@@ -17,6 +17,10 @@
             "description": "Cr\u00e9ation/modification des reminders (g\u00e9n\u00e8re les AgendaEntry)"
         },
         {
+            "name": "Repas",
+            "description": "Repas planifi\u00e9s : une recette type ou un libell\u00e9 libre, un repas par date et cr\u00e9neau"
+        },
+        {
             "name": "Agenda",
             "description": "Consultation de l'agenda : les AgendaEntry sont persist\u00e9es, pas calcul\u00e9es \u00e0 la vol\u00e9e"
         },
@@ -25,11 +29,129 @@
             "description": "Membres de la famille"
         },
         {
+            "name": "Recettes",
+            "description": "Recettes types, partag\u00e9es par la famille et r\u00e9utilisables pour planifier les repas"
+        },
+        {
             "name": "Meteo",
             "description": "M\u00e9t\u00e9o des prochains jours et tenue conseill\u00e9e pour les enfants"
+        },
+        {
+            "name": "Ingredients",
+            "description": "Ingr\u00e9dients r\u00e9utilisables (cr\u00e9\u00e9s \u00e0 la vol\u00e9e par les recettes)"
         }
     ],
     "paths": {
+        "/v1/repas/{id}": {
+            "get": {
+                "tags": [
+                    "Repas"
+                ],
+                "summary": "D\u00e9tail d'un repas",
+                "operationId": "getRepas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Repas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MealDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Repas introuvable"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Repas"
+                ],
+                "summary": "Modifier un repas",
+                "operationId": "updateRepas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MealRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Repas modifi\u00e9",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MealDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Donn\u00e9es invalides"
+                    },
+                    "404": {
+                        "description": "Repas introuvable"
+                    },
+                    "409": {
+                        "description": "Un autre repas est d\u00e9j\u00e0 pr\u00e9vu \u00e0 cette date et \u00e0 ce cr\u00e9neau"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Repas"
+                ],
+                "summary": "Supprimer un repas",
+                "operationId": "deleteRepas",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Repas introuvable"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/v1/reminders/{id}": {
             "get": {
                 "tags": [
@@ -123,6 +245,114 @@
                 "responses": {
                     "404": {
                         "description": "Reminder introuvable"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/v1/recettes/{id}": {
+            "get": {
+                "tags": [
+                    "Recettes"
+                ],
+                "summary": "D\u00e9tail d'une recette, avec ses ingr\u00e9dients",
+                "operationId": "getRecette",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recette",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecipeDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Recette introuvable"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Recettes"
+                ],
+                "summary": "Modifier une recette (remplace tous les champs et les ingr\u00e9dients)",
+                "operationId": "updateRecette",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RecipeRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recette modifi\u00e9e",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecipeDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Donn\u00e9es invalides"
+                    },
+                    "404": {
+                        "description": "Recette introuvable"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Recettes"
+                ],
+                "summary": "Supprimer une recette",
+                "description": "Les repas planifi\u00e9s avec cette recette sont conserv\u00e9s, avec son nom comme libell\u00e9 libre.",
+                "operationId": "deleteRecette",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Recette introuvable"
                     },
                     "204": {
                         "description": "No Content"
@@ -229,6 +459,93 @@
                 }
             }
         },
+        "/v1/repas": {
+            "get": {
+                "tags": [
+                    "Repas"
+                ],
+                "summary": "Repas d'une plage de dates",
+                "description": "Repas dont la date tombe entre `dateDebut` et `dateFin` (jours inclus, 366 jours au plus), par date puis cr\u00e9neau.",
+                "operationId": "listRepas",
+                "parameters": [
+                    {
+                        "name": "dateDebut",
+                        "in": "query",
+                        "description": "Premier jour (ISO, inclus)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2026-09-21"
+                    },
+                    {
+                        "name": "dateFin",
+                        "in": "query",
+                        "description": "Dernier jour (ISO, inclus)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2026-09-27"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Repas de la plage",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MealDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "dateFin ant\u00e9rieure \u00e0 dateDebut, plage trop longue ou date mal form\u00e9e"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Repas"
+                ],
+                "summary": "Planifier un repas",
+                "operationId": "createRepas",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MealRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Repas cr\u00e9\u00e9 (en-t\u00eate Location renseign\u00e9)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MealDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Donn\u00e9es invalides : ni recette ni libell\u00e9 (ou les deux), recette inconnue..."
+                    },
+                    "409": {
+                        "description": "Un repas est d\u00e9j\u00e0 pr\u00e9vu \u00e0 cette date et \u00e0 ce cr\u00e9neau"
+                    }
+                }
+            }
+        },
         "/v1/reminders": {
             "get": {
                 "tags": [
@@ -289,6 +606,75 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/v1/recettes": {
+            "get": {
+                "tags": [
+                    "Recettes"
+                ],
+                "summary": "Lister les recettes (par ordre alphab\u00e9tique), avec recherche optionnelle",
+                "operationId": "listRecettes",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Ne garder que les recettes dont le nom contient ce texte (sans casse)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "spag"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RecipeSummaryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Recettes"
+                ],
+                "summary": "Cr\u00e9er une recette",
+                "description": "Les ingr\u00e9dients sont d\u00e9sign\u00e9s par leur nom : un ingr\u00e9dient inconnu est cr\u00e9\u00e9 \u00e0 la vol\u00e9e.",
+                "operationId": "createRecette",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RecipeRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Recette cr\u00e9\u00e9e (en-t\u00eate Location renseign\u00e9)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecipeDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Donn\u00e9es invalides (champ manquant, ingr\u00e9dient en double...)"
                     }
                 }
             }
@@ -391,6 +777,55 @@
                 }
             }
         },
+        "/v1/recettes/{id}/fiche": {
+            "get": {
+                "tags": [
+                    "Recettes"
+                ],
+                "summary": "Fiche recette, quantit\u00e9s recalcul\u00e9es pour un nombre de portions",
+                "description": "Quantit\u00e9s = quantit\u00e9 de la recette \u00d7 portions \u00f7 portions de la recette, arrondies \u00e0 2 d\u00e9cimales.",
+                "operationId": "getFicheRecette",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "portions",
+                        "in": "query",
+                        "description": "Portions voulues (1 \u00e0 100) ; absent = portions de la recette",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "maximum": 100,
+                            "minimum": 1
+                        },
+                        "example": 6
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fiche recette",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RecipeSheetDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Recette introuvable"
+                    }
+                }
+            }
+        },
         "/v1/meteo": {
             "get": {
                 "tags": [
@@ -431,6 +866,58 @@
                     },
                     "503": {
                         "description": "Open-Meteo injoignable et aucune pr\u00e9vision du jour en cache"
+                    }
+                }
+            }
+        },
+        "/v1/ingredients": {
+            "get": {
+                "tags": [
+                    "Ingredients"
+                ],
+                "summary": "Rechercher des ingr\u00e9dients (autocompl\u00e9tion)",
+                "description": "Ingr\u00e9dients dont le nom contient `q`, sans tenir compte de la casse ni des accents, par ordre alphab\u00e9tique.",
+                "operationId": "searchIngredients",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Texte recherch\u00e9 ; vide = tous",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        },
+                        "example": "tom"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Nombre maximal de r\u00e9sultats (1 \u00e0 50)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10,
+                            "maximum": 50,
+                            "minimum": 1
+                        },
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/IngredientDTO"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -716,6 +1203,108 @@
     },
     "components": {
         "schemas": {
+            "MealRequest": {
+                "type": "object",
+                "description": "Cr\u00e9ation / modification d'un repas : une recette (recetteId) OU un libell\u00e9 libre, pas les deux",
+                "example": {
+                    "date": "2026-09-24",
+                    "creneau": "SOUPER",
+                    "portions": 4,
+                    "recetteId": 1
+                },
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-09-24"
+                    },
+                    "creneau": {
+                        "type": "string",
+                        "enum": [
+                            "PETIT_DEJEUNER",
+                            "MIDI",
+                            "SOUPER"
+                        ],
+                        "example": "SOUPER"
+                    },
+                    "portions": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 4,
+                        "maximum": 50,
+                        "minimum": 1
+                    },
+                    "recetteId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Recette type (exclusif avec libelle)",
+                        "example": 1
+                    },
+                    "libelle": {
+                        "type": "string",
+                        "description": "Libell\u00e9 libre, ex. \u00ab Restes \u00bb, \u00ab Resto \u00bb (exclusif avec recetteId)",
+                        "example": "Restes",
+                        "maxLength": 100,
+                        "minLength": 0
+                    }
+                },
+                "required": [
+                    "creneau",
+                    "date",
+                    "portions"
+                ]
+            },
+            "MealDTO": {
+                "type": "object",
+                "description": "Repas planifi\u00e9",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 12
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-09-24"
+                    },
+                    "creneau": {
+                        "type": "string",
+                        "enum": [
+                            "PETIT_DEJEUNER",
+                            "MIDI",
+                            "SOUPER"
+                        ],
+                        "example": "SOUPER"
+                    },
+                    "portions": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 4
+                    },
+                    "recetteId": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int64",
+                        "description": "Recette type, absente pour un libell\u00e9 libre",
+                        "example": 1
+                    },
+                    "libelle": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Libell\u00e9 libre, absent si une recette est choisie"
+                    },
+                    "titre": {
+                        "type": "string",
+                        "description": "\u00c0 afficher : nom de la recette ou libell\u00e9 libre",
+                        "example": "Spaghetti bolognaise"
+                    }
+                }
+            },
             "RecurrenceRuleRequest": {
                 "type": "object",
                 "description": "R\u00e8gle de r\u00e9currence. Fin : dateFin OU nombreOccurrences (pas les deux) ; aucune des deux = sans fin.",
@@ -1014,6 +1603,222 @@
                     }
                 }
             },
+            "RecipeIngredientRequest": {
+                "type": "object",
+                "description": "Ligne d'ingr\u00e9dient d'une recette. L'ingr\u00e9dient est d\u00e9sign\u00e9 par son nom : cr\u00e9\u00e9 s'il n'existe pas encore.",
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "example": "Tomates pel\u00e9es",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "quantite": {
+                        "type": "number",
+                        "example": 400,
+                        "exclusiveMinimum": 0
+                    },
+                    "unite": {
+                        "type": "string",
+                        "enum": [
+                            "G",
+                            "KG",
+                            "ML",
+                            "L",
+                            "PIECE",
+                            "CUILLERE_SOUPE",
+                            "CUILLERE_CAFE",
+                            "BOITE",
+                            "SACHET",
+                            "PINCEE"
+                        ],
+                        "example": "G"
+                    }
+                },
+                "required": [
+                    "nom",
+                    "quantite",
+                    "unite"
+                ]
+            },
+            "RecipeRequest": {
+                "type": "object",
+                "description": "Cr\u00e9ation / modification d'une recette type",
+                "example": {
+                    "nom": "Spaghetti bolognaise",
+                    "description": "Le classique du mercredi",
+                    "portions": 4,
+                    "tempsPreparation": 45,
+                    "instructions": "Faire revenir l'oignon.\nAjouter la viande, puis les tomates.\nLaisser mijoter 30 min.",
+                    "ingredients": [
+                        {
+                            "nom": "Spaghetti",
+                            "quantite": 400,
+                            "unite": "G"
+                        },
+                        {
+                            "nom": "Hach\u00e9 b\u0153uf",
+                            "quantite": 500,
+                            "unite": "G"
+                        },
+                        {
+                            "nom": "Tomates pel\u00e9es",
+                            "quantite": 1,
+                            "unite": "BOITE"
+                        }
+                    ]
+                },
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "maxLength": 150,
+                        "minLength": 0
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description courte",
+                        "maxLength": 500,
+                        "minLength": 0
+                    },
+                    "portions": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Portions pour lesquelles les quantit\u00e9s sont donn\u00e9es",
+                        "example": 4,
+                        "maximum": 100,
+                        "minimum": 1
+                    },
+                    "tempsPreparation": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Temps de pr\u00e9paration en minutes (optionnel)",
+                        "example": 45,
+                        "maximum": 1440,
+                        "minimum": 1
+                    },
+                    "instructions": {
+                        "type": "string",
+                        "description": "Instructions, texte libre multi-lignes",
+                        "maxLength": 10000,
+                        "minLength": 0
+                    },
+                    "ingredients": {
+                        "type": "array",
+                        "description": "Ingr\u00e9dients, dans l'ordre d'affichage ; absent = aucun",
+                        "items": {
+                            "$ref": "#/components/schemas/RecipeIngredientRequest"
+                        },
+                        "maxItems": 100,
+                        "minItems": 0
+                    }
+                },
+                "required": [
+                    "nom",
+                    "portions"
+                ]
+            },
+            "RecipeDTO": {
+                "type": "object",
+                "description": "Recette type",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Spaghetti bolognaise"
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "example": "Le classique du mercredi"
+                    },
+                    "portions": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Portions pour lesquelles les quantit\u00e9s sont donn\u00e9es",
+                        "example": 4
+                    },
+                    "tempsPreparation": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int32",
+                        "description": "En minutes",
+                        "example": 45
+                    },
+                    "instructions": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "ingredients": {
+                        "type": "array",
+                        "description": "Dans l'ordre d'affichage",
+                        "items": {
+                            "$ref": "#/components/schemas/RecipeIngredientDTO"
+                        }
+                    }
+                }
+            },
+            "RecipeIngredientDTO": {
+                "type": "object",
+                "description": "Ingr\u00e9dient d'une recette, avec sa quantit\u00e9",
+                "properties": {
+                    "ingredientId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 3
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Tomates pel\u00e9es"
+                    },
+                    "rayon": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "enum": [
+                            "FRUITS_LEGUMES",
+                            "BOUCHERIE_POISSONNERIE",
+                            "CREMERIE",
+                            "EPICERIE",
+                            "SURGELES",
+                            "BOULANGERIE",
+                            "BOISSONS",
+                            "AUTRE"
+                        ],
+                        "example": "EPICERIE"
+                    },
+                    "quantite": {
+                        "type": "number",
+                        "example": 400
+                    },
+                    "unite": {
+                        "type": "string",
+                        "enum": [
+                            "G",
+                            "KG",
+                            "ML",
+                            "L",
+                            "PIECE",
+                            "CUILLERE_SOUPE",
+                            "CUILLERE_CAFE",
+                            "BOITE",
+                            "SACHET",
+                            "PINCEE"
+                        ],
+                        "example": "G"
+                    }
+                }
+            },
             "FamilyMemberRequest": {
                 "type": "object",
                 "description": "Cr\u00e9ation / modification d'un membre de la famille",
@@ -1125,6 +1930,97 @@
                     "recurring": {
                         "type": "boolean",
                         "description": "L'entr\u00e9e provient d'un reminder r\u00e9current"
+                    }
+                }
+            },
+            "RecipeSummaryDTO": {
+                "type": "object",
+                "description": "Recette type, sans ingr\u00e9dients ni instructions (listes, recherche)",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Spaghetti bolognaise"
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "example": "Le classique du mercredi"
+                    },
+                    "portions": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 4
+                    },
+                    "tempsPreparation": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int32",
+                        "description": "En minutes",
+                        "example": 45
+                    }
+                }
+            },
+            "RecipeSheetDTO": {
+                "type": "object",
+                "description": "Fiche recette : quantit\u00e9s recalcul\u00e9es pour un nombre de portions donn\u00e9",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Spaghetti bolognaise"
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "portionsRecette": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Portions de r\u00e9f\u00e9rence de la recette",
+                        "example": 4
+                    },
+                    "portions": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Portions demand\u00e9es : les quantit\u00e9s sont calcul\u00e9es pour ce nombre",
+                        "example": 6
+                    },
+                    "tempsPreparation": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int32",
+                        "description": "En minutes",
+                        "example": 45
+                    },
+                    "instructions": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "ingredients": {
+                        "type": "array",
+                        "description": "Quantit\u00e9s au prorata, arrondies \u00e0 2 d\u00e9cimales",
+                        "items": {
+                            "$ref": "#/components/schemas/RecipeIngredientDTO"
+                        }
                     }
                 }
             },
@@ -1240,6 +2136,39 @@
                         "type": "boolean",
                         "description": "Plus chaud l'apr\u00e8s-midi : pr\u00e9voir un pull qu'on pourra enlever",
                         "example": true
+                    }
+                }
+            },
+            "IngredientDTO": {
+                "type": "object",
+                "description": "Ingr\u00e9dient r\u00e9utilisable entre recettes",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 3
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Tomates pel\u00e9es"
+                    },
+                    "rayon": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Rayon du magasin (optionnel)",
+                        "enum": [
+                            "FRUITS_LEGUMES",
+                            "BOUCHERIE_POISSONNERIE",
+                            "CREMERIE",
+                            "EPICERIE",
+                            "SURGELES",
+                            "BOULANGERIE",
+                            "BOISSONS",
+                            "AUTRE"
+                        ],
+                        "example": "EPICERIE"
                     }
                 }
             },
