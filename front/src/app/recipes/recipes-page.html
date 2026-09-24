@@ -1,0 +1,64 @@
+<div class="header">
+  <h1 i18n="@@recipes.title">Recettes</h1>
+  <button matButton="filled" (click)="create()">
+    <mat-icon>add</mat-icon>
+    <ng-container i18n="@@recipes.add">Nouvelle recette</ng-container>
+  </button>
+</div>
+
+<mat-form-field class="search" subscriptSizing="dynamic">
+  <mat-icon matPrefix>search</mat-icon>
+  <mat-label i18n="@@recipes.search">Rechercher une recette</mat-label>
+  <input matInput [value]="query()" (input)="query.set($any($event.target).value)" />
+</mat-form-field>
+
+<div class="progress">
+  @if (recipes.isLoading()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+</div>
+
+@if (recipes.error()) {
+  <div class="empty">
+    <p i18n="@@recipes.loadError">Impossible de charger les recettes.</p>
+    <button matButton="outlined" (click)="recipes.reload()" i18n="@@common.retry">
+      Réessayer
+    </button>
+  </div>
+} @else if (recipes.hasValue()) {
+  @if (recipes.value().length === 0) {
+    <p class="empty">
+      @if (query().trim()) {
+        <ng-container i18n="@@recipes.noMatch">Aucune recette ne correspond à cette recherche.</ng-container>
+      } @else {
+        <ng-container i18n="@@recipes.empty">Aucune recette pour le moment. Ajoutez la première !</ng-container>
+      }
+    </p>
+  } @else {
+    <mat-list>
+      @for (r of recipes.value(); track r.id) {
+        <mat-list-item [lines]="r.description ? 3 : 2">
+          <mat-icon matListItemIcon>restaurant_menu</mat-icon>
+          <span matListItemTitle>{{ r.nom }}</span>
+          @if (r.description) {
+            <span matListItemLine>{{ r.description }}</span>
+          }
+          <span matListItemLine class="meta">
+            <ng-container i18n="@@recipes.portions">{r.portions, plural, =1 {1 portion} other {{{ r.portions }} portions}}</ng-container>
+            @if (r.tempsPreparation) {
+              · <ng-container i18n="@@recipes.minutes">{{ r.tempsPreparation }} min</ng-container>
+            }
+          </span>
+          <span matListItemMeta class="actions">
+            <button matIconButton (click)="edit(r)" i18n-aria-label="@@common.edit" aria-label="Modifier">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button matIconButton (click)="remove(r)" i18n-aria-label="@@common.delete" aria-label="Supprimer">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+        </mat-list-item>
+      }
+    </mat-list>
+  }
+}

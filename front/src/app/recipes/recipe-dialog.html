@@ -1,0 +1,116 @@
+<h2 mat-dialog-title>
+  @if (editing) {
+    <ng-container i18n="@@recipe.editTitle">Modifier la recette</ng-container>
+  } @else {
+    <ng-container i18n="@@recipe.createTitle">Nouvelle recette</ng-container>
+  }
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()" id="recipe-form">
+  <mat-dialog-content class="content">
+    <mat-form-field>
+      <mat-label i18n="@@recipe.name">Nom</mat-label>
+      <input matInput formControlName="nom" maxlength="150" required />
+      @if (form.controls.nom.hasError('required')) {
+        <mat-error i18n="@@form.required">Ce champ est obligatoire.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label i18n="@@recipe.description">Description courte</mat-label>
+      <input matInput formControlName="description" maxlength="500" />
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field>
+        <mat-label i18n="@@recipe.portions">Portions</mat-label>
+        <input matInput type="number" min="1" max="100" formControlName="portions" required />
+        <mat-hint i18n="@@recipe.portionsHint">Les quantités sont données pour ce nombre.</mat-hint>
+        @if (form.controls.portions.invalid) {
+          <mat-error i18n="@@form.portionsRange">Entre 1 et 100.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label i18n="@@recipe.time">Préparation (min, facultatif)</mat-label>
+        <input matInput type="number" min="1" max="1440" formControlName="tempsPreparation" />
+        @if (form.controls.tempsPreparation.invalid) {
+          <mat-error i18n="@@form.timeRange">Entre 1 et 1440 minutes.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <fieldset class="ingredients" formArrayName="ingredients">
+      <legend i18n="@@recipe.ingredients">Ingrédients</legend>
+
+      @for (row of ingredients.controls; track row; let i = $index) {
+        <div class="ingredient" [formGroupName]="i">
+          <mat-form-field class="name" subscriptSizing="dynamic">
+            <mat-label i18n="@@recipe.ingredientName">Ingrédient</mat-label>
+            <input
+              matInput
+              formControlName="nom"
+              maxlength="100"
+              required
+              [matAutocomplete]="auto"
+              (input)="searchIngredients(row.controls.nom.value)"
+              (focus)="searchIngredients(row.controls.nom.value)"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (s of suggestions(); track s.id) {
+                <mat-option [value]="s.nom">{{ s.nom }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field class="quantity" subscriptSizing="dynamic">
+            <mat-label i18n="@@recipe.quantity">Quantité</mat-label>
+            <input matInput type="number" min="0" step="any" formControlName="quantite" required />
+          </mat-form-field>
+
+          <mat-form-field class="unit" subscriptSizing="dynamic">
+            <mat-label i18n="@@recipe.unit">Unité</mat-label>
+            <mat-select formControlName="unite">
+              @for (u of units; track u) {
+                <mat-option [value]="u">{{ u | enumLabel: 'unit' }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <button
+            type="button"
+            matIconButton
+            class="remove"
+            (click)="removeIngredient(i)"
+            i18n-aria-label="@@recipe.removeIngredient"
+            aria-label="Retirer l'ingrédient"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      }
+
+      @if (ingredients.hasError('duplicates')) {
+        <p class="error" i18n="@@recipe.duplicates">Ingrédient en double : {{ duplicates() }}</p>
+      }
+      @if (ingredients.touched && ingredients.invalid && !ingredients.hasError('duplicates')) {
+        <p class="error" i18n="@@recipe.ingredientsInvalid">Chaque ingrédient a besoin d'un nom et d'une quantité positive.</p>
+      }
+
+      <button type="button" matButton (click)="addIngredient()">
+        <mat-icon>add</mat-icon>
+        <ng-container i18n="@@recipe.addIngredient">Ajouter un ingrédient</ng-container>
+      </button>
+    </fieldset>
+
+    <mat-form-field>
+      <mat-label i18n="@@recipe.instructions">Instructions</mat-label>
+      <textarea matInput formControlName="instructions" rows="6" maxlength="10000"></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+</form>
+
+<mat-dialog-actions align="end">
+  <button matButton mat-dialog-close i18n="@@common.cancel">Annuler</button>
+  <button matButton="filled" type="submit" form="recipe-form" [disabled]="saving()" i18n="@@common.save">Enregistrer</button>
+</mat-dialog-actions>

@@ -27,3 +27,20 @@ nav a.active {
   transform: scale(0.85);
   transform-origin: right;
 }
+
+// Mobile : seule l'icône de l'application reste, les liens se resserrent (sinon la barre élargit la page)
+@media (max-width: 600px) {
+  .header {
+    gap: 4px;
+    padding: 0 8px;
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  nav a {
+    min-width: 0;
+    padding: 0 8px;
+  }
+}

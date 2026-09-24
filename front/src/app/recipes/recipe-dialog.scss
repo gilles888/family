@@ -1,0 +1,59 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 8px !important;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+
+.ingredients {
+  display: flex;
+  min-width: 0; // un fieldset vaut min-content par défaut : sans cela, il élargit le dialogue sur mobile
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 12px 0 16px;
+  padding: 8px 16px 12px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
+
+  legend {
+    padding: 0 8px;
+    font: var(--mat-sys-label-large);
+  }
+}
+
+.ingredient {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 100px 150px 40px;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.error {
+  margin: 0;
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-error);
+}
+
+@media (max-width: 600px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredient {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 40px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+    .name {
+      grid-column: 1 / -1;
+    }
+  }
+}
