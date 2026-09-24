@@ -28,8 +28,21 @@ Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dan
 - **Nouveau rappel / édition** (`mat-dialog`) : titre, description, type, membres, date (datepicker), heures (timepicker), interrupteur de récurrence et sous-formulaire (fréquence, intervalle, jours de la semaine, fin par date ou nombre d'occurrences).
 - **Clic sur une entrée** : détail, changement de statut (Prévu / Terminé / Annulé / Déplacé — une seule occurrence est modifiée), modification ou suppression du rappel.
 - **Membres** (`/membres`) : liste, ajout, modification, suppression.
+- **Recettes** (`/recettes`) et **repas de la semaine** : voir *Repas et recettes*.
 - **Comment s'habiller ?** : carte en haut de la colonne des tâches (voir *Carte météo*).
 - **Erreurs d'API** : un intercepteur affiche un message **traduit** dans un `mat-snack-bar` (réseau, 400, 404, 409, 5xx). Une requête qui affiche elle-même son erreur pose `SKIP_ERROR_NOTIFICATION` dans son `HttpContext` pour ne pas avoir de snack-bar.
+
+## Repas et recettes (`src/app/recipes/`, `src/app/meals/`)
+
+- **Recettes** (`/recettes`, `RecipesPage`) : liste avec recherche, création / modification (`RecipeDialog`) et suppression. Une recette a un nom, une description courte, des portions de référence, un temps de préparation (facultatif), des instructions et des lignes d'ingrédients (nom, quantité, unité). Le nom d'ingrédient est **autocomplété** sur les ingrédients existants (`GET /v1/ingredients`) ; un nom inconnu crée l'ingrédient à l'enregistrement. Un même ingrédient saisi deux fois est signalé dès la saisie, avec la même comparaison que le backend (`ingredient-names.ts` : sans casse, accents ni ligatures, « Œufs » = « oeufs »).
+- **Repas** (`MealDialog`) : date, créneau (petit-déjeuner, midi, souper), portions (par défaut : une par membre de la famille), puis **une recette** (recherche) **ou une saisie libre** (« Restes », « Resto » en un clic). Un seul repas par créneau : le conflit est expliqué dans le dialogue.
+- **Deux modes d'affichage**, au choix dans la barre de filtres de l'agenda (« Dans l'agenda » / « En carte ») :
+  - **En carte** (par défaut) : carte latérale **Repas de la semaine** (`MealsWeekCard`), grille lundi → dimanche × créneaux, semaine précédente / suivante ; case vide = ajouter, repas = l'ouvrir ;
+  - **Dans l'agenda** : les repas s'affichent dans les vues jour, semaine et mois comme des entrées 🍽️ de couleur dédiée (`--mat-sys-tertiary*`), à l'heure fictive de leur créneau (8 h, 12 h, 18 h 30 — `meal-entries.ts`) ; le filtre « 🍽️ Repas » les masque, le bouton « Repas » en ajoute un au jour affiché.
+
+  Il n'y a pas de préférences utilisateur côté backend : ce choix et le filtre sont gardés **dans le navigateur** (`localStorage`, `MealDisplayPreference`), avec des valeurs par défaut si le stockage est indisponible.
+- **Fiche recette** (`RecipeSheetDialog`) : au clic sur un repas lié à une recette (ou depuis la page Recettes), ingrédients **recalculés au prorata** des portions du repas (`GET /v1/recettes/{id}/fiche?portions=`), ajustables en −/+, temps et instructions en étapes ; bouton « Modifier le repas ». Un repas en saisie libre ouvre directement sa modification.
+- Libellés des unités et des créneaux : `src/app/shared/labels.ts` (`@@unit.*`, `@@slot.*`), via le pipe `enumLabel`.
 
 ## Carte météo (`src/app/weather/`)
 
@@ -46,7 +59,7 @@ La carte **« Comment s'habiller ? »** appelle `GET /v1/meteo?jours=2` (`MeteoS
 
 > **Ne modifiez jamais ce dossier à la main** : il est entièrement écrasé à chaque génération.
 
-Aucun service HTTP ni interface n'est écrit à la main : tous les composants utilisent les services et modèles générés (`AgendaService`, `RemindersService`, `MembresService`, `MeteoService`, `AgendaEntryDTO`, `ReminderRequest`…). Le code généré est **committé** ; il se régénère **manuellement** quand l'API du backend change.
+Aucun service HTTP ni interface n'est écrit à la main : tous les composants utilisent les services et modèles générés (`AgendaService`, `RemindersService`, `MembresService`, `MeteoService`, `RecettesService`, `IngredientsService`, `RepasService`, `AgendaEntryDTO`, `ReminderRequest`…). Le code généré est **committé** ; il se régénère **manuellement** quand l'API du backend change.
 
 ### Régénérer le client après un changement du backend
 
@@ -70,7 +83,7 @@ Le client est **configuré dans `src/app/app.config.ts`** : `provideApi(environm
 
 ### Points d'attention (constatés à la mise en place)
 
-- **Noms des services** : ils viennent des `@Tag` du backend (`Agenda`, `Reminders`, `Membres`, `Meteo` → `AgendaService`, `RemindersService`, `MembresService`, `MeteoService`). Renommer un tag renomme le service généré.
+- **Noms des services** : ils viennent des `@Tag` du backend (`Agenda`, `Reminders`, `Membres`, `Meteo`, `Recettes`, `Ingredients`, `Repas` → `AgendaService`, `RemindersService`, `MembresService`, `MeteoService`, `RecettesService`, `IngredientsService`, `RepasService`). Renommer un tag renomme le service généré.
 - **Noms des méthodes** : ils viennent des `operationId` du backend, fixés explicitement (`getAgendaMois`, `createReminder`, `updateEntryStatus`…). Sans cela, springdoc produit `list_1`, `get_1`… Ne les retirez pas.
 - **Ce que la spec doit garantir** — deux défauts du backend, corrigés à la source, qui cassaient le client :
   - les contrôleurs déclarent `produces = application/json` ; sans cela la spec annonce `*/*`, le générateur ne reconnaît pas du JSON et **renvoie des `Blob`** au lieu d'objets ;
@@ -112,7 +125,7 @@ location /v1/ { proxy_pass http://backend:8080; }
 
 - **Langue source : français**. Les textes sont dans les templates (`i18n="@@identifiant"`) ou dans le code (`` $localize`:@@identifiant:Texte` ``). Chaque message a un **identifiant explicite** (`@@agenda.today`…) : modifier le texte français ne casse pas les traductions.
 - **Dates, jours, mois, heures** : jamais traduits à la main. Ils passent par `DatePipe`/`Intl` avec la locale du build (`Lun.` / `Ma`, `septembre` / `september`…). La saisie d'une date au clavier suit l'ordre de la locale (`25/09/2026` en fr, `25-09-2026` en nl), grâce à `LocaleDateAdapter`.
-- **Libellés des enums** du backend (types, statuts, fréquences) : `src/app/shared/labels.ts` ; vêtements et ciel : `src/app/weather/weather-labels.ts`.
+- **Libellés des enums** du backend (types, statuts, fréquences, unités, créneaux) : `src/app/shared/labels.ts` ; vêtements et ciel : `src/app/weather/weather-labels.ts`.
 - Fichiers : `src/locale/messages.fr.xlf` (source, **généré**) et `src/locale/messages.nl.xlf` (traduit).
 - Limite : les libellés internes d'Angular Material (ex. les libellés d'accessibilité du datepicker) restent en anglais, Material ne les fournit pas traduits.
 
@@ -148,6 +161,8 @@ src/
 │   ├── agenda/            page agenda, vues jour / semaine / mois / année, dialogue de statut
 │   ├── reminders/         dialogue de création / édition d'un rappel
 │   ├── family-members/    gestion des membres
+│   ├── recipes/           page Recettes, dialogue recette, fiche recette (prorata)
+│   ├── meals/             carte « Repas de la semaine », dialogue repas, affichage dans l'agenda
 │   ├── weather/           carte « Comment s'habiller ? », dialogue semaine, journée (weather-day), libellés emoji
 │   ├── shared/            intercepteur d'erreurs, notifications, pipe enumLabel, libellés, utilitaires de dates
 │   ├── app.config.ts      providers (client API, HttpClient + intercepteur, adaptateur de dates)

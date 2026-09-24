@@ -58,39 +58,93 @@
           <context context-type="linenumber">25,26</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="agenda.newMeal" datatype="html">
+        <source>Repas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="agenda.newReminder" datatype="html">
         <source>Nouveau rappel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
-          <context context-type="linenumber">51,53</context>
+          <context context-type="linenumber">57,59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="agenda.filterLabel" datatype="html">
         <source>Filtrer par membre</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
-          <context context-type="linenumber">60,62</context>
+          <context context-type="linenumber">67,69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="agenda.allMembers" datatype="html">
         <source>Tous</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
-          <context context-type="linenumber">62,63</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.mealFilter" datatype="html">
+        <source>Afficher les repas dans l&apos;agenda</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">84,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.mealFilter.chip" datatype="html">
+        <source>🍽️ Repas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">86,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.mealDisplay" datatype="html">
+        <source>Afficher les repas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">96,98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.mealDisplay.agenda" datatype="html">
+        <source>Dans l&apos;agenda</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">98,99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.mealDisplay.card" datatype="html">
+        <source>En carte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">99,100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="agenda.loadError" datatype="html">
         <source>Impossible de charger l&apos;agenda.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
-          <context context-type="linenumber">81,82</context>
+          <context context-type="linenumber">114,115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="common.retry" datatype="html">
         <source> Réessayer </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
-          <context context-type="linenumber">83,84</context>
+          <context context-type="linenumber">116,117</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meals-week-card.html</context>
+          <context context-type="linenumber">33,35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">84,85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">25,27</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/weather/weather-card.html</context>
@@ -105,21 +159,21 @@
         <source>Supprimer le rappel ?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">280</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reminder.deleteMessage" datatype="html">
         <source>« <x id="title" equiv-text="entry.titre"/> » sera supprimé ainsi que toutes ses occurrences à venir. Les occurrences passées restent dans l&apos;agenda.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">226</context>
+          <context context-type="linenumber">281</context>
         </context-group>
       </trans-unit>
       <trans-unit id="common.delete" datatype="html">
         <source>Supprimer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">227</context>
+          <context context-type="linenumber">282</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
@@ -129,12 +183,28 @@
           <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
           <context context-type="linenumber">41</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">103,105</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.ts</context>
+          <context context-type="linenumber">197</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="reminder.deleted" datatype="html">
         <source>Rappel supprimé.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">234</context>
+          <context context-type="linenumber">289</context>
         </context-group>
       </trans-unit>
       <trans-unit id="day.empty" datatype="html">
@@ -144,11 +214,18 @@
           <context context-type="linenumber">2,4</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="day.mealPortions" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 portion} other {<x id="INTERPOLATION"/> portions}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/day-view.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="day.recurring" datatype="html">
         <source>Récurrent</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/day-view.html</context>
-          <context context-type="linenumber">28,29</context>
+          <context context-type="linenumber">37,38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="entry.recurring" datatype="html">
@@ -201,6 +278,14 @@
           <context context-type="linenumber">44,45</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">114,115</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
           <context context-type="linenumber">161,162</context>
         </context-group>
@@ -218,6 +303,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
           <context context-type="linenumber">45,46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">107,108</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">115,116</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
@@ -277,18 +370,25 @@
           <context context-type="linenumber">8,9</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nav.recipes" datatype="html">
+        <source>Recettes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nav.members" datatype="html">
         <source>Membres</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">9,12</context>
+          <context context-type="linenumber">10,13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="app.language" datatype="html">
         <source>Langue</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">21,22</context>
+          <context context-type="linenumber">22,23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="members.title" datatype="html">
@@ -324,6 +424,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
           <context context-type="linenumber">25,26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.deleteTitle" datatype="html">
@@ -375,6 +479,14 @@
           <context context-type="linenumber">35,37</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">89,91</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
           <context context-type="linenumber">21,23</context>
         </context-group>
@@ -391,6 +503,542 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
           <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.editTitle" datatype="html">
+        <source>Modifier le repas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.createTitle" datatype="html">
+        <source>Ajouter un repas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">5,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.date" datatype="html">
+        <source>Date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.invalidDate" datatype="html">
+        <source>Date invalide ou manquante.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">18,20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">142,144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.slot" datatype="html">
+        <source>Créneau</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.portions" datatype="html">
+        <source>Portions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.mealPortionsRange" datatype="html">
+        <source>Entre 1 et 50.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.kind" datatype="html">
+        <source>Type de repas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.kind.recipe" datatype="html">
+        <source>Recette</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.kind.label" datatype="html">
+        <source>Saisie libre</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.recipe" datatype="html">
+        <source>Recette</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.noRecipe" datatype="html">
+        <source>Aucune recette trouvée</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">77,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.recipeRequired" datatype="html">
+        <source>Choisissez une recette dans la liste.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">81,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.label" datatype="html">
+        <source>Libellé</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">86,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.quickLabels" datatype="html">
+        <source>Libellés rapides</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
+          <context context-type="linenumber">92,93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.quick.leftovers" datatype="html">
+        <source>Restes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.quick.restaurant" datatype="html">
+        <source>Resto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.updated" datatype="html">
+        <source>Repas modifié.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.ts</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.created" datatype="html">
+        <source>Repas ajouté.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.ts</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.slotTaken" datatype="html">
+        <source>Un repas est déjà prévu à ce créneau. Choisissez un autre jour ou créneau.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.ts</context>
+          <context context-type="linenumber">183</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.deleteTitle" datatype="html">
+        <source>Supprimer ce repas ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.ts</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.deleteMessage" datatype="html">
+        <source>« <x id="title" equiv-text="meal.titre"/> » sera retiré du planning.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.ts</context>
+          <context context-type="linenumber">196</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meal.deleted" datatype="html">
+        <source>Repas supprimé.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meal-dialog.ts</context>
+          <context context-type="linenumber">206</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meals.title" datatype="html">
+        <source>Repas de la semaine</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meals-week-card.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meals-week-card.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meals.previousWeek" datatype="html">
+        <source>Semaine précédente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meals-week-card.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meals.currentWeek" datatype="html">
+        <source>Revenir à cette semaine</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meals-week-card.html</context>
+          <context context-type="linenumber">13,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meals.nextWeek" datatype="html">
+        <source>Semaine suivante</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meals-week-card.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meals.loadError" datatype="html">
+        <source>Impossible de charger les repas.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meals-week-card.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meals.addAria" datatype="html">
+        <source>Ajouter un repas : <x id="day" equiv-text="dayName"/>, <x id="slot" equiv-text="SLOT_LABELS[slot]"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/meals/meals-week-card.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.editTitle" datatype="html">
+        <source>Modifier la recette</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.createTitle" datatype="html">
+        <source>Nouvelle recette</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">5,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.name" datatype="html">
+        <source>Nom</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.description" datatype="html">
+        <source>Description courte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.portions" datatype="html">
+        <source>Portions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.portionsHint" datatype="html">
+        <source>Les quantités sont données pour ce nombre.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.portionsRange" datatype="html">
+        <source>Entre 1 et 100.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">30,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.time" datatype="html">
+        <source>Préparation (min, facultatif)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.timeRange" datatype="html">
+        <source>Entre 1 et 1440 minutes.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">38,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.ingredients" datatype="html">
+        <source>Ingrédients</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">44,46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.ingredientName" datatype="html">
+        <source>Ingrédient</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.quantity" datatype="html">
+        <source>Quantité</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">67,68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.unit" datatype="html">
+        <source>Unité</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">72,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.removeIngredient" datatype="html">
+        <source>Retirer l&apos;ingrédient</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">86,88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.duplicates" datatype="html">
+        <source>Ingrédient en double : <x id="INTERPOLATION" equiv-text="{{ duplicates() }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">94,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.ingredientsInvalid" datatype="html">
+        <source>Chaque ingrédient a besoin d&apos;un nom et d&apos;une quantité positive.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">97,100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.addIngredient" datatype="html">
+        <source>Ajouter un ingrédient</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">102,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.instructions" datatype="html">
+        <source>Instructions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.html</context>
+          <context context-type="linenumber">107,108</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.updated" datatype="html">
+        <source>Recette modifiée.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.ts</context>
+          <context context-type="linenumber">161</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.created" datatype="html">
+        <source>Recette créée.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-dialog.ts</context>
+          <context context-type="linenumber">162</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.title" datatype="html">
+        <source>Fiche recette</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">5,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.lessPortions" datatype="html">
+        <source>Une portion de moins</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">29,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.portions" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 portion} other {<x id="INTERPOLATION"/> portions}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">33,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.morePortions" datatype="html">
+        <source>Une portion de plus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">39,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipes.minutes" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ s.tempsPreparation }}"/> min</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.scaled" datatype="html">
+        <source>Quantités recalculées (recette prévue pour <x id="INTERPOLATION" equiv-text="{{ s.portionsRecette }}"/>).</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">49,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.noIngredients" datatype="html">
+        <source>Aucun ingrédient renseigné.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">63,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.noInstructions" datatype="html">
+        <source>Aucune instruction renseignée.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">75,77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.notFound" datatype="html">
+        <source>Cette recette n&apos;existe plus.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">80,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.loadError" datatype="html">
+        <source>Impossible de charger la recette.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">82,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sheet.editMeal" datatype="html">
+        <source>Modifier le repas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.close" datatype="html">
+        <source>Fermer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
+          <context context-type="linenumber">98,99</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/notification.service.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/week-weather-dialog.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipes.title" datatype="html">
+        <source>Recettes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipes.add" datatype="html">
+        <source>Nouvelle recette</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipes.search" datatype="html">
+        <source>Rechercher une recette</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipes.loadError" datatype="html">
+        <source>Impossible de charger les recettes.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipes.noMatch" datatype="html">
+        <source>Aucune recette ne correspond à cette recherche.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipes.empty" datatype="html">
+        <source>Aucune recette pour le moment. Ajoutez la première !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">34,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipes.portions" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 portion} other {<x id="INTERPOLATION"/> portions}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipes.view" datatype="html">
+        <source>Voir la fiche</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.deleteTitle" datatype="html">
+        <source>Supprimer la recette ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.deleteMessage" datatype="html">
+        <source>« <x id="name" equiv-text="recipe.nom"/> » sera supprimée. Les repas déjà planifiés avec cette recette sont conservés, avec son nom.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recipe.deleted" datatype="html">
+        <source>Recette supprimée.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/recipes/recipes-page.ts</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reminder.editTitle" datatype="html">
@@ -447,17 +1095,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
           <context context-type="linenumber">55,56</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="form.invalidDate" datatype="html">
-        <source>Date invalide ou manquante.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
-          <context context-type="linenumber">60,62</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
-          <context context-type="linenumber">142,144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reminder.startTime" datatype="html">
@@ -668,95 +1305,196 @@
         <source>Sport</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="type.testMedical" datatype="html">
         <source>Test médical</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="type.rendezVous" datatype="html">
         <source>Rendez-vous</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="type.autre" datatype="html">
         <source>Autre</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.prevu" datatype="html">
         <source>Prévu</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.complete" datatype="html">
         <source>Terminé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.annule" datatype="html">
         <source>Annulé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.deplace" datatype="html">
         <source>Déplacé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.daily" datatype="html">
         <source>Tous les jours</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.weekly" datatype="html">
         <source>Toutes les semaines</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.monthly" datatype="html">
         <source>Tous les mois</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.yearly" datatype="html">
         <source>Tous les ans</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="common.close" datatype="html">
-        <source>Fermer</source>
+      <trans-unit id="unit.g" datatype="html">
+        <source>g</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/notification.service.ts</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">55</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="unit.kg" datatype="html">
+        <source>kg</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/weather/week-weather-dialog.html</context>
-          <context context-type="linenumber">33,34</context>
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="unit.ml" datatype="html">
+        <source>ml</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="unit.l" datatype="html">
+        <source>l</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="unit.piece" datatype="html">
+        <source>pièce(s)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="unit.cuillereSoupe" datatype="html">
+        <source>c. à soupe</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="unit.cuillereCafe" datatype="html">
+        <source>c. à café</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="unit.boite" datatype="html">
+        <source>boîte(s)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="unit.sachet" datatype="html">
+        <source>sachet(s)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="unit.pincee" datatype="html">
+        <source>pincée(s)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="slot.petitDejeuner" datatype="html">
+        <source>Petit-déjeuner</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="slot.midi" datatype="html">
+        <source>Midi</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="slot.souper" datatype="html">
+        <source>Souper</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="slot.short.petitDejeuner" datatype="html">
+        <source>Matin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="slot.short.midi" datatype="html">
+        <source>Midi</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="slot.short.souper" datatype="html">
+        <source>Soir</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="weather.title" datatype="html">
