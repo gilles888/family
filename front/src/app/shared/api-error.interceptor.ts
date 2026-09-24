@@ -1,7 +1,10 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { NotificationService } from './notification.service';
+
+/** À poser sur une requête dont l'appelant affiche lui-même l'erreur (pas de snack-bar). */
+export const SKIP_ERROR_NOTIFICATION = new HttpContextToken<boolean>(() => false);
 
 /** Message traduit pour une erreur HTTP (le backend renvoie des ProblemDetail en français : on ne les affiche pas tels quels). */
 export function apiErrorMessage(error: HttpErrorResponse): string {
@@ -26,7 +29,7 @@ export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const notifications = inject(NotificationService);
   return next(req).pipe(
     catchError((error: unknown) => {
-      if (error instanceof HttpErrorResponse) {
+      if (error instanceof HttpErrorResponse && !req.context.get(SKIP_ERROR_NOTIFICATION)) {
         notifications.error(apiErrorMessage(error));
       }
       return throwError(() => error);

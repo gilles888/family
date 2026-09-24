@@ -26,6 +26,7 @@ import { EntryList } from './entry-list';
 import { MonthView } from './month-view';
 import { WeekView } from './week-view';
 import { YearView } from './year-view';
+import { WeatherCard } from '../weather/weather-card';
 
 export type Mode = 'day' | 'week' | 'month' | 'year';
 
@@ -52,6 +53,7 @@ type MemberFilter = 'all' | number;
     WeekView,
     MonthView,
     YearView,
+    WeatherCard,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './agenda-page.html',
