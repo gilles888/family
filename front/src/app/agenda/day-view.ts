@@ -5,6 +5,7 @@ import { AgendaEntryDTO } from '../api-client';
 import { EnumLabelPipe } from '../shared/enum-label.pipe';
 import { contrastColor, entryColor } from '../shared/entry-utils';
 import { STATUS_ICONS } from '../shared/labels';
+import { mealOf } from '../meals/meal-entries';
 
 /** Vue Jour : liste détaillée des entrées d'une journée. */
 @Component({
@@ -21,4 +22,5 @@ export class DayView {
   protected readonly entryColor = entryColor;
   protected readonly contrastColor = contrastColor;
   protected readonly statusIcons = STATUS_ICONS;
+  protected readonly mealOf = mealOf;
 }

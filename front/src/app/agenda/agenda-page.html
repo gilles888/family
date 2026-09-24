@@ -46,6 +46,12 @@
 
   <span class="spacer"></span>
 
+  @if (mealDisplay.mode() === 'agenda') {
+    <button matButton="outlined" (click)="newMealForDay()">
+      <mat-icon>restaurant</mat-icon>
+      <ng-container i18n="@@agenda.newMeal">Repas</ng-container>
+    </button>
+  }
   <button matButton="filled" (click)="newReminder()">
     <mat-icon>add</mat-icon>
     <ng-container i18n="@@agenda.newReminder">Nouveau rappel</ng-container>
@@ -70,7 +76,18 @@
 </mat-chip-listbox>
 
   <div class="meal-display">
-    <mat-icon class="meal-icon" aria-hidden="true">restaurant</mat-icon>
+    @if (mealDisplay.mode() === 'agenda') {
+      <mat-chip-listbox
+        [value]="mealDisplay.visibleInAgenda()"
+        (change)="mealDisplay.setVisibleInAgenda($event.value === true)"
+        i18n-aria-label="@@agenda.mealFilter"
+        aria-label="Afficher les repas dans l'agenda"
+      >
+        <mat-chip-option [value]="true" i18n="@@agenda.mealFilter.chip">🍽️ Repas</mat-chip-option>
+      </mat-chip-listbox>
+    } @else {
+      <mat-icon class="meal-icon" aria-hidden="true">restaurant</mat-icon>
+    }
     <mat-button-toggle-group
       [value]="mealDisplay.mode()"
       (change)="mealDisplay.setMode($event.value)"
@@ -100,7 +117,7 @@
         </button>
       </div>
     } @else if (data.hasValue()) {
-      @let d = data.value();
+      @let d = calendar()!;
       @switch (d.kind) {
         @case ('day') {
           <app-day-view [entries]="d.entries" (entryClick)="openEntry($event)" />

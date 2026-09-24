@@ -15,6 +15,7 @@ import {
   MealDTO,
   MembresService,
   RemindersService,
+  RepasService,
   YearSummaryDTO,
 } from '../api-client';
 import { ConfirmDialog } from '../shared/confirm-dialog';
@@ -29,6 +30,7 @@ import { WeekView } from './week-view';
 import { YearView } from './year-view';
 import { WeatherCard } from '../weather/weather-card';
 import { MealDisplayPreference } from '../meals/meal-display';
+import { byDateTime, mealEntry, mealOf } from '../meals/meal-entries';
 import { MealDialog, MealDialogData, MealDialogResult } from '../meals/meal-dialog';
 import { MealSlotRequest, MealsWeekCard } from '../meals/meals-week-card';
 
@@ -68,6 +70,7 @@ export class AgendaPage {
   private readonly agendaApi = inject(AgendaService);
   private readonly remindersApi = inject(RemindersService);
   private readonly membresApi = inject(MembresService);
+  private readonly repasApi = inject(RepasService);
   private readonly dialog = inject(MatDialog);
   private readonly notifications = inject(NotificationService);
   protected readonly mealDisplay = inject(MealDisplayPreference);
@@ -98,6 +101,45 @@ export class AgendaPage {
         AgendaEntryDTO[]
       >;
     },
+  });
+
+  /** Mode « repas dans l'agenda » : repas de la période affichée (pas en vue Année), sauf s'ils sont masqués. */
+  protected readonly agendaMeals = rxResource<MealDTO[], { from: string; to: string } | undefined>({
+    params: () => {
+      if (this.mealDisplay.mode() !== 'agenda' || !this.mealDisplay.visibleInAgenda() || this.mode() === 'year') {
+        return undefined;
+      }
+      const [from, to] = this.periodBounds(this.mode(), this.date());
+      return { from: toIsoDate(from), to: toIsoDate(to) };
+    },
+    stream: ({ params }) => this.repasApi.listRepas(params.from, params.to),
+  });
+
+  /** Données du calendrier, avec les repas ajoutés comme des entrées (🍽️) quand ils sont affichés dans l'agenda. */
+  protected readonly calendar = computed<AgendaData | undefined>(() => {
+    if (!this.data.hasValue()) {
+      return undefined;
+    }
+    const data = this.data.value();
+    const meals = this.agendaMeals.hasValue() ? this.agendaMeals.value().map(mealEntry) : [];
+    if (meals.length === 0) {
+      return data;
+    }
+    switch (data.kind) {
+      case 'day':
+      case 'week':
+        return { ...data, entries: [...data.entries, ...meals].sort(byDateTime) };
+      case 'month': {
+        const byDay = { ...data.byDay };
+        for (const meal of meals) {
+          const day = meal.dateHeure!.substring(0, 10);
+          byDay[day] = [...(byDay[day] ?? []), meal].sort(byDateTime);
+        }
+        return { ...data, byDay };
+      }
+      case 'year':
+        return data;
+    }
   });
 
   protected readonly weekStart = computed(() => startOfWeek(this.date()));
@@ -199,6 +241,11 @@ export class AgendaPage {
   }
 
   protected openEntry(entry: AgendaEntryDTO): void {
+    const meal = mealOf(entry);
+    if (meal) {
+      this.openMeal(meal);
+      return;
+    }
     this.dialog
       .open<EntryDialog, { entry: AgendaEntryDTO }, EntryDialogResult>(EntryDialog, {
         data: { entry },
@@ -254,6 +301,12 @@ export class AgendaPage {
     return this.members.hasValue() && this.members.value().length > 0 ? this.members.value().length : 4;
   }
 
+  /** Mode agenda : ajout depuis la barre d'outils, au jour affiché. */
+  protected newMealForDay(): void {
+    const day = this.mode() === 'year' ? this.today : this.date();
+    this.openMealDialog({ date: day, defaultPortions: this.defaultPortions() });
+  }
+
   protected newMeal(request: MealSlotRequest): void {
     this.openMealDialog({ date: request.date, slot: request.slot, defaultPortions: this.defaultPortions() });
   }
@@ -276,6 +329,7 @@ export class AgendaPage {
 
   private reloadMeals(): void {
     this.mealsCard()?.reload();
+    this.agendaMeals.reload();
   }
 
   private openReminderDialog(data: ReminderDialogData): void {

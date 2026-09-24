@@ -1,9 +1,16 @@
 import { AgendaEntryDTO } from '../api-client';
+import { MEAL_COLOR, mealOf } from '../meals/meal-entries';
 
 export const DEFAULT_ENTRY_COLOR = '#3f51b5';
 
-/** Couleur d'une entrée : celle de son premier membre (par ordre alphabétique), sinon une couleur neutre. */
+/**
+ * Couleur d'une entrée : celle dédiée aux repas, sinon celle de son premier membre (par ordre alphabétique),
+ * sinon une couleur neutre.
+ */
 export function entryColor(entry: AgendaEntryDTO): string {
+  if (mealOf(entry)) {
+    return MEAL_COLOR;
+  }
   return entry.membres?.[0]?.couleur ?? DEFAULT_ENTRY_COLOR;
 }
 

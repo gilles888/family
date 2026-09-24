@@ -4,8 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { AgendaEntryDTO } from '../api-client';
 import { contrastColor, entryColor } from '../shared/entry-utils';
 import { STATUS_ICONS } from '../shared/labels';
+import { MEAL_BACKGROUND, MEAL_TEXT, mealOf } from '../meals/meal-entries';
 
-/** Pastille compacte d'une entrée (colorée selon le premier membre, barrée si annulée). */
+/** Pastille compacte d'une entrée (colorée selon le premier membre, barrée si annulée) ou d'un repas (🍽️). */
 @Component({
   selector: 'app-entry-chip',
   imports: [DatePipe, MatIconModule],
@@ -15,12 +16,15 @@ import { STATUS_ICONS } from '../shared/labels';
     '[style.color]': 'textColor()',
     '[class.cancelled]': 'entry().statut === "ANNULE"',
     '[class.done]': 'entry().statut === "COMPLETE"',
+    '[class.meal]': 'isMeal()',
   },
   template: `
-    @if (entry().statut !== 'PREVU') {
+    @if (isMeal()) {
+      <span class="meal-icon" aria-hidden="true">🍽️</span>
+    } @else if (entry().statut !== 'PREVU') {
       <mat-icon class="status">{{ icon() }}</mat-icon>
     }
-    @if (showTime()) {
+    @if (showTime() && !isMeal()) {
       <span class="time">{{ entry().dateHeure | date: 'shortTime' }}</span>
     }
     <span class="title">{{ entry().titre }}</span>
@@ -45,6 +49,9 @@ import { STATUS_ICONS } from '../shared/labels';
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    .meal-icon {
+      font-size: 11px;
+    }
     .status {
       font-size: 14px;
       width: 14px;
@@ -62,7 +69,9 @@ export class EntryChip {
   readonly entry = input.required<AgendaEntryDTO>();
   readonly showTime = input(true);
 
-  protected readonly color = computed(() => entryColor(this.entry()));
-  protected readonly textColor = computed(() => contrastColor(this.color()));
+  /** L'heure d'un repas est fictive (créneau) : elle n'est pas affichée. */
+  protected readonly isMeal = computed(() => !!mealOf(this.entry()));
+  protected readonly color = computed(() => (this.isMeal() ? MEAL_BACKGROUND : entryColor(this.entry())));
+  protected readonly textColor = computed(() => (this.isMeal() ? MEAL_TEXT : contrastColor(this.color())));
   protected readonly icon = computed(() => STATUS_ICONS[this.entry().statut ?? 'PREVU']);
 }

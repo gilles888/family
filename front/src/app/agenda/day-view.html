@@ -3,14 +3,23 @@
 } @else {
   <ul class="entries">
     @for (entry of entries(); track entry.id) {
+      @let meal = mealOf(entry);
       <li>
         <button
           type="button"
           class="entry"
           [class.cancelled]="entry.statut === 'ANNULE'"
+          [class.meal]="meal"
           [style.border-left-color]="entryColor(entry)"
           (click)="entryClick.emit(entry)"
         >
+          @if (meal) {
+            <span class="time">{{ meal.creneau | enumLabel: 'slot' }}</span>
+            <span class="body">
+              <span class="title">🍽️ {{ entry.titre }}</span>
+              <span class="meta" i18n="@@day.mealPortions">{meal.portions, plural, =1 {1 portion} other {{{ meal.portions }} portions}}</span>
+            </span>
+          } @else {
           <span class="time">
             {{ entry.dateHeure | date: 'shortTime' }}
             @if (entry.dateHeureFin) {
@@ -38,6 +47,7 @@
             <mat-icon>{{ statusIcons[entry.statut ?? 'PREVU'] }}</mat-icon>
             {{ entry.statut | enumLabel: 'status' }}
           </span>
+          }
         </button>
       </li>
     }
