@@ -1,0 +1,142 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 8px;
+}
+
+.heading {
+  margin: 0;
+  font: var(--mat-sys-title-large);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.range {
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-large);
+  cursor: pointer;
+
+  &.current {
+    color: var(--mat-sys-primary);
+  }
+}
+
+.progress {
+  height: 4px;
+  margin: 4px 0;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.line {
+  display: grid;
+  grid-template-columns: 40px repeat(3, minmax(0, 1fr));
+  gap: 3px;
+  align-items: stretch;
+
+  &.today .day {
+    color: var(--mat-sys-primary);
+    font-weight: 600;
+  }
+}
+
+.slot {
+  text-align: center;
+  font: var(--mat-sys-label-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font: var(--mat-sys-label-small);
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
+.dom {
+  font: var(--mat-sys-label-large);
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 36px;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: 6px;
+  font: var(--mat-sys-label-small);
+  cursor: pointer;
+}
+
+.meal {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  background: var(--mat-sys-tertiary-container);
+  color: var(--mat-sys-on-tertiary-container);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.empty {
+  background: transparent;
+  outline: 1px dashed var(--mat-sys-outline-variant);
+  outline-offset: -1px;
+  color: var(--mat-sys-outline);
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    opacity: 0;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: var(--mat-sys-surface-container-high);
+
+    mat-icon {
+      opacity: 1;
+    }
+  }
+}
+
+.error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+@media (hover: none) {
+  .empty mat-icon {
+    opacity: 0.6;
+  }
+}

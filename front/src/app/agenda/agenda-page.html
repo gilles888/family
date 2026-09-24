@@ -52,6 +52,7 @@
   </button>
 </div>
 
+<div class="filters">
 <mat-chip-listbox
   class="members-filter"
   [value]="memberFilter()"
@@ -67,6 +68,21 @@
     </mat-chip-option>
   }
 </mat-chip-listbox>
+
+  <div class="meal-display">
+    <mat-icon class="meal-icon" aria-hidden="true">restaurant</mat-icon>
+    <mat-button-toggle-group
+      [value]="mealDisplay.mode()"
+      (change)="mealDisplay.setMode($event.value)"
+      hideSingleSelectionIndicator
+      i18n-aria-label="@@agenda.mealDisplay"
+      aria-label="Afficher les repas"
+    >
+      <mat-button-toggle value="agenda" i18n="@@agenda.mealDisplay.agenda">Dans l'agenda</mat-button-toggle>
+      <mat-button-toggle value="card" i18n="@@agenda.mealDisplay.card">En carte</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</div>
 
 <div class="progress">
   @if (data.isLoading()) {
@@ -119,6 +135,9 @@
 
   <aside class="tasks">
     <app-weather-card />
+    @if (mealDisplay.mode() === 'card') {
+      <app-meals-week-card (addMeal)="newMeal($event)" (mealClick)="openMeal($event)" />
+    }
     <app-entry-list
       [entries]="periodEntries.value() ?? []"
       [members]="members.value() ?? []"

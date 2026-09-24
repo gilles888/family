@@ -1,0 +1,77 @@
+<div class="header">
+  <h2 class="heading" i18n="@@meals.title">Repas de la semaine</h2>
+  <div class="nav">
+    <button matIconButton (click)="step(-1)" i18n-aria-label="@@meals.previousWeek" aria-label="Semaine précédente">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button
+      type="button"
+      class="range"
+      [class.current]="isCurrentWeek()"
+      (click)="goToCurrentWeek()"
+      i18n-title="@@meals.currentWeek"
+      title="Revenir à cette semaine"
+    >
+      {{ monday() | date: 'd MMM' }} – {{ sunday() | date: 'd MMM' }}
+    </button>
+    <button matIconButton (click)="step(1)" i18n-aria-label="@@meals.nextWeek" aria-label="Semaine suivante">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="progress">
+  @if (meals.isLoading()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+</div>
+
+@if (meals.error()) {
+  <div class="error">
+    <span i18n="@@meals.loadError">Impossible de charger les repas.</span>
+    <button matButton (click)="meals.reload()" i18n="@@common.retry">
+      Réessayer
+    </button>
+  </div>
+} @else {
+  <div class="grid" role="grid" i18n-aria-label="@@meals.title" aria-label="Repas de la semaine">
+    <div role="row" class="line head">
+      <span role="columnheader"></span>
+      @for (s of slots; track s) {
+        <span role="columnheader" class="slot" [title]="slotLabels[s]">{{ slotShortLabels[s] }}</span>
+      }
+    </div>
+    @for (day of week(); track day.iso) {
+      <div role="row" class="line" [class.today]="day.iso === todayIso">
+        <span role="rowheader" class="day">
+          <span class="dow">{{ day.date | date: 'EEE' }}</span>
+          <span class="dom">{{ day.date | date: 'd' }}</span>
+        </span>
+        @for (cell of day.cells; track cell.slot) {
+          <span role="gridcell">
+            @if (cell.meal; as meal) {
+              <button
+                type="button"
+                class="cell meal"
+                [class.recipe]="meal.recetteId"
+                [title]="meal.titre + ' · ' + slotLabels[cell.slot]"
+                (click)="open(day, cell)"
+              >
+                {{ meal.titre }}
+              </button>
+            } @else {
+              <button
+                type="button"
+                class="cell empty"
+                (click)="open(day, cell)"
+                [attr.aria-label]="addLabel(day, cell.slot)"
+              >
+                <mat-icon>add</mat-icon>
+              </button>
+            }
+          </span>
+        }
+      </div>
+    }
+  </div>
+}

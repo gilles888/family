@@ -69,3 +69,10 @@ export const SLOT_LABELS: Record<MealSlot, string> = {
   MIDI: $localize`:@@slot.midi:Midi`,
   SOUPER: $localize`:@@slot.souper:Souper`,
 };
+
+/** En-têtes de colonnes de la carte « Repas de la semaine » (place réduite). */
+export const SLOT_SHORT_LABELS: Record<MealSlot, string> = {
+  PETIT_DEJEUNER: $localize`:@@slot.short.petitDejeuner:Matin`,
+  MIDI: $localize`:@@slot.short.midi:Midi`,
+  SOUPER: $localize`:@@slot.short.souper:Soir`,
+};

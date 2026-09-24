@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal, viewChild } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { Observable, map } from 'rxjs';
@@ -12,6 +12,7 @@ import {
   AgendaEntryDTO,
   AgendaService,
   FamilyMemberDTO,
+  MealDTO,
   MembresService,
   RemindersService,
   YearSummaryDTO,
@@ -27,6 +28,9 @@ import { MonthView } from './month-view';
 import { WeekView } from './week-view';
 import { YearView } from './year-view';
 import { WeatherCard } from '../weather/weather-card';
+import { MealDisplayPreference } from '../meals/meal-display';
+import { MealDialog, MealDialogData, MealDialogResult } from '../meals/meal-dialog';
+import { MealSlotRequest, MealsWeekCard } from '../meals/meals-week-card';
 
 export type Mode = 'day' | 'week' | 'month' | 'year';
 
@@ -54,6 +58,7 @@ type MemberFilter = 'all' | number;
     MonthView,
     YearView,
     WeatherCard,
+    MealsWeekCard,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './agenda-page.html',
@@ -65,6 +70,8 @@ export class AgendaPage {
   private readonly membresApi = inject(MembresService);
   private readonly dialog = inject(MatDialog);
   private readonly notifications = inject(NotificationService);
+  protected readonly mealDisplay = inject(MealDisplayPreference);
+  private readonly mealsCard = viewChild(MealsWeekCard);
 
   protected readonly mode = signal<Mode>('month');
   /** Jour de référence : la vue affichée (jour / semaine / mois / année) est celle qui le contient. */
@@ -238,6 +245,37 @@ export class AgendaPage {
           });
         }
       });
+  }
+
+  // ---------- repas
+
+  /** Portions proposées pour un nouveau repas : un par membre de la famille. */
+  private defaultPortions(): number {
+    return this.members.hasValue() && this.members.value().length > 0 ? this.members.value().length : 4;
+  }
+
+  protected newMeal(request: MealSlotRequest): void {
+    this.openMealDialog({ date: request.date, slot: request.slot, defaultPortions: this.defaultPortions() });
+  }
+
+  protected openMeal(meal: MealDTO): void {
+    this.openMealDialog({ meal });
+  }
+
+  private openMealDialog(data: MealDialogData): void {
+    this.dialog
+      .open<MealDialog, MealDialogData, MealDialogResult>(MealDialog, {
+        data,
+        width: '560px',
+        maxWidth: '95vw',
+        autoFocus: 'first-tabbable',
+      })
+      .afterClosed()
+      .subscribe((result) => result && this.reloadMeals());
+  }
+
+  private reloadMeals(): void {
+    this.mealsCard()?.reload();
   }
 
   private openReminderDialog(data: ReminderDialogData): void {

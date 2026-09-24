@@ -1,0 +1,108 @@
+<h2 mat-dialog-title>
+  @if (editing) {
+    <ng-container i18n="@@meal.editTitle">Modifier le repas</ng-container>
+  } @else {
+    <ng-container i18n="@@meal.createTitle">Ajouter un repas</ng-container>
+  }
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()" id="meal-form">
+  <mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field>
+        <mat-label i18n="@@meal.date">Date</mat-label>
+        <input matInput [matDatepicker]="datePicker" formControlName="date" required />
+        <mat-datepicker-toggle matIconSuffix [for]="datePicker" />
+        <mat-datepicker #datePicker />
+        @if (form.controls.date.invalid) {
+          <mat-error i18n="@@form.invalidDate">Date invalide ou manquante.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label i18n="@@meal.slot">Créneau</mat-label>
+        <mat-select formControlName="creneau">
+          @for (s of slots; track s) {
+            <mat-option [value]="s">{{ s | enumLabel: 'slot' }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label i18n="@@meal.portions">Portions</mat-label>
+        <input matInput type="number" min="1" max="50" formControlName="portions" required />
+        @if (form.controls.portions.invalid) {
+          <mat-error i18n="@@form.mealPortionsRange">Entre 1 et 50.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-button-toggle-group
+      class="kind"
+      formControlName="kind"
+      hideSingleSelectionIndicator
+      i18n-aria-label="@@meal.kind"
+      aria-label="Type de repas"
+    >
+      <mat-button-toggle value="recipe">
+        <mat-icon>menu_book</mat-icon>
+        <ng-container i18n="@@meal.kind.recipe">Recette</ng-container>
+      </mat-button-toggle>
+      <mat-button-toggle value="label">
+        <mat-icon>edit_note</mat-icon>
+        <ng-container i18n="@@meal.kind.label">Saisie libre</ng-container>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    @if (kind() === 'recipe') {
+      <mat-form-field>
+        <mat-label i18n="@@meal.recipe">Recette</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          formControlName="recette"
+          [matAutocomplete]="auto"
+          (input)="recipeQuery.set($any($event.target).value)"
+          (focus)="recipeQuery.set($any($event.target).value)"
+        />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayRecipe" requireSelection>
+          @for (r of recipes(); track r.id) {
+            <mat-option [value]="r">
+              {{ r.nom }}
+              @if (r.tempsPreparation) {
+                <span class="time">· {{ r.tempsPreparation }} min</span>
+              }
+            </mat-option>
+          } @empty {
+            <mat-option disabled i18n="@@meal.noRecipe">Aucune recette trouvée</mat-option>
+          }
+        </mat-autocomplete>
+        @if (form.controls.recette.invalid) {
+          <mat-error i18n="@@meal.recipeRequired">Choisissez une recette dans la liste.</mat-error>
+        }
+      </mat-form-field>
+    } @else {
+      <mat-form-field>
+        <mat-label i18n="@@meal.label">Libellé</mat-label>
+        <input matInput formControlName="libelle" maxlength="100" />
+        @if (form.controls.libelle.invalid) {
+          <mat-error i18n="@@form.required">Ce champ est obligatoire.</mat-error>
+        }
+      </mat-form-field>
+      <mat-chip-set class="quick" i18n-aria-label="@@meal.quickLabels" aria-label="Libellés rapides">
+        @for (label of quickLabels; track label) {
+          <mat-chip (click)="useQuickLabel(label)">{{ label }}</mat-chip>
+        }
+      </mat-chip-set>
+    }
+  </mat-dialog-content>
+</form>
+
+<mat-dialog-actions>
+  @if (editing) {
+    <button matButton class="danger" type="button" [disabled]="saving()" (click)="remove()" i18n="@@common.delete">Supprimer</button>
+  }
+  <span class="spacer"></span>
+  <button matButton mat-dialog-close i18n="@@common.cancel">Annuler</button>
+  <button matButton="filled" type="submit" form="meal-form" [disabled]="saving()" i18n="@@common.save">Enregistrer</button>
+</mat-dialog-actions>

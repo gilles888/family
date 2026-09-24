@@ -28,8 +28,24 @@
   flex: 1;
 }
 
-.members-filter {
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
   margin: 12px 0 4px;
+}
+
+.meal-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--mat-sys-on-surface-variant);
+
+  mat-button-toggle-group {
+    --mat-button-toggle-height: 32px;
+  }
 }
 
 .dot {
@@ -69,7 +85,13 @@
   flex-direction: column;
   gap: 16px;
   max-height: calc(100vh - 32px);
+  // Cartes météo et repas + tâches : la colonne défile d'un bloc plutôt que d'écraser la liste des tâches
+  overflow-y: auto;
   padding: 12px;
+
+  app-entry-list {
+    flex-shrink: 0;
+  }
   border-radius: 12px;
   background: var(--mat-sys-surface-container-low);
 }
