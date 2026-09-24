@@ -18,6 +18,17 @@ agenda:
   seed:
     enabled: false
 
+meteo:
+  # Le dépôt est public : ne pas committer les coordonnées du domicile, les passer par variables d'environnement.
+  lieu: ${METEO_LIEU:Bruxelles}
+  latitude: ${METEO_LATITUDE:50.85}
+  longitude: ${METEO_LONGITUDE:4.35}
+  fuseau: ${METEO_FUSEAU:Europe/Brussels}
+  # Heure de départ à l'école : ressenti « du matin » et début de la fenêtre de risque de pluie
+  heure-depart: ${METEO_HEURE_DEPART:8}
+  cache: ${METEO_CACHE:30m}
+  base-url: ${METEO_BASE_URL:https://api.open-meteo.com}
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

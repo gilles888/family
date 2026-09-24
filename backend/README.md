@@ -20,7 +20,7 @@ Prérequis : **JDK 25**. Maven n'est pas nécessaire (wrapper inclus).
 
 ```bash
 ./mvnw spring-boot:run          # profil "dev" par défaut : H2 en mémoire + données de test
-./mvnw test                     # 19 tests (calcul des récurrences + scénarios de bout en bout)
+./mvnw test                     # 37 tests (récurrences, scénarios de bout en bout, tenue conseillée, cache météo)
 ./mvnw package && java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 ```
 
@@ -56,6 +56,7 @@ java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 | `AGENDA_SEED_ENABLED` | `false` | charger les données de test en prod |
 | `SWAGGER_UI_ENABLED` | `true` | désactiver Swagger UI |
 | `APP_TIMEZONE` | `Europe/Paris` | fuseau JDBC |
+| `METEO_*` | Bruxelles | lieu de la carte météo (tous profils, voir *Météo et tenue conseillée*) |
 
 ## Exemple : créer un reminder récurrent, puis voir les entrées générées
 
@@ -133,6 +134,7 @@ Toutes les URL sont préfixées par `/v1`. Les endpoints de l'agenda acceptent `
 | GET / PUT / DELETE | `/v1/reminders/{id}` | détail / modifier (régénère le futur) / supprimer |
 | GET / POST | `/v1/membres` | lister / créer |
 | GET / PUT / DELETE | `/v1/membres/{id}` | détail / modifier / supprimer |
+| GET | `/v1/meteo` | météo d'aujourd'hui et de demain, avec la tenue conseillée pour les enfants (503 si indisponible) |
 
 Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validation ajoutent `errors` (champ → message), ex. `errors.dateHeureFin`, `errors["recurrence.dateFin"]`.
 
@@ -146,17 +148,58 @@ Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validatio
 - **Job nocturne** (`AgendaExtensionScheduler`) : pour chaque reminder récurrent actif non terminé, ajoute les occurrences manquantes jusqu'au nouvel horizon. Idempotent, ne supprime ni ne modifie rien ; un reminder en erreur n'empêche pas les autres. Une contrainte d'unicité `(reminder, date_heure)` garantit l'absence de doublons.
 - **Suppression d'un membre** : il est retiré des reminders concernés (qui sont conservés).
 
+## Météo et tenue conseillée (`MeteoService`, `TenueAdvisor`)
+
+`GET /v1/meteo` renvoie, pour aujourd'hui et demain, le ciel, les températures min/max, le **ressenti du matin**, le **ressenti de la journée**, le **risque de pluie** et la **tenue** conseillée (enum `Vetement`, dans l'ordre d'affichage) :
+
+```json
+{
+  "lieu": "Bruxelles",
+  "jours": [
+    { "date": "2026-09-25", "ciel": "NUAGEUX", "temperatureMin": 14.5, "temperatureMax": 25.3,
+      "ressentiMatin": 12.3, "ressentiJournee": 23.5, "risquePluie": 0,
+      "tenue": ["T_SHIRT", "PULL", "VESTE", "PANTALON"], "superposer": true }
+  ]
+}
+```
+
+- **Source** : [Open-Meteo](https://open-meteo.com) (gratuit, sans clé), 2 jours, dans le fuseau configuré. Client `OpenMeteoClient` (`RestClient`, délais 3 s connexion / 5 s lecture).
+- **Valeurs retenues** (règle, puis repli si la valeur horaire manque) :
+  - ressenti du matin = ressenti horaire à `heure-depart` (sinon température min) ;
+  - ressenti de la journée = ressenti horaire max entre 10 h et 18 h (sinon température max) ;
+  - risque de pluie = max horaire entre `heure-depart` et 18 h (sinon valeur journalière).
+- **Règles** (m = ressenti du matin, j = ressenti de la journée ; seuils = constantes de `TenueAdvisor`) :
+  - T-shirt toujours ; pull si m < 15 ou j < 18 ;
+  - manteau si m < 8, sinon imperméable s'il pleut (risque ≥ 50 % ou ciel bruine/pluie/neige/orage), sinon veste si m < 13 ;
+  - short si j ≥ 22 et m ≥ 15, sinon pantalon ;
+  - écharpe si m ≤ 7, bonnet si m ≤ 5, gants si m ≤ 3 ;
+  - bottes si ≥ 5 mm de précipitations ou neige ; casquette et crème solaire si UV ≥ 5 ;
+  - `superposer` : pull conseillé et j − m ≥ 8 (on pourra l'enlever l'après-midi).
+- **Cache** : la réponse est gardée en mémoire `meteo.cache` (30 min), jamais au-delà du jour (fuseau de `meteo.fuseau`). Si Open-Meteo ne répond pas, la prévision **du jour** en cache est resservie ; sans elle, **503** (`ProblemDetail`). La prévision de la veille n'est jamais resservie.
+
+| Variable | Défaut | Rôle |
+|---|---|---|
+| `METEO_LIEU` | `Bruxelles` | nom affiché |
+| `METEO_LATITUDE` / `METEO_LONGITUDE` | `50.85` / `4.35` | coordonnées (centre de Bruxelles) |
+| `METEO_FUSEAU` | `Europe/Brussels` | fuseau des prévisions et du changement de jour |
+| `METEO_HEURE_DEPART` | `8` | heure de départ à l'école (0-23) |
+| `METEO_CACHE` | `30m` | durée du cache (`Duration` Spring : `15m`, `1h`…) |
+| `METEO_BASE_URL` | `https://api.open-meteo.com` | URL de l'API |
+
+> Le dépôt est **public** : ne committez pas les coordonnées exactes du domicile, passez-les par `METEO_LATITUDE` / `METEO_LONGITUDE` (2 décimales ≈ 1 km suffisent).
+
 ## Structure
 
 ```
 com.family.agenda
 ├── entity/      FamilyMember, Reminder, RecurrenceRule, AgendaEntry + enums
-├── dto/         records de requête/réponse (+ validation de cohérence des dates et de la récurrence)
+├── dto/         records de requête/réponse (+ validation de cohérence des dates et de la récurrence), Ciel, Vetement
 ├── mapper/      MapStruct (Entity <-> DTO)
 ├── repository/  Spring Data JPA
 ├── service/     AgendaService (génération/gestion), RecurrenceCalculator (calcul pur),
-│                AgendaQueryService (jour/mois/année), ReminderService, FamilyMemberService
-├── controller/  AgendaController, ReminderController, FamilyMemberController
+│                AgendaQueryService (jour/mois/année), ReminderService, FamilyMemberService,
+│                MeteoService (cache), OpenMeteoClient, TenueAdvisor (règles de tenue, pur)
+├── controller/  AgendaController, ReminderController, FamilyMemberController, MeteoController
 ├── scheduler/   AgendaExtensionScheduler
 ├── exception/   GlobalExceptionHandler (@RestControllerAdvice)
 └── config/      versioning d'API, OpenAPI, propriétés, données de test
