@@ -12,6 +12,7 @@ import { RecettesService, RecipeSummaryDTO } from '../api-client';
 import { ConfirmDialog } from '../shared/confirm-dialog';
 import { NotificationService } from '../shared/notification.service';
 import { RecipeDialog, RecipeDialogData } from './recipe-dialog';
+import { RecipeSheetDialog, RecipeSheetDialogData } from './recipe-sheet-dialog';
 
 /** Recettes types de la famille : recherche, ajout, modification, suppression. */
 @Component({
@@ -36,6 +37,14 @@ export class RecipesPage {
 
   protected create(): void {
     this.openDialog({});
+  }
+
+  protected view(recipe: RecipeSummaryDTO): void {
+    this.dialog.open<RecipeSheetDialog, RecipeSheetDialogData>(RecipeSheetDialog, {
+      data: { recipeId: recipe.id! },
+      width: '640px',
+      maxWidth: '95vw',
+    });
   }
 
   protected edit(recipe: RecipeSummaryDTO): void {

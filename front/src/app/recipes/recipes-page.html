@@ -50,6 +50,9 @@
             }
           </span>
           <span matListItemMeta class="actions">
+            <button matIconButton (click)="view(r)" i18n-aria-label="@@recipes.view" aria-label="Voir la fiche">
+              <mat-icon>menu_book</mat-icon>
+            </button>
             <button matIconButton (click)="edit(r)" i18n-aria-label="@@common.edit" aria-label="Modifier">
               <mat-icon>edit</mat-icon>
             </button>

@@ -33,6 +33,7 @@ import { MealDisplayPreference } from '../meals/meal-display';
 import { byDateTime, mealEntry, mealOf } from '../meals/meal-entries';
 import { MealDialog, MealDialogData, MealDialogResult } from '../meals/meal-dialog';
 import { MealSlotRequest, MealsWeekCard } from '../meals/meals-week-card';
+import { RecipeSheetDialog, RecipeSheetDialogData, RecipeSheetResult } from '../recipes/recipe-sheet-dialog';
 
 export type Mode = 'day' | 'week' | 'month' | 'year';
 
@@ -311,8 +312,20 @@ export class AgendaPage {
     this.openMealDialog({ date: request.date, slot: request.slot, defaultPortions: this.defaultPortions() });
   }
 
+  /** Repas lié à une recette : fiche recette (quantités pour ses portions), d'où l'on peut le modifier. Sinon : modification. */
   protected openMeal(meal: MealDTO): void {
-    this.openMealDialog({ meal });
+    if (!meal.recetteId) {
+      this.openMealDialog({ meal });
+      return;
+    }
+    this.dialog
+      .open<RecipeSheetDialog, RecipeSheetDialogData, RecipeSheetResult>(RecipeSheetDialog, {
+        data: { recipeId: meal.recetteId, portions: meal.portions, meal },
+        width: '640px',
+        maxWidth: '95vw',
+      })
+      .afterClosed()
+      .subscribe((result) => result === 'edit-meal' && this.openMealDialog({ meal }));
   }
 
   private openMealDialog(data: MealDialogData): void {

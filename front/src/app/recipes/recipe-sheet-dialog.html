@@ -1,0 +1,99 @@
+<h2 mat-dialog-title>
+  @if (sheet.hasValue()) {
+    {{ sheet.value().nom }}
+  } @else {
+    <ng-container i18n="@@sheet.title">Fiche recette</ng-container>
+  }
+</h2>
+
+<mat-dialog-content class="content">
+  <div class="progress">
+    @if (sheet.isLoading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+  </div>
+
+  @if (sheet.hasValue()) {
+    @let s = sheet.value();
+    @if (s.description) {
+      <p class="description">{{ s.description }}</p>
+    }
+
+    <div class="facts">
+      <div class="portions">
+        <button
+          matIconButton
+          (click)="changePortions(-1)"
+          [disabled]="current() <= minPortions || sheet.isLoading()"
+          i18n-aria-label="@@sheet.lessPortions"
+          aria-label="Une portion de moins"
+        >
+          <mat-icon>remove</mat-icon>
+        </button>
+        <span class="count" i18n="@@sheet.portions">{current(), plural, =1 {1 portion} other {{{ current() }} portions}}</span>
+        <button
+          matIconButton
+          (click)="changePortions(1)"
+          [disabled]="current() >= maxPortions || sheet.isLoading()"
+          i18n-aria-label="@@sheet.morePortions"
+          aria-label="Une portion de plus"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      @if (s.tempsPreparation) {
+        <span class="fact"><mat-icon>schedule</mat-icon><ng-container i18n="@@recipes.minutes">{{ s.tempsPreparation }} min</ng-container></span>
+      }
+    </div>
+    @if (s.portions !== s.portionsRecette) {
+      <p class="hint" i18n="@@sheet.scaled">Quantités recalculées (recette prévue pour {{ s.portionsRecette }}).</p>
+    }
+
+    <h3 i18n="@@recipe.ingredients">Ingrédients</h3>
+    @if (s.ingredients?.length) {
+      <ul class="ingredients">
+        @for (i of s.ingredients; track i.ingredientId) {
+          <li>
+            <span class="quantity">{{ i.quantite | number: '1.0-2' }} {{ i.unite | enumLabel: 'unit' }}</span>
+            <span>{{ i.nom }}</span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="hint" i18n="@@sheet.noIngredients">Aucun ingrédient renseigné.</p>
+    }
+
+    <h3 i18n="@@recipe.instructions">Instructions</h3>
+    @let stepList = steps(s.instructions);
+    @if (stepList.length) {
+      <ol class="steps">
+        @for (step of stepList; track $index) {
+          <li>{{ step }}</li>
+        }
+      </ol>
+    } @else {
+      <p class="hint" i18n="@@sheet.noInstructions">Aucune instruction renseignée.</p>
+    }
+  } @else if (sheet.error()) {
+    <div class="error">
+      @if (notFound()) {
+        <span i18n="@@sheet.notFound">Cette recette n'existe plus.</span>
+      } @else {
+        <span i18n="@@sheet.loadError">Impossible de charger la recette.</span>
+        <button matButton (click)="sheet.reload()" i18n="@@common.retry">
+          Réessayer
+        </button>
+      }
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  @if (data.meal) {
+    <button matButton [mat-dialog-close]="'edit-meal'">
+      <mat-icon>edit</mat-icon>
+      <ng-container i18n="@@sheet.editMeal">Modifier le repas</ng-container>
+    </button>
+  }
+  <button matButton="filled" mat-dialog-close i18n="@@common.close">Fermer</button>
+</mat-dialog-actions>
