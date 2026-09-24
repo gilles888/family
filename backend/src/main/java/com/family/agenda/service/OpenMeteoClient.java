@@ -19,7 +19,8 @@ public class OpenMeteoClient {
 
     private static final Duration CONNECT_TIMEOUT = Duration.ofSeconds(3);
     private static final Duration READ_TIMEOUT = Duration.ofSeconds(5);
-    private static final int FORECAST_DAYS = 2;
+    /** Une semaine, aujourd'hui compris : la carte (2 jours) et le dialogue semaine partagent le même appel. */
+    public static final int FORECAST_DAYS = 7;
 
     private final MeteoProperties properties;
     private final RestClient restClient;
@@ -35,8 +36,8 @@ public class OpenMeteoClient {
                 .build();
     }
 
-    /** Prévisions d'aujourd'hui et de demain pour le lieu configuré, dans son fuseau. */
-    public Forecast forecast() {
+    /** Prévisions des 7 prochains jours (aujourd'hui compris) pour le lieu configuré, dans son fuseau. */
+    public Forecast previsionSemaine() {
         return restClient.get()
                 .uri(uri -> uri.path("/v1/forecast")
                         .queryParam("latitude", properties.latitude())

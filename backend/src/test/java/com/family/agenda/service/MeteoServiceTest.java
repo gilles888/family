@@ -42,7 +42,7 @@ class MeteoServiceTest {
         }
 
         @Override
-        public Forecast forecast() {
+        public Forecast previsionSemaine() {
             appels++;
             return reponse.get();
         }
@@ -55,12 +55,7 @@ class MeteoServiceTest {
     private final MeteoService service = new MeteoService(client, new TenueAdvisor(properties), properties, clock);
 
     private static Forecast prevision(LocalDate jour) {
-        Forecast f = TenueAdvisorTest.forecast(new Double[48], new Integer[48]);
-        long decalage = jour.toEpochDay() - JOUR.toEpochDay();
-        var d = f.daily();
-        return new Forecast(new OpenMeteoClient.Daily(d.time().stream().map(t -> t.plusDays(decalage)).toList(),
-                d.temperatureMin(), d.temperatureMax(), d.precipitationProbabilityMax(), d.precipitationSum(),
-                d.weatherCode(), d.uvIndexMax()), f.hourly());
+        return MeteoFixtures.prevision(jour, 7);
     }
 
     private static Supplier<Forecast> panne() {
@@ -71,12 +66,43 @@ class MeteoServiceTest {
     void construitAujourdhuiEtDemain() {
         client.reponse = () -> prevision(JOUR);
 
-        MeteoDTO meteo = service.getMeteo();
+        MeteoDTO meteo = service.meteo(2);
 
         assertThat(meteo.lieu()).isEqualTo("Bruxelles");
         assertThat(meteo.jours()).extracting(j -> j.date()).containsExactly(JOUR, JOUR.plusDays(1));
-        assertThat(meteo.jours().getFirst().temperatureMax()).isEqualTo(19.0);
-        assertThat(meteo.jours().get(1).temperatureMax()).isEqualTo(21.0);
+        assertThat(meteo.jours().getFirst().temperatureMax()).isEqualTo(10.0);
+        assertThat(meteo.jours().get(1).temperatureMax()).isEqualTo(11.0);
+    }
+
+    @Test
+    void deuxEtSeptJoursDansLOrdreAvecUnSeulAppel() {
+        client.reponse = () -> prevision(JOUR);
+
+        MeteoDTO deux = service.meteo(2);
+        MeteoDTO sept = service.meteo(7);
+
+        assertThat(deux.jours()).extracting(j -> j.date()).containsExactly(JOUR, JOUR.plusDays(1));
+        assertThat(sept.jours()).extracting(j -> j.date())
+                .containsExactly(JOUR, JOUR.plusDays(1), JOUR.plusDays(2), JOUR.plusDays(3), JOUR.plusDays(4),
+                        JOUR.plusDays(5), JOUR.plusDays(6));
+        assertThat(sept.jours()).extracting(j -> j.temperatureMax())
+                .containsExactly(10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0);
+        assertThat(sept.lieu()).isEqualTo("Bruxelles");
+        assertThat(client.appels).isEqualTo(1);
+    }
+
+    @Test
+    void previsionIncompleteRenvoieLesJoursDisponibles() {
+        client.reponse = () -> MeteoFixtures.prevision(JOUR, 3);
+
+        assertThat(service.meteo(7).jours()).hasSize(3);
+    }
+
+    @Test
+    void nombreDeJoursHorsBornesRefuse() {
+        assertThatThrownBy(() -> service.meteo(0)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> service.meteo(8)).isInstanceOf(IllegalArgumentException.class);
+        assertThat(client.appels).isZero();
     }
 
     @Test
@@ -85,20 +111,20 @@ class MeteoServiceTest {
         clock.instant = Instant.parse("2026-09-23T23:30:00Z");
         client.reponse = () -> prevision(JOUR);
 
-        assertThat(service.getMeteo().jours().getFirst().date()).isEqualTo(JOUR);
+        assertThat(service.meteo(2).jours().getFirst().date()).isEqualTo(JOUR);
     }
 
     @Test
     void utiliseLeCachePendantSaDuree() {
         client.reponse = () -> prevision(JOUR);
 
-        MeteoDTO premier = service.getMeteo();
+        MeteoDTO premier = service.meteo(2);
         clock.avancer(Duration.ofMinutes(29));
-        assertThat(service.getMeteo()).isSameAs(premier);
+        assertThat(service.meteo(2)).isEqualTo(premier);
         assertThat(client.appels).isEqualTo(1);
 
         clock.avancer(Duration.ofMinutes(1));
-        service.getMeteo();
+        service.meteo(2);
         assertThat(client.appels).isEqualTo(2);
     }
 
@@ -106,24 +132,24 @@ class MeteoServiceTest {
     void cacheInvalideAuChangementDeJour() {
         clock.instant = JOUR.atTime(23, 50).atZone(BRUXELLES).toInstant();
         client.reponse = () -> prevision(JOUR);
-        service.getMeteo();
+        service.meteo(2);
 
         clock.avancer(Duration.ofMinutes(15)); // 00:05 le lendemain, cache encore « frais »
         client.reponse = () -> prevision(JOUR.plusDays(1));
 
-        assertThat(service.getMeteo().jours().getFirst().date()).isEqualTo(JOUR.plusDays(1));
+        assertThat(service.meteo(2).jours().getFirst().date()).isEqualTo(JOUR.plusDays(1));
         assertThat(client.appels).isEqualTo(2);
     }
 
     @Test
     void repliSurLaPrevisionDuJourSiOpenMeteoEchoue() {
         client.reponse = () -> prevision(JOUR);
-        MeteoDTO premier = service.getMeteo();
+        MeteoDTO premier = service.meteo(2);
 
         clock.avancer(Duration.ofHours(2));
         client.reponse = panne();
 
-        assertThat(service.getMeteo()).isSameAs(premier);
+        assertThat(service.meteo(2)).isEqualTo(premier);
         assertThat(client.appels).isEqualTo(2);
     }
 
@@ -131,24 +157,24 @@ class MeteoServiceTest {
     void indisponibleSansCache() {
         client.reponse = panne();
 
-        assertThatThrownBy(service::getMeteo).isInstanceOf(MeteoIndisponibleException.class);
+        assertThatThrownBy(() -> service.meteo(2)).isInstanceOf(MeteoIndisponibleException.class);
     }
 
     @Test
     void reponseSansLeJourCouranteEstUneErreur() {
-        client.reponse = () -> prevision(JOUR.minusDays(1));
+        client.reponse = () -> MeteoFixtures.prevision(JOUR.minusDays(1), 1);
 
-        assertThatThrownBy(service::getMeteo).isInstanceOf(MeteoIndisponibleException.class);
+        assertThatThrownBy(() -> service.meteo(2)).isInstanceOf(MeteoIndisponibleException.class);
     }
 
     @Test
     void pasDeRepliSurLaPrevisionDeLaVeille() {
         client.reponse = () -> prevision(JOUR);
-        service.getMeteo();
+        service.meteo(2);
 
         clock.avancer(Duration.ofDays(1));
         client.reponse = panne();
 
-        assertThatThrownBy(service::getMeteo).isInstanceOf(MeteoIndisponibleException.class);
+        assertThatThrownBy(() -> service.meteo(2)).isInstanceOf(MeteoIndisponibleException.class);
     }
 }

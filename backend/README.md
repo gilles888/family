@@ -20,7 +20,7 @@ Prérequis : **JDK 25**. Maven n'est pas nécessaire (wrapper inclus).
 
 ```bash
 ./mvnw spring-boot:run          # profil "dev" par défaut : H2 en mémoire + données de test
-./mvnw test                     # 37 tests (récurrences, scénarios de bout en bout, tenue conseillée, cache météo)
+./mvnw test                     # 43 tests (récurrences, scénarios de bout en bout, tenue conseillée, cache et endpoint météo)
 ./mvnw package && java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 ```
 
@@ -134,7 +134,7 @@ Toutes les URL sont préfixées par `/v1`. Les endpoints de l'agenda acceptent `
 | GET / PUT / DELETE | `/v1/reminders/{id}` | détail / modifier (régénère le futur) / supprimer |
 | GET / POST | `/v1/membres` | lister / créer |
 | GET / PUT / DELETE | `/v1/membres/{id}` | détail / modifier / supprimer |
-| GET | `/v1/meteo` | météo d'aujourd'hui et de demain, avec la tenue conseillée pour les enfants (503 si indisponible) |
+| GET | `/v1/meteo?jours=` | météo et tenue conseillée pour les enfants, à partir d'aujourd'hui : `jours` de 1 à 7, **2 par défaut** (400 hors bornes, 503 si indisponible) |
 
 Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validation ajoutent `errors` (champ → message), ex. `errors.dateHeureFin`, `errors["recurrence.dateFin"]`.
 
@@ -150,7 +150,7 @@ Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validatio
 
 ## Météo et tenue conseillée (`MeteoService`, `TenueAdvisor`)
 
-`GET /v1/meteo` renvoie, pour aujourd'hui et demain, le ciel, les températures min/max, le **ressenti du matin**, le **ressenti de la journée**, le **risque de pluie** et la **tenue** conseillée (enum `Vetement`, dans l'ordre d'affichage) :
+`GET /v1/meteo` renvoie, pour aujourd'hui et demain (ou `?jours=1` à `7` : la carte en affiche 2, le dialogue « Toute la semaine » 7), le ciel, les températures min/max, le **ressenti du matin**, le **ressenti de la journée**, le **risque de pluie** et la **tenue** conseillée (enum `Vetement`, dans l'ordre d'affichage) :
 
 ```json
 {
@@ -163,7 +163,7 @@ Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validatio
 }
 ```
 
-- **Source** : [Open-Meteo](https://open-meteo.com) (gratuit, sans clé), 2 jours, dans le fuseau configuré. Client `OpenMeteoClient` (`RestClient`, délais 3 s connexion / 5 s lecture).
+- **Source** : [Open-Meteo](https://open-meteo.com) (gratuit, sans clé), **7 jours** en un seul appel (`OpenMeteoClient.previsionSemaine()`), dans le fuseau configuré. Client `RestClient`, délais 3 s connexion / 5 s lecture.
 - **Valeurs retenues** (règle, puis repli si la valeur horaire manque) :
   - ressenti du matin = ressenti horaire à `heure-depart` (sinon température min) ;
   - ressenti de la journée = ressenti horaire max entre 10 h et 18 h (sinon température max) ;
@@ -175,7 +175,7 @@ Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validatio
   - écharpe si m ≤ 7, bonnet si m ≤ 5, gants si m ≤ 3 ;
   - bottes si ≥ 5 mm de précipitations ou neige ; casquette et crème solaire si UV ≥ 5 ;
   - `superposer` : pull conseillé et j − m ≥ 8 (on pourra l'enlever l'après-midi).
-- **Cache** : la réponse est gardée en mémoire `meteo.cache` (30 min), jamais au-delà du jour (fuseau de `meteo.fuseau`). Si Open-Meteo ne répond pas, la prévision **du jour** en cache est resservie ; sans elle, **503** (`ProblemDetail`). La prévision de la veille n'est jamais resservie.
+- **Cache** : la prévision des 7 jours est gardée en mémoire `meteo.cache` (30 min) et partagée par toutes les valeurs de `jours` (`MeteoService.meteo(nbJours)` en renvoie les premiers jours), jamais au-delà du jour (fuseau de `meteo.fuseau`). Si Open-Meteo ne répond pas, la prévision **du jour** en cache est resservie ; sans elle, **503** (`ProblemDetail`). La prévision de la veille n'est jamais resservie.
 
 | Variable | Défaut | Rôle |
 |---|---|---|
