@@ -14,7 +14,8 @@ class IngredientServiceTest {
     @Test
     void normaliserIgnoreCasseAccentsEtEspaces() {
         assertThat(IngredientService.normaliser("  Crème   Fraîche ")).isEqualTo("creme fraiche");
-        assertThat(IngredientService.normaliser("ŒUFS")).isEqualTo(IngredientService.normaliser("œufs"));
+        assertThat(IngredientService.normaliser("ŒUFS")).isEqualTo("oeufs");
+        assertThat(IngredientService.normaliser("Haché bœuf")).isEqualTo("hache boeuf");
         assertThat(IngredientService.normaliser("Tomàte")).isEqualTo(IngredientService.normaliser("tomate"));
     }
 }

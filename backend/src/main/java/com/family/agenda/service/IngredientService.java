@@ -57,10 +57,15 @@ public class IngredientService {
         return nom.strip().replaceAll("\\s+", " ");
     }
 
-    /** Clé d'unicité : nom nettoyé, en minuscules, sans accents (« Crème  Fraîche » → « creme fraiche »). */
+    /**
+     * Clé d'unicité : nom nettoyé, en minuscules, sans accents ni ligatures
+     * (« Crème  Fraîche » → « creme fraiche », « Œufs » → « oeufs »).
+     */
     static String normaliser(String nom) {
         return Normalizer.normalize(nettoyer(nom), Normalizer.Form.NFD)
                 .replaceAll("\\p{M}", "")
-                .toLowerCase(Locale.ROOT);
+                .toLowerCase(Locale.ROOT)
+                .replace("œ", "oe")
+                .replace("æ", "ae");
     }
 }

@@ -20,7 +20,7 @@ Prérequis : **JDK 25**. Maven n'est pas nécessaire (wrapper inclus).
 
 ```bash
 ./mvnw spring-boot:run          # profil "dev" par défaut : H2 en mémoire + données de test
-./mvnw test                     # 43 tests (récurrences, scénarios de bout en bout, tenue conseillée, cache et endpoint météo)
+./mvnw test                     # 76 tests (récurrences, agenda, météo, recettes, repas, prorata des portions)
 ./mvnw package && java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 ```
 
@@ -31,7 +31,7 @@ Prérequis : **JDK 25**. Maven n'est pas nécessaire (wrapper inclus).
 | OpenAPI JSON | http://localhost:8080/v3/api-docs |
 
 Au démarrage en `dev`, un `CommandLineRunner` crée 4 membres (Maman, Papa, Léa, Tom) et 5 reminders (natation hebdo, football mardi+jeudi avec date de fin,
-prise de sang ponctuelle, dentiste, anniversaire annuel). Les dates sont **relatives à aujourd'hui**, l'agenda est donc immédiatement rempli :
+prise de sang ponctuelle, dentiste, anniversaire annuel), ainsi que 3 recettes (spaghetti bolognaise, crêpes, soupe de légumes) et 6 repas dans la semaine en cours. Les dates sont **relatives à aujourd'hui**, l'agenda est donc immédiatement rempli :
 
 ```bash
 curl "http://localhost:8080/v1/agenda?dateDebut=$(date +%F)&dateFin=$(date -d '+30 days' +%F)"
@@ -141,6 +141,14 @@ Toutes les URL sont préfixées par `/v1`. Les endpoints de l'agenda acceptent `
 | GET / PUT / DELETE | `/v1/reminders/{id}` | détail / modifier (régénère le futur) / supprimer |
 | GET / POST | `/v1/membres` | lister / créer |
 | GET / PUT / DELETE | `/v1/membres/{id}` | détail / modifier / supprimer |
+| GET | `/v1/recettes?q=` | recettes par ordre alphabétique (résumés), `q` = recherche dans le nom (sans casse) |
+| POST | `/v1/recettes` | créer une recette ; ingrédients désignés **par nom**, créés à la volée s'ils n'existent pas |
+| GET / PUT / DELETE | `/v1/recettes/{id}` | détail (avec ingrédients) / modifier (remplace tout) / supprimer (les repas gardent son nom) |
+| GET | `/v1/recettes/{id}/fiche?portions=` | fiche recette, quantités recalculées au prorata des portions (1 à 100) |
+| GET | `/v1/ingredients?q=&limit=` | autocomplétion des ingrédients (sans casse ni accents, 10 résultats par défaut, 50 max) |
+| GET | `/v1/repas?dateDebut=&dateFin=` | repas de la plage (jours inclus, 366 jours max), par date puis créneau |
+| POST | `/v1/repas` | planifier un repas (409 si le créneau est déjà pris) |
+| GET / PUT / DELETE | `/v1/repas/{id}` | détail / modifier / supprimer |
 | GET | `/v1/meteo?jours=` | météo et tenue conseillée pour les enfants, à partir d'aujourd'hui : `jours` de 1 à 7, **2 par défaut** (400 hors bornes, 503 si indisponible) |
 
 Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validation ajoutent `errors` (champ → message), ex. `errors.dateHeureFin`, `errors["recurrence.dateFin"]`.
@@ -154,6 +162,34 @@ Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validatio
 - **Suppression (DELETE)** : les entrées futures sont supprimées. Si des entrées passées existent, le reminder est **archivé** (`actif = false`, invisible dans l'API) pour qu'elles gardent leur titre ; sinon il est supprimé pour de bon.
 - **Job nocturne** (`AgendaExtensionScheduler`) : pour chaque reminder récurrent actif non terminé, ajoute les occurrences manquantes jusqu'au nouvel horizon. Idempotent, ne supprime ni ne modifie rien ; un reminder en erreur n'empêche pas les autres. Une contrainte d'unicité `(reminder, date_heure)` garantit l'absence de doublons.
 - **Suppression d'un membre** : il est retiré des reminders concernés (qui sont conservés).
+
+## Repas de la semaine et recettes types
+
+**Recettes** (`RecipeService`) : nom, description courte, portions de référence, temps de préparation (optionnel), instructions (texte libre) et ingrédients ordonnés (quantité + unité : `G, KG, ML, L, PIECE, CUILLERE_SOUPE, CUILLERE_CAFE, BOITE, SACHET, PINCEE`). Partagées par toute la famille (il n'y a pas d'utilisateurs : une installation = une famille).
+
+```bash
+curl -s -X POST http://localhost:8080/v1/recettes -H 'Content-Type: application/json' -d '{
+  "nom": "Omelette", "portions": 2, "tempsPreparation": 10, "instructions": "Battre les œufs.\nCuire 3 min.",
+  "ingredients": [ { "nom": "Œufs", "quantite": 4, "unite": "PIECE" }, { "nom": "Beurre", "quantite": 10, "unite": "G" } ]
+}'
+curl -s "http://localhost:8080/v1/recettes/1/fiche?portions=6"     # quantités pour 6 personnes
+```
+
+- **Ingrédients** (table `ingredient`, `IngredientService`) : réutilisés entre recettes, **uniques par nom normalisé** (sans casse, accents, ligatures ni espaces superflus : « Œufs » = « oeufs »). Une recette les désigne par leur nom : un ingrédient inconnu est créé, un ingrédient connu garde son nom d'origine. Deux lignes avec le même ingrédient dans une recette sont refusées (400). Le **rayon** (`Aisle`) est prévu pour la future liste de courses : rempli par les données de test, pas encore modifiable par l'API.
+- **Fiche recette** (`PortionCalculator`) : quantité × portions voulues ÷ portions de la recette, arrondie à 2 décimales au plus proche (3 œufs pour 4 → 0,75 pour 1).
+- **Suppression** d'une recette : les repas qui l'utilisaient sont conservés, avec son nom comme libellé libre ; les ingrédients restent.
+
+**Repas** (`MealService`) : date, créneau (`PETIT_DEJEUNER`, `MIDI`, `SOUPER`), portions, et **soit** une recette (`recetteId`) **soit** un libellé libre (`libelle`, ex. « Restes », « Resto »), jamais les deux ni aucun (400, `errors.recetteId`). **Un seul repas par date et créneau** : un deuxième est refusé en **409**. Le champ `titre` de la réponse est le nom de la recette ou le libellé, prêt à afficher.
+
+```bash
+curl -s -X POST http://localhost:8080/v1/repas -H 'Content-Type: application/json' \
+  -d '{ "date": "2026-09-24", "creneau": "SOUPER", "portions": 4, "recetteId": 1 }'
+curl -s -X POST http://localhost:8080/v1/repas -H 'Content-Type: application/json' \
+  -d '{ "date": "2026-09-25", "creneau": "MIDI", "portions": 4, "libelle": "Restes" }'
+curl -s "http://localhost:8080/v1/repas?dateDebut=2026-09-21&dateFin=2026-09-27"
+```
+
+Ces contraintes sont aussi posées en base (migration `V2__repas_et_recettes.sql`) : unicité `(date_repas, creneau)`, `check` recette XOR libellé, `check` portions et quantités > 0.
 
 ## Météo et tenue conseillée (`MeteoService`, `TenueAdvisor`)
 
@@ -199,16 +235,18 @@ Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validatio
 
 ```
 com.family.agenda
-├── entity/      FamilyMember, Reminder, RecurrenceRule, AgendaEntry + enums
+├── entity/      FamilyMember, Reminder, RecurrenceRule, AgendaEntry, Recipe, RecipeIngredient, Ingredient, Meal + enums
 ├── dto/         records de requête/réponse (+ validation de cohérence des dates et de la récurrence), Ciel, Vetement
 ├── mapper/      MapStruct (Entity <-> DTO)
 ├── repository/  Spring Data JPA
 ├── service/     AgendaService (génération/gestion), RecurrenceCalculator (calcul pur),
 │                AgendaQueryService (jour/mois/année), ReminderService, FamilyMemberService,
-│                MeteoService (cache), OpenMeteoClient, TenueAdvisor (règles de tenue, pur)
-├── controller/  AgendaController, ReminderController, FamilyMemberController, MeteoController
+│                MeteoService (cache), OpenMeteoClient, TenueAdvisor (règles de tenue, pur),
+│                RecipeService, IngredientService, MealService, PortionCalculator (prorata, pur)
+├── controller/  AgendaController, ReminderController, FamilyMemberController, MeteoController,
+│                RecipeController, IngredientController, MealController
 ├── scheduler/   AgendaExtensionScheduler
-├── exception/   GlobalExceptionHandler (@RestControllerAdvice)
+├── exception/   GlobalExceptionHandler (@RestControllerAdvice) : 400 / 404 / 409 (ConflictException) / 503
 └── config/      versioning d'API, OpenAPI, propriétés, données de test
 ```
 
