@@ -50,13 +50,20 @@ java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 | Variable | Défaut | Rôle |
 |---|---|---|
 | `DB_URL` / `DB_USERNAME` / `DB_PASSWORD` | localhost / `family` / *(obligatoire)* | connexion PostgreSQL |
-| `DDL_AUTO` | `update` | stratégie Hibernate (voir *Limites*) |
 | `AGENDA_HORIZON_MONTHS` | `6` | fenêtre de génération des occurrences (tous profils) |
 | `AGENDA_EXTENSION_CRON` | `0 0 2 * * *` | horaire du job de prolongation (cron Spring à 6 champs) |
 | `AGENDA_SEED_ENABLED` | `false` | charger les données de test en prod |
 | `SWAGGER_UI_ENABLED` | `true` | désactiver Swagger UI |
 | `APP_TIMEZONE` | `Europe/Paris` | fuseau JDBC |
 | `METEO_*` | Bruxelles | lieu de la carte météo (tous profils, voir *Météo et tenue conseillée*) |
+
+### Schéma de la base : Flyway
+
+Le schéma est créé et mis à jour par **Flyway** au démarrage, avec les scripts de `src/main/resources/db/migration` (`V1__schema_initial.sql`, `V2__...`). Hibernate ne fait que **valider** (`ddl-auto: validate`) : une entité qui ne correspond pas au schéma empêche le démarrage.
+
+- Les scripts sont en SQL **portable H2 / PostgreSQL** (enums en `varchar` + `check`) : les mêmes migrations servent en dev, en test et en prod.
+- **Base existante** (créée avant Flyway par l'ancien `ddl-auto=update`) : au premier démarrage, Flyway la marque en version 1 **sans rejouer V1** (`baseline-on-migrate`), puis applique les migrations suivantes. Vérifié sur PostgreSQL 16 (base neuve et base existante).
+- **Modifier le schéma** : ajouter un script `V<n>__description.sql`, ne jamais modifier un script déjà appliqué.
 
 ## Exemple : créer un reminder récurrent, puis voir les entrées générées
 
@@ -227,7 +234,6 @@ Breaking changes rencontrés :
 
 ## Limites et pistes
 
-- **Schéma** : pas de Flyway/Liquibase. En prod, `DDL_AUTO=update` crée le schéma automatiquement ; pour une vraie exploitation, ajouter Flyway et passer à `validate`. Le profil prod n'a pas été exécuté contre un PostgreSQL réel (seuls H2 et les tests l'ont été).
 - **DEPLACE** ne change que le statut (le PATCH n'accepte pas de nouvelle date, conformément au besoin). L'occurrence garde sa date d'origine.
 - **Fuseau** : les dates sont des `LocalDateTime` (heure locale de la famille), sans fuseau.
 - **Sécurité** : aucune authentification (backend d'agenda familial en réseau de confiance).

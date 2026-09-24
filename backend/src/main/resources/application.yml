@@ -3,8 +3,15 @@ spring:
     name: family-agenda
   profiles:
     default: dev
+  flyway:
+    # Base créée avant Flyway (ancien ddl-auto=update) : elle est marquée en version 1 sans rejouer V1.
+    baseline-on-migrate: true
+    baseline-version: 1
   jpa:
     open-in-view: false
+    hibernate:
+      # Le schéma est géré par Flyway (src/main/resources/db/migration) ; Hibernate vérifie seulement la correspondance.
+      ddl-auto: validate
     properties:
       hibernate:
         jdbc.time_zone: ${APP_TIMEZONE:Europe/Paris}
@@ -47,8 +54,6 @@ spring:
     username: sa
     password:
   jpa:
-    hibernate:
-      ddl-auto: create-drop
     show-sql: false
 
 agenda:
@@ -69,10 +74,6 @@ spring:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/family_agenda}
     username: ${DB_USERNAME:family}
     password: ${DB_PASSWORD}
-  jpa:
-    hibernate:
-      # "update" crée/complète le schéma au démarrage. Pour une vraie prod, préférer Flyway/Liquibase + "validate".
-      ddl-auto: ${DDL_AUTO:update}
 
 agenda:
   seed:
