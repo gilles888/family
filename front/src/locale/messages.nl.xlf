@@ -846,6 +846,230 @@
           <context context-type="linenumber">20,22</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="weather.title" datatype="html">
+        <source>Comment s&apos;habiller ?</source>
+        <target>Wat trek ik aan?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-card.html</context>
+          <context context-type="linenumber">1,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="weather.today" datatype="html">
+        <source>Aujourd&apos;hui</source>
+        <target>Vandaag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-card.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="weather.tomorrow" datatype="html">
+        <source>Demain</source>
+        <target>Morgen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-card.html</context>
+          <context context-type="linenumber">11,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="weather.morningFeel" datatype="html">
+        <source>Ressenti le matin</source>
+        <target>Gevoelstemperatuur &apos;s ochtends</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-card.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="weather.rainRisk" datatype="html">
+        <source>Risque de pluie</source>
+        <target>Kans op regen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-card.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="weather.layers" datatype="html">
+        <source> Il fera plus chaud l&apos;après-midi : on pourra enlever le pull. </source>
+        <target> &apos;s Middags wordt het warmer: dan mag de trui uit. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-card.html</context>
+          <context context-type="linenumber">47,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="weather.error" datatype="html">
+        <source>Météo indisponible pour le moment.</source>
+        <target>Het weer is momenteel niet beschikbaar.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-card.html</context>
+          <context context-type="linenumber">55,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.tShirt" datatype="html">
+        <source>T-shirt</source>
+        <target>T-shirt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.pull" datatype="html">
+        <source>Pull</source>
+        <target>Trui</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.veste" datatype="html">
+        <source>Veste</source>
+        <target>Jasje</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.manteau" datatype="html">
+        <source>Manteau</source>
+        <target>Winterjas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.impermeable" datatype="html">
+        <source>Imperméable</source>
+        <target>Regenjas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.short" datatype="html">
+        <source>Short</source>
+        <target>Korte broek</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.pantalon" datatype="html">
+        <source>Pantalon</source>
+        <target>Lange broek</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.bonnet" datatype="html">
+        <source>Bonnet</source>
+        <target>Muts</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.echarpe" datatype="html">
+        <source>Écharpe</source>
+        <target>Sjaal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.gants" datatype="html">
+        <source>Gants</source>
+        <target>Handschoenen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.bottes" datatype="html">
+        <source>Bottes</source>
+        <target>Laarzen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.casquette" datatype="html">
+        <source>Casquette</source>
+        <target>Pet</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clothing.cremeSolaire" datatype="html">
+        <source>Crème solaire</source>
+        <target>Zonnecrème</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sky.soleil" datatype="html">
+        <source>Soleil</source>
+        <target>Zonnig</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sky.eclaircies" datatype="html">
+        <source>Éclaircies</source>
+        <target>Opklaringen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sky.nuageux" datatype="html">
+        <source>Nuageux</source>
+        <target>Bewolkt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sky.brouillard" datatype="html">
+        <source>Brouillard</source>
+        <target>Mist</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sky.bruine" datatype="html">
+        <source>Bruine</source>
+        <target>Motregen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sky.pluie" datatype="html">
+        <source>Pluie</source>
+        <target>Regen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sky.neige" datatype="html">
+        <source>Neige</source>
+        <target>Sneeuw</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sky.orage" datatype="html">
+        <source>Orage</source>
+        <target>Onweer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-labels.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

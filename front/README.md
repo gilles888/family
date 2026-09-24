@@ -28,13 +28,23 @@ Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dan
 - **Nouveau rappel / édition** (`mat-dialog`) : titre, description, type, membres, date (datepicker), heures (timepicker), interrupteur de récurrence et sous-formulaire (fréquence, intervalle, jours de la semaine, fin par date ou nombre d'occurrences).
 - **Clic sur une entrée** : détail, changement de statut (Prévu / Terminé / Annulé / Déplacé — une seule occurrence est modifiée), modification ou suppression du rappel.
 - **Membres** (`/membres`) : liste, ajout, modification, suppression.
-- **Erreurs d'API** : un intercepteur affiche un message **traduit** dans un `mat-snack-bar` (réseau, 400, 404, 409, 5xx).
+- **Comment s'habiller ?** : carte en haut de la colonne des tâches (voir *Carte météo*).
+- **Erreurs d'API** : un intercepteur affiche un message **traduit** dans un `mat-snack-bar` (réseau, 400, 404, 409, 5xx). Une requête qui affiche elle-même son erreur pose `SKIP_ERROR_NOTIFICATION` dans son `HttpContext` pour ne pas avoir de snack-bar.
+
+## Carte météo (`src/app/weather/`)
+
+La carte **« Comment s'habiller ? »** appelle `GET /v1/meteo` (`MeteoService.getMeteo` généré) et affiche deux colonnes, **Aujourd'hui** (fond `primary-container`) et **Demain** : ciel, max/min, 🌅 ressenti du matin, 💧 risque de pluie, et la **tenue conseillée** en tuiles (gros emoji + libellé court, pour les enfants qui ne lisent pas encore). Si un pull est conseillé et que l'après-midi est nettement plus chaud, la carte l'indique (« on pourra enlever le pull »).
+
+- Le conseil (règles, seuils, lieu) est calculé **par le backend** : voir la section *Météo et tenue conseillée* de `../backend/README.md`. Le lieu se règle côté backend par les variables `METEO_*` (Bruxelles par défaut).
+- Rechargement automatique toutes les **30 min** (le backend garde lui-même la prévision en cache 30 min).
+- En cas d'erreur (503 si Open-Meteo est injoignable et qu'aucune prévision du jour n'est en cache) : message discret dans la carte et bouton **Réessayer**, sans snack-bar (`SKIP_ERROR_NOTIFICATION`).
+- Emojis et libellés : `weather-labels.ts` (identifiants `@@clothing.*`, `@@sky.*`).
 
 ## Le client API généré (`src/app/api-client/`)
 
 > **Ne modifiez jamais ce dossier à la main** : il est entièrement écrasé à chaque génération.
 
-Aucun service HTTP ni interface n'est écrit à la main : tous les composants utilisent les services et modèles générés (`AgendaService`, `RemindersService`, `MembresService`, `AgendaEntryDTO`, `ReminderRequest`…). Le code généré est **committé** ; il se régénère **manuellement** quand l'API du backend change.
+Aucun service HTTP ni interface n'est écrit à la main : tous les composants utilisent les services et modèles générés (`AgendaService`, `RemindersService`, `MembresService`, `MeteoService`, `AgendaEntryDTO`, `ReminderRequest`…). Le code généré est **committé** ; il se régénère **manuellement** quand l'API du backend change.
 
 ### Régénérer le client après un changement du backend
 
@@ -58,7 +68,7 @@ Le client est **configuré dans `src/app/app.config.ts`** : `provideApi(environm
 
 ### Points d'attention (constatés à la mise en place)
 
-- **Noms des services** : ils viennent des `@Tag` du backend (`Agenda`, `Reminders`, `Membres` → `AgendaService`, `RemindersService`, `MembresService`). Renommer un tag renomme le service généré.
+- **Noms des services** : ils viennent des `@Tag` du backend (`Agenda`, `Reminders`, `Membres`, `Meteo` → `AgendaService`, `RemindersService`, `MembresService`, `MeteoService`). Renommer un tag renomme le service généré.
 - **Noms des méthodes** : ils viennent des `operationId` du backend, fixés explicitement (`getAgendaMois`, `createReminder`, `updateEntryStatus`…). Sans cela, springdoc produit `list_1`, `get_1`… Ne les retirez pas.
 - **Ce que la spec doit garantir** — deux défauts du backend, corrigés à la source, qui cassaient le client :
   - les contrôleurs déclarent `produces = application/json` ; sans cela la spec annonce `*/*`, le générateur ne reconnaît pas du JSON et **renvoie des `Blob`** au lieu d'objets ;
@@ -100,7 +110,7 @@ location /v1/ { proxy_pass http://backend:8080; }
 
 - **Langue source : français**. Les textes sont dans les templates (`i18n="@@identifiant"`) ou dans le code (`` $localize`:@@identifiant:Texte` ``). Chaque message a un **identifiant explicite** (`@@agenda.today`…) : modifier le texte français ne casse pas les traductions.
 - **Dates, jours, mois, heures** : jamais traduits à la main. Ils passent par `DatePipe`/`Intl` avec la locale du build (`Lun.` / `Ma`, `septembre` / `september`…). La saisie d'une date au clavier suit l'ordre de la locale (`25/09/2026` en fr, `25-09-2026` en nl), grâce à `LocaleDateAdapter`.
-- **Libellés des enums** du backend (types, statuts, fréquences) : `src/app/shared/labels.ts`.
+- **Libellés des enums** du backend (types, statuts, fréquences) : `src/app/shared/labels.ts` ; vêtements et ciel : `src/app/weather/weather-labels.ts`.
 - Fichiers : `src/locale/messages.fr.xlf` (source, **généré**) et `src/locale/messages.nl.xlf` (traduit).
 - Limite : les libellés internes d'Angular Material (ex. les libellés d'accessibilité du datepicker) restent en anglais, Material ne les fournit pas traduits.
 
@@ -136,6 +146,7 @@ src/
 │   ├── agenda/            page agenda, vues jour / semaine / mois / année, dialogue de statut
 │   ├── reminders/         dialogue de création / édition d'un rappel
 │   ├── family-members/    gestion des membres
+│   ├── weather/           carte « Comment s'habiller ? » (météo + tenue), libellés emoji
 │   ├── shared/            intercepteur d'erreurs, notifications, pipe enumLabel, libellés, utilitaires de dates
 │   ├── app.config.ts      providers (client API, HttpClient + intercepteur, adaptateur de dates)
 │   └── app.ts             en-tête, navigation, sélecteur de langue

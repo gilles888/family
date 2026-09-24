@@ -53,6 +53,8 @@
 } @else if (meteo.error()) {
   <div class="error">
     <span i18n="@@weather.error">Météo indisponible pour le moment.</span>
-    <button matButton (click)="meteo.reload()" i18n="@@common.retry">Réessayer</button>
+    <button matButton (click)="meteo.reload()" i18n="@@common.retry">
+      Réessayer
+    </button>
   </div>
 }
