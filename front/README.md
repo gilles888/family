@@ -33,12 +33,14 @@ Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dan
 
 ## Carte météo (`src/app/weather/`)
 
-La carte **« Comment s'habiller ? »** appelle `GET /v1/meteo` (`MeteoService.getMeteo` généré) et affiche deux colonnes, **Aujourd'hui** (fond `primary-container`) et **Demain** : ciel, max/min, 🌅 ressenti du matin, 💧 risque de pluie, et la **tenue conseillée** en tuiles (gros emoji + libellé court, pour les enfants qui ne lisent pas encore). Si un pull est conseillé et que l'après-midi est nettement plus chaud, la carte l'indique (« on pourra enlever le pull »).
+La carte **« Comment s'habiller ? »** appelle `GET /v1/meteo?jours=2` (`MeteoService.getMeteo(2)` généré) et affiche deux colonnes, **Aujourd'hui** (fond `primary-container`) et **Demain** : ciel, max/min, 🌅 ressenti du matin, 💧 risque de pluie, et la **tenue conseillée** en tuiles (gros emoji + libellé court, pour les enfants qui ne lisent pas encore). Si un pull est conseillé et que l'après-midi est nettement plus chaud, la carte l'indique (« on pourra enlever le pull »).
 
+- **Toute la semaine** : le bouton de l'en-tête (visible une fois la météo chargée) ouvre `WeekWeatherDialog`, qui charge `GET /v1/meteo?jours=7` : les 7 prochains jours, aujourd'hui compris (« Aujourd'hui », « Demain », puis le nom du jour dans la langue du build), en grille responsive (1 colonne sur mobile, 2 à 3 au-delà de 600 px), avec un rappel : au-delà de 3 jours, les prévisions sont moins fiables. Le paramètre `jours` va de 1 à 7 (2 par défaut) ; le backend fait un seul appel à Open-Meteo pour la carte et le dialogue.
+- Une journée (ciel, températures, ressenti, pluie, tuiles, « on pourra enlever le pull ») est affichée par le composant réutilisable `weather-day` (`day`, `label`, `highlighted`).
 - Le conseil (règles, seuils, lieu) est calculé **par le backend** : voir la section *Météo et tenue conseillée* de `../backend/README.md`. Le lieu se règle côté backend par les variables `METEO_*` (Bruxelles par défaut).
 - Rechargement automatique toutes les **30 min** (le backend garde lui-même la prévision en cache 30 min).
-- En cas d'erreur (503 si Open-Meteo est injoignable et qu'aucune prévision du jour n'est en cache) : message discret dans la carte et bouton **Réessayer**, sans snack-bar (`SKIP_ERROR_NOTIFICATION`).
-- Emojis et libellés : `weather-labels.ts` (identifiants `@@clothing.*`, `@@sky.*`).
+- En cas d'erreur (503 si Open-Meteo est injoignable et qu'aucune prévision du jour n'est en cache) : message discret dans la carte (ou le dialogue) et bouton **Réessayer**, sans snack-bar (`SKIP_ERROR_NOTIFICATION`).
+- Emojis et libellés : `weather-labels.ts` (identifiants `@@clothing.*`, `@@sky.*`, et `@@weather.today` / `@@weather.tomorrow` partagés par la carte et le dialogue).
 
 ## Le client API généré (`src/app/api-client/`)
 
@@ -146,7 +148,7 @@ src/
 │   ├── agenda/            page agenda, vues jour / semaine / mois / année, dialogue de statut
 │   ├── reminders/         dialogue de création / édition d'un rappel
 │   ├── family-members/    gestion des membres
-│   ├── weather/           carte « Comment s'habiller ? » (météo + tenue), libellés emoji
+│   ├── weather/           carte « Comment s'habiller ? », dialogue semaine, journée (weather-day), libellés emoji
 │   ├── shared/            intercepteur d'erreurs, notifications, pipe enumLabel, libellés, utilitaires de dates
 │   ├── app.config.ts      providers (client API, HttpClient + intercepteur, adaptateur de dates)
 │   └── app.ts             en-tête, navigation, sélecteur de langue

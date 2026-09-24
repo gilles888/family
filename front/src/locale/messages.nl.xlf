@@ -1070,6 +1070,30 @@
           <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="weather.weekButton" datatype="html">
+        <source>Toute la semaine</source>
+        <target>Hele week</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/weather-card.html</context>
+          <context context-type="linenumber">6,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="weather.weekTitle" datatype="html">
+        <source>La météo de la semaine</source>
+        <target>Het weer deze week</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/week-weather-dialog.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="weather.weekReliability" datatype="html">
+        <source> Les prévisions au-delà de 3 jours sont moins fiables. </source>
+        <target> Voorspellingen verder dan 3 dagen zijn minder betrouwbaar. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/weather/week-weather-dialog.html</context>
+          <context context-type="linenumber">20,22</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>
