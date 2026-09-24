@@ -1,0 +1,36 @@
+.line,
+.when {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  flex-wrap: wrap;
+}
+.when {
+  font: var(--mat-sys-title-medium);
+}
+.member {
+  padding: 0 10px;
+  border-radius: 12px;
+  font: var(--mat-sys-label-medium);
+}
+h3 {
+  margin: 20px 0 8px;
+  font: var(--mat-sys-title-small);
+}
+.statuses {
+  flex-wrap: wrap;
+}
+.hint {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+mat-dialog-actions {
+  flex-wrap: wrap;
+  .spacer {
+    flex: 1;
+  }
+}
+.danger {
+  color: var(--mat-sys-error);
+}

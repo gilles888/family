@@ -1,0 +1,20 @@
+<div class="grid" role="grid">
+  @for (d of weekdays(); track $index) {
+    <div class="weekday" role="columnheader">{{ d | date: 'EEE' }}</div>
+  }
+  @for (week of weeks(); track week[0].getTime()) {
+    @for (day of week; track key(day)) {
+      <div class="cell" role="gridcell" [class.outside]="!inMonth(day)" [class.today]="isToday(day)">
+        <button type="button" class="day-number" (click)="dayClick.emit(day)">{{ day | date: 'd' }}</button>
+        @for (entry of entriesOf(day).slice(0, maxChips); track entry.id) {
+          <app-entry-chip [entry]="entry" (click)="entryClick.emit(entry)" />
+        }
+        @if (entriesOf(day).length > maxChips) {
+          <button type="button" class="more" (click)="dayClick.emit(day)">
+            <ng-container i18n="@@month.more">+{{ entriesOf(day).length - maxChips }} autres</ng-container>
+          </button>
+        }
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,42 @@
+.months {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.month {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 120px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--mat-sys-surface-container-high);
+  }
+  &.current {
+    outline: 2px solid var(--mat-sys-primary);
+  }
+}
+
+.name {
+  font: var(--mat-sys-title-medium);
+  text-transform: capitalize;
+}
+.total {
+  font: var(--mat-sys-display-small);
+  color: var(--mat-sys-primary);
+}
+.types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font: var(--mat-sys-label-small);
+  color: var(--mat-sys-on-surface-variant);
+}

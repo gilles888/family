@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>{{ entry.titre }}</h2>
+<mat-dialog-content>
+  <p class="when">
+    <mat-icon>event</mat-icon>
+    {{ entry.dateHeure | date: 'fullDate' }},
+    {{ entry.dateHeure | date: 'shortTime' }}
+    @if (entry.dateHeureFin) {
+      – {{ entry.dateHeureFin | date: 'shortTime' }}
+    }
+  </p>
+  <p class="line">
+    <mat-icon>category</mat-icon>
+    {{ entry.type | enumLabel: 'type' }}
+    @if (entry.recurring) {
+      · <span i18n="@@entry.recurring">récurrent</span>
+    }
+  </p>
+  @if (entry.description) {
+    <p class="line"><mat-icon>notes</mat-icon> {{ entry.description }}</p>
+  }
+  @if (entry.membres?.length) {
+    <p class="line members">
+      <mat-icon>group</mat-icon>
+      @for (m of entry.membres; track m.id) {
+        <span class="member" [style.background-color]="m.couleur" [style.color]="contrastColor(m.couleur ?? '')">
+          {{ m.nom }}
+        </span>
+      }
+    </p>
+  }
+
+  <h3 i18n="@@entry.statusTitle">Statut de cette occurrence</h3>
+  <mat-button-toggle-group
+    class="statuses"
+    hideSingleSelectionIndicator
+    [ngModel]="selected()"
+    (ngModelChange)="selected.set($event)"
+    i18n-aria-label="@@entry.statusTitle"
+    aria-label="Statut de cette occurrence"
+  >
+    @for (s of statuses; track s) {
+      <mat-button-toggle [value]="s">
+        <mat-icon>{{ statusIcons[s] }}</mat-icon>
+        {{ s | enumLabel: 'status' }}
+      </mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+  @if (entry.recurring) {
+    <p class="hint" i18n="@@entry.onlyThisOne">Seule cette occurrence est modifiée, les autres restent inchangées.</p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="close('delete-reminder')" class="danger">
+    <mat-icon>delete</mat-icon>
+    <ng-container i18n="@@entry.deleteReminder">Supprimer le rappel</ng-container>
+  </button>
+  <button matButton (click)="close('edit-reminder')">
+    <mat-icon>edit</mat-icon>
+    <ng-container i18n="@@entry.editReminder">Modifier le rappel</ng-container>
+  </button>
+  <span class="spacer"></span>
+  <button matButton mat-dialog-close i18n="@@common.cancel">Annuler</button>
+  <button matButton="filled" [disabled]="!changed() || saving()" (click)="save()" i18n="@@common.save">Enregistrer</button>
+</mat-dialog-actions>

@@ -1,0 +1,91 @@
+$gutter: 56px;
+
+.week {
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.head,
+.body {
+  display: grid;
+  grid-template-columns: $gutter repeat(7, minmax(0, 1fr));
+}
+
+.head {
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface-container-low);
+}
+
+.day-head {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 0;
+  cursor: pointer;
+  border-left: 1px solid var(--mat-sys-outline-variant);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--mat-sys-surface-container-high);
+  }
+  .dow {
+    font: var(--mat-sys-label-medium);
+    text-transform: capitalize;
+    color: var(--mat-sys-on-surface-variant);
+  }
+  .dom {
+    font: var(--mat-sys-title-medium);
+    min-width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 16px;
+  }
+  &.today .dom {
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+.scroller {
+  max-height: calc(100vh - 320px);
+  min-height: 320px;
+  overflow-y: auto;
+}
+
+.body {
+  position: relative;
+}
+
+.hour-label {
+  box-sizing: border-box;
+  padding: 0 6px;
+  text-align: right;
+  font: var(--mat-sys-label-small);
+  color: var(--mat-sys-on-surface-variant);
+  transform: translateY(-7px);
+}
+
+.col {
+  position: relative;
+  border-left: 1px solid var(--mat-sys-outline-variant);
+  // une ligne fine par heure
+  background-image: linear-gradient(to bottom, var(--mat-sys-outline-variant) 1px, transparent 1px);
+  background-repeat: repeat-y;
+
+  &.today {
+    background-color: color-mix(in srgb, var(--mat-sys-primary) 6%, transparent);
+  }
+}
+
+.block {
+  position: absolute;
+  box-sizing: border-box;
+  align-items: flex-start;
+  padding: 2px 4px;
+  border: 1px solid var(--mat-sys-surface);
+  flex-wrap: wrap;
+  white-space: normal;
+}

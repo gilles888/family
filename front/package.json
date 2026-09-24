@@ -1,0 +1,43 @@
+{
+  "name": "family-agenda-front",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "start:nl": "ng serve --configuration nl",
+    "build": "ng build",
+    "build:fr": "ng build --localize=fr",
+    "build:nl": "ng build --localize=nl",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "extract-i18n": "ng extract-i18n",
+    "generate-api": "openapi-generator-cli generate --generator-key api",
+    "generate-api:file": "openapi-generator-cli generate --generator-key api-file",
+    "fetch-api-spec": "curl -sf http://localhost:8080/v3/api-docs | python3 -m json.tool > openapi/family-agenda.json"
+  },
+  "private": true,
+  "packageManager": "npm@11.19.0",
+  "dependencies": {
+    "@angular/cdk": "^22.1.7",
+    "@angular/common": "^22.1.0",
+    "@angular/compiler": "^22.1.0",
+    "@angular/core": "^22.1.0",
+    "@angular/forms": "^22.1.0",
+    "@angular/localize": "^22.1.7",
+    "@angular/material": "^22.1.7",
+    "@angular/platform-browser": "^22.1.0",
+    "@angular/router": "^22.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.1.8",
+    "@angular/cli": "^22.1.8",
+    "@angular/compiler-cli": "^22.1.0",
+    "@openapitools/openapi-generator-cli": "^2.41.0",
+    "jsdom": "^28.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "~6.0.2",
+    "vitest": "^4.0.8"
+  }
+}

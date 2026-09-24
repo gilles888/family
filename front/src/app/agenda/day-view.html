@@ -1,0 +1,45 @@
+@if (entries().length === 0) {
+  <p class="empty" i18n="@@day.empty">Rien de prévu ce jour-là.</p>
+} @else {
+  <ul class="entries">
+    @for (entry of entries(); track entry.id) {
+      <li>
+        <button
+          type="button"
+          class="entry"
+          [class.cancelled]="entry.statut === 'ANNULE'"
+          [style.border-left-color]="entryColor(entry)"
+          (click)="entryClick.emit(entry)"
+        >
+          <span class="time">
+            {{ entry.dateHeure | date: 'shortTime' }}
+            @if (entry.dateHeureFin) {
+              <span class="end">– {{ entry.dateHeureFin | date: 'shortTime' }}</span>
+            }
+          </span>
+          <span class="body">
+            <span class="title">{{ entry.titre }}</span>
+            @if (entry.description) {
+              <span class="description">{{ entry.description }}</span>
+            }
+            <span class="meta">
+              <span class="type">{{ entry.type | enumLabel: 'type' }}</span>
+              @if (entry.recurring) {
+                <mat-icon class="recurring" i18n-aria-label="@@day.recurring" aria-label="Récurrent">repeat</mat-icon>
+              }
+              @for (m of entry.membres; track m.id) {
+                <span class="member" [style.background-color]="m.couleur" [style.color]="contrastColor(m.couleur ?? '')">
+                  {{ m.nom }}
+                </span>
+              }
+            </span>
+          </span>
+          <span class="status">
+            <mat-icon>{{ statusIcons[entry.statut ?? 'PREVU'] }}</mat-icon>
+            {{ entry.statut | enumLabel: 'status' }}
+          </span>
+        </button>
+      </li>
+    }
+  </ul>
+}

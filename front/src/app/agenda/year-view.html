@@ -1,0 +1,13 @@
+<div class="months">
+  @for (m of months(); track m.month) {
+    <button type="button" class="month" [class.current]="isCurrent(m)" (click)="monthClick.emit(m.month)">
+      <span class="name">{{ m.date | date: 'LLLL' }}</span>
+      <span class="total">{{ m.total }}</span>
+      <span class="types">
+        @for (t of m.byType; track t.type) {
+          <span class="type">{{ t.type | enumLabel: 'type' }} · {{ t.count }}</span>
+        }
+      </span>
+    </button>
+  }
+</div>

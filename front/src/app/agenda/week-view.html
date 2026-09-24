@@ -1,0 +1,35 @@
+<div class="week">
+  <div class="head">
+    <div class="gutter"></div>
+    @for (col of columns(); track col.date.getTime()) {
+      <button type="button" class="day-head" [class.today]="isToday(col.date)" (click)="dayClick.emit(col.date)">
+        <span class="dow">{{ col.date | date: 'EEE' }}</span>
+        <span class="dom">{{ col.date | date: 'd' }}</span>
+      </button>
+    }
+  </div>
+  <div class="scroller" #scroller>
+    <div class="body" [style.height.px]="hourPx * 24">
+      <div class="gutter">
+        @for (h of hours; track $index) {
+          <div class="hour-label" [style.height.px]="hourPx">{{ h | date: 'shortTime' }}</div>
+        }
+      </div>
+      @for (col of columns(); track col.date.getTime()) {
+        <div class="col" [class.today]="isToday(col.date)" [style.background-size]="'100% ' + hourPx + 'px'">
+          @for (p of col.placed; track p.entry.id) {
+            <app-entry-chip
+              class="block"
+              [entry]="p.entry"
+              [style.top.px]="p.top"
+              [style.height.px]="p.height"
+              [style.left.%]="(p.lane / p.lanes) * 100"
+              [style.width.%]="100 / p.lanes"
+              (click)="entryClick.emit(p.entry)"
+            />
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>

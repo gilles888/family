@@ -1,0 +1,36 @@
+<div class="header">
+  <h1 i18n="@@members.title">Membres de la famille</h1>
+  <button matButton="filled" (click)="edit()">
+    <mat-icon>person_add</mat-icon>
+    <ng-container i18n="@@members.add">Ajouter un membre</ng-container>
+  </button>
+</div>
+
+@if (members.isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+@if (members.error()) {
+  <p class="empty" i18n="@@members.loadError">Impossible de charger les membres.</p>
+} @else if (members.hasValue()) {
+  @if (members.value().length === 0) {
+    <p class="empty" i18n="@@members.empty">Aucun membre pour le moment. Ajoutez le premier !</p>
+  } @else {
+    <mat-list>
+      @for (m of members.value(); track m.id) {
+        <mat-list-item>
+          <span matListItemIcon class="swatch" [style.background-color]="m.couleur"></span>
+          <span matListItemTitle>{{ m.nom }}</span>
+          <span matListItemMeta class="actions">
+            <button matIconButton (click)="edit(m)" i18n-aria-label="@@common.edit" aria-label="Modifier">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button matIconButton (click)="remove(m)" i18n-aria-label="@@common.delete" aria-label="Supprimer">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+        </mat-list-item>
+      }
+    </mat-list>
+  }
+}

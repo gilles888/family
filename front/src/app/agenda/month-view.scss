@@ -1,0 +1,71 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  border-left: 1px solid var(--mat-sys-outline-variant);
+}
+
+.weekday {
+  padding: 8px;
+  text-align: center;
+  font: var(--mat-sys-label-large);
+  text-transform: capitalize;
+  color: var(--mat-sys-on-surface-variant);
+  border-right: 1px solid var(--mat-sys-outline-variant);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.cell {
+  min-height: 112px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+  &.outside {
+    background: var(--mat-sys-surface-container-low);
+    .day-number {
+      opacity: 0.5;
+    }
+  }
+  &.today .day-number {
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+.day-number {
+  all: unset;
+  align-self: flex-start;
+  min-width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 12px;
+  font: var(--mat-sys-label-large);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--mat-sys-surface-container-highest);
+  }
+}
+.today .day-number:hover {
+  background: var(--mat-sys-primary);
+}
+
+.more {
+  all: unset;
+  font: var(--mat-sys-label-small);
+  color: var(--mat-sys-primary);
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+@media (max-width: 720px) {
+  .cell {
+    min-height: 72px;
+  }
+}

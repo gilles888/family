@@ -1,0 +1,17 @@
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Backend
+backend/target/
+
+# Front
+front/node_modules/
+front/dist/
+front/.angular/
+
+# Divers
+*.log
+.env
+.env.*

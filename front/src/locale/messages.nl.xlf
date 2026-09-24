@@ -1,0 +1,851 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="fr" target-language="nl" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="agenda.modeLabel" datatype="html">
+        <source>Affichage de l&apos;agenda</source>
+        <target>Weergave van de agenda</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">7,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.mode.day" datatype="html">
+        <source>Jour</source>
+        <target>Dag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.mode.week" datatype="html">
+        <source>Semaine</source>
+        <target>Week</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.mode.month" datatype="html">
+        <source>Mois</source>
+        <target>Maand</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.mode.year" datatype="html">
+        <source>Année</source>
+        <target>Jaar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.previous" datatype="html">
+        <source>Précédent</source>
+        <target>Vorige</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.today" datatype="html">
+        <source>Aujourd&apos;hui</source>
+        <target>Vandaag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.next" datatype="html">
+        <source>Suivant</source>
+        <target>Volgende</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.newReminder" datatype="html">
+        <source>Nouveau rappel</source>
+        <target>Nieuwe herinnering</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">46,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.filterLabel" datatype="html">
+        <source>Filtrer par membre</source>
+        <target>Filteren op lid</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.allMembers" datatype="html">
+        <source>Tous</source>
+        <target>Iedereen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="agenda.loadError" datatype="html">
+        <source>Impossible de charger l&apos;agenda.</source>
+        <target>De agenda kan niet worden geladen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.retry" datatype="html">
+        <source>Réessayer</source>
+        <target>Opnieuw proberen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.html</context>
+          <context context-type="linenumber">75,77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.deleteTitle" datatype="html">
+        <source>Supprimer le rappel ?</source>
+        <target>Herinnering verwijderen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">163</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.deleteMessage" datatype="html">
+        <source>« <x id="title" equiv-text="entry.titre"/> » sera supprimé ainsi que toutes ses occurrences à venir. Les occurrences passées restent dans l&apos;agenda.</source>
+        <target>‘<x id="title" equiv-text="entry.titre"/>’ wordt verwijderd, samen met alle komende afspraken. Afspraken uit het verleden blijven in de agenda staan.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">164</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.delete" datatype="html">
+        <source>Supprimer</source>
+        <target>Verwijderen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">165</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.deleted" datatype="html">
+        <source>Rappel supprimé.</source>
+        <target>Herinnering verwijderd.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">172</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="day.empty" datatype="html">
+        <source>Rien de prévu ce jour-là.</source>
+        <target>Niets gepland op deze dag.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/day-view.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="day.recurring" datatype="html">
+        <source>Récurrent</source>
+        <target>Terugkerend</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/day-view.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.recurring" datatype="html">
+        <source>récurrent</source>
+        <target>terugkerend</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">15,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.statusTitle" datatype="html">
+        <source>Statut de cette occurrence</source>
+        <target>Status van deze afspraak</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">39,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.onlyThisOne" datatype="html">
+        <source>Seule cette occurrence est modifiée, les autres restent inchangées.</source>
+        <target>Alleen deze afspraak wordt gewijzigd, de andere blijven ongewijzigd.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">49,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.deleteReminder" datatype="html">
+        <source>Supprimer le rappel</source>
+        <target>Herinnering verwijderen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.editReminder" datatype="html">
+        <source>Modifier le rappel</source>
+        <target>Herinnering wijzigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">59,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.cancel" datatype="html">
+        <source>Annuler</source>
+        <target>Annuleren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">62,63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">44,45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">161,162</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/confirm-dialog.ts</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.save" datatype="html">
+        <source>Enregistrer</source>
+        <target>Opslaan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">63,64</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">162,163</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.saved" datatype="html">
+        <source>Statut mis à jour.</source>
+        <target>Status bijgewerkt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="month.more" datatype="html">
+        <source>+<x id="INTERPOLATION" equiv-text="{{ entriesOf(day).length - maxChips }}"/> autres</source>
+        <target>+<x id="INTERPOLATION" equiv-text="{{ entriesOf(day).length - maxChips }}"/> meer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/month-view.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="app.title" datatype="html">
+        <source>Agenda familial</source>
+        <target>Familieagenda</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">4,8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.agenda" datatype="html">
+        <source>Agenda</source>
+        <target>Agenda</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="nav.members" datatype="html">
+        <source>Membres</source>
+        <target>Leden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">9,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="app.language" datatype="html">
+        <source>Langue</source>
+        <target>Taal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="members.title" datatype="html">
+        <source>Membres de la famille</source>
+        <target>Gezinsleden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="members.add" datatype="html">
+        <source>Ajouter un membre</source>
+        <target>Lid toevoegen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="members.loadError" datatype="html">
+        <source>Impossible de charger les membres.</source>
+        <target>De leden kunnen niet worden geladen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="members.empty" datatype="html">
+        <source>Aucun membre pour le moment. Ajoutez le premier !</source>
+        <target>Nog geen leden. Voeg het eerste toe!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.edit" datatype="html">
+        <source>Modifier</source>
+        <target>Wijzigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.deleteTitle" datatype="html">
+        <source>Supprimer ce membre ?</source>
+        <target>Dit lid verwijderen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.deleteMessage" datatype="html">
+        <source>« <x id="name" equiv-text="member.nom"/> » sera retiré de tous ses rappels. Les rappels et leurs occurrences sont conservés.</source>
+        <target>‘<x id="name" equiv-text="member.nom"/>’ wordt uit al zijn herinneringen verwijderd. De herinneringen en hun afspraken blijven bewaard.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.deleted" datatype="html">
+        <source>Membre supprimé.</source>
+        <target>Lid verwijderd.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.editTitle" datatype="html">
+        <source>Modifier le membre</source>
+        <target>Lid wijzigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.createTitle" datatype="html">
+        <source>Nouveau membre</source>
+        <target>Nieuw lid</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">26,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.name" datatype="html">
+        <source>Nom</source>
+        <target>Naam</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.required" datatype="html">
+        <source>Ce champ est obligatoire.</source>
+        <target>Dit veld is verplicht.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.color" datatype="html">
+        <source>Couleur</source>
+        <target>Kleur</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.saved" datatype="html">
+        <source>Membre enregistré.</source>
+        <target>Lid opgeslagen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.editTitle" datatype="html">
+        <source>Modifier le rappel</source>
+        <target>Herinnering wijzigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.createTitle" datatype="html">
+        <source>Nouveau rappel</source>
+        <target>Nieuwe herinnering</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">5,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.editHint" datatype="html">
+        <source> Les occurrences à venir sont recalculées ; les occurrences passées restent inchangées. </source>
+        <target>De komende afspraken worden opnieuw berekend; afspraken uit het verleden blijven ongewijzigd.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">13,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.title" datatype="html">
+        <source>Titre</source>
+        <target>Titel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.description" datatype="html">
+        <source>Description</source>
+        <target>Beschrijving</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.type" datatype="html">
+        <source>Type</source>
+        <target>Type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.members" datatype="html">
+        <source>Membres</source>
+        <target>Leden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.date" datatype="html">
+        <source>Date</source>
+        <target>Datum</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">55,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.invalidDate" datatype="html">
+        <source>Date invalide ou manquante.</source>
+        <target>Ongeldige of ontbrekende datum.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">142,144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.startTime" datatype="html">
+        <source>Début</source>
+        <target>Begin</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.invalidTime" datatype="html">
+        <source>Heure invalide ou manquante.</source>
+        <target>Ongeldige of ontbrekende tijd.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">70,72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">82,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.endTime" datatype="html">
+        <source>Fin (facultatif)</source>
+        <target>Einde (optioneel)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.endBeforeStart" datatype="html">
+        <source>La fin doit être après le début.</source>
+        <target>Het einde moet na het begin liggen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">80,81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.recurring" datatype="html">
+        <source>Rappel récurrent</source>
+        <target>Terugkerende herinnering</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">87,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.title" datatype="html">
+        <source>Récurrence</source>
+        <target>Herhaling</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">91,93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.frequency" datatype="html">
+        <source>Fréquence</source>
+        <target>Frequentie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.interval" datatype="html">
+        <source>Intervalle</source>
+        <target>Interval</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">104,105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.intervalHint" datatype="html">
+        <source>1 = chaque fois, 2 = une fois sur deux…</source>
+        <target>1 = elke keer, 2 = om de andere keer…</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.intervalRange" datatype="html">
+        <source>Entre 1 et 365.</source>
+        <target>Tussen 1 en 365.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">108,110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.weekdays" datatype="html">
+        <source>Jours de la semaine</source>
+        <target>Dagen van de week</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">115,116</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">116,117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.weekdaysHint" datatype="html">
+        <source>Aucun jour choisi : le jour de la date de début est utilisé.</source>
+        <target>Geen dag gekozen: de dag van de begindatum wordt gebruikt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">121,125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.end" datatype="html">
+        <source>Fin de la récurrence</source>
+        <target>Einde van de herhaling</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">126,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.endNever" datatype="html">
+        <source>Jamais</source>
+        <target>Nooit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">128,129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.endDate" datatype="html">
+        <source>Jusqu&apos;au</source>
+        <target>Tot</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">129,130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.endCount" datatype="html">
+        <source>Après N occurrences</source>
+        <target>Na N keer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">130,131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.endDateLabel" datatype="html">
+        <source>Dernière date</source>
+        <target>Laatste datum</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">135,136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.endDateBeforeStart" datatype="html">
+        <source>La date de fin précède le début.</source>
+        <target>De einddatum ligt voor het begin.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">140,141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="recurrence.count" datatype="html">
+        <source>Nombre d&apos;occurrences</source>
+        <target>Aantal keer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">148,149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="form.countMin" datatype="html">
+        <source>Au moins 1.</source>
+        <target>Minstens 1.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
+          <context context-type="linenumber">151,152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.updated" datatype="html">
+        <source>Rappel modifié. Entrées dans l&apos;agenda : <x id="count" equiv-text="count"/></source>
+        <target>Herinnering gewijzigd. Afspraken in de agenda: <x id="count" equiv-text="count"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.ts</context>
+          <context context-type="linenumber">203</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.created" datatype="html">
+        <source>Rappel créé. Entrées ajoutées à l&apos;agenda : <x id="count" equiv-text="count"/></source>
+        <target>Herinnering aangemaakt. Afspraken toegevoegd aan de agenda: <x id="count" equiv-text="count"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/reminders/reminder-dialog.ts</context>
+          <context context-type="linenumber">204</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.network" datatype="html">
+        <source>Impossible de joindre le serveur. Vérifiez votre connexion.</source>
+        <target>De server is onbereikbaar. Controleer je verbinding.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/api-error.interceptor.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.badRequest" datatype="html">
+        <source>Les données envoyées sont invalides. Vérifiez le formulaire.</source>
+        <target>De verzonden gegevens zijn ongeldig. Controleer het formulier.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/api-error.interceptor.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.notFound" datatype="html">
+        <source>Élément introuvable : il a peut-être été supprimé.</source>
+        <target>Item niet gevonden: het is misschien verwijderd.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/api-error.interceptor.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.conflict" datatype="html">
+        <source>Cette opération est en conflit avec les données existantes.</source>
+        <target>Deze bewerking conflicteert met bestaande gegevens.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/api-error.interceptor.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.server" datatype="html">
+        <source>Le serveur a rencontré une erreur. Réessayez plus tard.</source>
+        <target>Er is een serverfout opgetreden. Probeer het later opnieuw.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/api-error.interceptor.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.unknown" datatype="html">
+        <source>Une erreur inattendue est survenue.</source>
+        <target>Er is een onverwachte fout opgetreden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/api-error.interceptor.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="type.sport" datatype="html">
+        <source>Sport</source>
+        <target>Sport</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="type.testMedical" datatype="html">
+        <source>Test médical</source>
+        <target>Medisch onderzoek</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="type.rendezVous" datatype="html">
+        <source>Rendez-vous</source>
+        <target>Afspraak</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="type.autre" datatype="html">
+        <source>Autre</source>
+        <target>Andere</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.prevu" datatype="html">
+        <source>Prévu</source>
+        <target>Gepland</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.complete" datatype="html">
+        <source>Terminé</source>
+        <target>Voltooid</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.annule" datatype="html">
+        <source>Annulé</source>
+        <target>Geannuleerd</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.deplace" datatype="html">
+        <source>Déplacé</source>
+        <target>Verplaatst</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="frequency.daily" datatype="html">
+        <source>Tous les jours</source>
+        <target>Elke dag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="frequency.weekly" datatype="html">
+        <source>Toutes les semaines</source>
+        <target>Elke week</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="frequency.monthly" datatype="html">
+        <source>Tous les mois</source>
+        <target>Elke maand</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="frequency.yearly" datatype="html">
+        <source>Tous les ans</source>
+        <target>Elk jaar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.close" datatype="html">
+        <source>Fermer</source>
+        <target>Sluiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/notification.service.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="list.title" datatype="html">
+        <source>Tâches</source>
+        <target>Taken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-list.html</context>
+          <context context-type="linenumber">1,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="list.filterLabel" datatype="html">
+        <source>Filtrer les tâches par personne</source>
+        <target>Taken filteren op persoon</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-list.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="list.empty" datatype="html">
+        <source>Aucune tâche sur cette période.</source>
+        <target>Geen taken in deze periode.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-list.html</context>
+          <context context-type="linenumber">20,22</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

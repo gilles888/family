@@ -1,0 +1,127 @@
+<div class="toolbar">
+  <mat-button-toggle-group
+    [value]="mode()"
+    (change)="setMode($event.value)"
+    hideSingleSelectionIndicator
+    i18n-aria-label="@@agenda.modeLabel"
+    aria-label="Affichage de l'agenda"
+  >
+    <mat-button-toggle value="day" i18n="@@agenda.mode.day">Jour</mat-button-toggle>
+    <mat-button-toggle value="week" i18n="@@agenda.mode.week">Semaine</mat-button-toggle>
+    <mat-button-toggle value="month" i18n="@@agenda.mode.month">Mois</mat-button-toggle>
+    <mat-button-toggle value="year" i18n="@@agenda.mode.year">Année</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <div class="nav">
+    <button
+      matIconButton
+      (click)="step(-1)"
+      i18n-aria-label="@@agenda.previous"
+      aria-label="Précédent"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button matButton="outlined" (click)="goToToday()" i18n="@@agenda.today">Aujourd'hui</button>
+    <button matIconButton (click)="step(1)" i18n-aria-label="@@agenda.next" aria-label="Suivant">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <h1 class="title">
+    @switch (mode()) {
+      @case ('day') {
+        {{ date() | date: 'fullDate' }}
+      }
+      @case ('week') {
+        {{ weekStart() | date: 'd MMM' }} – {{ weekEnd() | date: 'd MMM y' }}
+      }
+      @case ('month') {
+        {{ date() | date: 'LLLL y' }}
+      }
+      @case ('year') {
+        {{ date() | date: 'y' }}
+      }
+    }
+  </h1>
+
+  <span class="spacer"></span>
+
+  <button matButton="filled" (click)="newReminder()">
+    <mat-icon>add</mat-icon>
+    <ng-container i18n="@@agenda.newReminder">Nouveau rappel</ng-container>
+  </button>
+</div>
+
+<mat-chip-listbox
+  class="members-filter"
+  [value]="memberFilter()"
+  (change)="onMemberChange($event.value)"
+  i18n-aria-label="@@agenda.filterLabel"
+  aria-label="Filtrer par membre"
+>
+  <mat-chip-option value="all" i18n="@@agenda.allMembers">Tous</mat-chip-option>
+  @for (m of members.value() ?? []; track m.id) {
+    <mat-chip-option [value]="m.id">
+      <span class="dot" [style.background-color]="m.couleur"></span>
+      {{ m.nom }}
+    </mat-chip-option>
+  }
+</mat-chip-listbox>
+
+<div class="progress">
+  @if (data.isLoading()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+</div>
+
+<div class="layout">
+  <div class="calendar">
+    @if (data.error()) {
+      <div class="load-error">
+        <p i18n="@@agenda.loadError">Impossible de charger l'agenda.</p>
+        <button matButton="outlined" (click)="data.reload()" i18n="@@common.retry">
+          Réessayer
+        </button>
+      </div>
+    } @else if (data.hasValue()) {
+      @let d = data.value();
+      @switch (d.kind) {
+        @case ('day') {
+          <app-day-view [entries]="d.entries" (entryClick)="openEntry($event)" />
+        }
+        @case ('week') {
+          <app-week-view
+            [weekStart]="weekStart()"
+            [entries]="d.entries"
+            (dayClick)="showDay($event)"
+            (entryClick)="openEntry($event)"
+          />
+        }
+        @case ('month') {
+          <app-month-view
+            [year]="date().getFullYear()"
+            [month]="date().getMonth() + 1"
+            [entriesByDay]="d.byDay"
+            (dayClick)="showDay($event)"
+            (entryClick)="openEntry($event)"
+          />
+        }
+        @case ('year') {
+          <app-year-view
+            [summary]="d.summary"
+            [year]="date().getFullYear()"
+            (monthClick)="showMonth($event)"
+          />
+        }
+      }
+    }
+  </div>
+
+  <aside class="tasks">
+    <app-entry-list
+      [entries]="periodEntries.value() ?? []"
+      [members]="members.value() ?? []"
+      (entryClick)="openEntry($event)"
+    />
+  </aside>
+</div>

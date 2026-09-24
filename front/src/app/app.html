@@ -1,0 +1,30 @@
+<mat-toolbar class="header">
+  <a class="brand" routerLink="/">
+    <mat-icon>calendar_month</mat-icon>
+    <span i18n="@@app.title">Agenda familial</span>
+  </a>
+
+  <nav>
+    <a matButton routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" i18n="@@nav.agenda">Agenda</a>
+    <a matButton routerLink="/membres" routerLinkActive="active" i18n="@@nav.members">Membres</a>
+  </nav>
+
+  <span class="spacer"></span>
+
+  <mat-button-toggle-group
+    class="language"
+    [value]="locale"
+    (change)="switchLanguage($event.value)"
+    hideSingleSelectionIndicator
+    i18n-aria-label="@@app.language"
+    aria-label="Langue"
+  >
+    @for (l of languages; track l.code) {
+      <mat-button-toggle [value]="l.code" [attr.lang]="l.code" [title]="l.label">{{ l.code.toUpperCase() }}</mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+</mat-toolbar>
+
+<main>
+  <router-outlet />
+</main>

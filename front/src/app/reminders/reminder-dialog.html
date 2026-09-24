@@ -1,0 +1,164 @@
+<h2 mat-dialog-title>
+  @if (editing) {
+    <ng-container i18n="@@reminder.editTitle">Modifier le rappel</ng-container>
+  } @else {
+    <ng-container i18n="@@reminder.createTitle">Nouveau rappel</ng-container>
+  }
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()" id="reminder-form">
+  <mat-dialog-content class="content">
+    @if (editing) {
+      <p class="hint" i18n="@@reminder.editHint">
+        Les occurrences à venir sont recalculées ; les occurrences passées restent inchangées.
+      </p>
+    }
+
+    <mat-form-field>
+      <mat-label i18n="@@reminder.title">Titre</mat-label>
+      <input matInput formControlName="titre" maxlength="200" required />
+      @if (form.controls.titre.hasError('required')) {
+        <mat-error i18n="@@form.required">Ce champ est obligatoire.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label i18n="@@reminder.description">Description</mat-label>
+      <textarea matInput formControlName="description" rows="2" maxlength="2000"></textarea>
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field>
+        <mat-label i18n="@@reminder.type">Type</mat-label>
+        <mat-select formControlName="type">
+          @for (t of types; track t) {
+            <mat-option [value]="t">{{ t | enumLabel: 'type' }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label i18n="@@reminder.members">Membres</mat-label>
+        <mat-select formControlName="membreIds" multiple>
+          @for (m of members; track m.id) {
+            <mat-option [value]="m.id">
+              <span class="dot" [style.background-color]="m.couleur"></span>
+              {{ m.nom }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row three">
+      <mat-form-field>
+        <mat-label i18n="@@reminder.date">Date</mat-label>
+        <input matInput [matDatepicker]="datePicker" formControlName="date" required />
+        <mat-datepicker-toggle matIconSuffix [for]="datePicker" />
+        <mat-datepicker #datePicker />
+        @if (form.controls.date.invalid) {
+          <mat-error i18n="@@form.invalidDate">Date invalide ou manquante.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label i18n="@@reminder.startTime">Début</mat-label>
+        <input matInput [matTimepicker]="startPicker" formControlName="startTime" required />
+        <mat-timepicker-toggle matIconSuffix [for]="startPicker" />
+        <mat-timepicker #startPicker />
+        @if (form.controls.startTime.invalid) {
+          <mat-error i18n="@@form.invalidTime">Heure invalide ou manquante.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label i18n="@@reminder.endTime">Fin (facultatif)</mat-label>
+        <input matInput [matTimepicker]="endPicker" formControlName="endTime" />
+        <mat-timepicker-toggle matIconSuffix [for]="endPicker" />
+        <mat-timepicker #endPicker />
+        @if (form.controls.endTime.hasError('endBeforeStart')) {
+          <mat-error i18n="@@form.endBeforeStart">La fin doit être après le début.</mat-error>
+        } @else if (form.controls.endTime.invalid) {
+          <mat-error i18n="@@form.invalidTime">Heure invalide ou manquante.</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-slide-toggle formControlName="recurring" i18n="@@reminder.recurring">Rappel récurrent</mat-slide-toggle>
+
+    @if (recurring()) {
+      <fieldset class="recurrence" formGroupName="recurrence">
+        <legend i18n="@@recurrence.title">Récurrence</legend>
+
+        <div class="row">
+          <mat-form-field>
+            <mat-label i18n="@@recurrence.frequency">Fréquence</mat-label>
+            <mat-select formControlName="frequence">
+              @for (f of frequencies; track f) {
+                <mat-option [value]="f">{{ f | enumLabel: 'frequency' }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label i18n="@@recurrence.interval">Intervalle</mat-label>
+            <input matInput type="number" min="1" max="365" formControlName="intervalle" />
+            <mat-hint i18n="@@recurrence.intervalHint">1 = chaque fois, 2 = une fois sur deux…</mat-hint>
+            @if (form.controls.recurrence.controls.intervalle.invalid) {
+              <mat-error i18n="@@form.intervalRange">Entre 1 et 365.</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        @if (frequence() === 'WEEKLY') {
+          <div class="weekdays">
+            <span class="label" i18n="@@recurrence.weekdays">Jours de la semaine</span>
+            <mat-button-toggle-group multiple hideMultipleSelectionIndicator formControlName="joursSemaine" i18n-aria-label="@@recurrence.weekdays" aria-label="Jours de la semaine">
+              @for (d of weekDays; track d.code) {
+                <mat-button-toggle [value]="d.code">{{ d.reference | date: 'EEEEE' }}</mat-button-toggle>
+              }
+            </mat-button-toggle-group>
+            <span class="hint" i18n="@@recurrence.weekdaysHint">Aucun jour choisi : le jour de la date de début est utilisé.</span>
+          </div>
+        }
+
+        <div class="end">
+          <span class="label" i18n="@@recurrence.end">Fin de la récurrence</span>
+          <mat-radio-group formControlName="endMode">
+            <mat-radio-button value="never" i18n="@@recurrence.endNever">Jamais</mat-radio-button>
+            <mat-radio-button value="date" i18n="@@recurrence.endDate">Jusqu'au</mat-radio-button>
+            <mat-radio-button value="count" i18n="@@recurrence.endCount">Après N occurrences</mat-radio-button>
+          </mat-radio-group>
+
+          @if (endMode() === 'date') {
+            <mat-form-field>
+              <mat-label i18n="@@recurrence.endDateLabel">Dernière date</mat-label>
+              <input matInput [matDatepicker]="endDatePicker" formControlName="dateFin" />
+              <mat-datepicker-toggle matIconSuffix [for]="endDatePicker" />
+              <mat-datepicker #endDatePicker />
+              @if (form.controls.recurrence.controls.dateFin.hasError('endBeforeStart')) {
+                <mat-error i18n="@@form.endDateBeforeStart">La date de fin précède le début.</mat-error>
+              } @else if (form.controls.recurrence.controls.dateFin.invalid) {
+                <mat-error i18n="@@form.invalidDate">Date invalide ou manquante.</mat-error>
+              }
+            </mat-form-field>
+          }
+          @if (endMode() === 'count') {
+            <mat-form-field>
+              <mat-label i18n="@@recurrence.count">Nombre d'occurrences</mat-label>
+              <input matInput type="number" min="1" formControlName="nombreOccurrences" />
+              @if (form.controls.recurrence.controls.nombreOccurrences.invalid) {
+                <mat-error i18n="@@form.countMin">Au moins 1.</mat-error>
+              }
+            </mat-form-field>
+          }
+        </div>
+      </fieldset>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button matButton type="button" mat-dialog-close i18n="@@common.cancel">Annuler</button>
+    <button matButton="filled" type="submit" [disabled]="saving()" i18n="@@common.save">Enregistrer</button>
+  </mat-dialog-actions>
+</form>

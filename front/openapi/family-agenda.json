@@ -1,0 +1,1139 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Agenda familial - API",
+        "description": "Un **Agenda** contient des **AgendaEntry** persist\u00e9es. Cr\u00e9er un `Reminder` g\u00e9n\u00e8re imm\u00e9diatement ses entr\u00e9es (une seule s'il est ponctuel, toute la fen\u00eatre glissante s'il est r\u00e9current) ; un job nocturne prolonge ensuite les r\u00e9currences.\n\nCommencer par la section **Agenda** : `GET /v1/agenda`.",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Generated server url"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Reminders",
+            "description": "Cr\u00e9ation/modification des reminders (g\u00e9n\u00e8re les AgendaEntry)"
+        },
+        {
+            "name": "Agenda",
+            "description": "Consultation de l'agenda : les AgendaEntry sont persist\u00e9es, pas calcul\u00e9es \u00e0 la vol\u00e9e"
+        },
+        {
+            "name": "Membres",
+            "description": "Membres de la famille"
+        }
+    ],
+    "paths": {
+        "/v1/reminders/{id}": {
+            "get": {
+                "tags": [
+                    "Reminders"
+                ],
+                "summary": "D\u00e9tail d'un reminder",
+                "operationId": "getReminder",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Reminder introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReminderDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Reminders"
+                ],
+                "summary": "Modifier un reminder (r\u00e9g\u00e9n\u00e8re ses entr\u00e9es futures)",
+                "description": "Les entr\u00e9es d'agenda **futures** sont r\u00e9concili\u00e9es avec la nouvelle d\u00e9finition ; les entr\u00e9es pass\u00e9es restent inchang\u00e9es. Une occurrence future toujours valide conserve son statut.",
+                "operationId": "updateReminder",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReminderRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "404": {
+                        "description": "Reminder introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReminderWithAgendaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Reminders"
+                ],
+                "summary": "Supprimer un reminder",
+                "description": "Supprime ses entr\u00e9es d'agenda futures ; les entr\u00e9es pass\u00e9es restent inchang\u00e9es (le reminder est alors archiv\u00e9 et n'appara\u00eet plus dans la liste).",
+                "operationId": "deleteReminder",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Reminder introuvable"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{id}": {
+            "get": {
+                "tags": [
+                    "Membres"
+                ],
+                "summary": "D\u00e9tail d'un membre",
+                "operationId": "getMembre",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Membre introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FamilyMemberDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Membres"
+                ],
+                "summary": "Modifier un membre",
+                "operationId": "updateMembre",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FamilyMemberRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "404": {
+                        "description": "Membre introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FamilyMemberDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Membres"
+                ],
+                "summary": "Supprimer un membre",
+                "description": "Le membre est retir\u00e9 des reminders auxquels il participait ; ceux-ci et leurs entr\u00e9es d'agenda sont conserv\u00e9s.",
+                "operationId": "deleteMembre",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Membre introuvable"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/v1/reminders": {
+            "get": {
+                "tags": [
+                    "Reminders"
+                ],
+                "summary": "Lister les reminders actifs",
+                "operationId": "listReminders",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ReminderDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Reminders"
+                ],
+                "summary": "Cr\u00e9er un reminder (et g\u00e9n\u00e9rer ses entr\u00e9es d'agenda)",
+                "description": "Cr\u00e9e le reminder puis **g\u00e9n\u00e8re et enregistre imm\u00e9diatement ses AgendaEntry** :\nune seule s'il est ponctuel, toutes les occurrences de la fen\u00eatre glissante (6 mois par d\u00e9faut) s'il est r\u00e9current. La r\u00e9ponse contient le reminder et un r\u00e9sum\u00e9 des entr\u00e9es g\u00e9n\u00e9r\u00e9es (nombre, premi\u00e8re et derni\u00e8re date).",
+                "operationId": "createReminder",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReminderRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Reminder cr\u00e9\u00e9 + r\u00e9sum\u00e9 des AgendaEntry g\u00e9n\u00e9r\u00e9es",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReminderWithAgendaDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Donn\u00e9es invalides (champ manquant, dates incoh\u00e9rentes, membre inconnu...)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReminderWithAgendaDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/membres": {
+            "get": {
+                "tags": [
+                    "Membres"
+                ],
+                "summary": "Lister les membres de la famille (par ordre alphab\u00e9tique)",
+                "operationId": "listMembres",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FamilyMemberDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Membres"
+                ],
+                "summary": "Cr\u00e9er un membre",
+                "operationId": "createMembre",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FamilyMemberRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Membre cr\u00e9\u00e9 (en-t\u00eate Location renseign\u00e9)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FamilyMemberDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/agenda/entries/{id}": {
+            "patch": {
+                "tags": [
+                    "Agenda"
+                ],
+                "summary": "Changer le statut d'une occurrence",
+                "description": "Marque UNE entr\u00e9e comme compl\u00e9t\u00e9e, annul\u00e9e ou d\u00e9plac\u00e9e, sans toucher aux autres occurrences du reminder.",
+                "operationId": "updateEntryStatus",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifiant de l'AgendaEntry",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AgendaEntryStatusRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "404": {
+                        "description": "Entr\u00e9e introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AgendaEntryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/agenda": {
+            "get": {
+                "tags": [
+                    "Agenda"
+                ],
+                "summary": "Entr\u00e9es de l'agenda sur une plage de dates",
+                "description": "Liste chronologique des AgendaEntry dont la date tombe entre `dateDebut` et `dateFin` (jours inclus).",
+                "operationId": "listAgenda",
+                "parameters": [
+                    {
+                        "name": "dateDebut",
+                        "in": "query",
+                        "description": "Premier jour (ISO, inclus)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2026-09-01"
+                    },
+                    {
+                        "name": "dateFin",
+                        "in": "query",
+                        "description": "Dernier jour (ISO, inclus)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2026-09-30"
+                    },
+                    {
+                        "name": "membreId",
+                        "in": "query",
+                        "description": "Ne garder que les entr\u00e9es concernant ce membre (optionnel)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "dateFin ant\u00e9rieure \u00e0 dateDebut, ou date mal form\u00e9e",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AgendaEntryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/agenda/semaine/{date}": {
+            "get": {
+                "tags": [
+                    "Agenda"
+                ],
+                "summary": "Entr\u00e9es de la semaine d'une date",
+                "description": "Entr\u00e9es de la semaine ISO (lundi \u00e0 dimanche) qui contient `date`, en ordre chronologique.",
+                "operationId": "getAgendaSemaine",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "description": "N'importe quel jour de la semaine (ISO)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2026-09-23"
+                    },
+                    {
+                        "name": "membreId",
+                        "in": "query",
+                        "description": "Ne garder que les entr\u00e9es concernant ce membre (optionnel)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AgendaEntryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/agenda/mois/{annee}/{mois}": {
+            "get": {
+                "tags": [
+                    "Agenda"
+                ],
+                "summary": "Entr\u00e9es d'un mois, group\u00e9es par jour",
+                "description": "Map `date -> entr\u00e9es`. Seuls les jours ayant au moins une entr\u00e9e sont pr\u00e9sents.",
+                "operationId": "getAgendaMois",
+                "parameters": [
+                    {
+                        "name": "annee",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "maximum": 2200,
+                            "minimum": 1900
+                        },
+                        "example": 2026
+                    },
+                    {
+                        "name": "mois",
+                        "in": "path",
+                        "description": "Mois (1-12)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "maximum": 12,
+                            "minimum": 1
+                        },
+                        "example": 9
+                    },
+                    {
+                        "name": "membreId",
+                        "in": "query",
+                        "description": "Ne garder que les entr\u00e9es concernant ce membre (optionnel)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "2026-09-22": [
+                                        {
+                                            "id": 1,
+                                            "reminderId": 1,
+                                            "titre": "Football",
+                                            "type": "SPORT",
+                                            "dateHeure": "2026-09-22T18:00:00",
+                                            "dateHeureFin": "2026-09-22T19:30:00",
+                                            "statut": "PREVU",
+                                            "membres": [
+                                                {
+                                                    "id": 4,
+                                                    "nom": "Tom",
+                                                    "couleur": "#4CAF50"
+                                                }
+                                            ],
+                                            "recurring": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/agenda/jour/{date}": {
+            "get": {
+                "tags": [
+                    "Agenda"
+                ],
+                "summary": "Entr\u00e9es d\u00e9taill\u00e9es d'un jour",
+                "operationId": "getAgendaJour",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "description": "Jour (ISO)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2026-09-22"
+                    },
+                    {
+                        "name": "membreId",
+                        "in": "query",
+                        "description": "Ne garder que les entr\u00e9es concernant ce membre (optionnel)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AgendaEntryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/agenda/annee/{annee}": {
+            "get": {
+                "tags": [
+                    "Agenda"
+                ],
+                "summary": "R\u00e9sum\u00e9 annuel",
+                "description": "Pour chacun des 12 mois : nombre d'entr\u00e9es, au total et par type de reminder. Sert \u00e0 la vue annuelle.",
+                "operationId": "getAgendaAnnee",
+                "parameters": [
+                    {
+                        "name": "annee",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "maximum": 2200,
+                            "minimum": 1900
+                        },
+                        "example": 2026
+                    },
+                    {
+                        "name": "membreId",
+                        "in": "query",
+                        "description": "Ne garder que les entr\u00e9es concernant ce membre (optionnel)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/YearSummaryDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RecurrenceRuleRequest": {
+                "type": "object",
+                "description": "R\u00e8gle de r\u00e9currence. Fin : dateFin OU nombreOccurrences (pas les deux) ; aucune des deux = sans fin.",
+                "properties": {
+                    "frequence": {
+                        "type": "string",
+                        "description": "Fr\u00e9quence",
+                        "enum": [
+                            "DAILY",
+                            "WEEKLY",
+                            "MONTHLY",
+                            "YEARLY"
+                        ],
+                        "example": "WEEKLY"
+                    },
+                    "intervalle": {
+                        "type": "integer",
+                        "format": "int32",
+                        "default": 1,
+                        "description": "Tous les N jours/semaines/mois/ans (d\u00e9faut 1)",
+                        "example": 1,
+                        "maximum": 365,
+                        "minimum": 1
+                    },
+                    "joursSemaine": {
+                        "type": "array",
+                        "description": "Jours de la semaine (WEEKLY uniquement). Vide = jour de la date de d\u00e9but.",
+                        "example": [
+                            "TUESDAY",
+                            "THURSDAY"
+                        ],
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "MONDAY",
+                                "TUESDAY",
+                                "WEDNESDAY",
+                                "THURSDAY",
+                                "FRIDAY",
+                                "SATURDAY",
+                                "SUNDAY"
+                            ]
+                        },
+                        "uniqueItems": true
+                    },
+                    "dateFin": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "Derni\u00e8re date incluse de la r\u00e9currence",
+                        "example": "2027-06-30"
+                    },
+                    "nombreOccurrences": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Nombre total d'occurrences (la premi\u00e8re comprise)",
+                        "example": 20,
+                        "minimum": 1
+                    }
+                },
+                "required": [
+                    "frequence"
+                ]
+            },
+            "ReminderRequest": {
+                "type": "object",
+                "description": "Cr\u00e9ation / modification d'un reminder. Les AgendaEntry sont g\u00e9n\u00e9r\u00e9es automatiquement.",
+                "example": {
+                    "titre": "Football",
+                    "description": "Entra\u00eenement au stade",
+                    "type": "SPORT",
+                    "dateHeureDebut": "2026-09-22T18:00:00",
+                    "dateHeureFin": "2026-09-22T19:30:00",
+                    "membreIds": [
+                        1
+                    ],
+                    "isRecurring": true,
+                    "recurrence": {
+                        "frequence": "WEEKLY",
+                        "intervalle": 1,
+                        "joursSemaine": [
+                            "TUESDAY",
+                            "THURSDAY"
+                        ]
+                    }
+                },
+                "properties": {
+                    "titre": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "minLength": 0
+                    },
+                    "description": {
+                        "type": "string",
+                        "maxLength": 2000,
+                        "minLength": 0
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "SPORT",
+                            "TEST_MEDICAL",
+                            "RENDEZ_VOUS",
+                            "AUTRE"
+                        ]
+                    },
+                    "dateHeureDebut": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "D\u00e9but de la 1re occurrence",
+                        "example": "2026-09-22T18:00:00"
+                    },
+                    "dateHeureFin": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Fin (optionnelle) de la 1re occurrence ; sert \u00e0 calculer la dur\u00e9e",
+                        "example": "2026-09-22T19:30:00"
+                    },
+                    "membreIds": {
+                        "type": "array",
+                        "description": "Identifiants des membres concern\u00e9s",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "uniqueItems": true
+                    },
+                    "isRecurring": {
+                        "type": "boolean",
+                        "description": "Reminder r\u00e9current ? Si vrai, 'recurrence' est obligatoire."
+                    },
+                    "recurrence": {
+                        "$ref": "#/components/schemas/RecurrenceRuleRequest"
+                    }
+                },
+                "required": [
+                    "dateHeureDebut",
+                    "titre",
+                    "type"
+                ]
+            },
+            "AgendaGenerationSummaryDTO": {
+                "type": "object",
+                "description": "R\u00e9sum\u00e9 des AgendaEntry d'un reminder (g\u00e9n\u00e9r\u00e9es \u00e0 la cr\u00e9ation ou \u00e0 la modification)",
+                "properties": {
+                    "nombre": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Nombre d'entr\u00e9es d'agenda li\u00e9es au reminder",
+                        "example": 26
+                    },
+                    "premiereDate": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date/heure de la premi\u00e8re entr\u00e9e (null si aucune)",
+                        "example": "2026-09-22T18:00:00"
+                    },
+                    "derniereDate": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date/heure de la derni\u00e8re entr\u00e9e (null si aucune)",
+                        "example": "2027-03-18T18:00:00"
+                    }
+                }
+            },
+            "FamilyMemberDTO": {
+                "type": "object",
+                "description": "Membre de la famille",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "L\u00e9a"
+                    },
+                    "couleur": {
+                        "type": "string",
+                        "example": "#E91E63"
+                    }
+                }
+            },
+            "RecurrenceRuleDTO": {
+                "type": "object",
+                "description": "R\u00e8gle de r\u00e9currence d'un reminder",
+                "properties": {
+                    "frequence": {
+                        "type": "string",
+                        "enum": [
+                            "DAILY",
+                            "WEEKLY",
+                            "MONTHLY",
+                            "YEARLY"
+                        ],
+                        "example": "WEEKLY"
+                    },
+                    "intervalle": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                    },
+                    "joursSemaine": {
+                        "type": "array",
+                        "example": [
+                            "TUESDAY",
+                            "THURSDAY"
+                        ],
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "MONDAY",
+                                "TUESDAY",
+                                "WEDNESDAY",
+                                "THURSDAY",
+                                "FRIDAY",
+                                "SATURDAY",
+                                "SUNDAY"
+                            ]
+                        },
+                        "uniqueItems": true
+                    },
+                    "dateFin": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2027-06-30"
+                    },
+                    "nombreOccurrences": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 20
+                    }
+                }
+            },
+            "ReminderDTO": {
+                "type": "object",
+                "description": "Reminder",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "titre": {
+                        "type": "string",
+                        "example": "Football"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "SPORT",
+                            "TEST_MEDICAL",
+                            "RENDEZ_VOUS",
+                            "AUTRE"
+                        ],
+                        "example": "SPORT"
+                    },
+                    "dateHeureDebut": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-09-22T18:00:00"
+                    },
+                    "dateHeureFin": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-09-22T19:30:00"
+                    },
+                    "membres": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FamilyMemberDTO"
+                        }
+                    },
+                    "isRecurring": {
+                        "type": "boolean"
+                    },
+                    "recurrence": {
+                        "$ref": "#/components/schemas/RecurrenceRuleDTO",
+                        "description": "Pr\u00e9sent uniquement si isRecurring = true"
+                    }
+                }
+            },
+            "ReminderWithAgendaDTO": {
+                "type": "object",
+                "description": "Reminder cr\u00e9\u00e9/modifi\u00e9 + r\u00e9sum\u00e9 des AgendaEntry g\u00e9n\u00e9r\u00e9es",
+                "properties": {
+                    "reminder": {
+                        "$ref": "#/components/schemas/ReminderDTO"
+                    },
+                    "agenda": {
+                        "$ref": "#/components/schemas/AgendaGenerationSummaryDTO",
+                        "description": "R\u00e9sum\u00e9 des entr\u00e9es d'agenda li\u00e9es au reminder"
+                    }
+                }
+            },
+            "FamilyMemberRequest": {
+                "type": "object",
+                "description": "Cr\u00e9ation / modification d'un membre de la famille",
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "description": "Nom affich\u00e9",
+                        "example": "L\u00e9a",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "couleur": {
+                        "type": "string",
+                        "description": "Couleur hexad\u00e9cimale #RRGGBB",
+                        "example": "#E91E63",
+                        "minLength": 1,
+                        "pattern": "^#[0-9A-Fa-f]{6}$"
+                    }
+                },
+                "required": [
+                    "couleur",
+                    "nom"
+                ]
+            },
+            "AgendaEntryStatusRequest": {
+                "type": "object",
+                "description": "Nouveau statut d'une occurrence",
+                "example": {
+                    "statut": "ANNULE"
+                },
+                "properties": {
+                    "statut": {
+                        "type": "string",
+                        "description": "PREVU, COMPLETE, ANNULE ou DEPLACE",
+                        "enum": [
+                            "PREVU",
+                            "COMPLETE",
+                            "ANNULE",
+                            "DEPLACE"
+                        ],
+                        "example": "ANNULE"
+                    }
+                },
+                "required": [
+                    "statut"
+                ]
+            },
+            "AgendaEntryDTO": {
+                "type": "object",
+                "description": "Occurrence d'un reminder dans l'agenda",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Identifiant de l'entr\u00e9e (\u00e0 utiliser pour le PATCH de statut)",
+                        "example": 42
+                    },
+                    "reminderId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "titre": {
+                        "type": "string",
+                        "example": "Football"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "SPORT",
+                            "TEST_MEDICAL",
+                            "RENDEZ_VOUS",
+                            "AUTRE"
+                        ],
+                        "example": "SPORT"
+                    },
+                    "dateHeure": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date/heure de cette occurrence",
+                        "example": "2026-09-22T18:00:00"
+                    },
+                    "dateHeureFin": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Fin de cette occurrence (null si le reminder n'a pas de fin)",
+                        "example": "2026-09-22T19:30:00"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "enum": [
+                            "PREVU",
+                            "COMPLETE",
+                            "ANNULE",
+                            "DEPLACE"
+                        ],
+                        "example": "PREVU"
+                    },
+                    "membres": {
+                        "type": "array",
+                        "description": "Membres concern\u00e9s",
+                        "items": {
+                            "$ref": "#/components/schemas/FamilyMemberDTO"
+                        }
+                    },
+                    "recurring": {
+                        "type": "boolean",
+                        "description": "L'entr\u00e9e provient d'un reminder r\u00e9current"
+                    }
+                }
+            },
+            "MonthSummaryDTO": {
+                "type": "object",
+                "description": "R\u00e9sum\u00e9 d'un mois",
+                "properties": {
+                    "mois": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Num\u00e9ro du mois (1-12)",
+                        "example": 9
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Nombre total d'entr\u00e9es du mois",
+                        "example": 9
+                    },
+                    "parType": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "description": "Nombre d'entr\u00e9es par type (types absents = 0)",
+                        "example": {
+                            "SPORT": 8,
+                            "TEST_MEDICAL": 1
+                        }
+                    }
+                }
+            },
+            "YearSummaryDTO": {
+                "type": "object",
+                "description": "Vue annuelle : nombre d'entr\u00e9es par mois, group\u00e9es par type",
+                "properties": {
+                    "annee": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 2026
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Nombre total d'entr\u00e9es de l'ann\u00e9e",
+                        "example": 42
+                    },
+                    "mois": {
+                        "type": "array",
+                        "description": "12 \u00e9l\u00e9ments, de janvier \u00e0 d\u00e9cembre",
+                        "items": {
+                            "$ref": "#/components/schemas/MonthSummaryDTO"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

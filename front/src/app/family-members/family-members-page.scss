@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  h1 {
+    margin: 0;
+    font: var(--mat-sys-headline-small);
+  }
+}
+
+.swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.actions {
+  display: flex;
+}
+
+.empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--mat-sys-on-surface-variant);
+}
