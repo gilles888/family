@@ -1,0 +1,38 @@
+@let jour = day();
+<h3 class="day-name">{{ label() }}</h3>
+
+<div class="summary">
+  @if (jour.ciel; as ciel) {
+    <span class="sky" role="img" [attr.aria-label]="labels[ciel].label" [title]="labels[ciel].label">
+      {{ labels[ciel].emoji }}
+    </span>
+  }
+  <span class="temps">
+    <span class="max">{{ degrees(jour.temperatureMax) }}</span>
+    <span class="min">{{ degrees(jour.temperatureMin) }}</span>
+  </span>
+</div>
+
+<div class="details">
+  <span i18n-title="@@weather.morningFeel" title="Ressenti le matin">
+    🌅 {{ degrees(jour.ressentiMatin) }}
+  </span>
+  <span i18n-title="@@weather.rainRisk" title="Risque de pluie">
+    💧 {{ jour.risquePluie == null ? '–' : (jour.risquePluie / 100 | percent) }}
+  </span>
+</div>
+
+<ul class="clothes">
+  @for (item of jour.tenue ?? []; track item) {
+    <li class="tile">
+      <span class="tile-emoji" aria-hidden="true">{{ labels[item].emoji }}</span>
+      <span class="tile-label">{{ labels[item].label }}</span>
+    </li>
+  }
+</ul>
+
+@if (jour.superposer) {
+  <p class="layers" i18n="@@weather.layers">
+    Il fera plus chaud l'après-midi : on pourra enlever le pull.
+  </p>
+}

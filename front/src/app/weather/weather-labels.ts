@@ -33,3 +33,7 @@ export const WEATHER_LABELS: Record<Clothing | Sky, WeatherLabel> = {
   NEIGE: { emoji: '🌨️', label: $localize`:@@sky.neige:Neige` },
   ORAGE: { emoji: '⛈️', label: $localize`:@@sky.orage:Orage` },
 };
+
+/** Libellés partagés par la carte et le dialogue semaine. */
+export const TODAY_LABEL = $localize`:@@weather.today:Aujourd'hui`;
+export const TOMORROW_LABEL = $localize`:@@weather.tomorrow:Demain`;

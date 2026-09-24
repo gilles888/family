@@ -3,51 +3,7 @@
 @if (meteo.hasValue()) {
   <div class="days">
     @for (jour of meteo.value().jours ?? []; track jour.date; let first = $first) {
-      <section class="day" [class.today]="first">
-        <h3 class="day-name">
-          @if (first) {
-            <ng-container i18n="@@weather.today">Aujourd'hui</ng-container>
-          } @else {
-            <ng-container i18n="@@weather.tomorrow">Demain</ng-container>
-          }
-        </h3>
-
-        <div class="summary">
-          @if (jour.ciel; as ciel) {
-            <span class="sky" role="img" [attr.aria-label]="labels[ciel].label" [title]="labels[ciel].label">
-              {{ labels[ciel].emoji }}
-            </span>
-          }
-          <span class="temps">
-            <span class="max">{{ degrees(jour.temperatureMax) }}</span>
-            <span class="min">{{ degrees(jour.temperatureMin) }}</span>
-          </span>
-        </div>
-
-        <div class="details">
-          <span i18n-title="@@weather.morningFeel" title="Ressenti le matin">
-            🌅 {{ degrees(jour.ressentiMatin) }}
-          </span>
-          <span i18n-title="@@weather.rainRisk" title="Risque de pluie">
-            💧 {{ jour.risquePluie == null ? '–' : (jour.risquePluie / 100 | percent) }}
-          </span>
-        </div>
-
-        <ul class="clothes">
-          @for (item of jour.tenue ?? []; track item) {
-            <li class="tile">
-              <span class="tile-emoji" aria-hidden="true">{{ labels[item].emoji }}</span>
-              <span class="tile-label">{{ labels[item].label }}</span>
-            </li>
-          }
-        </ul>
-
-        @if (jour.superposer) {
-          <p class="layers" i18n="@@weather.layers">
-            Il fera plus chaud l'après-midi : on pourra enlever le pull.
-          </p>
-        }
-      </section>
+      <app-weather-day [day]="jour" [label]="first ? todayLabel : tomorrowLabel" [highlighted]="first" />
     }
   </div>
 } @else if (meteo.error()) {

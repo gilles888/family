@@ -1,0 +1,85 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+}
+
+:host(.highlighted) {
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.day-name {
+  margin: 0;
+  font: var(--mat-sys-title-small);
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sky {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.temps {
+  display: flex;
+  flex-direction: column;
+}
+
+.max {
+  font: var(--mat-sys-title-medium);
+}
+
+.min,
+.details,
+.layers {
+  font: var(--mat-sys-body-small);
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
+.clothes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 2px;
+  border-radius: 8px;
+  background: var(--mat-sys-surface-container-lowest);
+  color: var(--mat-sys-on-surface);
+  text-align: center;
+}
+
+.tile-emoji {
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.tile-label {
+  font: var(--mat-sys-label-small);
+  overflow-wrap: anywhere;
+}
+
+.layers {
+  margin: 0;
+}
