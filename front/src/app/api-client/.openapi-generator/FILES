@@ -3,6 +3,7 @@ api.module.ts
 api/agenda.service.ts
 api/api.ts
 api/membres.service.ts
+api/meteo.service.ts
 api/reminders.service.ts
 configuration.ts
 encoder.ts
@@ -12,6 +13,8 @@ model/agenda-entry-status-request.ts
 model/agenda-generation-summary-dto.ts
 model/family-member-dto.ts
 model/family-member-request.ts
+model/meteo-dto.ts
+model/meteo-jour-dto.ts
 model/models.ts
 model/month-summary-dto.ts
 model/recurrence-rule-dto.ts

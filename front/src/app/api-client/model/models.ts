@@ -3,6 +3,8 @@ export * from './agenda-entry-status-request';
 export * from './agenda-generation-summary-dto';
 export * from './family-member-dto';
 export * from './family-member-request';
+export * from './meteo-dto';
+export * from './meteo-jour-dto';
 export * from './month-summary-dto';
 export * from './recurrence-rule-dto';
 export * from './recurrence-rule-request';
