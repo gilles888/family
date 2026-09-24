@@ -13,10 +13,6 @@
     ],
     "tags": [
         {
-            "name": "Meteo",
-            "description": "M\u00e9t\u00e9o du jour et du lendemain, et tenue conseill\u00e9e pour les enfants"
-        },
-        {
             "name": "Reminders",
             "description": "Cr\u00e9ation/modification des reminders (g\u00e9n\u00e8re les AgendaEntry)"
         },
@@ -27,6 +23,10 @@
         {
             "name": "Membres",
             "description": "Membres de la famille"
+        },
+        {
+            "name": "Meteo",
+            "description": "M\u00e9t\u00e9o des prochains jours et tenue conseill\u00e9e pour les enfants"
         }
     ],
     "paths": {
@@ -396,12 +396,28 @@
                 "tags": [
                     "Meteo"
                 ],
-                "summary": "M\u00e9t\u00e9o d'aujourd'hui et de demain, avec la tenue conseill\u00e9e",
+                "summary": "M\u00e9t\u00e9o des prochains jours (aujourd'hui et demain par d\u00e9faut), avec la tenue conseill\u00e9e",
                 "description": "Source : Open-Meteo, gard\u00e9e en cache. Si Open-Meteo ne r\u00e9pond pas, la derni\u00e8re pr\u00e9vision du jour est resservie.",
                 "operationId": "getMeteo",
+                "parameters": [
+                    {
+                        "name": "jours",
+                        "in": "query",
+                        "description": "Nombre de jours, aujourd'hui compris (1 \u00e0 7)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 2,
+                            "maximum": 7,
+                            "minimum": 1
+                        },
+                        "example": 7
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Pr\u00e9visions et tenues d'aujourd'hui et de demain",
+                        "description": "Pr\u00e9visions et tenues, \u00e0 partir d'aujourd'hui",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -409,6 +425,9 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Nombre de jours hors bornes (1 \u00e0 7)"
                     },
                     "503": {
                         "description": "Open-Meteo injoignable et aucune pr\u00e9vision du jour en cache"

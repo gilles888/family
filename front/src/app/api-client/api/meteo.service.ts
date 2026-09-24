@@ -36,17 +36,29 @@ export class MeteoService extends BaseService {
     }
 
     /**
-     * Météo d\&#39;aujourd\&#39;hui et de demain, avec la tenue conseillée
+     * Météo des prochains jours (aujourd\&#39;hui et demain par défaut), avec la tenue conseillée
      * Source : Open-Meteo, gardée en cache. Si Open-Meteo ne répond pas, la dernière prévision du jour est resservie.
      * @endpoint get /v1/meteo
+     * @param jours Nombre de jours, aujourd\&#39;hui compris (1 à 7)
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getMeteo(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<MeteoDTO>;
-    public getMeteo(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<MeteoDTO>>;
-    public getMeteo(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<MeteoDTO>>;
-    public getMeteo(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getMeteo(jours?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<MeteoDTO>;
+    public getMeteo(jours?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<MeteoDTO>>;
+    public getMeteo(jours?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<MeteoDTO>>;
+    public getMeteo(jours?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'jours',
+            <any>jours,
+            QueryParamStyle.Form,
+            true,
+        );
+
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -78,6 +90,7 @@ export class MeteoService extends BaseService {
         return this.httpClient.request<MeteoDTO>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                params: localVarQueryParameters.toHttpParams(),
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

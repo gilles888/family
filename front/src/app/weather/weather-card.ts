@@ -8,6 +8,8 @@ import { SKIP_ERROR_NOTIFICATION } from '../shared/api-error.interceptor';
 import { WEATHER_LABELS } from './weather-labels';
 
 const REFRESH_INTERVAL_MS = 30 * 60 * 1000;
+/** Aujourd'hui et demain. */
+const CARD_DAYS = 2;
 
 /** Météo d'aujourd'hui et de demain, et la tenue conseillée pour les enfants. */
 @Component({
@@ -23,7 +25,7 @@ export class WeatherCard {
   /** L'erreur est affichée dans la carte : pas de snack-bar, notamment à chaque rechargement automatique. */
   protected readonly meteo = rxResource<MeteoDTO, void>({
     stream: () =>
-      this.meteoApi.getMeteo('body', false, {
+      this.meteoApi.getMeteo(CARD_DAYS, 'body', false, {
         context: new HttpContext().set(SKIP_ERROR_NOTIFICATION, true),
       }),
   });
