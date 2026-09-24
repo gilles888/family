@@ -1,4 +1,12 @@
-<h2 class="heading" i18n="@@weather.title">Comment s'habiller ?</h2>
+<div class="header">
+  <h2 class="heading" i18n="@@weather.title">Comment s'habiller ?</h2>
+  @if (meteo.hasValue()) {
+    <button matButton (click)="openWeek()">
+      <mat-icon>date_range</mat-icon>
+      <ng-container i18n="@@weather.weekButton">Toute la semaine</ng-container>
+    </button>
+  }
+</div>
 
 @if (meteo.hasValue()) {
   <div class="days">

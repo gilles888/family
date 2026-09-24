@@ -3,8 +3,17 @@
   flex-shrink: 0;
 }
 
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 8px;
+  margin-bottom: 8px;
+}
+
 .heading {
-  margin: 0 0 8px;
+  margin: 0;
   font: var(--mat-sys-title-large);
 }
 

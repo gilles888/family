@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>
+  <ng-container i18n="@@weather.weekTitle">La météo de la semaine</ng-container>
+  @if (meteo.hasValue()) {
+    <span class="place">{{ meteo.value().lieu }}</span>
+  }
+</h2>
+
+<mat-dialog-content>
+  @if (meteo.isLoading()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+
+  @if (meteo.hasValue()) {
+    <div class="days">
+      @for (d of days(); track d.day.date; let first = $first) {
+        <app-weather-day [day]="d.day" [label]="d.label" [highlighted]="first" />
+      }
+    </div>
+    <p class="note" i18n="@@weather.weekReliability">
+      Les prévisions au-delà de 3 jours sont moins fiables.
+    </p>
+  } @else if (meteo.error()) {
+    <div class="error">
+      <span i18n="@@weather.error">Météo indisponible pour le moment.</span>
+      <button matButton (click)="meteo.reload()" i18n="@@common.retry">
+        Réessayer
+      </button>
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button matButton mat-dialog-close i18n="@@common.close">Fermer</button>
+</mat-dialog-actions>
