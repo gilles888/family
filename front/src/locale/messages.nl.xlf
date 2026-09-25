@@ -3190,6 +3190,254 @@
           <context context-type="linenumber">527</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nav.routines" datatype="html">
+        <source>Routines</source>
+        <target>Routines</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">12,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.badge" datatype="html">
+        <source>Je peux le faire !</source>
+        <target>Ik kan het!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-board.html</context>
+          <context context-type="linenumber">23,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.footer.night" datatype="html">
+        <source>Fais de beaux rêves !</source>
+        <target>Droom maar mooi!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-board.html</context>
+          <context context-type="linenumber">69,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.footer.day" datatype="html">
+        <source>Bien joué !</source>
+        <target>Goed gedaan!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-board.html</context>
+          <context context-type="linenumber">71,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.wakeUp" datatype="html">
+        <source>Réveil</source>
+        <target>Wekker</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.toilet" datatype="html">
+        <source>Toilettes</source>
+        <target>Toilet</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.toothbrush" datatype="html">
+        <source>Brosse à dents</source>
+        <target>Tandenborstel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.washbasin" datatype="html">
+        <source>Lavabo</source>
+        <target>Lavabo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.clothes" datatype="html">
+        <source>Vêtements</source>
+        <target>Kleren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.comb" datatype="html">
+        <source>Peigne</source>
+        <target>Kam</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.breakfast" datatype="html">
+        <source>Petit-déjeuner</source>
+        <target>Ontbijt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.schoolbag" datatype="html">
+        <source>Cartable</source>
+        <target>Boekentas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.waterBottle" datatype="html">
+        <source>Gourde</source>
+        <target>Drinkfles</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.shoes" datatype="html">
+        <source>Chaussures</source>
+        <target>Schoenen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">140</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.shower" datatype="html">
+        <source>Douche</source>
+        <target>Douche</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.pyjamas" datatype="html">
+        <source>Pyjama</source>
+        <target>Pyjama</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">171</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.book" datatype="html">
+        <source>Livre</source>
+        <target>Boek</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">182</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.bed" datatype="html">
+        <source>Lit</source>
+        <target>Bed</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">193</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.moon" datatype="html">
+        <source>Lune</source>
+        <target>Maan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">207</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.sun" datatype="html">
+        <source>Soleil</source>
+        <target>Zon</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">218</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.finish" datatype="html">
+        <source>Fini !</source>
+        <target>Klaar!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">233</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.clock" datatype="html">
+        <source>Horloge</source>
+        <target>Klok</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">245</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.coat" datatype="html">
+        <source>Manteau</source>
+        <target>Jas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">260</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.glasses" datatype="html">
+        <source>Lunettes</source>
+        <target>Bril</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">271</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.medicine" datatype="html">
+        <source>Médicament</source>
+        <target>Medicijn</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">284</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.pet" datatype="html">
+        <source>Animal</source>
+        <target>Huisdier</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">295</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineIcon.toys" datatype="html">
+        <source>Ranger les jouets</source>
+        <target>Speelgoed opruimen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-icons.ts</context>
+          <context context-type="linenumber">309</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routines.who" datatype="html">
+        <source>Qui es-tu ?</source>
+        <target>Wie ben jij?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routines.changePerson" datatype="html">
+        <source>Changer</source>
+        <target>Wisselen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">18,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routines.loadError" datatype="html">
+        <source>Impossible de charger les routines.</source>
+        <target>Kan de routines niet laden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routines.none" datatype="html">
+        <source>Pas de routine aujourd&apos;hui. Profite bien ! 🎈</source>
+        <target>Vandaag geen routine. Veel plezier! 🎈</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

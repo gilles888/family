@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { FamilyMemberDTO } from '../api-client';
+import { SvgShapes } from '../shared/svg/svg-shapes';
 import { AvatarConfig, defaultAvatar, normalizeAvatar } from './avatar-config';
 import { LayerKey, drawAvatar } from './avatar-layers';
 
@@ -18,6 +19,7 @@ const SMALL = 40;
  */
 @Component({
   selector: 'app-avatar',
+  imports: [SvgShapes],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[style.width]': 'size() === null ? "100%" : size() + "px"',
@@ -48,59 +50,7 @@ const SMALL = 40;
         <rect data-layer="background" width="200" height="200" [attr.fill]="bg.color" />
       }
       @for (layer of drawing().layers; track layer.key) {
-        <g [attr.data-layer]="layer.key" [attr.data-part]="layer.part">
-          @for (s of layer.shapes; track $index) {
-            @switch (s.el) {
-              @case ('path') {
-                <path
-                  [attr.d]="s.d"
-                  [attr.fill]="s.fill"
-                  [attr.stroke]="s.stroke"
-                  [attr.stroke-width]="s.sw"
-                  [attr.opacity]="s.opacity"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              }
-              @case ('circle') {
-                <circle
-                  [attr.cx]="s.cx"
-                  [attr.cy]="s.cy"
-                  [attr.r]="s.r"
-                  [attr.fill]="s.fill"
-                  [attr.stroke]="s.stroke"
-                  [attr.stroke-width]="s.sw"
-                  [attr.opacity]="s.opacity"
-                />
-              }
-              @case ('ellipse') {
-                <ellipse
-                  [attr.cx]="s.cx"
-                  [attr.cy]="s.cy"
-                  [attr.rx]="s.rx"
-                  [attr.ry]="s.ry"
-                  [attr.fill]="s.fill"
-                  [attr.stroke]="s.stroke"
-                  [attr.stroke-width]="s.sw"
-                  [attr.opacity]="s.opacity"
-                />
-              }
-              @case ('rect') {
-                <rect
-                  [attr.x]="s.x"
-                  [attr.y]="s.y"
-                  [attr.width]="s.w"
-                  [attr.height]="s.h"
-                  [attr.rx]="s.rx"
-                  [attr.fill]="s.fill"
-                  [attr.stroke]="s.stroke"
-                  [attr.stroke-width]="s.sw"
-                  [attr.opacity]="s.opacity"
-                />
-              }
-            }
-          }
-        </g>
+        <g [attr.data-layer]="layer.key" [attr.data-part]="layer.part" [appShapes]="layer.shapes"></g>
       }
     </svg>
   `,

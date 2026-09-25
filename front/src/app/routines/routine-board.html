@@ -1,0 +1,73 @@
+<header class="board-header">
+  <div class="decor" aria-hidden="true">
+    @if (routine().theme === 'NIGHT') {
+      <app-routine-icon class="decor-main" icon="moon" [size]="84" />
+      <span class="twinkle t1">✦</span>
+      <span class="twinkle t2">✦</span>
+      <span class="twinkle t3">✦</span>
+    } @else {
+      <svg class="rainbow" viewBox="0 0 120 60">
+        @for (c of ['#ef5350', '#ffa726', '#ffee58', '#66bb6a', '#42a5f5', '#7e57c2']; track c; let i = $index) {
+          <path [attr.d]="'M' + (8 + i * 6) + ' 60 A' + (52 - i * 6) + ' ' + (52 - i * 6) + ' 0 0 1 ' + (112 - i * 6) + ' 60'" fill="none" [attr.stroke]="c" stroke-width="6" />
+        }
+      </svg>
+      <app-routine-icon class="decor-main" icon="sun" [size]="84" />
+    }
+  </div>
+  <div class="titles">
+    <h2 class="title">{{ routine().nom }}</h2>
+    @if (routine().sousTitre) {
+      <p class="subtitle">{{ routine().sousTitre }}</p>
+    }
+  </div>
+  <span class="badge" i18n="@@routine.badge">Je peux le faire !</span>
+</header>
+
+<div class="progress" role="progressbar" [attr.aria-valuenow]="progress().done" aria-valuemin="0" [attr.aria-valuemax]="progress().total">
+  <div class="bar"><div class="fill" [style.width.%]="percent()"></div></div>
+  <span class="count">{{ progress().done }} / {{ progress().total }}</span>
+</div>
+
+<ol class="steps">
+  @for (step of steps(); track step.id; let i = $index) {
+    <li>
+      <button
+        type="button"
+        role="checkbox"
+        class="step"
+        [class.done]="checked().has(step.id!)"
+        [attr.aria-checked]="checked().has(step.id!)"
+        [style.--row]="step.couleur"
+        [style.--strong]="strong(step)"
+        (click)="onToggle(step)"
+      >
+        <span class="number" aria-hidden="true">{{ i + 1 }}</span>
+        <span class="picture" aria-hidden="true">
+          @if (withCharacter(step) && member()) {
+            <app-avatar class="hero" [member]="member()" [size]="44" />
+          }
+          <app-routine-icon [icon]="step.icone ?? ''" [size]="52" />
+        </span>
+        <span class="label">{{ step.libelle }}</span>
+        <span class="box" aria-hidden="true">
+          @if (checked().has(step.id!)) {
+            <mat-icon>check</mat-icon>
+          }
+          @for (b of burstsOf(step.id!); track b.id) {
+            @for (c of confetti; track $index; let k = $index) {
+              <i class="confetto" [style.--k]="k" [style.background]="c"></i>
+            }
+          }
+        </span>
+      </button>
+    </li>
+  }
+</ol>
+
+<footer class="board-footer">
+  @if (routine().theme === 'NIGHT') {
+    <span i18n="@@routine.footer.night">Fais de beaux rêves !</span> 🌙
+  } @else {
+    <span i18n="@@routine.footer.day">Bien joué !</span> 🌈
+  }
+</footer>

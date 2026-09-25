@@ -12,7 +12,7 @@ import {
   OUTFIT_COLORS,
   SKIN_TONES,
 } from './avatar-parts';
-import { isHexColor, lighten } from './avatar-shapes';
+import { isHexColor, lighten } from '../shared/svg/shapes';
 
 /** Version du catalogue : à incrémenter si le sens d'un champ change (les ids retirés, eux, sont tolérés). */
 export const AVATAR_VERSION = 1;

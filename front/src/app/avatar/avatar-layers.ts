@@ -1,6 +1,6 @@
 import { AvatarConfig } from './avatar-config';
 import { BACKGROUND_GRADIENTS, GradientOption, HEAD_SHAPES, SKIN_TONES, findPart } from './avatar-parts';
-import { PaintContext, Shape, resolvePaint } from './avatar-shapes';
+import { PaintContext, Shape, resolvePaint } from '../shared/svg/shapes';
 
 /**
  * Calques, du fond vers l'avant. Les cheveux « arrière » passent derrière la tête (sinon ils couvriraient le

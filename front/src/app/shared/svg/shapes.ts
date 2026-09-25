@@ -1,5 +1,5 @@
 /**
- * Formes SVG des pièces d'avatar, décrites en données (pas de chaîne HTML : rien à désinfecter, et les couleurs
+ * Formes SVG des catalogues (pièces d'avatar, icônes de routine), décrites en données (pas de chaîne HTML : rien à désinfecter, et les couleurs
  * venant du serveur ne sont jamais insérées telles quelles). Toutes les pièces partagent le viewBox 0 0 200 200 :
  * elles s'emboîtent sans calcul.
  *
@@ -108,6 +108,28 @@ export function mix(a: string, b: string, ratio: number): string {
 
 export const darken = (color: string, amount: number) => mix(color, '#000000', amount);
 export const lighten = (color: string, amount: number) => mix(color, '#ffffff', amount);
+
+/**
+ * Version franche d'une couleur pastel (même teinte, saturée et plus sombre) : numéro et case à cocher d'une ligne
+ * de routine. Assombrir un pastel donnerait un gris terne.
+ */
+export function vivid(color: string, saturation = 0.62, lightness = 0.46): string {
+  const [r, g, b] = rgb(color).map((c) => c / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const d = max - min;
+  let h = 0;
+  if (d > 0) {
+    h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  }
+  h = (h * 60 + 360) % 360;
+  const c = (1 - Math.abs(2 * lightness - 1)) * saturation;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = lightness - c / 2;
+  const [r1, g1, b1] = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x] : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x];
+  const hex = (v: number) => Math.round((v + m) * 255).toString(16).padStart(2, '0');
+  return `#${hex(r1)}${hex(g1)}${hex(b1)}`;
+}
 
 function rgb(hex: string): [number, number, number] {
   const n = parseInt(hex.slice(1), 16);

@@ -5,10 +5,21 @@
   </a>
 
   <nav>
-    <a matButton routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" i18n="@@nav.agenda">Agenda</a>
-    <a matButton routerLink="/recettes" routerLinkActive="active" i18n="@@nav.recipes">Recettes</a>
-    <a matButton routerLink="/courses" routerLinkActive="active" i18n="@@nav.shopping">Courses</a>
-    <a matButton routerLink="/membres" routerLinkActive="active" i18n="@@nav.members">Membres</a>
+    <a matButton routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <mat-icon class="nav-icon">event</mat-icon><span class="nav-label" i18n="@@nav.agenda">Agenda</span>
+    </a>
+    <a matButton routerLink="/routines" routerLinkActive="active">
+      <mat-icon class="nav-icon">stars</mat-icon><span class="nav-label" i18n="@@nav.routines">Routines</span>
+    </a>
+    <a matButton routerLink="/recettes" routerLinkActive="active">
+      <mat-icon class="nav-icon">menu_book</mat-icon><span class="nav-label" i18n="@@nav.recipes">Recettes</span>
+    </a>
+    <a matButton routerLink="/courses" routerLinkActive="active">
+      <mat-icon class="nav-icon">shopping_cart</mat-icon><span class="nav-label" i18n="@@nav.shopping">Courses</span>
+    </a>
+    <a matButton routerLink="/membres" routerLinkActive="active">
+      <mat-icon class="nav-icon">group</mat-icon><span class="nav-label" i18n="@@nav.members">Membres</span>
+    </a>
   </nav>
 
   <span class="spacer"></span>

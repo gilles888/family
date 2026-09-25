@@ -1,0 +1,63 @@
+@if (!params().membre) {
+  <h1 class="ask" i18n="@@routines.who">Qui es-tu ?</h1>
+  @if (members.isLoading()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+  <div class="people">
+    @for (m of members.value() ?? []; track m.id) {
+      <button type="button" class="person" [style.--member-color]="m.couleur" (click)="chooseMember(m)">
+        <app-avatar [member]="m" [size]="null" [round]="false" />
+        <span class="name">{{ m.nom }}</span>
+      </button>
+    }
+  </div>
+} @else {
+  <div class="top">
+    <button matButton (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
+      <ng-container i18n="@@routines.changePerson">Changer</ng-container>
+    </button>
+    @if (member(); as m) {
+      <span class="me">
+        <app-avatar [member]="m" [size]="44" />
+        <span>{{ m.nom }}</span>
+      </span>
+    }
+  </div>
+
+  @if (routines.isLoading() && !routines.hasValue()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else if (routines.error()) {
+    <div class="empty">
+      <p i18n="@@routines.loadError">Impossible de charger les routines.</p>
+      <button matButton="outlined" (click)="routines.reload()" i18n="@@common.retry">Réessayer</button>
+    </div>
+  } @else if (ofDay().length === 0) {
+    <p class="empty" i18n="@@routines.none">Pas de routine aujourd'hui. Profite bien ! 🎈</p>
+  } @else {
+    @if (ofDay().length > 1) {
+      <div class="choices" role="tablist">
+        @for (r of ofDay(); track r.id) {
+          <button
+            type="button"
+            role="tab"
+            class="choice"
+            [class.active]="r.id === selected()?.id"
+            [class.done]="r.etat?.terminee"
+            [attr.aria-selected]="r.id === selected()?.id"
+            (click)="chooseRoutine(r)"
+          >
+            <mat-icon>{{ r.theme === 'NIGHT' ? 'bedtime' : 'wb_sunny' }}</mat-icon>
+            <span>{{ r.nom }}</span>
+            @if (r.etat?.terminee) {
+              <mat-icon class="star">star</mat-icon>
+            }
+          </button>
+        }
+      </div>
+    }
+    @if (selected(); as r) {
+      <app-routine-board [routine]="r" [member]="member()" (toggle)="toggle(r, $event)" />
+    }
+  }
+}

@@ -6,7 +6,7 @@
  * dans les avatars des membres), libellé traduit ($localize + messages.nl.xlf). Retirer une pièce : les avatars qui
  * l'utilisaient retombent sur la pièce par défaut de l'emplacement (normalizeAvatar), sans erreur.
  */
-import { INK, Shape, circle, ellipse, line, path, rect, star } from './avatar-shapes';
+import { INK, Shape, circle, ellipse, line, path, rect, star } from '../shared/svg/shapes';
 
 /** Emplacements : une pièce posée va toujours au sien. */
 export type AvatarSlot = 'background' | 'body' | 'head' | 'eyes' | 'mouth' | 'hair' | 'hat' | 'accessory';
