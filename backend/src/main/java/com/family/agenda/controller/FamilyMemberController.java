@@ -4,6 +4,7 @@ import com.family.agenda.dto.FamilyMemberDTO;
 import com.family.agenda.dto.FamilyMemberRequest;
 import com.family.agenda.service.FamilyMemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/membres", version = "1", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,6 +62,19 @@ public class FamilyMemberController {
     @ApiResponse(responseCode = "404", description = "Membre introuvable")
     public FamilyMemberDTO update(@PathVariable Long id, @Valid @RequestBody FamilyMemberRequest request) {
         return service.update(id, request);
+    }
+
+    @PutMapping(path = "/{id}/avatar", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(operationId = "updateAvatarMembre", summary = "Enregistrer le personnage (avatar) d'un membre",
+            description = """
+                    Corps : un objet JSON libre (pièces du catalogue front, couleurs, `version` du catalogue), \
+                    2000 caractères au plus une fois sérialisé. `null` revient à l'avatar par défaut.""")
+    @ApiResponse(responseCode = "200", description = "Membre, avec son avatar")
+    @ApiResponse(responseCode = "400", description = "Corps qui n'est pas un objet JSON, ou trop long", content = @Content)
+    @ApiResponse(responseCode = "404", description = "Membre introuvable", content = @Content)
+    public FamilyMemberDTO updateAvatar(@PathVariable Long id,
+                                        @RequestBody(required = false) Map<String, Object> avatarConfig) {
+        return service.updateAvatar(id, avatarConfig);
     }
 
     @DeleteMapping("/{id}")

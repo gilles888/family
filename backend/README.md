@@ -141,6 +141,7 @@ Toutes les URL sont préfixées par `/v1`. Les endpoints de l'agenda acceptent `
 | GET / PUT / DELETE | `/v1/reminders/{id}` | détail / modifier (régénère le futur) / supprimer |
 | GET / POST | `/v1/membres` | lister / créer |
 | GET / PUT / DELETE | `/v1/membres/{id}` | détail / modifier / supprimer |
+| PUT | `/v1/membres/{id}/avatar` | enregistrer le personnage : objet JSON libre (catalogue côté front, champ `version`), 2000 caractères max ; `null` = avatar par défaut |
 | GET | `/v1/recettes?q=` | recettes par ordre alphabétique (résumés), `q` = recherche dans le nom (sans casse) |
 | POST | `/v1/recettes` | créer une recette ; ingrédients désignés **par nom**, créés à la volée s'ils n'existent pas |
 | GET / PUT / DELETE | `/v1/recettes/{id}` | détail (avec ingrédients) / modifier (remplace tout) / supprimer (les repas gardent son nom) |
