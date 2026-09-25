@@ -1,0 +1,71 @@
+<div class="bar">
+  <h2 class="title">
+    @if (phase() === 'playing' || phase() === 'done') {
+      {{ title() }}
+    } @else {
+      <span i18n="@@reward.title">🎁 Ta récompense</span>
+    }
+  </h2>
+  <button
+    matIconButton
+    (click)="sound.toggle()"
+    [attr.aria-pressed]="sound.enabled()"
+    i18n-aria-label="@@reward.sound"
+    aria-label="Son"
+    [title]="sound.enabled() ? '🔊' : '🔇'"
+  >
+    <mat-icon>{{ sound.enabled() ? 'volume_up' : 'volume_off' }}</mat-icon>
+  </button>
+  <button matIconButton (click)="close()" i18n-aria-label="@@common.close" aria-label="Fermer">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="stage">
+  @switch (phase()) {
+    @case ('choose') {
+      <p class="ask" i18n="@@reward.choose">Choisis ton jeu !</p>
+      <div class="choices">
+        @for (g of choices; track g.id) {
+          <button type="button" class="choice" (click)="start(g)">
+            <app-routine-icon [icon]="g.icon" [size]="72" />
+            <span class="name">{{ g.name }}</span>
+          </button>
+        }
+      </div>
+    }
+    @case ('starting') {
+      <p class="ask">…</p>
+    }
+    @case ('playing') {
+      <ng-container *ngComponentOutlet="game()!.component; injector: gameInjector" />
+    }
+    @case ('done') {
+      <div class="end">
+        <div class="stars" aria-hidden="true">
+          @for (s of [1, 2, 3, 4, 5]; track s) {
+            <span class="star" [style.--i]="s">⭐</span>
+          }
+        </div>
+        <app-avatar class="hero" [member]="data.member" [size]="140" />
+        <p class="bravo" i18n="@@reward.bravo">Bravo {{ data.member.nom }} !</p>
+        @if (score() !== null) {
+          <p class="score">{{ score() }} 🌟</p>
+        }
+        <button matButton="outlined" disabled>
+          <mat-icon>replay</mat-icon>
+          <ng-container i18n="@@reward.replay">Rejouer</ng-container>
+        </button>
+        <p class="soft" i18n="@@reward.tomorrow">Une partie par routine et par jour. À demain pour une nouvelle partie !</p>
+        <button matButton="filled" (click)="close()" i18n="@@reward.finish">Terminer</button>
+      </div>
+    }
+    @case ('already') {
+      <div class="end">
+        <app-avatar class="hero" [member]="data.member" [size]="120" />
+        <p class="soft" i18n="@@reward.already">Tu as déjà joué aujourd'hui pour cette routine. À demain !</p>
+        <button matButton="filled" (click)="close()" i18n="@@common.close">Fermer</button>
+      </div>
+    }
+  }
+</div>

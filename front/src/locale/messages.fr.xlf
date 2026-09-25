@@ -1391,6 +1391,13 @@
           <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="game.bubbles" datatype="html">
+        <source>Éclate les bulles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/games/games.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="meal.editTitle" datatype="html">
         <source>Modifier le repas</source>
         <context-group purpose="location">
@@ -1846,6 +1853,14 @@
           <context context-type="linenumber">71,72</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">67,69</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/notification.service.ts</context>
           <context context-type="linenumber">8</context>
         </context-group>
@@ -2231,6 +2246,62 @@
           <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="reward.title" datatype="html">
+        <source>🎁 Ta récompense</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reward.sound" datatype="html">
+        <source>Son</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reward.choose" datatype="html">
+        <source>Choisis ton jeu !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reward.bravo" datatype="html">
+        <source>Bravo <x id="INTERPOLATION" equiv-text="{{ data.member.nom }}"/> !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reward.replay" datatype="html">
+        <source>Rejouer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reward.tomorrow" datatype="html">
+        <source>Une partie par routine et par jour. À demain pour une nouvelle partie !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reward.finish" datatype="html">
+        <source>Terminer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reward.already" datatype="html">
+        <source>Tu as déjà joué aujourd&apos;hui pour cette routine. À demain !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routine.badge" datatype="html">
         <source>Je peux le faire !</source>
         <context-group purpose="location">
@@ -2238,18 +2309,46 @@
           <context context-type="linenumber">23,26</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routine.bravoName" datatype="html">
+        <source>Bravo <x id="INTERPOLATION" equiv-text="{{ m.nom }}"/>, tout est fait !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-board.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.bravo" datatype="html">
+        <source>Bravo, tout est fait !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-board.html</context>
+          <context context-type="linenumber">81,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.rewardPlayed" datatype="html">
+        <source>Récompense jouée aujourd&apos;hui. À demain !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-board.html</context>
+          <context context-type="linenumber">85,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.reward" datatype="html">
+        <source>Ma récompense</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-board.html</context>
+          <context context-type="linenumber">89,90</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routine.footer.night" datatype="html">
         <source>Fais de beaux rêves !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routine-board.html</context>
-          <context context-type="linenumber">69,71</context>
+          <context context-type="linenumber">97,99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="routine.footer.day" datatype="html">
         <source>Bien joué !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routine-board.html</context>
-          <context context-type="linenumber">71,74</context>
+          <context context-type="linenumber">99,102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="routineEditor.editTitle" datatype="html">

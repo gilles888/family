@@ -64,6 +64,34 @@
   }
 </ol>
 
+@if (finished()) {
+  <section #celebration class="celebration" aria-live="polite">
+    <div class="sparkles" aria-hidden="true">
+      @for (s of [1, 2, 3, 4, 5, 6, 7]; track s) {
+        <span class="sparkle" [style.--i]="s">⭐</span>
+      }
+    </div>
+    @if (member(); as m) {
+      <app-avatar class="hero" [member]="m" [size]="110" />
+    }
+    <p class="bravo">
+      @if (member(); as m) {
+        <ng-container i18n="@@routine.bravoName">Bravo {{ m.nom }}, tout est fait !</ng-container>
+      } @else {
+        <ng-container i18n="@@routine.bravo">Bravo, tout est fait !</ng-container>
+      }
+    </p>
+    @if (routine().etat?.recompenseJouee) {
+      <p class="played" i18n="@@routine.rewardPlayed">Récompense jouée aujourd'hui. À demain !</p>
+    } @else {
+      <button type="button" class="reward" (click)="reward.emit()">
+        <span aria-hidden="true">🎁</span>
+        <ng-container i18n="@@routine.reward">Ma récompense</ng-container>
+      </button>
+    }
+  </section>
+}
+
 <footer class="board-footer">
   @if (routine().theme === 'NIGHT') {
     <span i18n="@@routine.footer.night">Fais de beaux rêves !</span> 🌙

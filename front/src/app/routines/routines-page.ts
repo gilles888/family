@@ -4,10 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { FamilyMemberDTO, MembresService, RoutineDTO, RoutinesService } from '../api-client';
+import { FamilyMemberDTO, MembresService, RoutineDTO, RoutineRunDTO, RoutinesService } from '../api-client';
 import { Avatar } from '../avatar/avatar';
 import { toIsoDate } from '../shared/date-utils';
+import { RewardData, RewardDialog } from './reward-dialog';
 import { RoutineBoard } from './routine-board';
 import { currentRoutine, routinesOfDay, toggledRun } from './routine-logic';
 
@@ -27,6 +29,7 @@ export class RoutinesPage {
   private readonly api = inject(RoutinesService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly dialog = inject(MatDialog);
 
   protected readonly params = toSignal(this.route.queryParamMap.pipe(map((p) => ({ membre: Number(p.get('membre')) || null, routine: Number(p.get('routine')) || null }))), {
     initialValue: { membre: null, routine: null },
@@ -79,6 +82,25 @@ export class RoutinesPage {
       next: (etat) => latest() && this.patch(routine.id!, (r) => ({ ...r, etat })),
       error: () => latest() && this.routines.reload(),
     });
+  }
+
+  /** Mini-jeu de récompense (plein écran) ; au retour, la routine sait que la partie du jour est jouée. */
+  protected openReward(routine: RoutineDTO): void {
+    const member = this.member();
+    if (!member) {
+      return;
+    }
+    this.dialog
+      .open<RewardDialog, RewardData, RoutineRunDTO>(RewardDialog, {
+        data: { routine, member, date: this.todayIso },
+        width: '100vw',
+        maxWidth: '100vw',
+        height: '100dvh',
+        maxHeight: '100dvh',
+        panelClass: 'reward-panel',
+      })
+      .afterClosed()
+      .subscribe((etat) => etat && this.patch(routine.id!, (r) => ({ ...r, etat })));
   }
 
   private patch(id: number, change: (routine: RoutineDTO) => RoutineDTO): void {

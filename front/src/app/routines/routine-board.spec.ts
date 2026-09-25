@@ -76,4 +76,37 @@ describe('RoutineBoard', () => {
 
     expect(toggled).toEqual([12]);
   });
+
+  describe('récompense', () => {
+    const done = (recompenseJouee: boolean): RoutineDTO => ({
+      ...ROUTINE,
+      etat: { date: '2026-09-25', etapesCochees: [10, 11, 12], terminee: true, recompenseJouee },
+    });
+
+    it('pas de fête tant que la routine n’est pas finie', () => {
+      render(ROUTINE);
+
+      expect(el.querySelector('.celebration')).toBeNull();
+      expect(el.querySelector('.reward')).toBeNull();
+    });
+
+    it('routine finie : bravo et bouton « Ma récompense », qui déclenche la récompense', () => {
+      render(done(false));
+      let asked = 0;
+      ref.instance.reward.subscribe(() => asked++);
+
+      expect(el.querySelector('.bravo')?.textContent).toContain('Tom');
+      el.querySelector<HTMLButtonElement>('.reward')!.click();
+
+      expect(asked).toBe(1);
+    });
+
+    it('récompense déjà jouée aujourd’hui : plus de bouton', () => {
+      render(done(true));
+
+      expect(el.querySelector('.celebration')).not.toBeNull();
+      expect(el.querySelector('.reward')).toBeNull();
+      expect(el.querySelector('.played')).not.toBeNull();
+    });
+  });
 });

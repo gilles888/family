@@ -55,3 +55,8 @@ body {
     }
   }
 }
+
+// Récompense (mini-jeu) : plein écran, sans coins arrondis
+.reward-panel .mat-mdc-dialog-surface {
+  border-radius: 0;
+}

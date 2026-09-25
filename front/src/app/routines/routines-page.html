@@ -57,7 +57,7 @@
       </div>
     }
     @if (selected(); as r) {
-      <app-routine-board [routine]="r" [member]="member()" (toggle)="toggle(r, $event)" />
+      <app-routine-board [routine]="r" [member]="member()" (toggle)="toggle(r, $event)" (reward)="openReward(r)" />
     }
   }
 }
