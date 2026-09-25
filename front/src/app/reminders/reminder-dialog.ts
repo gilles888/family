@@ -17,6 +17,7 @@ import { EnumLabelPipe } from '../shared/enum-label.pipe';
 import { NotificationService } from '../shared/notification.service';
 import { combine, parseIsoDate, parseIsoDateTime, toIsoDate, toIsoDateTime } from '../shared/date-utils';
 import { FREQUENCIES, Frequency, REMINDER_TYPES, ReminderType, WEEKDAY_REFERENCE_DATES, WEEK_DAYS, WeekDay } from '../shared/labels';
+import { Avatar } from '../avatar/avatar';
 
 export interface ReminderDialogData {
   members: FamilyMemberDTO[];
@@ -47,6 +48,7 @@ const minutesOf = (d: Date) => d.getHours() * 60 + d.getMinutes();
     MatSlideToggleModule,
     MatTimepickerModule,
     EnumLabelPipe,
+    Avatar,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './reminder-dialog.html',

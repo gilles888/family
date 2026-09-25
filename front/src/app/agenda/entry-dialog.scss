@@ -10,8 +10,11 @@
   font: var(--mat-sys-title-medium);
 }
 .member {
-  padding: 0 10px;
-  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px 2px 2px;
+  border-radius: 14px;
   font: var(--mat-sys-label-medium);
 }
 h3 {

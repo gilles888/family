@@ -10,12 +10,13 @@
   font: var(--mat-sys-title-large);
 }
 
-.dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
+.chip-avatar {
+  margin: -4px 6px -4px -4px;
+  vertical-align: middle;
+}
+
+.member app-avatar {
   margin-right: 4px;
-  border-radius: 50%;
   vertical-align: middle;
 }
 

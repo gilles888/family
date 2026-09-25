@@ -27,7 +27,7 @@ Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dan
 - **Filtre par membre** (`mat-chip-listbox`, avec les couleurs des membres) appliqué à toutes les vues.
 - **Nouveau rappel / édition** (`mat-dialog`) : titre, description, type, membres, date (datepicker), heures (timepicker), interrupteur de récurrence et sous-formulaire (fréquence, intervalle, jours de la semaine, fin par date ou nombre d'occurrences).
 - **Clic sur une entrée** : détail, changement de statut (Prévu / Terminé / Annulé / Déplacé — une seule occurrence est modifiée), modification ou suppression du rappel.
-- **Membres** (`/membres`) : liste, ajout, modification, suppression.
+- **Membres** (`/membres`) : cartes avec le personnage de chacun, ajout, modification, suppression ; **éditeur de personnage** (voir *Personnages*).
 - **Recettes** (`/recettes`) et **repas de la semaine** : voir *Repas et recettes*.
 - **Courses** (`/courses`) : liste de courses générée depuis les repas, garde-manger (voir *Liste de courses*).
 - **Comment s'habiller ?** : carte en haut de la colonne des tâches (voir *Carte météo*).
@@ -57,6 +57,22 @@ Page **`/courses`** (`ShoppingPage`), pensée d'abord pour le téléphone en mag
 - **Déjà à la maison** : section repliée en bas de liste, chaque article se remet dans les achats en un tap.
 - **Vider les achetés** (bouton du résumé ou menu ⋮) ; **Garde-manger** (menu ⋮, `PantryDialog`) : ajouter / retirer les ingrédients qu'on a toujours.
 - `ShoppingStore` (service racine) garde la liste pour la page **et** la carte Courses de la page Mobile : un chargement, modifications reportées localement.
+
+## Personnages (`src/app/avatar/`)
+
+Chaque membre a un personnage (avatar) à habiller, pensé pour les enfants. Il remplace les pastilles de couleur dans l'onglet Membres, les filtres et la liste des tâches (donc la page Mobile), la vue Jour, le détail d'une entrée et le choix des membres d'un rappel. Les vues Semaine et Mois gardent la couleur du membre.
+
+- **`<app-avatar>`** : SVG pur, sans image externe. `[member]` (son personnage, ou l'avatar par défaut), ou `[config]` ; `[size]` en px (`null` = toute la largeur) ; sous 40 px, le cadrage se resserre sur la tête.
+- **Calques**, du fond vers l'avant : fond, habit, cheveux arrière, tête (teint), col de l'habit, yeux, bouche, cheveux avant, chapeau, accessoire. Les cheveux « arrière » passent derrière la tête, sinon ils couvriraient le visage.
+- **Catalogue** (`avatar-parts.ts`) : dessins originaux, style plat et arrondi, viewBox commun `0 0 200 200`. Chaque pièce est décrite **en données** (formes `path`, `circle`, `ellipse`, `rect`) et non en chaîne SVG : rien n'est injecté par `innerHTML`, et les couleurs sont des jetons (`$c`, `$d`, `$skin`…) résolus au rendu. Une couleur venant du serveur n'est utilisée que si elle est au format `#RRGGBB`.
+- **Config** (`avatar-config.ts`) : `{ version, skin, eyes, mouth, hair, hairColor, outfit, outfitColor, hat, accessory, background }`, enregistrée par `PUT /v1/membres/{id}/avatar`. `normalizeAvatar` remplace toute valeur inconnue (pièce retirée du catalogue, couleur mal formée) par la valeur par défaut : une pièce supprimée ne casse pas les anciens avatars.
+- **Avatar par défaut** : déterministe, tiré d'après l'id du membre (toujours le même), sans chapeau ni accessoire, sur un fond clair de la couleur du membre.
+- **Éditeur** (`AvatarEditor`, bouton « Personnage » ou tap sur le portrait) : grand aperçu, garde-robe en onglets (Visage, Cheveux, Habits, Chapeau, Accessoires, Fond). Les vignettes montrent le personnage avec chaque option. Pastilles de couleur, 🎲 Surprise !, Annuler / Enregistrer (rebond). Plein écran sur téléphone ; garde-robe sous le personnage en portrait, à côté en paysage.
+  - **Tap** sur une vignette ou une pastille : appliquée tout de suite (petit « pop »).
+  - **Glisser-déposer** (CDK DragDrop : souris, doigt et stylet avec le même code) : la zone cible du personnage se surligne. Déposée sur le personnage, la pièce s'aimante à sa zone. Lâchée ailleurs, elle revient dans la garde-robe sans rien changer. Pour retirer le chapeau ou l'accessoire, on les glisse du personnage vers la garde-robe (ou on choisit « aucun »).
+  - Au **doigt**, le glisser démarre après un court appui (180 ms) : un balayage rapide fait défiler la garde-robe. Pendant le glisser, le CDK bloque le défilement (`touch-action: none`).
+  - Tout reste faisable au **clavier** (Tab + Entrée) ; cibles tactiles ≥ 48 px ; animations coupées avec `prefers-reduced-motion`.
+- **Ajouter une pièce** : une entrée dans la liste de son emplacement dans `avatar-parts.ts` (id stable, jamais réutilisé ; libellé `$localize` à traduire dans `messages.nl.xlf`) ; pour un accessoire, sa `zone` (yeux, cou, oreilles…). Elle apparaît dans l'éditeur, le tirage « Surprise » et l'avatar par défaut.
 
 ## Page Mobile (`src/app/dashboard/`)
 
@@ -201,6 +217,7 @@ src/
 │   ├── meals/             carte « Repas de la semaine », dialogue repas, affichage dans l'agenda
 │   ├── dashboard/         page Mobile : registre des cartes, panneau, gestes, état (MobilePanelService)
 │   ├── shopping/          page Courses, ShoppingStore, dialogues article et garde-manger
+│   ├── avatar/            personnages : <app-avatar>, catalogue de pièces SVG, éditeur (tap + glisser-déposer)
 │   ├── weather/           carte « Comment s'habiller ? », dialogue semaine, journée (weather-day), libellés emoji
 │   ├── shared/            intercepteur d'erreurs, notifications, pipe enumLabel, libellés, utilitaires de dates
 │   ├── app.config.ts      providers (client API, HttpClient + intercepteur, adaptateur de dates)

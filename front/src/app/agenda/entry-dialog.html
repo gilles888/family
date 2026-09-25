@@ -23,6 +23,7 @@
       <mat-icon>group</mat-icon>
       @for (m of entry.membres; track m.id) {
         <span class="member" [style.background-color]="m.couleur" [style.color]="contrastColor(m.couleur ?? '')">
+          <app-avatar [member]="m" [size]="20" />
           {{ m.nom }}
         </span>
       }

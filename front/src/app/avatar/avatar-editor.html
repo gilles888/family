@@ -109,7 +109,7 @@
                   @if (option.none) {
                     <mat-icon class="none">block</mat-icon>
                   } @else {
-                    <app-avatar [config]="thumbs().get(option.key)" [size]="null" [round]="false" [viewBox]="group.viewBox ?? '0 0 200 200'" />
+                    <app-avatar [config]="thumbs().get(option.key)" [size]="null" [round]="false" [viewBox]="group.viewBox ?? null" />
                   }
                 </button>
               } @else {

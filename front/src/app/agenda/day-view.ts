@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { AgendaEntryDTO } from '../api-client';
 import { EnumLabelPipe } from '../shared/enum-label.pipe';
+import { Avatar } from '../avatar/avatar';
 import { contrastColor, entryColor } from '../shared/entry-utils';
 import { STATUS_ICONS } from '../shared/labels';
 import { mealOf } from '../meals/meal-entries';
@@ -10,7 +11,7 @@ import { mealOf } from '../meals/meal-entries';
 /** Vue Jour : liste détaillée des entrées d'une journée. */
 @Component({
   selector: 'app-day-view',
-  imports: [DatePipe, MatIconModule, EnumLabelPipe],
+  imports: [DatePipe, MatIconModule, EnumLabelPipe, Avatar],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './day-view.html',
   styleUrl: './day-view.scss',

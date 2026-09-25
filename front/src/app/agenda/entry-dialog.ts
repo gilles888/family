@@ -7,6 +7,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { AgendaEntryDTO, AgendaService } from '../api-client';
 import { EnumLabelPipe } from '../shared/enum-label.pipe';
+import { Avatar } from '../avatar/avatar';
 import { NotificationService } from '../shared/notification.service';
 import { contrastColor, entryColor } from '../shared/entry-utils';
 import { ENTRY_STATUSES, EntryStatus, STATUS_ICONS } from '../shared/labels';
@@ -21,7 +22,7 @@ export type EntryDialogResult = 'saved' | 'edit-reminder' | 'delete-reminder';
 /** Détail d'une occurrence + changement de son statut (PATCH /v1/agenda/entries/{id}). */
 @Component({
   selector: 'app-entry-dialog',
-  imports: [DatePipe, FormsModule, MatDialogModule, MatButtonModule, MatButtonToggleModule, MatIconModule, EnumLabelPipe],
+  imports: [DatePipe, FormsModule, MatDialogModule, MatButtonModule, MatButtonToggleModule, MatIconModule, EnumLabelPipe, Avatar],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './entry-dialog.html',
   styleUrl: './entry-dialog.scss',

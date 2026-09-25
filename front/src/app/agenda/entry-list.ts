@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AgendaEntryDTO, FamilyMemberDTO } from '../api-client';
 import { parseIsoDateTime } from '../shared/date-utils';
 import { EnumLabelPipe } from '../shared/enum-label.pipe';
+import { Avatar } from '../avatar/avatar';
 import { entryColor } from '../shared/entry-utils';
 import { STATUS_ICONS } from '../shared/labels';
 
@@ -16,7 +17,7 @@ interface DayGroup {
 /** Liste des tâches de la période affichée, de la plus récente à la plus ancienne, filtrable par personnes. */
 @Component({
   selector: 'app-entry-list',
-  imports: [DatePipe, MatChipsModule, MatIconModule, EnumLabelPipe],
+  imports: [DatePipe, MatChipsModule, MatIconModule, EnumLabelPipe, Avatar],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './entry-list.html',
   styleUrl: './entry-list.scss',

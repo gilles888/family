@@ -10,7 +10,7 @@
 >
   @for (m of members(); track m.id) {
     <mat-chip-option [value]="m.id">
-      <span class="dot" [style.background-color]="m.couleur"></span>
+      <app-avatar class="chip-avatar" [member]="m" [size]="22" />
       {{ m.nom }}
     </mat-chip-option>
   }
@@ -40,7 +40,7 @@
                     {{ entry.type | enumLabel: 'type' }}
                     @for (m of entry.membres; track m.id) {
                       <span class="member">
-                        <span class="dot" [style.background-color]="m.couleur"></span>{{ m.nom }}
+                        <app-avatar [member]="m" [size]="18" />{{ m.nom }}
                       </span>
                     }
                   </span>

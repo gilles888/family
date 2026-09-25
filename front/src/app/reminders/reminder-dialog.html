@@ -42,7 +42,7 @@
         <mat-select formControlName="membreIds" multiple>
           @for (m of members; track m.id) {
             <mat-option [value]="m.id">
-              <span class="dot" [style.background-color]="m.couleur"></span>
+              <app-avatar class="option-avatar" [member]="m" [size]="28" />
               {{ m.nom }}
             </mat-option>
           }

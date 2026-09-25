@@ -5,6 +5,12 @@ import { LayerKey, drawAvatar } from './avatar-layers';
 
 let nextId = 0;
 
+const FULL_FRAME = '0 0 200 200';
+/** Tête et haut des épaules. */
+const HEAD_FRAME = '36 22 128 128';
+/** En dessous (px), cadrage sur la tête. */
+const SMALL = 40;
+
 /**
  * Personnage d'un membre, en SVG pur (aucune image externe). Deux usages :
  * - `<app-avatar [member]="m" [size]="32" />` : avatar du membre, ou son avatar par défaut s'il n'en a pas ;
@@ -20,7 +26,7 @@ let nextId = 0;
   },
   template: `
     <svg
-      [attr.viewBox]="viewBox()"
+      [attr.viewBox]="frame()"
       width="100%"
       height="100%"
       [attr.role]="label() ? 'img' : null"
@@ -122,8 +128,16 @@ export class Avatar {
   readonly config = input<AvatarConfig | null | undefined>();
   /** Côté en px ; null = toute la largeur du conteneur (carré). */
   readonly size = input<number | null>(40);
-  /** Cadrage : tout le personnage par défaut, ou une zone (vignettes de chapeaux, d'yeux…). */
-  readonly viewBox = input('0 0 200 200');
+  /**
+   * Cadrage : une zone précise (vignettes de chapeaux, d'yeux…) ; par défaut tout le personnage, ou seulement la tête
+   * sous 40 px (mini-avatars de l'agenda : le visage reste reconnaissable).
+   */
+  readonly viewBox = input<string | null>(null);
+
+  protected readonly frame = computed(() => {
+    const size = this.size();
+    return this.viewBox() ?? (size !== null && size < SMALL ? HEAD_FRAME : FULL_FRAME);
+  });
   readonly round = input(true);
   /** Libellé accessible ; par défaut le nom du membre. Vide = décoratif (le nom est déjà écrit à côté). */
   readonly ariaLabel = input<string | undefined>(undefined, { alias: 'label' });

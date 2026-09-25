@@ -37,6 +37,7 @@ import { RecipeSheetDialog, RecipeSheetDialogData, RecipeSheetResult } from '../
 import { AgendaCardsContext } from '../dashboard/agenda-cards-context';
 import { MobilePageComponent } from '../dashboard/mobile-page';
 import { MobilePanelService } from '../dashboard/mobile-panel.service';
+import { Avatar } from '../avatar/avatar';
 
 export type Mode = 'day' | 'week' | 'month' | 'year';
 
@@ -65,6 +66,7 @@ type MemberFilter = 'all' | number;
     YearView,
     WeatherCard,
     MobilePageComponent,
+    Avatar,
   ],
   // Les cartes de la page Mobile lisent les données de l'agenda et lui délèguent les dialogues
   providers: [{ provide: AgendaCardsContext, useExisting: forwardRef(() => AgendaPage) }],
