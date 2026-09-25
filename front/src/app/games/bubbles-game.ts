@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, afterNextRender, computed, inject, signal, viewChild } from '@angular/core';
 import { Avatar } from '../avatar/avatar';
+import { SoundService } from '../shared/sound.service';
 import { GAME_CONTEXT } from './mini-game';
 
 interface Bubble {
@@ -137,6 +138,7 @@ const COLORS = ['#81d4fa', '#f48fb1', '#a5d6a7', '#fff59d', '#ce93d8', '#ffcc80'
 })
 export class BubblesGame {
   protected readonly context = inject(GAME_CONTEXT);
+  private readonly sound = inject(SoundService);
 
   protected readonly bubbles = signal<Bubble[]>([]);
   protected readonly score = signal(0);
@@ -180,6 +182,7 @@ export class BubblesGame {
     this.bubbles.update((list) => list.map((b) => (b === bubble ? { ...b, popped: true } : b)));
     setTimeout(() => this.bubbles.update((list) => list.filter((b) => b.id !== bubble.id)), 240);
     this.score.update((s) => s + 1);
+    this.sound.play('pop');
     this.jump.set(false);
     requestAnimationFrame(() => this.jump.set(true));
   }

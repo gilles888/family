@@ -3854,6 +3854,62 @@
           <context context-type="linenumber">89,90</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="game.stars.field" datatype="html">
+        <source>Terrain : glisse ton personnage ou utilise les flèches</source>
+        <target>Speelveld: sleep je personage of gebruik de pijltjes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/games/catch-stars-game.ts</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="game.memory" datatype="html">
+        <source>Memory</source>
+        <target>Memory</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/games/games.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="game.stars" datatype="html">
+        <source>Attrape les étoiles</source>
+        <target>Vang de sterren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/games/games.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="game.puzzle" datatype="html">
+        <source>Puzzle de mon personnage</source>
+        <target>Puzzel van mijn personage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/games/games.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="game.memory.hidden" datatype="html">
+        <source>Carte cachée</source>
+        <target>Verborgen kaart</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/games/memory-game.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="game.puzzle.hint" datatype="html">
+        <source>Remets ton personnage en place !</source>
+        <target>Zet je personage weer in elkaar!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/games/puzzle-game.ts</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="game.puzzle.piece" datatype="html">
+        <source>Pièce du puzzle</source>
+        <target>Puzzelstuk</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/games/puzzle-game.ts</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

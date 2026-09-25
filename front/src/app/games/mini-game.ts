@@ -18,8 +18,6 @@ export interface MiniGame {
 export interface GameContext {
   /** L'enfant : son avatar devient le héros du jeu. */
   member: FamilyMemberDTO;
-  /** Sons autorisés (bouton muet de la fenêtre). */
-  sound(): boolean;
   /** Fin de partie : la fenêtre affiche « Bravo ! » (score facultatif, jamais un échec). */
   finish(score?: number): void;
 }

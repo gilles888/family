@@ -48,7 +48,6 @@ export class RewardDialog {
 
   private readonly context: GameContext = {
     member: this.data.member,
-    sound: () => this.sound.enabled(),
     finish: (score) => {
       this.score.set(score ?? null);
       this.phase.set('done');
