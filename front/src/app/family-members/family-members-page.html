@@ -16,12 +16,23 @@
   @if (members.value().length === 0) {
     <p class="empty" i18n="@@members.empty">Aucun membre pour le moment. Ajoutez le premier !</p>
   } @else {
-    <mat-list>
+    <ul class="members">
       @for (m of members.value(); track m.id) {
-        <mat-list-item>
-          <span matListItemIcon class="swatch" [style.background-color]="m.couleur"></span>
-          <span matListItemTitle>{{ m.nom }}</span>
-          <span matListItemMeta class="actions">
+        <li class="member" [style.--member-color]="m.couleur">
+          <button
+            type="button"
+            class="portrait"
+            (click)="editAvatar(m)"
+            i18n-aria-label="@@members.editAvatar"
+            aria-label="Personnaliser le personnage de {{ m.nom }}"
+          >
+            <app-avatar [member]="m" [size]="null" [round]="false" />
+          </button>
+          <span class="name">{{ m.nom }}</span>
+          <span class="actions">
+            <button matIconButton (click)="editAvatar(m)" i18n-title="@@members.avatar" title="Personnage">
+              <mat-icon>checkroom</mat-icon>
+            </button>
             <button matIconButton (click)="edit(m)" i18n-aria-label="@@common.edit" aria-label="Modifier">
               <mat-icon>edit</mat-icon>
             </button>
@@ -29,8 +40,8 @@
               <mat-icon>delete</mat-icon>
             </button>
           </span>
-        </mat-list-item>
+        </li>
       }
-    </mat-list>
+    </ul>
   }
 }

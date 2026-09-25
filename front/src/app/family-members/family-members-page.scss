@@ -18,10 +18,52 @@
   }
 }
 
-.swatch {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+.members {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px 4px;
+  border-radius: 16px;
+  border-top: 6px solid var(--member-color);
+  background: var(--mat-sys-surface-container-low);
+}
+
+// Tout le portrait ouvre l'éditeur (grande cible pour les enfants)
+.portrait {
+  all: unset;
+  width: min(100%, 128px);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 120ms ease;
+
+  app-avatar {
+    border-radius: 20px;
+  }
+
+  &:hover {
+    transform: scale(1.04);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--mat-sys-primary);
+    outline-offset: 3px;
+  }
+}
+
+.name {
+  font: var(--mat-sys-title-medium);
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .actions {

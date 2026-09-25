@@ -14,13 +14,13 @@ let nextId = 0;
   selector: 'app-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[style.width.px]': 'size()',
-    '[style.height.px]': 'size()',
+    '[style.width]': 'size() === null ? "100%" : size() + "px"',
+    '[style.height]': 'size() === null ? "auto" : size() + "px"',
     '[class.round]': 'round()',
   },
   template: `
     <svg
-      viewBox="0 0 200 200"
+      [attr.viewBox]="viewBox()"
       width="100%"
       height="100%"
       [attr.role]="label() ? 'img' : null"
@@ -103,6 +103,7 @@ let nextId = 0;
       overflow: hidden;
       border-radius: 16%;
       line-height: 0;
+      aspect-ratio: 1;
     }
     :host(.round) {
       border-radius: 50%;
@@ -117,7 +118,10 @@ export class Avatar {
   readonly member = input<FamilyMemberDTO | null | undefined>();
   /** Config explicite (prioritaire sur celle du membre). */
   readonly config = input<AvatarConfig | null | undefined>();
-  readonly size = input(40);
+  /** Côté en px ; null = toute la largeur du conteneur (carré). */
+  readonly size = input<number | null>(40);
+  /** Cadrage : tout le personnage par défaut, ou une zone (vignettes de chapeaux, d'yeux…). */
+  readonly viewBox = input('0 0 200 200');
   readonly round = input(true);
   /** Libellé accessible ; par défaut le nom du membre. Vide = décoratif (le nom est déjà écrit à côté). */
   readonly ariaLabel = input<string | undefined>(undefined, { alias: 'label' });

@@ -1,0 +1,82 @@
+<h2 mat-dialog-title class="title">
+  <ng-container i18n="@@avatarEditor.title">Le personnage de {{ member.nom }}</ng-container>
+</h2>
+
+<mat-dialog-content class="content">
+  <div class="stage">
+    <div #preview class="preview">
+      <app-avatar [config]="config()" [size]="null" [round]="false" [label]="member.nom ?? ''" />
+    </div>
+    <button type="button" matButton="tonal" class="surprise" (click)="surprise()">
+      <span aria-hidden="true">🎲</span>
+      <ng-container i18n="@@avatarEditor.surprise">Surprise !</ng-container>
+    </button>
+  </div>
+
+  <div class="wardrobe">
+    <div class="tabs" role="tablist" i18n-aria-label="@@avatarEditor.wardrobe" aria-label="Garde-robe">
+      @for (c of categories; track c.id) {
+        <button
+          type="button"
+          role="tab"
+          class="tab"
+          [class.active]="c === category()"
+          [attr.aria-selected]="c === category()"
+          (click)="category.set(c)"
+        >
+          <mat-icon>{{ c.icon }}</mat-icon>
+          <span>{{ c.label }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="groups" role="tabpanel" [attr.aria-label]="category().label">
+      @for (group of category().groups; track group.id) {
+        <section class="group">
+          <h3>{{ group.title }}</h3>
+          <div class="options" [class.swatches]="group.kind === 'swatches'">
+            @for (option of group.options; track option.key) {
+              @if (group.kind === 'thumbs') {
+                <button
+                  type="button"
+                  class="thumb"
+                  [class.selected]="option.isSelected(config())"
+                  [attr.aria-pressed]="option.isSelected(config())"
+                  [attr.aria-label]="option.label"
+                  [title]="option.label"
+                  (click)="select(option)"
+                >
+                  @if (option.none) {
+                    <mat-icon class="none">block</mat-icon>
+                  } @else {
+                    <app-avatar [config]="thumbs().get(option.key)" [size]="null" [round]="false" [viewBox]="group.viewBox ?? '0 0 200 200'" />
+                  }
+                </button>
+              } @else {
+                <button
+                  type="button"
+                  class="swatch"
+                  [class.selected]="option.isSelected(config())"
+                  [attr.aria-pressed]="option.isSelected(config())"
+                  [attr.aria-label]="option.label"
+                  [title]="option.label"
+                  (click)="select(option)"
+                >
+                  <span class="dot" [style.background]="option.swatch"></span>
+                </button>
+              }
+            }
+          </div>
+        </section>
+      }
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button type="button" matButton mat-dialog-close i18n="@@common.cancel">Annuler</button>
+  <button type="button" matButton="filled" (click)="save()" [disabled]="saving()">
+    <mat-icon>check</mat-icon>
+    <ng-container i18n="@@common.save">Enregistrer</ng-container>
+  </button>
+</mat-dialog-actions>

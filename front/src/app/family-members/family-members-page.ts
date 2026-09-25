@@ -3,17 +3,18 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FamilyMemberDTO, MembresService } from '../api-client';
 import { ConfirmDialog } from '../shared/confirm-dialog';
 import { NotificationService } from '../shared/notification.service';
+import { Avatar } from '../avatar/avatar';
+import { AvatarEditor, AvatarEditorData } from '../avatar/avatar-editor';
 import { MemberDialog, MemberDialogData } from './member-dialog';
 
-/** Gestion des membres de la famille (liste, ajout, modification, suppression). */
+/** Gestion des membres de la famille (liste, ajout, modification, suppression) et de leur personnage. */
 @Component({
   selector: 'app-family-members-page',
-  imports: [MatButtonModule, MatIconModule, MatListModule, MatProgressBarModule],
+  imports: [MatButtonModule, MatIconModule, MatProgressBarModule, Avatar],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './family-members-page.html',
   styleUrl: './family-members-page.scss',
@@ -28,6 +29,22 @@ export class FamilyMembersPage {
   protected edit(member?: FamilyMemberDTO): void {
     this.dialog
       .open<MemberDialog, MemberDialogData, boolean>(MemberDialog, { data: { member }, width: '420px', maxWidth: '95vw' })
+      .afterClosed()
+      .subscribe((saved) => saved && this.members.reload());
+  }
+
+  /** Éditeur de personnage : plein écran sur téléphone, grand dialogue ailleurs. */
+  protected editAvatar(member: FamilyMemberDTO): void {
+    this.dialog
+      .open<AvatarEditor, AvatarEditorData, FamilyMemberDTO>(AvatarEditor, {
+        data: { member },
+        width: '960px',
+        maxWidth: '100vw',
+        height: '720px',
+        maxHeight: '100dvh',
+        panelClass: 'avatar-editor-panel',
+        autoFocus: 'dialog',
+      })
       .afterClosed()
       .subscribe((saved) => saved && this.members.reload());
   }

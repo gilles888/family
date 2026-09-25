@@ -43,3 +43,15 @@ body {
   --mat-snack-bar-supporting-text-color: var(--mat-sys-on-error);
   --mat-snack-bar-button-color: var(--mat-sys-on-error);
 }
+
+// Éditeur de personnage : plein écran sur téléphone
+@media (max-width: 599.98px) {
+  .avatar-editor-panel {
+    width: 100vw !important;
+    height: 100dvh !important;
+
+    .mat-mdc-dialog-surface {
+      border-radius: 0;
+    }
+  }
+}
