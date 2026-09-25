@@ -1,0 +1,214 @@
+<div class="header">
+  <h1 i18n="@@shopping.title">Courses</h1>
+  <button matIconButton [matMenuTriggerFor]="pageMenu" i18n-aria-label="@@shopping.moreActions" aria-label="Plus d'actions">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #pageMenu="matMenu" xPosition="before">
+    <button mat-menu-item (click)="openPantry()">
+      <mat-icon>kitchen</mat-icon>
+      <span i18n="@@shopping.pantry">Garde-manger</span>
+    </button>
+    <button mat-menu-item (click)="clearBought()" [disabled]="store.boughtCount() === 0">
+      <mat-icon>remove_done</mat-icon>
+      <span i18n="@@shopping.clearBought">Vider les articles achetés</span>
+    </button>
+  </mat-menu>
+</div>
+
+<!-- Génération depuis les repas de la période -->
+<form class="period" [formGroup]="period" (ngSubmit)="generate()">
+  <mat-form-field subscriptSizing="dynamic">
+    <mat-label i18n="@@shopping.period">Repas du … au …</mat-label>
+    <mat-date-range-input [rangePicker]="rangePicker">
+      <input matStartDate formControlName="from" i18n-placeholder="@@shopping.from" placeholder="Du" />
+      <input matEndDate formControlName="to" i18n-placeholder="@@shopping.to" placeholder="Au" />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="rangePicker" />
+    <mat-date-range-picker #rangePicker />
+  </mat-form-field>
+  <button type="submit" matButton="filled" [disabled]="generating()">
+    <mat-icon>autorenew</mat-icon>
+    @if (list.hasValue() && list.value().dateDebut) {
+      <ng-container i18n="@@shopping.regenerate">Régénérer</ng-container>
+    } @else {
+      <ng-container i18n="@@shopping.generate">Générer</ng-container>
+    }
+  </button>
+</form>
+
+<!-- Ajout rapide : Entrée pour valider, le champ garde le focus -->
+<form class="quick-add" [formGroup]="addForm" #addFormDir="ngForm" (ngSubmit)="add(nameInput, addFormDir)">
+  <div class="line">
+    <mat-form-field subscriptSizing="dynamic" class="name">
+      <mat-icon matPrefix>add_shopping_cart</mat-icon>
+      <mat-label i18n="@@shopping.addLabel">Ajouter un article</mat-label>
+      <input #nameInput matInput formControlName="nom" maxlength="100" autocomplete="off" enterkeyhint="done" />
+    </mat-form-field>
+    <button
+      type="button"
+      matIconButton
+      class="details-toggle"
+      [class.active]="addDetails()"
+      (click)="addDetails.set(!addDetails())"
+      [attr.aria-expanded]="addDetails()"
+      i18n-aria-label="@@shopping.addDetails"
+      aria-label="Quantité et unité"
+    >
+      <mat-icon>tune</mat-icon>
+    </button>
+    <button type="submit" matButton="tonal" [disabled]="adding()" i18n="@@common.add">Ajouter</button>
+  </div>
+  @if (addDetails()) {
+    <div class="line details">
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label i18n="@@shopping.quantity">Quantité</mat-label>
+        <input matInput type="number" min="0" step="any" inputmode="decimal" formControlName="quantite" />
+      </mat-form-field>
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label i18n="@@shopping.unit">Unité</mat-label>
+        <mat-select formControlName="unite">
+          <mat-option [value]="null">—</mat-option>
+          @for (u of units; track u) {
+            <mat-option [value]="u">{{ u | enumLabel: 'unit' }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    @if (addForm.hasError('unitWithoutQuantity')) {
+      <p class="form-error" i18n="@@shopping.unitWithoutQuantity">Indiquez une quantité pour cette unité.</p>
+    }
+  }
+</form>
+
+<div class="progress">
+  @if (list.isLoading() || generating()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+</div>
+
+@if (list.error() && !list.hasValue()) {
+  <div class="empty">
+    <p i18n="@@shopping.loadError">Impossible de charger la liste de courses.</p>
+    <button matButton="outlined" (click)="list.reload()" i18n="@@common.retry">Réessayer</button>
+  </div>
+} @else if (list.hasValue()) {
+  <div class="summary">
+    <span class="count"><ng-container i18n="@@shopping.remaining">{store.toBuy().length, plural, =0 {Rien à acheter} =1 {1 article à acheter} other {{{ store.toBuy().length }} articles à acheter}}</ng-container></span>
+    @if (store.boughtCount() > 0) {
+      <button matButton (click)="clearBought()">
+        <mat-icon>remove_done</mat-icon>
+        <ng-container i18n="@@shopping.clearBoughtShort">Vider les achetés ({{ store.boughtCount() }})</ng-container>
+      </button>
+    }
+  </div>
+
+  @if (groups().length === 0 && atHome().length === 0) {
+    <p class="empty" i18n="@@shopping.empty">
+      La liste est vide. Générez-la depuis les repas de la semaine, ou ajoutez un article.
+    </p>
+  }
+
+  @for (group of groups(); track group.aisle) {
+    <section class="aisle">
+      <h2>
+        @if (group.aisle) {
+          {{ aisleLabels[group.aisle] }}
+        } @else {
+          <ng-container i18n="@@shopping.noAisle">Sans rayon</ng-container>
+        }
+      </h2>
+      <ul>
+        @for (item of group.items; track item.id) {
+          <li class="item" [class.bought]="item.achete">
+            <mat-checkbox class="check" [checked]="!!item.achete" (change)="toggleBought(item)" [aria-label]="item.nom ?? ''" />
+            <button type="button" class="body" (click)="toggleBought(item)" tabindex="-1" aria-hidden="true">
+              <span class="name">
+                {{ item.nom }}
+                @if (item.quantite != null) {
+                  <span class="qty">{{ item.quantite | number: '1.0-3' }} {{ item.unite | enumLabel: 'unit' }}</span>
+                }
+              </span>
+              @if (item.sources?.length) {
+                <app-shopping-sources class="sources" [sources]="item.sources!" />
+              }
+            </button>
+            <ng-container *ngTemplateOutlet="itemMenu; context: { $implicit: item }" />
+          </li>
+        }
+      </ul>
+    </section>
+  }
+
+  @if (atHome().length > 0) {
+    <section class="at-home">
+      <button
+        type="button"
+        class="at-home-toggle"
+        (click)="showAtHome.set(!showAtHome())"
+        [attr.aria-expanded]="showAtHome()"
+      >
+        <mat-icon>{{ showAtHome() ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <span i18n="@@shopping.atHomeSection">Déjà à la maison ({{ atHome().length }})</span>
+      </button>
+      @if (showAtHome()) {
+        <ul>
+          @for (item of atHome(); track item.id) {
+            <li class="item home">
+              <mat-icon class="home-icon" aria-hidden="true">home</mat-icon>
+              <span class="body static">
+                <span class="name">
+                  {{ item.nom }}
+                  @if (item.quantite != null) {
+                    <span class="qty">{{ item.quantite | number: '1.0-3' }} {{ item.unite | enumLabel: 'unit' }}</span>
+                  }
+                </span>
+              </span>
+              <button
+                matIconButton
+                (click)="setAtHome(item, false)"
+                i18n-aria-label="@@shopping.backToList"
+                aria-label="Remettre dans les achats"
+                i18n-title="@@shopping.backToList"
+                title="Remettre dans les achats"
+              >
+                <mat-icon>add_shopping_cart</mat-icon>
+              </button>
+              <ng-container *ngTemplateOutlet="itemMenu; context: { $implicit: item }" />
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  }
+}
+
+<ng-template #itemMenu let-item>
+  <button matIconButton [matMenuTriggerFor]="menu" i18n-aria-label="@@shopping.itemActions" aria-label="Actions sur l'article">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button mat-menu-item (click)="edit(item)">
+      <mat-icon>edit</mat-icon>
+      <span i18n="@@common.edit">Modifier</span>
+    </button>
+    @if (item.aLaMaison) {
+      <button mat-menu-item (click)="setAtHome(item, false)">
+        <mat-icon>add_shopping_cart</mat-icon>
+        <span i18n="@@shopping.backToList">Remettre dans les achats</span>
+      </button>
+    } @else {
+      <button mat-menu-item (click)="setAtHome(item, true)">
+        <mat-icon>home</mat-icon>
+        <span i18n="@@shopping.markAtHome">Déjà à la maison</span>
+      </button>
+    }
+    <button mat-menu-item (click)="addToPantry(item)">
+      <mat-icon>kitchen</mat-icon>
+      <span i18n="@@shopping.addToPantry">Ajouter au garde-manger</span>
+    </button>
+    <button mat-menu-item (click)="remove(item)">
+      <mat-icon>delete</mat-icon>
+      <span i18n="@@common.delete">Supprimer</span>
+    </button>
+  </mat-menu>
+</ng-template>

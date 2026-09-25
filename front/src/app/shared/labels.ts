@@ -1,4 +1,11 @@
-import { AgendaEntryDTO, MealRequest, RecipeIngredientRequest, RecurrenceRuleRequest, ReminderRequest } from '../api-client';
+import {
+  AgendaEntryDTO,
+  IngredientDTO,
+  MealRequest,
+  RecipeIngredientRequest,
+  RecurrenceRuleRequest,
+  ReminderRequest,
+} from '../api-client';
 
 export type ReminderType = ReminderRequest.TypeEnum;
 export type EntryStatus = AgendaEntryDTO.StatutEnum;
@@ -6,6 +13,7 @@ export type Frequency = RecurrenceRuleRequest.FrequenceEnum;
 export type WeekDay = RecurrenceRuleRequest.JoursSemaineEnum;
 export type IngredientUnit = RecipeIngredientRequest.UniteEnum;
 export type MealSlot = MealRequest.CreneauEnum;
+export type Aisle = IngredientDTO.RayonEnum;
 
 export const REMINDER_TYPES: ReminderType[] = Object.values(ReminderRequest.TypeEnum);
 export const ENTRY_STATUSES: EntryStatus[] = Object.values(AgendaEntryDTO.StatutEnum);
@@ -15,6 +23,8 @@ export const WEEK_DAYS: WeekDay[] = Object.values(RecurrenceRuleRequest.JoursSem
 export const INGREDIENT_UNITS: IngredientUnit[] = Object.values(RecipeIngredientRequest.UniteEnum);
 /** Dans l'ordre de la journée. */
 export const MEAL_SLOTS: MealSlot[] = Object.values(MealRequest.CreneauEnum);
+/** Dans l'ordre du backend : celui du parcours en magasin. */
+export const AISLES: Aisle[] = Object.values(IngredientDTO.RayonEnum);
 
 /** Dates de référence (lundi 1er janv. 2024 ...) pour obtenir le nom localisé d'un jour avec DatePipe/Intl. */
 export const WEEKDAY_REFERENCE_DATES: Record<WeekDay, Date> = Object.fromEntries(
@@ -75,4 +85,16 @@ export const SLOT_SHORT_LABELS: Record<MealSlot, string> = {
   PETIT_DEJEUNER: $localize`:@@slot.short.petitDejeuner:Matin`,
   MIDI: $localize`:@@slot.short.midi:Midi`,
   SOUPER: $localize`:@@slot.short.souper:Soir`,
+};
+
+/** Rayons du magasin (liste de courses). */
+export const AISLE_LABELS: Record<Aisle, string> = {
+  FRUITS_LEGUMES: $localize`:@@aisle.fruitsLegumes:Fruits et légumes`,
+  BOUCHERIE_POISSONNERIE: $localize`:@@aisle.boucheriePoissonnerie:Boucherie, poissonnerie`,
+  CREMERIE: $localize`:@@aisle.cremerie:Crèmerie`,
+  EPICERIE: $localize`:@@aisle.epicerie:Épicerie`,
+  SURGELES: $localize`:@@aisle.surgeles:Surgelés`,
+  BOULANGERIE: $localize`:@@aisle.boulangerie:Boulangerie`,
+  BOISSONS: $localize`:@@aisle.boissons:Boissons`,
+  AUTRE: $localize`:@@aisle.autre:Autres rayons`,
 };

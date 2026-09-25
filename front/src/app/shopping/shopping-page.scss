@@ -1,0 +1,193 @@
+:host {
+  display: block;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  h1 {
+    margin: 0;
+    font: var(--mat-sys-headline-small);
+  }
+}
+
+.period,
+.quick-add .line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.period {
+  margin-top: 12px;
+
+  mat-form-field {
+    flex: 1 1 240px;
+  }
+}
+
+.quick-add {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container-low);
+
+  .name {
+    flex: 1 1 180px;
+  }
+
+  .details {
+    margin-top: 8px;
+
+    mat-form-field {
+      flex: 1 1 120px;
+    }
+  }
+
+  .details-toggle.active {
+    background: var(--mat-sys-secondary-container);
+  }
+}
+
+.form-error {
+  margin: 4px 0 0;
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-error);
+}
+
+.progress {
+  height: 4px;
+  margin: 8px 0;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 8px;
+  min-height: 40px;
+
+  .count {
+    font: var(--mat-sys-title-medium);
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.aisle,
+.at-home {
+  margin-top: 16px;
+
+  h2 {
+    margin: 0 0 4px;
+    font: var(--mat-sys-title-small);
+    color: var(--mat-sys-primary);
+  }
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+// Une ligne = une grande zone tactile (≥ 56 px) : toute la ligne coche l'article
+.item {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  padding-right: 4px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container);
+
+  &.bought {
+    background: var(--mat-sys-surface-container-low);
+
+    .name,
+    .sources {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+  }
+}
+
+.check {
+  flex: none;
+  padding-left: 4px;
+}
+
+.body {
+  all: unset;
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 4px;
+  cursor: pointer;
+
+  &.static {
+    cursor: default;
+  }
+}
+
+.name {
+  font: var(--mat-sys-body-large);
+  overflow-wrap: anywhere;
+}
+
+.qty {
+  margin-left: 6px;
+  font: var(--mat-sys-label-large);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.sources {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.at-home-toggle {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 48px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font: var(--mat-sys-title-small);
+  color: var(--mat-sys-on-surface-variant);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--mat-sys-surface-container-high);
+  }
+}
+
+.home {
+  opacity: 0.75;
+}
+
+.home-icon {
+  flex: none;
+  margin: 0 12px 0 16px;
+  color: var(--mat-sys-on-surface-variant);
+}

@@ -147,6 +147,10 @@
           <context context-type="linenumber">25,27</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">92,94</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/weather/weather-card.html</context>
           <context context-type="linenumber">21,23</context>
         </context-group>
@@ -198,6 +202,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/recipes/recipes-page.ts</context>
           <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">211,213</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reminder.deleted" datatype="html">
@@ -293,6 +301,10 @@
           <context context-type="sourcefile">src/app/shared/confirm-dialog.ts</context>
           <context context-type="linenumber">19,20</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">58,59</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="common.save" datatype="html">
         <source>Enregistrer</source>
@@ -315,6 +327,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
           <context context-type="linenumber">162,163</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">59,60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="entry.saved" datatype="html">
@@ -377,18 +393,25 @@
           <context context-type="linenumber">9,10</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="nav.shopping" datatype="html">
+        <source>Courses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="nav.members" datatype="html">
         <source>Membres</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">10,13</context>
+          <context context-type="linenumber">11,14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="app.language" datatype="html">
         <source>Langue</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">22,23</context>
+          <context context-type="linenumber">23,24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dashboard.card.weather" datatype="html">
@@ -477,6 +500,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
           <context context-type="linenumber">56,57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">192,194</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.deleteTitle" datatype="html">
@@ -1009,6 +1036,10 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/pantry-dialog.ts</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/weather/week-weather-dialog.html</context>
           <context context-type="linenumber">33,34</context>
         </context-group>
@@ -1354,196 +1385,570 @@
         <source>Sport</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="type.testMedical" datatype="html">
         <source>Test médical</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="type.rendezVous" datatype="html">
         <source>Rendez-vous</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="type.autre" datatype="html">
         <source>Autre</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.prevu" datatype="html">
         <source>Prévu</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.complete" datatype="html">
         <source>Terminé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.annule" datatype="html">
         <source>Annulé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.deplace" datatype="html">
         <source>Déplacé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.daily" datatype="html">
         <source>Tous les jours</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.weekly" datatype="html">
         <source>Toutes les semaines</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.monthly" datatype="html">
         <source>Tous les mois</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.yearly" datatype="html">
         <source>Tous les ans</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.g" datatype="html">
         <source>g</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.kg" datatype="html">
         <source>kg</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.ml" datatype="html">
         <source>ml</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.l" datatype="html">
         <source>l</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.piece" datatype="html">
         <source>pièce(s)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.cuillereSoupe" datatype="html">
         <source>c. à soupe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.cuillereCafe" datatype="html">
         <source>c. à café</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.boite" datatype="html">
         <source>boîte(s)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.sachet" datatype="html">
         <source>sachet(s)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.pincee" datatype="html">
         <source>pincée(s)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.petitDejeuner" datatype="html">
         <source>Petit-déjeuner</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.midi" datatype="html">
         <source>Midi</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.souper" datatype="html">
         <source>Souper</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.short.petitDejeuner" datatype="html">
         <source>Matin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.short.midi" datatype="html">
         <source>Midi</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.short.souper" datatype="html">
         <source>Soir</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aisle.fruitsLegumes" datatype="html">
+        <source>Fruits et légumes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aisle.boucheriePoissonnerie" datatype="html">
+        <source>Boucherie, poissonnerie</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aisle.cremerie" datatype="html">
+        <source>Crèmerie</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aisle.epicerie" datatype="html">
+        <source>Épicerie</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aisle.surgeles" datatype="html">
+        <source>Surgelés</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aisle.boulangerie" datatype="html">
+        <source>Boulangerie</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aisle.boissons" datatype="html">
+        <source>Boissons</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aisle.autre" datatype="html">
+        <source>Autres rayons</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pantry.title" datatype="html">
+        <source>Garde-manger</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/pantry-dialog.ts</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pantry.hint" datatype="html">
+        <source> Ce que vous avez toujours à la maison : ces ingrédients arrivent « déjà à la maison » dans la liste de courses. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/pantry-dialog.ts</context>
+          <context context-type="linenumber">23,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pantry.addLabel" datatype="html">
+        <source>Ajouter un ingrédient</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/pantry-dialog.ts</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.add" datatype="html">
+        <source>Ajouter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/pantry-dialog.ts</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">59,61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pantry.empty" datatype="html">
+        <source>Le garde-manger est vide.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/pantry-dialog.ts</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pantry.remove" datatype="html">
+        <source>Retirer du garde-manger</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/pantry-dialog.ts</context>
+          <context context-type="linenumber">47,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pantry.loadError" datatype="html">
+        <source>Impossible de charger le garde-manger.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/pantry-dialog.ts</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.editTitle" datatype="html">
+        <source>Modifier l&apos;article</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.name" datatype="html">
+        <source>Article</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.nameRequired" datatype="html">
+        <source>Nom obligatoire.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">27,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.quantity" datatype="html">
+        <source>Quantité</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.quantityInvalid" datatype="html">
+        <source>Quantité positive.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.unit" datatype="html">
+        <source>Unité</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.unitWithoutQuantity" datatype="html">
+        <source>Indiquez une quantité pour cette unité.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">78,83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.editGeneratedHint" datatype="html">
+        <source> Cet article vient des repas : la quantité saisie sera gardée lors des prochaines générations. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
+          <context context-type="linenumber">53,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.title" datatype="html">
+        <source>Courses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.moreActions" datatype="html">
+        <source>Plus d&apos;actions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.pantry" datatype="html">
+        <source>Garde-manger</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.clearBought" datatype="html">
+        <source>Vider les articles achetés</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">13,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.period" datatype="html">
+        <source>Repas du … au …</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.from" datatype="html">
+        <source>Du</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.to" datatype="html">
+        <source>Au</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.regenerate" datatype="html">
+        <source>Régénérer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">32,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.generate" datatype="html">
+        <source>Générer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">34,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.addLabel" datatype="html">
+        <source>Ajouter un article</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">44,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.addDetails" datatype="html">
+        <source>Quantité et unité</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.loadError" datatype="html">
+        <source>Impossible de charger la liste de courses.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">91,92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.remaining" datatype="html">
+        <source>{VAR_PLURAL, plural, =0 {Rien à acheter} =1 {1 article à acheter} other {<x id="INTERPOLATION"/> articles à acheter}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.clearBoughtShort" datatype="html">
+        <source>Vider les achetés (<x id="INTERPOLATION" equiv-text="{{ store.boughtCount() }}"/>)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">100,101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.empty" datatype="html">
+        <source> La liste est vide. Générez-la depuis les repas de la semaine, ou ajoutez un article. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">107,111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.noAisle" datatype="html">
+        <source>Sans rayon</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">117,119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.atHomeSection" datatype="html">
+        <source>Déjà à la maison (<x id="INTERPOLATION" equiv-text="{{ atHome().length }}"/>)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">151,152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.backToList" datatype="html">
+        <source>Remettre dans les achats</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">170,171</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">172,174</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">197,199</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.itemActions" datatype="html">
+        <source>Actions sur l&apos;article</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">186,187</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.markAtHome" datatype="html">
+        <source>Déjà à la maison</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">202,205</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.addToPantry" datatype="html">
+        <source>Ajouter au garde-manger</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
+          <context context-type="linenumber">207,209</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.generated" datatype="html">
+        <source>Liste mise à jour : <x id="count" equiv-text="list.articles?.length ?? 0"/> article(s).</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.ts</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.addedToPantry" datatype="html">
+        <source>« <x id="name" equiv-text="item.nom"/> » ajouté au garde-manger.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.ts</context>
+          <context context-type="linenumber">163</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.clearTitle" datatype="html">
+        <source>Vider les articles achetés ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.ts</context>
+          <context context-type="linenumber">179</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.clearMessage" datatype="html">
+        <source>Les <x id="count" equiv-text="this.store.boughtCount()"/> article(s) coché(s) seront retirés de la liste. Les articles venant des repas ne reviendront pas à la prochaine génération.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.ts</context>
+          <context context-type="linenumber">180</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.clearConfirm" datatype="html">
+        <source>Vider</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-page.ts</context>
+          <context context-type="linenumber">181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopping.for" datatype="html">
+        <source>pour :</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shopping/shopping-sources.ts</context>
+          <context context-type="linenumber">12,13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="weather.title" datatype="html">
