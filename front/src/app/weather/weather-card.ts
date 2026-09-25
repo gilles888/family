@@ -1,18 +1,11 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
-import { HttpContext } from '@angular/common/http';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MeteoDTO, MeteoService } from '../api-client';
-import { SKIP_ERROR_NOTIFICATION } from '../shared/api-error.interceptor';
 import { WeatherDay } from './weather-day';
 import { TODAY_LABEL, TOMORROW_LABEL } from './weather-labels';
 import { WeekWeatherDialog } from './week-weather-dialog';
-
-const REFRESH_INTERVAL_MS = 30 * 60 * 1000;
-/** Aujourd'hui et demain. */
-const CARD_DAYS = 2;
+import { WEATHER_REFRESH_INTERVAL_MS, WeatherStore } from './weather-store';
 
 /** Météo d'aujourd'hui et de demain, et la tenue conseillée pour les enfants. */
 @Component({
@@ -23,22 +16,18 @@ const CARD_DAYS = 2;
   styleUrl: './weather-card.scss',
 })
 export class WeatherCard {
-  private readonly meteoApi = inject(MeteoService);
+  private readonly store = inject(WeatherStore);
   private readonly dialog = inject(MatDialog);
 
-  /** L'erreur est affichée dans la carte : pas de snack-bar, notamment à chaque rechargement automatique. */
-  protected readonly meteo = rxResource<MeteoDTO, void>({
-    stream: () =>
-      this.meteoApi.getMeteo(CARD_DAYS, 'body', false, {
-        context: new HttpContext().set(SKIP_ERROR_NOTIFICATION, true),
-      }),
-  });
+  /** Prévision partagée entre les cartes (un seul appel à l'API). */
+  protected readonly meteo = this.store.meteo;
 
   protected readonly todayLabel = TODAY_LABEL;
   protected readonly tomorrowLabel = TOMORROW_LABEL;
 
   constructor() {
-    const timer = setInterval(() => this.meteo.reload(), REFRESH_INTERVAL_MS);
+    this.store.refreshIfStale();
+    const timer = setInterval(() => this.store.refreshIfStale(), WEATHER_REFRESH_INTERVAL_MS);
     inject(DestroyRef).onDestroy(() => clearInterval(timer));
   }
 

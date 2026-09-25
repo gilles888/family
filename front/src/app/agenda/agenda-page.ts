@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, inject, signal, viewChild } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { Observable, map } from 'rxjs';
@@ -34,6 +34,7 @@ import { byDateTime, mealEntry, mealOf } from '../meals/meal-entries';
 import { MealDialog, MealDialogData, MealDialogResult } from '../meals/meal-dialog';
 import { MealSlotRequest, MealsWeekCard } from '../meals/meals-week-card';
 import { RecipeSheetDialog, RecipeSheetDialogData, RecipeSheetResult } from '../recipes/recipe-sheet-dialog';
+import { AgendaCardsContext } from '../dashboard/agenda-cards-context';
 
 export type Mode = 'day' | 'week' | 'month' | 'year';
 
@@ -63,11 +64,13 @@ type MemberFilter = 'all' | number;
     WeatherCard,
     MealsWeekCard,
   ],
+  // Les cartes de la page Mobile lisent les données de l'agenda et lui délèguent les dialogues
+  providers: [{ provide: AgendaCardsContext, useExisting: forwardRef(() => AgendaPage) }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './agenda-page.html',
   styleUrl: './agenda-page.scss',
 })
-export class AgendaPage {
+export class AgendaPage implements AgendaCardsContext {
   private readonly agendaApi = inject(AgendaService);
   private readonly remindersApi = inject(RemindersService);
   private readonly membresApi = inject(MembresService);
@@ -142,6 +145,12 @@ export class AgendaPage {
         return data;
     }
   });
+
+  // ---------- données partagées avec les cartes (AgendaCardsContext)
+
+  readonly tasks = computed(() => (this.periodEntries.hasValue() ? this.periodEntries.value() : []));
+  readonly familyMembers = computed(() => (this.members.hasValue() ? this.members.value() : []));
+  readonly mealsVersion = signal(0);
 
   protected readonly weekStart = computed(() => startOfWeek(this.date()));
   protected readonly weekEnd = computed(() => addDays(this.weekStart(), 6));
@@ -241,7 +250,7 @@ export class AgendaPage {
     this.openReminderDialog({ members: this.members.value() ?? [], defaultDate: day });
   }
 
-  protected openEntry(entry: AgendaEntryDTO): void {
+  openEntry(entry: AgendaEntryDTO): void {
     const meal = mealOf(entry);
     if (meal) {
       this.openMeal(meal);
@@ -308,12 +317,12 @@ export class AgendaPage {
     this.openMealDialog({ date: day, defaultPortions: this.defaultPortions() });
   }
 
-  protected newMeal(request: MealSlotRequest): void {
+  newMeal(request: MealSlotRequest): void {
     this.openMealDialog({ date: request.date, slot: request.slot, defaultPortions: this.defaultPortions() });
   }
 
   /** Repas lié à une recette : fiche recette (quantités pour ses portions), d'où l'on peut le modifier. Sinon : modification. */
-  protected openMeal(meal: MealDTO): void {
+  openMeal(meal: MealDTO): void {
     if (!meal.recetteId) {
       this.openMealDialog({ meal });
       return;
@@ -342,6 +351,7 @@ export class AgendaPage {
 
   private reloadMeals(): void {
     this.mealsCard()?.reload();
+    this.mealsVersion.update((v) => v + 1);
     this.agendaMeals.reload();
   }
 

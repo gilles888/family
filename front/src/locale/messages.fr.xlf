@@ -159,21 +159,21 @@
         <source>Supprimer le rappel ?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">280</context>
+          <context context-type="linenumber">289</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reminder.deleteMessage" datatype="html">
         <source>« <x id="title" equiv-text="entry.titre"/> » sera supprimé ainsi que toutes ses occurrences à venir. Les occurrences passées restent dans l&apos;agenda.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">281</context>
+          <context context-type="linenumber">290</context>
         </context-group>
       </trans-unit>
       <trans-unit id="common.delete" datatype="html">
         <source>Supprimer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">282</context>
+          <context context-type="linenumber">291</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
@@ -204,7 +204,7 @@
         <source>Rappel supprimé.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">289</context>
+          <context context-type="linenumber">298</context>
         </context-group>
       </trans-unit>
       <trans-unit id="day.empty" datatype="html">
