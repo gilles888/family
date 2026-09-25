@@ -18,8 +18,9 @@ export interface MealSlotRequest {
 }
 
 /**
- * Carte latérale « Repas de la semaine » : grille lundi → dimanche × créneaux. Clic sur une case vide = ajouter,
- * clic sur un repas = l'ouvrir. Les dialogues sont ouverts par la page, qui recharge ensuite via reload().
+ * Carte « Repas de la semaine » (page Mobile) : grille lundi → dimanche × créneaux. Clic sur une case vide = ajouter,
+ * clic sur un repas = l'ouvrir. Les dialogues sont ouverts par l'agenda (voir dashboard/cards/meals-card.ts),
+ * qui recharge ensuite la grille via reload().
  */
 @Component({
   selector: 'app-meals-week-card',

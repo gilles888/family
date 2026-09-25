@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 
-/** Où afficher les repas : dans le calendrier de l'agenda, ou dans la carte latérale « Repas de la semaine ». */
+/** Où afficher les repas : dans le calendrier de l'agenda, ou dans la carte « Repas de la semaine » de la page Mobile. */
 export type MealDisplayMode = 'agenda' | 'card';
 
 const MODE_KEY = 'family-agenda.meals.display';

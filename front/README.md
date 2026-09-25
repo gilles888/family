@@ -30,6 +30,7 @@ Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dan
 - **Membres** (`/membres`) : liste, ajout, modification, suppression.
 - **Recettes** (`/recettes`) et **repas de la semaine** : voir *Repas et recettes*.
 - **Comment s'habiller ?** : carte en haut de la colonne des tâches (voir *Carte météo*).
+- **Page Mobile** : panneau qui glisse depuis la droite (languette ou swipe) et regroupe les cartes Météo, Tâches et Repas (voir *Page Mobile*).
 - **Erreurs d'API** : un intercepteur affiche un message **traduit** dans un `mat-snack-bar` (réseau, 400, 404, 409, 5xx). Une requête qui affiche elle-même son erreur pose `SKIP_ERROR_NOTIFICATION` dans son `HttpContext` pour ne pas avoir de snack-bar.
 
 ## Repas et recettes (`src/app/recipes/`, `src/app/meals/`)
@@ -37,12 +38,34 @@ Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dan
 - **Recettes** (`/recettes`, `RecipesPage`) : liste avec recherche, création / modification (`RecipeDialog`) et suppression. Une recette a un nom, une description courte, des portions de référence, un temps de préparation (facultatif), des instructions et des lignes d'ingrédients (nom, quantité, unité). Le nom d'ingrédient est **autocomplété** sur les ingrédients existants (`GET /v1/ingredients`) ; un nom inconnu crée l'ingrédient à l'enregistrement. Un même ingrédient saisi deux fois est signalé dès la saisie, avec la même comparaison que le backend (`ingredient-names.ts` : sans casse, accents ni ligatures, « Œufs » = « oeufs »).
 - **Repas** (`MealDialog`) : date, créneau (petit-déjeuner, midi, souper), portions (par défaut : une par membre de la famille), puis **une recette** (recherche) **ou une saisie libre** (« Restes », « Resto » en un clic). Un seul repas par créneau : le conflit est expliqué dans le dialogue.
 - **Deux modes d'affichage**, au choix dans la barre de filtres de l'agenda (« Dans l'agenda » / « En carte ») :
-  - **En carte** (par défaut) : carte latérale **Repas de la semaine** (`MealsWeekCard`), grille lundi → dimanche × créneaux, semaine précédente / suivante ; case vide = ajouter, repas = l'ouvrir ;
+  - **En carte** (par défaut) : carte **Repas de la semaine** (`MealsWeekCard`) de la **page Mobile** (choisir ce mode l'ouvre sur cette carte), grille lundi → dimanche × créneaux, semaine précédente / suivante ; case vide = ajouter, repas = l'ouvrir ;
   - **Dans l'agenda** : les repas s'affichent dans les vues jour, semaine et mois comme des entrées 🍽️ de couleur dédiée (`--mat-sys-tertiary*`), à l'heure fictive de leur créneau (8 h, 12 h, 18 h 30 — `meal-entries.ts`) ; le filtre « 🍽️ Repas » les masque, le bouton « Repas » en ajoute un au jour affiché.
 
   Il n'y a pas de préférences utilisateur côté backend : ce choix et le filtre sont gardés **dans le navigateur** (`localStorage`, `MealDisplayPreference`), avec des valeurs par défaut si le stockage est indisponible.
 - **Fiche recette** (`RecipeSheetDialog`) : au clic sur un repas lié à une recette (ou depuis la page Recettes), ingrédients **recalculés au prorata** des portions du repas (`GET /v1/recettes/{id}/fiche?portions=`), ajustables en −/+, temps et instructions en étapes ; bouton « Modifier le repas ». Un repas en saisie libre ouvre directement sa modification.
 - Libellés des unités et des créneaux : `src/app/shared/labels.ts` (`@@unit.*`, `@@slot.*`), via le pipe `enumLabel`.
+
+## Page Mobile (`src/app/dashboard/`)
+
+Panneau affiché par la page agenda (`<app-mobile-page />`) : plein écran sous 1000 px, 480 px au-delà (avec un fond assombri), défilement vertical, et une barre d'ancres (icônes) qui fait défiler jusqu'à chaque carte.
+
+- **Ouvrir / fermer** : languette au bord droit (le chevron pivote, elle suit le bord gauche de la page ouverte), swipe vers la gauche depuis la languette ou le bord droit de l'écran (bande de 20 px, écrans tactiles seulement), swipe vers la droite sur la page, clic sur le fond, **Échap**, bouton **retour** du navigateur ou du téléphone.
+- **Gestes** (`mobile-page.ts`) : Pointer Events, sans bibliothèque. Le sens est décidé après 10 px (horizontal = glissement, vertical = défilement des cartes, grâce à `touch-action: pan-y`). Au relâchement, le glissement aboutit au-delà de 40 % de la largeur ou si le geste est rapide (> 0,5 px/ms), sinon la page revient. Animation 250 ms en `transform` uniquement, désactivée avec `prefers-reduced-motion`.
+- **État** : `MobilePanelService` (signal `isOpen`), synchronisé avec le paramètre d'URL `?panel=mobile`. `open(cardId?)` ouvre la page et fait défiler jusqu'à une carte, ex. `open('meals')`.
+- **Données** : les cartes réutilisent ce que la page a déjà chargé, sans second appel à l'API : les tâches et les repas via `AgendaCardsContext` (fourni par `AgendaPage`, qui ouvre aussi les dialogues), la météo via `WeatherStore` (partagé par les deux cartes météo). Les cartes ne sont créées qu'à la première ouverture.
+
+### Ajouter une carte
+
+1. Créer un composant standalone. Il est affiché par `NgComponentOutlet`, donc **sans inputs ni outputs** : il obtient ses données par injection (un service, ou `AgendaCardsContext` pour celles de l'agenda ; voir `cards/tasks-card.ts`, un adaptateur de 20 lignes autour d'un composant existant).
+2. Ajouter une entrée dans `DASHBOARD_CARDS` (`dashboard-cards.ts`) : `id` unique, `title` traduit avec `$localize`, `icon` (nom d'une icône **Material Icons**), `order`, et `enabled: false` pour la masquer.
+3. `npm run extract-i18n`, puis traduire le titre dans `messages.nl.xlf`.
+
+### Tester le tactile (Chrome DevTools)
+
+1. `npm start`, ouvrir http://localhost:4200, puis DevTools (F12) → **Toggle device toolbar** (Ctrl+Maj+M) et choisir un appareil (ex. Pixel 7, iPad) : le curseur devient un « doigt » et les événements sont de type `touch`.
+2. Glisser depuis la languette ou tout près du bord droit vers la gauche : la page suit le doigt ; relâcher avant 40 % la fait revenir, un geste vif l'ouvre. Glisser vers la droite sur la page la ferme ; un glissement vertical fait défiler les cartes.
+3. Recharger la page après avoir changé d'appareil : la bande du bord droit n'existe que si le navigateur annonce un écran tactile (`any-pointer: coarse`).
+4. Vérifier l'URL (`?panel=mobile`), le bouton retour et Échap. **Rendering** → *Emulate CSS media feature prefers-reduced-motion* coupe les animations.
 
 ## Carte météo (`src/app/weather/`)
 
@@ -51,7 +74,7 @@ La carte **« Comment s'habiller ? »** appelle `GET /v1/meteo?jours=2` (`MeteoS
 - **Toute la semaine** : le bouton de l'en-tête (visible une fois la météo chargée) ouvre `WeekWeatherDialog`, qui charge `GET /v1/meteo?jours=7` : les 7 prochains jours, aujourd'hui compris (« Aujourd'hui », « Demain », puis le nom du jour dans la langue du build), en grille responsive (1 colonne sur mobile, 2 à 3 au-delà de 600 px), avec un rappel : au-delà de 3 jours, les prévisions sont moins fiables. Le paramètre `jours` va de 1 à 7 (2 par défaut) ; le backend fait un seul appel à Open-Meteo pour la carte et le dialogue.
 - Une journée (ciel, températures, ressenti, pluie, tuiles, « on pourra enlever le pull ») est affichée par le composant réutilisable `weather-day` (`day`, `label`, `highlighted`).
 - Le conseil (règles, seuils, lieu) est calculé **par le backend** : voir la section *Météo et tenue conseillée* de `../backend/README.md`. Le lieu se règle côté backend par les variables `METEO_*` (Bruxelles par défaut).
-- Rechargement automatique toutes les **30 min** (le backend garde lui-même la prévision en cache 30 min).
+- Rechargement automatique toutes les **30 min** (le backend garde lui-même la prévision en cache 30 min). La prévision est gardée par `WeatherStore` : la carte de la page principale et celle de la page Mobile partagent le même appel.
 - En cas d'erreur (503 si Open-Meteo est injoignable et qu'aucune prévision du jour n'est en cache) : message discret dans la carte (ou le dialogue) et bouton **Réessayer**, sans snack-bar (`SKIP_ERROR_NOTIFICATION`).
 - Emojis et libellés : `weather-labels.ts` (identifiants `@@clothing.*`, `@@sky.*`, et `@@weather.today` / `@@weather.tomorrow` partagés par la carte et le dialogue).
 
@@ -163,6 +186,7 @@ src/
 │   ├── family-members/    gestion des membres
 │   ├── recipes/           page Recettes, dialogue recette, fiche recette (prorata)
 │   ├── meals/             carte « Repas de la semaine », dialogue repas, affichage dans l'agenda
+│   ├── dashboard/         page Mobile : registre des cartes, panneau, gestes, état (MobilePanelService)
 │   ├── weather/           carte « Comment s'habiller ? », dialogue semaine, journée (weather-day), libellés emoji
 │   ├── shared/            intercepteur d'erreurs, notifications, pipe enumLabel, libellés, utilitaires de dates
 │   ├── app.config.ts      providers (client API, HttpClient + intercepteur, adaptateur de dates)

@@ -85,7 +85,7 @@
   flex-direction: column;
   gap: 16px;
   max-height: calc(100vh - 32px);
-  // Cartes météo et repas + tâches : la colonne défile d'un bloc plutôt que d'écraser la liste des tâches
+  // Carte météo + tâches : la colonne défile d'un bloc plutôt que d'écraser la liste des tâches
   overflow-y: auto;
   padding: 12px;
 

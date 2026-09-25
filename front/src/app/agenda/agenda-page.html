@@ -90,7 +90,7 @@
     }
     <mat-button-toggle-group
       [value]="mealDisplay.mode()"
-      (change)="mealDisplay.setMode($event.value)"
+      (change)="setMealDisplay($event.value)"
       hideSingleSelectionIndicator
       i18n-aria-label="@@agenda.mealDisplay"
       aria-label="Afficher les repas"
@@ -152,9 +152,6 @@
 
   <aside class="tasks">
     <app-weather-card />
-    @if (mealDisplay.mode() === 'card') {
-      <app-meals-week-card (addMeal)="newMeal($event)" (mealClick)="openMeal($event)" />
-    }
     <app-entry-list
       [entries]="periodEntries.value() ?? []"
       [members]="members.value() ?? []"

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, forwardRef, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { Observable, map } from 'rxjs';
@@ -29,13 +29,14 @@ import { MonthView } from './month-view';
 import { WeekView } from './week-view';
 import { YearView } from './year-view';
 import { WeatherCard } from '../weather/weather-card';
-import { MealDisplayPreference } from '../meals/meal-display';
+import { MealDisplayMode, MealDisplayPreference } from '../meals/meal-display';
 import { byDateTime, mealEntry, mealOf } from '../meals/meal-entries';
 import { MealDialog, MealDialogData, MealDialogResult } from '../meals/meal-dialog';
-import { MealSlotRequest, MealsWeekCard } from '../meals/meals-week-card';
+import { MealSlotRequest } from '../meals/meals-week-card';
 import { RecipeSheetDialog, RecipeSheetDialogData, RecipeSheetResult } from '../recipes/recipe-sheet-dialog';
 import { AgendaCardsContext } from '../dashboard/agenda-cards-context';
 import { MobilePageComponent } from '../dashboard/mobile-page';
+import { MobilePanelService } from '../dashboard/mobile-panel.service';
 
 export type Mode = 'day' | 'week' | 'month' | 'year';
 
@@ -63,7 +64,6 @@ type MemberFilter = 'all' | number;
     MonthView,
     YearView,
     WeatherCard,
-    MealsWeekCard,
     MobilePageComponent,
   ],
   // Les cartes de la page Mobile lisent les données de l'agenda et lui délèguent les dialogues
@@ -80,7 +80,7 @@ export class AgendaPage implements AgendaCardsContext {
   private readonly dialog = inject(MatDialog);
   private readonly notifications = inject(NotificationService);
   protected readonly mealDisplay = inject(MealDisplayPreference);
-  private readonly mealsCard = viewChild(MealsWeekCard);
+  private readonly mobilePanel = inject(MobilePanelService);
 
   protected readonly mode = signal<Mode>('month');
   /** Jour de référence : la vue affichée (jour / semaine / mois / année) est celle qui le contient. */
@@ -241,6 +241,14 @@ export class AgendaPage implements AgendaCardsContext {
     this.mode.set('month');
   }
 
+  /** « En carte » : la carte des repas est dans la page Mobile, qu'on ouvre sur elle. */
+  protected setMealDisplay(mode: MealDisplayMode): void {
+    this.mealDisplay.setMode(mode);
+    if (mode === 'card') {
+      this.mobilePanel.open('meals');
+    }
+  }
+
   protected onMemberChange(value: MemberFilter | undefined): void {
     this.memberFilter.set(value ?? 'all');
   }
@@ -352,7 +360,6 @@ export class AgendaPage implements AgendaCardsContext {
   }
 
   private reloadMeals(): void {
-    this.mealsCard()?.reload();
     this.mealsVersion.update((v) => v + 1);
     this.agendaMeals.reload();
   }
