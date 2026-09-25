@@ -149,6 +149,13 @@ Toutes les URL sont préfixées par `/v1`. Les endpoints de l'agenda acceptent `
 | GET | `/v1/repas?dateDebut=&dateFin=` | repas de la plage (jours inclus, 366 jours max), par date puis créneau |
 | POST | `/v1/repas` | planifier un repas (409 si le créneau est déjà pris) |
 | GET / PUT / DELETE | `/v1/repas/{id}` | détail / modifier / supprimer |
+| GET | `/v1/courses` | liste de courses : période de la dernière génération + articles (hors lignes retirées), par ordre alphabétique |
+| POST | `/v1/courses/generer` | `{dateDebut, dateFin}` (62 jours max) : génère ou régénère la liste depuis les repas de la période |
+| POST | `/v1/courses/articles` | ajouter un article à la main (`nom`, `quantite` et `unite` facultatives, pas d'unité sans quantité) |
+| PUT / PATCH / DELETE | `/v1/courses/articles/{id}` | modifier / cocher `achete` ou `aLaMaison` / supprimer |
+| DELETE | `/v1/courses/articles/achetes` | vider les articles achetés |
+| GET / POST | `/v1/garde-manger` | lister / ajouter (201, ou 200 si déjà présent ; marque « déjà à la maison » les lignes de même nom) |
+| DELETE | `/v1/garde-manger/{id}` | retirer du garde-manger |
 | GET | `/v1/meteo?jours=` | météo et tenue conseillée pour les enfants, à partir d'aujourd'hui : `jours` de 1 à 7, **2 par défaut** (400 hors bornes, 503 si indisponible) |
 
 Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validation ajoutent `errors` (champ → message), ex. `errors.dateHeureFin`, `errors["recurrence.dateFin"]`.
@@ -175,7 +182,7 @@ curl -s -X POST http://localhost:8080/v1/recettes -H 'Content-Type: application/
 curl -s "http://localhost:8080/v1/recettes/1/fiche?portions=6"     # quantités pour 6 personnes
 ```
 
-- **Ingrédients** (table `ingredient`, `IngredientService`) : réutilisés entre recettes, **uniques par nom normalisé** (sans casse, accents, ligatures ni espaces superflus : « Œufs » = « oeufs »). Une recette les désigne par leur nom : un ingrédient inconnu est créé, un ingrédient connu garde son nom d'origine. Deux lignes avec le même ingrédient dans une recette sont refusées (400). Le **rayon** (`Aisle`) est prévu pour la future liste de courses : rempli par les données de test, pas encore modifiable par l'API.
+- **Ingrédients** (table `ingredient`, `IngredientService`) : réutilisés entre recettes, **uniques par nom normalisé** (sans casse, accents, ligatures ni espaces superflus : « Œufs » = « oeufs »). Une recette les désigne par leur nom : un ingrédient inconnu est créé, un ingrédient connu garde son nom d'origine. Deux lignes avec le même ingrédient dans une recette sont refusées (400). Le **rayon** (`Aisle`) regroupe la liste de courses : rempli par les données de test, pas encore modifiable par l'API.
 - **Fiche recette** (`PortionCalculator`) : quantité × portions voulues ÷ portions de la recette, arrondie à 2 décimales au plus proche (3 œufs pour 4 → 0,75 pour 1).
 - **Suppression** d'une recette : les repas qui l'utilisaient sont conservés, avec son nom comme libellé libre ; les ingrédients restent.
 
@@ -190,6 +197,24 @@ curl -s "http://localhost:8080/v1/repas?dateDebut=2026-09-21&dateFin=2026-09-27"
 ```
 
 Ces contraintes sont aussi posées en base (migration `V2__repas_et_recettes.sql`) : unicité `(date_repas, creneau)`, `check` recette XOR libellé, `check` portions et quantités > 0.
+
+## Liste de courses et garde-manger (`ShoppingListService`, `ShoppingListAggregator`, `PantryService`)
+
+Une seule liste, partagée par la famille (migration `V3__liste_de_courses.sql`).
+
+```bash
+curl -s -X POST http://localhost:8080/v1/courses/generer -H 'Content-Type: application/json' \
+  -d '{ "dateDebut": "2026-09-25", "dateFin": "2026-10-02" }'
+curl -s -X POST http://localhost:8080/v1/courses/articles -H 'Content-Type: application/json' -d '{ "nom": "Papier toilette" }'
+curl -s -X PATCH http://localhost:8080/v1/courses/articles/3 -H 'Content-Type: application/json' -d '{ "achete": true }'
+```
+
+- **Agrégation** (`ShoppingListAggregator`, calcul pur) : les ingrédients des repas de la période sont **proratisés** aux portions du repas (`PortionCalculator`), puis additionnés par ingrédient (nom normalisé) et **famille d'unité** : g et kg, ml et l se convertissent (affichage en kg / l dès 1 000) ; les autres unités ne s'additionnent qu'avec elles-mêmes. Unités incompatibles (2 pièces et 200 g d'oignon) → **deux lignes**, jamais une somme fausse. Les repas en libellé libre sont ignorés. Chaque ligne garde ses **repas d'origine** (id, date, créneau, nom de la recette : `sources`).
+- **Régénération** : une ligne générée est retrouvée par sa clé (`cle_generation` = nom normalisé + famille d'unité). Quantité et repas d'origine sont mis à jour, les nouveaux ingrédients ajoutés, les lignes dont plus aucun repas de la période n'a besoin supprimées. Les **articles manuels** et les **statuts** (acheté, déjà à la maison) sont conservés.
+- **Supprimer une ligne générée**, ou **vider les achetés**, la **retire** (`retire = true`) au lieu de l'effacer : sinon la régénération suivante la ferait revenir comme à acheter. Elle est effacée pour de bon quand plus aucun repas n'en a besoin. Un article manuel est effacé tout de suite.
+- **Ligne générée modifiée** (PUT) : marquée `modifie` ; la régénération garde son nom, sa quantité et son unité (mais met à jour ses repas d'origine, et la retire si plus aucun repas n'en a besoin).
+- **Garde-manger** (`pantry_item`, initialisé avec sel, poivre, huile d'olive et sucre) : à la génération, une nouvelle ligne dont le nom normalisé y figure arrive **« déjà à la maison »**. L'ajout d'un article marque aussi les lignes existantes de même nom. La correspondance est exacte (« huile » ne couvre pas « huile d'olive »).
+- **Rayon** : celui de l'ingrédient (ligne générée, ou article manuel dont le nom correspond à un ingrédient connu).
 
 ## Météo et tenue conseillée (`MeteoService`, `TenueAdvisor`)
 
@@ -235,16 +260,18 @@ Ces contraintes sont aussi posées en base (migration `V2__repas_et_recettes.sql
 
 ```
 com.family.agenda
-├── entity/      FamilyMember, Reminder, RecurrenceRule, AgendaEntry, Recipe, RecipeIngredient, Ingredient, Meal + enums
+├── entity/      FamilyMember, Reminder, RecurrenceRule, AgendaEntry, Recipe, RecipeIngredient, Ingredient, Meal,
+│                ShoppingList, ShoppingItem (+ ShoppingItemSource), PantryItem + enums
 ├── dto/         records de requête/réponse (+ validation de cohérence des dates et de la récurrence), Ciel, Vetement
 ├── mapper/      MapStruct (Entity <-> DTO)
 ├── repository/  Spring Data JPA
 ├── service/     AgendaService (génération/gestion), RecurrenceCalculator (calcul pur),
 │                AgendaQueryService (jour/mois/année), ReminderService, FamilyMemberService,
 │                MeteoService (cache), OpenMeteoClient, TenueAdvisor (règles de tenue, pur),
-│                RecipeService, IngredientService, MealService, PortionCalculator (prorata, pur)
+│                RecipeService, IngredientService, MealService, PortionCalculator (prorata, pur),
+│                ShoppingListService, ShoppingListAggregator (agrégation, pur), PantryService
 ├── controller/  AgendaController, ReminderController, FamilyMemberController, MeteoController,
-│                RecipeController, IngredientController, MealController
+│                RecipeController, IngredientController, MealController, ShoppingListController, PantryController
 ├── scheduler/   AgendaExtensionScheduler
 ├── exception/   GlobalExceptionHandler (@RestControllerAdvice) : 400 / 404 / 409 (ConflictException) / 503
 └── config/      versioning d'API, OpenAPI, propriétés, données de test
@@ -277,3 +304,4 @@ Breaking changes rencontrés :
 - **Sécurité** : aucune authentification (backend d'agenda familial en réseau de confiance).
 - **Job nocturne multi-instances** : sans verrou distribué (ShedLock), deux instances exécuteraient le job simultanément ; la contrainte d'unicité évite les doublons mais l'une des deux transactions échouerait (loggé).
 - La vue annuelle compte toutes les entrées, y compris annulées.
+- **Liste de courses** : une ligne achetée ou retirée le reste à la régénération même si la quantité nécessaire augmente (un repas ajouté après les courses) ; il faut alors la décocher. Pas de conversion entre unités « de cuisine » (cuillères, pincées) et masses. Le rayon d'un ingrédient n'est pas encore modifiable par l'API.
