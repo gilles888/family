@@ -23,6 +23,8 @@ import { isToBuy } from './shopping-list';
 export class ShoppingStore {
   private readonly api = inject(CoursesService);
   private readonly pantryApi = inject(GardeMangerService);
+  /** Numéro de la dernière requête de statut envoyée, par article. */
+  private readonly statusRequests = new Map<number, number>();
 
   /** L'erreur de chargement est affichée par la page ou la carte (pas de snack-bar). */
   readonly list = rxResource<ShoppingListDTO, void>({
@@ -48,12 +50,26 @@ export class ShoppingStore {
     return this.api.updateArticle(id, request).pipe(tap((item) => this.replace(item)));
   }
 
-  /** Coché tout de suite (en magasin, la réponse du réseau peut tarder) ; rechargé si le serveur refuse. */
-  setStatus(item: ShoppingItemDTO, status: ShoppingItemStatusRequest): void {
-    this.replace({ ...item, ...definedOnly(status) });
-    this.api.updateArticleStatut(item.id!, status).subscribe({
-      next: (saved) => this.replace(saved),
-      error: () => this.list.reload(),
+  /** Inverse « acheté » à partir de l'état courant (deux taps rapides : coché puis décoché). */
+  toggleBought(id: number): void {
+    const item = this.items().find((i) => i.id === id);
+    if (item) {
+      this.setStatus(id, { achete: !item.achete });
+    }
+  }
+
+  /**
+   * Appliqué tout de suite (en magasin, la réponse du réseau peut tarder). Seule la réponse de la dernière requête
+   * d'un article compte : une réponse lente ne peut pas défaire un tap plus récent. Rechargé si le serveur refuse.
+   */
+  setStatus(id: number, status: ShoppingItemStatusRequest): void {
+    const request = (this.statusRequests.get(id) ?? 0) + 1;
+    this.statusRequests.set(id, request);
+    this.patchItems((items) => items.map((i) => (i.id === id ? { ...i, ...definedOnly(status) } : i)));
+    const latest = () => this.statusRequests.get(id) === request;
+    this.api.updateArticleStatut(id, status).subscribe({
+      next: (saved) => latest() && this.replace(saved),
+      error: () => latest() && this.list.reload(),
     });
   }
 

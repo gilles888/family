@@ -151,11 +151,11 @@ export class ShoppingPage {
   // ---------- lignes
 
   protected toggleBought(item: ShoppingItemDTO): void {
-    this.store.setStatus(item, { achete: !item.achete });
+    this.store.toggleBought(item.id!);
   }
 
   protected setAtHome(item: ShoppingItemDTO, atHome: boolean): void {
-    this.store.setStatus(item, { aLaMaison: atHome });
+    this.store.setStatus(item.id!, { aLaMaison: atHome });
   }
 
   protected addToPantry(item: ShoppingItemDTO): void {
