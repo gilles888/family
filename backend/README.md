@@ -324,5 +324,6 @@ Breaking changes rencontrés :
 - **Sécurité** : aucune authentification (backend d'agenda familial en réseau de confiance).
 - **Job nocturne multi-instances** : sans verrou distribué (ShedLock), deux instances exécuteraient le job simultanément ; la contrainte d'unicité évite les doublons mais l'une des deux transactions échouerait (loggé).
 - La vue annuelle compte toutes les entrées, y compris annulées.
+- **H2 (dev)** : H2 en mémoire lie ses contraintes `check` à la connexion qui les a créées (celle des migrations Flyway). Si le pool la recycle, toute écriture sur ces tables échoue (« Check constraint invalid », renvoyé en **409**). Le profil dev désactive donc le recyclage des connexions (`spring.datasource.hikari.max-lifetime: 0`). PostgreSQL n'est pas concerné.
 - **Routines** : la gestion (mode parent) n'est pas protégée, faute de comptes ou de code parent. Le « jour » est celui de l'horloge du serveur : un serveur dans un autre fuseau que la famille décalerait le changement de jour.
 - **Liste de courses** : une ligne achetée ou retirée le reste à la régénération même si la quantité nécessaire augmente (un repas ajouté après les courses) ; il faut alors la décocher. Pas de conversion entre unités « de cuisine » (cuillères, pincées) et masses. Le rayon d'un ingrédient n'est pas encore modifiable par l'API.

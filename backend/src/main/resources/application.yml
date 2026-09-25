@@ -53,6 +53,12 @@ spring:
     url: jdbc:h2:mem:familyagenda;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
+    hikari:
+      # H2 en mémoire lie ses contraintes check (« type in (...) ») à la connexion qui les a créées : celle des
+      # migrations Flyway. Si le pool la recycle (maxLifetime, 30 min par défaut), toute écriture sur ces tables
+      # échoue ensuite (« Check constraint invalid » → 409). Les connexions ne sont donc jamais recyclées en dev.
+      # PostgreSQL (prod) n'est pas concerné.
+      max-lifetime: 0
   jpa:
     show-sql: false
 
