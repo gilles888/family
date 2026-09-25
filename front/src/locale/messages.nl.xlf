@@ -2826,6 +2826,370 @@
           <context context-type="linenumber">59,61</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="avatar.eyes.wink" datatype="html">
+        <source>Clin d&apos;œil</source>
+        <target>Knipoog</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.eyes.surprised" datatype="html">
+        <source>Yeux étonnés</source>
+        <target>Verbaasde ogen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.eyes.sleepy" datatype="html">
+        <source>Yeux endormis</source>
+        <target>Slaperige ogen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.mouth.tongue" datatype="html">
+        <source>Langue tirée</source>
+        <target>Tong uitsteken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.mouth.o" datatype="html">
+        <source>Bouche en « o »</source>
+        <target>Mond in een « o »</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">155</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.mouth.neutral" datatype="html">
+        <source>Neutre</source>
+        <target>Neutraal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">156</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.pigtails" datatype="html">
+        <source>Couettes</source>
+        <target>Staartjes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">201</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.bun" datatype="html">
+        <source>Chignon</source>
+        <target>Knot</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">212</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.mohawk" datatype="html">
+        <source>Crête</source>
+        <target>Hanenkam</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">218</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.bald" datatype="html">
+        <source>Chauve</source>
+        <target>Kaal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">224</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.afro" datatype="html">
+        <source>Afro</source>
+        <target>Afro</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">230</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.fringe" datatype="html">
+        <source>Frange</source>
+        <target>Pony</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">237</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.ponytail" datatype="html">
+        <source>Queue de cheval</source>
+        <target>Paardenstaart</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">244</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.color.chestnut" datatype="html">
+        <source>Châtain</source>
+        <target>Kastanjebruin</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">253</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.color.grey" datatype="html">
+        <source>Gris</source>
+        <target>Grijs</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">256</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">363</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.color.pink" datatype="html">
+        <source>Rose</source>
+        <target>Roze</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">258</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">360</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.color.purple" datatype="html">
+        <source>Violet</source>
+        <target>Paars</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">260</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">359</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.sweater" datatype="html">
+        <source>Pull</source>
+        <target>Trui</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">279</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.shirt" datatype="html">
+        <source>Chemise</source>
+        <target>Hemd</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">297</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.dress" datatype="html">
+        <source>Robe</source>
+        <target>Jurk</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">304</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.overalls" datatype="html">
+        <source>Salopette</source>
+        <target>Tuinbroek</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">322</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.jersey" datatype="html">
+        <source>Maillot de sport</source>
+        <target>Sportshirt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">336</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.hero" datatype="html">
+        <source>Costume de super-héros</source>
+        <target>Superheldenpak</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">343</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.color.orange" datatype="html">
+        <source>Orange</source>
+        <target>Oranje</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">361</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.color.turquoise" datatype="html">
+        <source>Turquoise</source>
+        <target>Turkoois</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">362</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.color.navy" datatype="html">
+        <source>Bleu marine</source>
+        <target>Marineblauw</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">364</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.beanie" datatype="html">
+        <source>Bonnet</source>
+        <target>Muts</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">384</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.pirate" datatype="html">
+        <source>Chapeau de pirate</source>
+        <target>Piratenhoed</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">390</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.wizard" datatype="html">
+        <source>Chapeau de sorcier</source>
+        <target>Tovenaarshoed</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">414</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.hardhat" datatype="html">
+        <source>Casque de chantier</source>
+        <target>Bouwhelm</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">426</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.bob" datatype="html">
+        <source>Bob</source>
+        <target>Vissershoedje</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">432</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.cowboy" datatype="html">
+        <source>Chapeau de cow-boy</source>
+        <target>Cowboyhoed</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">438</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.accessory.sunglasses" datatype="html">
+        <source>Lunettes de soleil</source>
+        <target>Zonnebril</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">470</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.accessory.bowtie" datatype="html">
+        <source>Nœud papillon</source>
+        <target>Strikje</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">485</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.accessory.scarf" datatype="html">
+        <source>Écharpe</source>
+        <target>Sjaal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">492</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.accessory.earrings" datatype="html">
+        <source>Boucles d&apos;oreille</source>
+        <target>Oorbellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">505</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.lavender" datatype="html">
+        <source>Lavande</source>
+        <target>Lavendel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">517</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.apricot" datatype="html">
+        <source>Abricot</source>
+        <target>Abrikoos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">518</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.pearl" datatype="html">
+        <source>Perle</source>
+        <target>Parel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">519</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.lagoon" datatype="html">
+        <source>Lagon</source>
+        <target>Lagune</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">520</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.sunset" datatype="html">
+        <source>Coucher de soleil</source>
+        <target>Zonsondergang</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">524</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.ocean" datatype="html">
+        <source>Océan</source>
+        <target>Oceaan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">525</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.meadow" datatype="html">
+        <source>Prairie</source>
+        <target>Weide</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">526</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.galaxy" datatype="html">
+        <source>Galaxie</source>
+        <target>Melkweg</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">527</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>
