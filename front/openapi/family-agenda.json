@@ -467,6 +467,55 @@
                 }
             }
         },
+        "/v1/membres/{id}/avatar": {
+            "put": {
+                "tags": [
+                    "Membres"
+                ],
+                "summary": "Enregistrer le personnage (avatar) d'un membre",
+                "description": "Corps : un objet JSON libre (pi\u00e8ces du catalogue front, couleurs, `version` du catalogue), 2000 caract\u00e8res au plus une fois s\u00e9rialis\u00e9. `null` revient \u00e0 l'avatar par d\u00e9faut.",
+                "operationId": "updateAvatarMembre",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": {}
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Membre, avec son avatar",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FamilyMemberDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Corps qui n'est pas un objet JSON, ou trop long"
+                    },
+                    "404": {
+                        "description": "Membre introuvable"
+                    }
+                }
+            }
+        },
         "/v1/courses/articles/{id}": {
             "put": {
                 "tags": [
@@ -1816,6 +1865,20 @@
                     "couleur": {
                         "type": "string",
                         "example": "#E91E63"
+                    },
+                    "avatarConfig": {
+                        "type": [
+                            "object",
+                            "null"
+                        ],
+                        "additionalProperties": {},
+                        "description": "Personnage (avatar) : configuration libre du catalogue front, absente = avatar par d\u00e9faut",
+                        "example": {
+                            "version": 1,
+                            "skin": "skin-3",
+                            "hair": "hair-curly",
+                            "hairColor": "#6b3e26"
+                        }
                     }
                 }
             },

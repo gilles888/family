@@ -16,5 +16,9 @@ export interface FamilyMemberDTO {
     id?: number;
     nom?: string;
     couleur?: string;
+    /**
+     * Personnage (avatar) : configuration libre du catalogue front, absente = avatar par défaut
+     */
+    avatarConfig?: { [key: string]: any | null; } | null;
 }
 
