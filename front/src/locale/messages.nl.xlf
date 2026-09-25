@@ -3438,6 +3438,318 @@
           <context context-type="linenumber">36,38</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="members.routines" datatype="html">
+        <source>Routines</source>
+        <target>Routines</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.title" datatype="html">
+        <source>Routines de <x id="INTERPOLATION" equiv-text="{{ member.nom }}"/></source>
+        <target>Routines van <x id="INTERPOLATION" equiv-text="{{ member.nom }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.empty" datatype="html">
+        <source>Pas encore de routine. Partez d&apos;un modèle ou créez-en une.</source>
+        <target>Nog geen routine. Begin met een sjabloon of maak er zelf een.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">12,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.steps" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 étape} other {<x id="INTERPOLATION"/> étapes}}</source>
+        <target>{VAR_PLURAL, plural, =1 {1 stap} other {<x id="INTERPOLATION"/> stappen}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.activeToggle" datatype="html">
+        <source>Routine active</source>
+        <target>Routine actief</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">37,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.fromTemplate" datatype="html">
+        <source>Depuis un modèle</source>
+        <target>Vanuit een sjabloon</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.create" datatype="html">
+        <source>Nouvelle routine</source>
+        <target>Nieuwe routine</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">68,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.added" datatype="html">
+        <source>« <x id="name" equiv-text="routine.nom"/> » ajoutée : vous pouvez l&apos;adapter.</source>
+        <target>« <x id="name" equiv-text="routine.nom"/> » toegevoegd: u kunt ze aanpassen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.deleteTitle" datatype="html">
+        <source>Supprimer la routine ?</source>
+        <target>Routine verwijderen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.deleteMessage" datatype="html">
+        <source>« <x id="name" equiv-text="routine.nom"/> » et son historique seront supprimés.</source>
+        <target>« <x id="name" equiv-text="routine.nom"/> » en de geschiedenis ervan worden verwijderd.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.editTitle" datatype="html">
+        <source>Modifier la routine</source>
+        <target>Routine bewerken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.createTitle" datatype="html">
+        <source>Nouvelle routine pour <x id="INTERPOLATION" equiv-text="{{ data.member.nom }}"/></source>
+        <target>Nieuwe routine voor <x id="INTERPOLATION" equiv-text="{{ data.member.nom }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.name" datatype="html">
+        <source>Nom</source>
+        <target>Naam</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.namePlaceholder" datatype="html">
+        <source>Ma routine du matin</source>
+        <target>Mijn ochtendroutine</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.nameRequired" datatype="html">
+        <source>Nom obligatoire.</source>
+        <target>Naam verplicht.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.subtitle" datatype="html">
+        <source>Sous-titre</source>
+        <target>Ondertitel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.subtitlePlaceholder" datatype="html">
+        <source>Un bon début de journée !</source>
+        <target>Een goede start van de dag!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">20,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.type" datatype="html">
+        <source>Moment</source>
+        <target>Moment</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.theme" datatype="html">
+        <source>Décor</source>
+        <target>Decor</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.days" datatype="html">
+        <source>Jours</source>
+        <target>Dagen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.from" datatype="html">
+        <source>De</source>
+        <target>Van</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.to" datatype="html">
+        <source>À</source>
+        <target>Tot</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.active" datatype="html">
+        <source>Active</source>
+        <target>Actief</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.timeIncomplete" datatype="html">
+        <source>Indiquez l&apos;heure de début et l&apos;heure de fin, ou aucune des deux.</source>
+        <target>Geef een begin- en einduur op, of geen van beide.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">63,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.timeOrder" datatype="html">
+        <source>L&apos;heure de fin doit suivre l&apos;heure de début.</source>
+        <target>Het einduur moet na het beginuur komen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.timeHint" datatype="html">
+        <source>Plage indicative : la routine est mise en avant à ce moment-là.</source>
+        <target>Richttijd: de routine wordt dan naar voren gebracht.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">67,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.steps" datatype="html">
+        <source>Étapes</source>
+        <target>Stappen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.drag" datatype="html">
+        <source>Glisser pour déplacer</source>
+        <target>Sleep om te verplaatsen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.chooseIcon" datatype="html">
+        <source>Choisir l&apos;illustration</source>
+        <target>Afbeelding kiezen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.stepLabel" datatype="html">
+        <source>Texte de l&apos;étape</source>
+        <target>Tekst van de stap</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">99,101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.color" datatype="html">
+        <source>Couleur de la ligne</source>
+        <target>Kleur van de lijn</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">101,102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.up" datatype="html">
+        <source>Monter</source>
+        <target>Omhoog</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.down" datatype="html">
+        <source>Descendre</source>
+        <target>Omlaag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">115,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.addStep" datatype="html">
+        <source>Ajouter une étape</source>
+        <target>Stap toevoegen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">127,129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.type.morning" datatype="html">
+        <source>Matin</source>
+        <target>Ochtend</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.type.evening" datatype="html">
+        <source>Soir</source>
+        <target>Avond</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.type.custom" datatype="html">
+        <source>Autre moment</source>
+        <target>Ander moment</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.theme.day" datatype="html">
+        <source>Jour</source>
+        <target>Dag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.theme.night" datatype="html">
+        <source>Nuit</source>
+        <target>Nacht</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

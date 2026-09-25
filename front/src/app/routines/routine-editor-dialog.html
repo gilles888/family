@@ -1,0 +1,135 @@
+<h2 mat-dialog-title>
+  @if (data.routine) {
+    <ng-container i18n="@@routineEditor.editTitle">Modifier la routine</ng-container>
+  } @else {
+    <ng-container i18n="@@routineEditor.createTitle">Nouvelle routine pour {{ data.member.nom }}</ng-container>
+  }
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()" id="routine-form">
+  <mat-dialog-content class="content">
+    <mat-form-field>
+      <mat-label i18n="@@routineEditor.name">Nom</mat-label>
+      <input matInput formControlName="nom" maxlength="100" required i18n-placeholder="@@routineEditor.namePlaceholder" placeholder="Ma routine du matin" />
+      @if (form.controls.nom.invalid) {
+        <mat-error i18n="@@routineEditor.nameRequired">Nom obligatoire.</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n="@@routineEditor.subtitle">Sous-titre</mat-label>
+      <input matInput formControlName="sousTitre" maxlength="150" i18n-placeholder="@@routineEditor.subtitlePlaceholder" placeholder="Un bon début de journée !" />
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field>
+        <mat-label i18n="@@routineEditor.type">Moment</mat-label>
+        <mat-select formControlName="type">
+          @for (t of types; track t) {
+            <mat-option [value]="t">{{ typeLabels[t] }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-button-toggle-group formControlName="theme" hideSingleSelectionIndicator i18n-aria-label="@@routineEditor.theme" aria-label="Décor">
+        @for (t of themes; track t) {
+          <mat-button-toggle [value]="t">
+            <mat-icon>{{ t === 'NIGHT' ? 'bedtime' : 'wb_sunny' }}</mat-icon>
+            {{ themeLabels[t] }}
+          </mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+    </div>
+
+    <div class="days">
+      <span class="label" i18n="@@routineEditor.days">Jours</span>
+      <mat-button-toggle-group multiple hideMultipleSelectionIndicator formControlName="jours" i18n-aria-label="@@recurrence.weekdays" aria-label="Jours de la semaine">
+        @for (d of weekDays; track d.code) {
+          <mat-button-toggle [value]="d.code" [title]="d.reference | date: 'EEEE'">{{ d.reference | date: 'EEEEE' }}</mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+    </div>
+
+    <div class="row">
+      <mat-form-field>
+        <mat-label i18n="@@routineEditor.from">De</mat-label>
+        <input matInput type="time" formControlName="heureDebut" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n="@@routineEditor.to">À</mat-label>
+        <input matInput type="time" formControlName="heureFin" />
+      </mat-form-field>
+      <mat-slide-toggle formControlName="active" i18n="@@routineEditor.active">Active</mat-slide-toggle>
+    </div>
+    @if (form.hasError('timeIncomplete')) {
+      <p class="form-error" i18n="@@routineEditor.timeIncomplete">Indiquez l'heure de début et l'heure de fin, ou aucune des deux.</p>
+    } @else if (form.hasError('timeOrder')) {
+      <p class="form-error" i18n="@@routineEditor.timeOrder">L'heure de fin doit suivre l'heure de début.</p>
+    } @else {
+      <p class="hint" i18n="@@routineEditor.timeHint">Plage indicative : la routine est mise en avant à ce moment-là.</p>
+    }
+
+    <h3 i18n="@@routineEditor.steps">Étapes</h3>
+    <ol class="steps" cdkDropList (cdkDropListDropped)="dropStep($event)" formArrayName="etapes">
+      @for (step of steps.controls; track step; let i = $index; let first = $first; let last = $last) {
+        <li class="step" cdkDrag cdkDragLockAxis="y" [formGroupName]="i" [style.background]="step.controls.couleur.value">
+          <button type="button" class="handle" cdkDragHandle i18n-aria-label="@@routineEditor.drag" aria-label="Glisser pour déplacer">
+            <mat-icon>drag_indicator</mat-icon>
+          </button>
+          <span class="number">{{ i + 1 }}</span>
+          <button type="button" class="icon-button" [matMenuTriggerFor]="iconMenu" i18n-aria-label="@@routineEditor.chooseIcon" aria-label="Choisir l'illustration">
+            <app-routine-icon [icon]="step.controls.icone.value" [size]="44" />
+          </button>
+          <mat-menu #iconMenu="matMenu" class="routine-icon-menu">
+            <div class="icon-grid">
+              @for (icon of icons; track icon.id) {
+                <button
+                  type="button"
+                  class="icon-choice"
+                  mat-menu-item
+                  [class.selected]="icon.id === step.controls.icone.value"
+                  [attr.aria-label]="icon.label"
+                  [title]="icon.label"
+                  (click)="step.controls.icone.setValue(icon.id)"
+                >
+                  <app-routine-icon [icon]="icon.id" [size]="40" />
+                </button>
+              }
+            </div>
+          </mat-menu>
+          <mat-form-field class="step-label" subscriptSizing="dynamic">
+            <input matInput formControlName="libelle" maxlength="150" required i18n-aria-label="@@routineEditor.stepLabel" aria-label="Texte de l'étape" />
+          </mat-form-field>
+          <button type="button" matIconButton [matMenuTriggerFor]="colorMenu" i18n-aria-label="@@routineEditor.color" aria-label="Couleur de la ligne">
+            <mat-icon>palette</mat-icon>
+          </button>
+          <mat-menu #colorMenu="matMenu">
+            <div class="color-grid">
+              @for (c of pastels; track c) {
+                <button type="button" mat-menu-item class="color-choice" [style.background]="c" [attr.aria-label]="c" (click)="step.controls.couleur.setValue(c)"></button>
+              }
+            </div>
+          </mat-menu>
+          <span class="move">
+            <button type="button" matIconButton [disabled]="first" (click)="moveStep(i, i - 1)" i18n-aria-label="@@routineEditor.up" aria-label="Monter">
+              <mat-icon>arrow_upward</mat-icon>
+            </button>
+            <button type="button" matIconButton [disabled]="last" (click)="moveStep(i, i + 1)" i18n-aria-label="@@routineEditor.down" aria-label="Descendre">
+              <mat-icon>arrow_downward</mat-icon>
+            </button>
+          </span>
+          <button type="button" matIconButton (click)="removeStep(i)" i18n-aria-label="@@common.delete" aria-label="Supprimer">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </li>
+      }
+    </ol>
+    <button type="button" matButton="tonal" (click)="addStep()">
+      <mat-icon>add</mat-icon>
+      <ng-container i18n="@@routineEditor.addStep">Ajouter une étape</ng-container>
+    </button>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button type="button" matButton mat-dialog-close i18n="@@common.cancel">Annuler</button>
+    <button type="submit" matButton="filled" [disabled]="saving()" i18n="@@common.save">Enregistrer</button>
+  </mat-dialog-actions>
+</form>

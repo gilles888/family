@@ -189,11 +189,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
-          <context context-type="linenumber">39,40</context>
+          <context context-type="linenumber">42,43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
@@ -210,6 +210,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/recipes/recipes-page.ts</context>
           <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">42,43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">119,120</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
@@ -310,6 +322,10 @@
           <context context-type="linenumber">161,162</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">132,133</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/confirm-dialog.ts</context>
           <context context-type="linenumber">19,20</context>
         </context-group>
@@ -343,6 +359,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
           <context context-type="linenumber">162,163</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">133,134</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
@@ -1270,15 +1290,26 @@
           <context context-type="linenumber">33,34</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="common.edit" datatype="html">
-        <source>Modifier</source>
+      <trans-unit id="members.routines" datatype="html">
+        <source>Routines</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
           <context context-type="linenumber">36,37</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="common.edit" datatype="html">
+        <source>Modifier</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
           <context context-type="linenumber">56,57</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">39,40</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
@@ -1289,21 +1320,21 @@
         <source>Supprimer ce membre ?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.deleteMessage" datatype="html">
         <source>« <x id="name" equiv-text="member.nom"/> » sera retiré de tous ses rappels. Les rappels et leurs occurrences sont conservés.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.deleted" datatype="html">
         <source>Membre supprimé.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.editTitle" datatype="html">
@@ -1811,6 +1842,10 @@
           <context context-type="linenumber">98,99</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">71,72</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/notification.service.ts</context>
           <context context-type="linenumber">8</context>
         </context-group>
@@ -2040,6 +2075,10 @@
           <context context-type="sourcefile">src/app/reminders/reminder-dialog.html</context>
           <context context-type="linenumber">116,117</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">44,45</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="recurrence.weekdaysHint" datatype="html">
         <source>Aucun jour choisi : le jour de la date de début est utilisé.</source>
@@ -2118,6 +2157,80 @@
           <context context-type="linenumber">206</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="memberRoutines.title" datatype="html">
+        <source>Routines de <x id="INTERPOLATION" equiv-text="{{ member.nom }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.empty" datatype="html">
+        <source>Pas encore de routine. Partez d&apos;un modèle ou créez-en une.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">12,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.steps" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 étape} other {<x id="INTERPOLATION"/> étapes}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.activeToggle" datatype="html">
+        <source>Routine active</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">37,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routines.loadError" datatype="html">
+        <source>Impossible de charger les routines.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">49,53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.fromTemplate" datatype="html">
+        <source>Depuis un modèle</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.create" datatype="html">
+        <source>Nouvelle routine</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
+          <context context-type="linenumber">68,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.added" datatype="html">
+        <source>« <x id="name" equiv-text="routine.nom"/> » ajoutée : vous pouvez l&apos;adapter.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.deleteTitle" datatype="html">
+        <source>Supprimer la routine ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.deleteMessage" datatype="html">
+        <source>« <x id="name" equiv-text="routine.nom"/> » et son historique seront supprimés.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routine.badge" datatype="html">
         <source>Je peux le faire !</source>
         <context-group purpose="location">
@@ -2137,6 +2250,174 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routine-board.html</context>
           <context context-type="linenumber">71,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.editTitle" datatype="html">
+        <source>Modifier la routine</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.createTitle" datatype="html">
+        <source>Nouvelle routine pour <x id="INTERPOLATION" equiv-text="{{ data.member.nom }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.name" datatype="html">
+        <source>Nom</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.namePlaceholder" datatype="html">
+        <source>Ma routine du matin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.nameRequired" datatype="html">
+        <source>Nom obligatoire.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.subtitle" datatype="html">
+        <source>Sous-titre</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.subtitlePlaceholder" datatype="html">
+        <source>Un bon début de journée !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">20,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.type" datatype="html">
+        <source>Moment</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.theme" datatype="html">
+        <source>Décor</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.days" datatype="html">
+        <source>Jours</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.from" datatype="html">
+        <source>De</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.to" datatype="html">
+        <source>À</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.active" datatype="html">
+        <source>Active</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.timeIncomplete" datatype="html">
+        <source>Indiquez l&apos;heure de début et l&apos;heure de fin, ou aucune des deux.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">63,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.timeOrder" datatype="html">
+        <source>L&apos;heure de fin doit suivre l&apos;heure de début.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.timeHint" datatype="html">
+        <source>Plage indicative : la routine est mise en avant à ce moment-là.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">67,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.steps" datatype="html">
+        <source>Étapes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.drag" datatype="html">
+        <source>Glisser pour déplacer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.chooseIcon" datatype="html">
+        <source>Choisir l&apos;illustration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.stepLabel" datatype="html">
+        <source>Texte de l&apos;étape</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">99,101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.color" datatype="html">
+        <source>Couleur de la ligne</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">101,102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.up" datatype="html">
+        <source>Monter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.down" datatype="html">
+        <source>Descendre</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">115,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineEditor.addStep" datatype="html">
+        <source>Ajouter une étape</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
+          <context context-type="linenumber">127,129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="routineIcon.wakeUp" datatype="html">
@@ -2300,6 +2581,41 @@
           <context context-type="linenumber">309</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routine.type.morning" datatype="html">
+        <source>Matin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.type.evening" datatype="html">
+        <source>Soir</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.type.custom" datatype="html">
+        <source>Autre moment</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.theme.day" datatype="html">
+        <source>Jour</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routine.theme.night" datatype="html">
+        <source>Nuit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routines.who" datatype="html">
         <source>Qui es-tu ?</source>
         <context-group purpose="location">
@@ -2312,13 +2628,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
           <context context-type="linenumber">18,20</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="routines.loadError" datatype="html">
-        <source>Impossible de charger les routines.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">32,33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="routines.none" datatype="html">

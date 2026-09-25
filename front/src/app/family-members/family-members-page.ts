@@ -9,6 +9,7 @@ import { ConfirmDialog } from '../shared/confirm-dialog';
 import { NotificationService } from '../shared/notification.service';
 import { Avatar } from '../avatar/avatar';
 import { AvatarEditor, AvatarEditorData } from '../avatar/avatar-editor';
+import { MemberRoutinesData, MemberRoutinesDialog } from '../routines/member-routines-dialog';
 import { MemberDialog, MemberDialogData } from './member-dialog';
 
 /** Gestion des membres de la famille (liste, ajout, modification, suppression) et de leur personnage. */
@@ -47,6 +48,16 @@ export class FamilyMembersPage {
       })
       .afterClosed()
       .subscribe((saved) => saved && this.members.reload());
+  }
+
+  /** Mode parent : routines du membre. */
+  protected editRoutines(member: FamilyMemberDTO): void {
+    this.dialog.open<MemberRoutinesDialog, MemberRoutinesData>(MemberRoutinesDialog, {
+      data: { member },
+      width: '640px',
+      maxWidth: '100vw',
+      maxHeight: '100dvh',
+    });
   }
 
   protected remove(member: FamilyMemberDTO): void {

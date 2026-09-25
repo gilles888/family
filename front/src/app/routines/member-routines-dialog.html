@@ -1,0 +1,72 @@
+<h2 mat-dialog-title class="title">
+  <app-avatar [member]="member" [size]="36" />
+  <ng-container i18n="@@memberRoutines.title">Routines de {{ member.nom }}</ng-container>
+</h2>
+
+<mat-dialog-content>
+  @if (routines.isLoading()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+  @if (routines.hasValue()) {
+    @if (routines.value().length === 0) {
+      <p class="empty" i18n="@@memberRoutines.empty">Pas encore de routine. Partez d'un modèle ou créez-en une.</p>
+    }
+    <ul class="list">
+      @for (r of routines.value(); track r.id) {
+        <li class="routine" [class.inactive]="!r.active">
+          <app-routine-icon [icon]="r.theme === 'NIGHT' ? 'moon' : 'sun'" [size]="40" />
+          <span class="info">
+            <span class="name">{{ r.nom }}</span>
+            <span class="meta">
+              {{ typeLabels[r.type!] }} ·
+              <ng-container i18n="@@memberRoutines.steps">{r.etapes?.length ?? 0, plural, =1 {1 étape} other {{{ r.etapes?.length ?? 0 }} étapes}}</ng-container>
+              @if (r.heureDebut) {
+                · {{ hhmm(r.heureDebut) }}–{{ hhmm(r.heureFin) }}
+              }
+            </span>
+            <span class="days">
+              @for (d of weekDays; track d.code) {
+                <span class="day" [class.on]="r.jours?.includes(d.code)" [title]="d.reference | date: 'EEEE'">{{ d.reference | date: 'EEEEE' }}</span>
+              }
+            </span>
+          </span>
+          <mat-slide-toggle
+            [checked]="r.active"
+            (change)="setActive(r, $event.checked)"
+            i18n-aria-label="@@memberRoutines.activeToggle"
+            aria-label="Routine active"
+          />
+          <button matIconButton (click)="edit(r)" i18n-aria-label="@@common.edit" aria-label="Modifier">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button matIconButton (click)="remove(r)" i18n-aria-label="@@common.delete" aria-label="Supprimer">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </li>
+      }
+    </ul>
+  } @else if (routines.error()) {
+    <p class="empty" i18n="@@routines.loadError">Impossible de charger les routines.</p>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions class="actions">
+  <button matButton="tonal" [matMenuTriggerFor]="templatesMenu" [disabled]="!templates.hasValue()">
+    <mat-icon>auto_awesome</mat-icon>
+    <ng-container i18n="@@memberRoutines.fromTemplate">Depuis un modèle</ng-container>
+  </button>
+  <mat-menu #templatesMenu="matMenu">
+    @for (t of templates.value() ?? []; track t.id) {
+      <button mat-menu-item (click)="fromTemplate(t)">
+        <mat-icon>{{ t.theme === 'NIGHT' ? 'bedtime' : 'wb_sunny' }}</mat-icon>
+        <span>{{ t.nom }}</span>
+      </button>
+    }
+  </mat-menu>
+  <button matButton="filled" (click)="create()">
+    <mat-icon>add</mat-icon>
+    <ng-container i18n="@@memberRoutines.create">Nouvelle routine</ng-container>
+  </button>
+  <span class="spacer"></span>
+  <button matButton mat-dialog-close i18n="@@common.close">Fermer</button>
+</mat-dialog-actions>
