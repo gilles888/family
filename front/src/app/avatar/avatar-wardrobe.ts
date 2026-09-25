@@ -5,6 +5,7 @@ import {
   BACKGROUND_COLORS,
   BACKGROUND_GRADIENTS,
   ColorOption,
+  DropZone,
   EYES,
   HAIRS,
   HAIR_COLORS,
@@ -16,8 +17,6 @@ import {
   SKIN_TONES,
 } from './avatar-parts';
 
-/** Zone du personnage où une pièce se pose (surlignée pendant un glisser-déposer). */
-export type DropZone = 'head' | 'face' | 'eyes' | 'mouth' | 'body' | 'hat' | 'background';
 
 /** Une vignette ou une pastille de la garde-robe. */
 export interface WardrobeOption {
@@ -56,7 +55,7 @@ function parts(field: PartField, list: AvatarPart[], zone: DropZone): WardrobeOp
   return list.map((part) => ({
     key: `${field}:${part.id}`,
     label: part.label,
-    zone,
+    zone: part.zone ?? zone,
     none: part.id === NONE,
     apply: (c) => ({ ...c, [field]: part.id }),
     isSelected: (c) => c[field] === part.id,
@@ -103,8 +102,8 @@ export const WARDROBE: WardrobeCategory[] = [
     label: $localize`:@@avatar.cat.hair:Cheveux`,
     icon: 'content_cut',
     groups: [
-      { id: 'hair', title: $localize`:@@avatar.group.hairStyle:Coiffure`, kind: 'thumbs', viewBox: '20 10 160 160', options: parts('hair', HAIRS, 'head') },
-      { id: 'hairColor', title: $localize`:@@avatar.group.color:Couleur`, kind: 'swatches', options: colors('hairColor', HAIR_COLORS, 'head') },
+      { id: 'hair', title: $localize`:@@avatar.group.hairStyle:Coiffure`, kind: 'thumbs', viewBox: '20 10 160 160', options: parts('hair', HAIRS, 'hair') },
+      { id: 'hairColor', title: $localize`:@@avatar.group.color:Couleur`, kind: 'swatches', options: colors('hairColor', HAIR_COLORS, 'hair') },
     ],
   },
   {

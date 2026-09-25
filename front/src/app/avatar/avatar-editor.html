@@ -4,8 +4,49 @@
 
 <mat-dialog-content class="content">
   <div class="stage">
-    <div #preview class="preview">
-      <app-avatar [config]="config()" [size]="null" [round]="false" [label]="member.nom ?? ''" />
+    <!-- Zone de dépôt : une option lâchée ici s'aimante à sa zone (placeholder placé sur la zone) -->
+    <div
+      #preview
+      class="preview"
+      id="avatar-stage"
+      cdkDropList
+      cdkDropListSortingDisabled
+      [cdkDropListConnectedTo]="groupListIds()"
+      [cdkDropListEnterPredicate]="acceptOption"
+      (cdkDropListDropped)="dropOnStage($event)"
+      (cdkDropListEntered)="overStage.set(true)"
+      (cdkDropListExited)="overStage.set(false)"
+      [class.targeted]="dragged()?.kind === 'option'"
+      [style.--zone-left]="dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['left'] : null"
+      [style.--zone-top]="dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['top'] : null"
+      [style.--zone-width]="dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['width'] : null"
+      [style.--zone-height]="dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['height'] : null"
+    >
+      <app-avatar [config]="shown()" [size]="null" [round]="false" [label]="member.nom ?? ''" />
+      @if (dragged(); as d) {
+        @if (d.kind === 'option') {
+          <div class="zone" [class.over]="overStage()" aria-hidden="true"></div>
+        }
+      }
+      <!-- Chapeau et accessoire portés : à glisser vers la garde-robe pour les enlever -->
+      @for (w of worn(); track w.field) {
+        <div
+          class="worn"
+          cdkDrag
+          [cdkDragData]="w"
+          [cdkDragStartDelay]="dragDelay"
+          [style]="zoneStyle(w.zone)"
+          (cdkDragStarted)="dragStarted(w)"
+          (cdkDragEnded)="dragEnded()"
+          aria-hidden="true"
+          [title]="wornLabels[w.field]"
+        >
+          <div *cdkDragPreview class="worn-preview">
+            <app-avatar [config]="config()" [only]="[w.field]" [size]="96" [round]="false" [viewBox]="zoneViewBox(w.zone)" />
+          </div>
+          <span *cdkDragPlaceholder class="placeholder-hidden"></span>
+        </div>
+      }
     </div>
     <button type="button" matButton="tonal" class="surprise" (click)="surprise()">
       <span aria-hidden="true">🎲</span>
@@ -13,7 +54,10 @@
     </button>
   </div>
 
-  <div class="wardrobe">
+  <div class="wardrobe" [class.receiving]="dragged()?.kind === 'worn'">
+    @if (dragged()?.kind === 'worn') {
+      <p class="drop-hint" i18n="@@avatarEditor.dropToRemove">Lâche ici pour l'enlever</p>
+    }
     <div class="tabs" role="tablist" i18n-aria-label="@@avatarEditor.wardrobe" aria-label="Garde-robe">
       @for (c of categories; track c.id) {
         <button
@@ -34,12 +78,28 @@
       @for (group of category().groups; track group.id) {
         <section class="group">
           <h3>{{ group.title }}</h3>
-          <div class="options" [class.swatches]="group.kind === 'swatches'">
+          <div
+            class="options"
+            [class.swatches]="group.kind === 'swatches'"
+            cdkDropList
+            cdkDropListSortingDisabled
+            cdkDropListHasAnchor
+            [id]="'wardrobe-' + group.id"
+            [cdkDropListConnectedTo]="['avatar-stage']"
+            [cdkDropListEnterPredicate]="acceptWorn"
+            (cdkDropListDropped)="dropInWardrobe($event)"
+          >
             @for (option of group.options; track option.key) {
               @if (group.kind === 'thumbs') {
                 <button
                   type="button"
                   class="thumb"
+                  cdkDrag
+                  [cdkDragData]="{ kind: 'option', option }"
+                  [cdkDragStartDelay]="dragDelay"
+                  cdkDragPreviewClass="drag-preview"
+                  (cdkDragStarted)="dragStarted({ kind: 'option', option })"
+                  (cdkDragEnded)="dragEnded()"
                   [class.selected]="option.isSelected(config())"
                   [attr.aria-pressed]="option.isSelected(config())"
                   [attr.aria-label]="option.label"
@@ -56,6 +116,12 @@
                 <button
                   type="button"
                   class="swatch"
+                  cdkDrag
+                  [cdkDragData]="{ kind: 'option', option }"
+                  [cdkDragStartDelay]="dragDelay"
+                  cdkDragPreviewClass="drag-preview"
+                  (cdkDragStarted)="dragStarted({ kind: 'option', option })"
+                  (cdkDragEnded)="dragEnded()"
                   [class.selected]="option.isSelected(config())"
                   [attr.aria-pressed]="option.isSelected(config())"
                   [attr.aria-label]="option.label"

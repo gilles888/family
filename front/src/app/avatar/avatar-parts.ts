@@ -11,6 +11,22 @@ import { INK, Shape, circle, ellipse, line, path, rect } from './avatar-shapes';
 /** Emplacements : une pièce posée va toujours au sien. */
 export type AvatarSlot = 'background' | 'body' | 'head' | 'eyes' | 'mouth' | 'hair' | 'hat' | 'accessory';
 
+/** Zone du personnage où une pièce s'aimante (surlignée pendant un glisser-déposer). */
+export type DropZone = 'hair' | 'hat' | 'face' | 'eyes' | 'mouth' | 'ears' | 'neck' | 'body' | 'background';
+
+/** Rectangle [x, y, largeur, hauteur] de chaque zone, dans le viewBox 0 0 200 200. */
+export const ZONES: Record<DropZone, readonly [number, number, number, number]> = {
+  hair: [42, 26, 116, 112],
+  hat: [36, 0, 128, 82],
+  face: [56, 46, 88, 90],
+  eyes: [62, 74, 76, 32],
+  mouth: [78, 98, 44, 30],
+  ears: [44, 82, 112, 34],
+  neck: [64, 134, 72, 58],
+  body: [30, 140, 140, 60],
+  background: [0, 0, 200, 200],
+};
+
 export interface AvatarPart {
   id: string;
   label: string;
@@ -21,6 +37,8 @@ export interface AvatarPart {
   back?: Shape[];
   /** Habits : partie devant le cou (col, capuche…), dessinée après la tête. */
   front?: Shape[];
+  /** Accessoires : zone où il se pose (lunettes → yeux, nœud papillon → cou…). */
+  zone?: DropZone;
 }
 
 export interface ColorOption {
@@ -215,6 +233,7 @@ export const ACCESSORIES: AvatarPart[] = [
   {
     id: 'acc-glasses',
     slot: 'accessory',
+    zone: 'eyes',
     label: $localize`:@@avatar.accessory.glasses:Lunettes`,
     shapes: [
       circle(84, 90, 11, '#ffffff', { opacity: 0.2 }),

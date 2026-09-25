@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { FamilyMemberDTO } from '../api-client';
 import { AvatarConfig, defaultAvatar, normalizeAvatar } from './avatar-config';
-import { drawAvatar } from './avatar-layers';
+import { LayerKey, drawAvatar } from './avatar-layers';
 
 let nextId = 0;
 
@@ -28,7 +28,9 @@ let nextId = 0;
       [attr.aria-hidden]="label() ? null : 'true'"
     >
       @let bg = drawing().background;
-      @if ('gradient' in bg) {
+      @if (only()) {
+        <!-- pièce seule : pas de fond -->
+      } @else if ('gradient' in bg) {
         <defs>
           <linearGradient [attr.id]="gradientId" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" [attr.stop-color]="bg.gradient.from" />
@@ -126,6 +128,9 @@ export class Avatar {
   /** Libellé accessible ; par défaut le nom du membre. Vide = décoratif (le nom est déjà écrit à côté). */
   readonly ariaLabel = input<string | undefined>(undefined, { alias: 'label' });
 
+  /** Ne dessiner que ces calques, sans fond (aperçu d'une pièce seule). */
+  readonly only = input<(LayerKey | 'hat' | 'accessory')[] | null>(null);
+
   protected readonly gradientId = `avatar-gradient-${nextId++}`;
 
   protected readonly label = computed(() => this.ariaLabel() ?? '');
@@ -133,6 +138,8 @@ export class Avatar {
   protected readonly drawing = computed(() => {
     const member = this.member();
     const fallback = defaultAvatar(member?.id ?? 0, member?.couleur);
-    return drawAvatar(normalizeAvatar(this.config() ?? member?.avatarConfig, fallback));
+    const drawing = drawAvatar(normalizeAvatar(this.config() ?? member?.avatarConfig, fallback));
+    const only = this.only();
+    return only ? { ...drawing, layers: drawing.layers.filter((l) => (only as string[]).includes(l.key)) } : drawing;
   });
 }
