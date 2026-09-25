@@ -16,7 +16,7 @@ export const DASHBOARD_CARDS: readonly DashboardCard[] = [
   {
     id: 'weather',
     title: $localize`:@@dashboard.card.weather:Météo`,
-    icon: 'partly_cloudy_day',
+    icon: 'wb_sunny',
     component: WeatherCard,
     order: 10,
   },

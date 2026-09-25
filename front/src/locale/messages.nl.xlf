@@ -1862,6 +1862,62 @@
           <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="dashboard.card.weather" datatype="html">
+        <source>Météo</source>
+        <target>Weer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard-cards.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.card.tasks" datatype="html">
+        <source>Tâches</source>
+        <target>Taken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard-cards.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.card.meals" datatype="html">
+        <source>Repas</source>
+        <target>Maaltijden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard-cards.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mobile.title" datatype="html">
+        <source>Tableau de bord</source>
+        <target>Overzicht</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/mobile-page.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mobile.anchors" datatype="html">
+        <source>Aller à une carte</source>
+        <target>Naar een kaart gaan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/mobile-page.html</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mobile.open" datatype="html">
+        <source>Ouvrir le tableau de bord</source>
+        <target>Overzicht openen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/mobile-page.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mobile.close" datatype="html">
+        <source>Fermer le tableau de bord</source>
+        <target>Overzicht sluiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/mobile-page.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

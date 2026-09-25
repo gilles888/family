@@ -35,6 +35,7 @@ import { MealDialog, MealDialogData, MealDialogResult } from '../meals/meal-dial
 import { MealSlotRequest, MealsWeekCard } from '../meals/meals-week-card';
 import { RecipeSheetDialog, RecipeSheetDialogData, RecipeSheetResult } from '../recipes/recipe-sheet-dialog';
 import { AgendaCardsContext } from '../dashboard/agenda-cards-context';
+import { MobilePageComponent } from '../dashboard/mobile-page';
 
 export type Mode = 'day' | 'week' | 'month' | 'year';
 
@@ -63,6 +64,7 @@ type MemberFilter = 'all' | number;
     YearView,
     WeatherCard,
     MealsWeekCard,
+    MobilePageComponent,
   ],
   // Les cartes de la page Mobile lisent les données de l'agenda et lui délèguent les dialogues
   providers: [{ provide: AgendaCardsContext, useExisting: forwardRef(() => AgendaPage) }],

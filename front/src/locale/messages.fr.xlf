@@ -159,21 +159,21 @@
         <source>Supprimer le rappel ?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">289</context>
+          <context context-type="linenumber">291</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reminder.deleteMessage" datatype="html">
         <source>« <x id="title" equiv-text="entry.titre"/> » sera supprimé ainsi que toutes ses occurrences à venir. Les occurrences passées restent dans l&apos;agenda.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">290</context>
+          <context context-type="linenumber">292</context>
         </context-group>
       </trans-unit>
       <trans-unit id="common.delete" datatype="html">
         <source>Supprimer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">291</context>
+          <context context-type="linenumber">293</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
@@ -204,7 +204,7 @@
         <source>Rappel supprimé.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">298</context>
+          <context context-type="linenumber">300</context>
         </context-group>
       </trans-unit>
       <trans-unit id="day.empty" datatype="html">
@@ -389,6 +389,55 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
           <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.card.weather" datatype="html">
+        <source>Météo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard-cards.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.card.tasks" datatype="html">
+        <source>Tâches</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard-cards.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.card.meals" datatype="html">
+        <source>Repas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard-cards.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mobile.title" datatype="html">
+        <source>Tableau de bord</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/mobile-page.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mobile.anchors" datatype="html">
+        <source>Aller à une carte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/mobile-page.html</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mobile.open" datatype="html">
+        <source>Ouvrir le tableau de bord</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/mobile-page.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="mobile.close" datatype="html">
+        <source>Fermer le tableau de bord</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/mobile-page.ts</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="members.title" datatype="html">

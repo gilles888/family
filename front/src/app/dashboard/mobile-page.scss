@@ -1,0 +1,153 @@
+// --progress (0 = fermée, 1 = ouverte) est posé sur l'hôte : panneau, languette, chevron et fond le suivent.
+:host {
+  --panel-width: 100vw;
+  // Plein écran : la languette s'arrête au bord gauche de l'écran au lieu d'en sortir
+  --tab-travel: calc(100vw - var(--tab-width));
+  --tab-width: 48px;
+  --duration: 250ms;
+  --easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (min-width: 1000px) {
+  :host {
+    --panel-width: 480px;
+    --tab-travel: var(--panel-width);
+  }
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: var(--mat-sys-scrim, #000);
+  opacity: calc(var(--progress) * 0.32);
+  pointer-events: none;
+  transition: opacity var(--duration) var(--easing);
+
+  &.active {
+    pointer-events: auto;
+  }
+}
+
+.sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 901;
+  width: var(--panel-width);
+  display: flex;
+  flex-direction: column;
+  background: var(--mat-sys-surface);
+  box-shadow: var(--mat-sys-level3);
+  transform: translateX(calc((1 - var(--progress)) * 100%));
+  transition: transform var(--duration) var(--easing);
+  touch-action: pan-y;
+}
+
+// Fermée et immobile : rien ne dépasse (ombre) et rien n'est rendu inutilement
+:host(.closed) .sheet {
+  visibility: hidden;
+  transition:
+    transform var(--duration) var(--easing),
+    visibility 0s var(--duration);
+}
+
+.header {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 12px;
+  padding: 12px 16px 8px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.title {
+  margin: 0;
+  font: var(--mat-sys-title-large);
+  outline: none;
+}
+
+.anchors {
+  display: flex;
+  gap: 4px;
+}
+
+.body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 12px;
+}
+
+// Plein écran : la languette ouverte est sur le bord gauche, les cartes lui laissent la place
+@media (max-width: 999.98px) {
+  .body {
+    padding-left: calc(var(--tab-width) + 4px);
+  }
+}
+
+.card {
+  flex: none;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container-low);
+}
+
+.tab {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 902;
+  width: var(--tab-width);
+  height: 72px;
+  margin-top: -36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 12px 0 0 12px;
+  background: var(--mat-sys-surface-container-high);
+  color: var(--mat-sys-on-surface);
+  box-shadow: var(--mat-sys-level2);
+  cursor: pointer;
+  touch-action: pan-y;
+  transform: translateX(calc(var(--progress) * -1 * var(--tab-travel)));
+  transition: transform var(--duration) var(--easing);
+
+  &:hover {
+    background: var(--mat-sys-surface-container-highest);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: -2px;
+  }
+}
+
+// ‹ fermée, › ouverte
+.chevron {
+  transform: rotate(calc(var(--progress) * 180deg));
+  transition: transform var(--duration) var(--easing);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .sheet,
+  .tab,
+  .chevron {
+    transition: none !important;
+  }
+}

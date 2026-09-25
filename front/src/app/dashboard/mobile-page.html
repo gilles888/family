@@ -1,0 +1,52 @@
+<div class="backdrop" [class.active]="panel.isOpen()" (click)="panel.close()" aria-hidden="true"></div>
+
+<button
+  #tab
+  type="button"
+  class="tab"
+  [attr.aria-expanded]="panel.isOpen()"
+  aria-controls="mobile-page"
+  [attr.aria-label]="panel.isOpen() ? closeLabel : openLabel"
+  [title]="panel.isOpen() ? closeLabel : openLabel"
+  (click)="panel.toggle()"
+>
+  <mat-icon class="chevron">chevron_left</mat-icon>
+</button>
+
+<section
+  #sheet
+  id="mobile-page"
+  class="sheet"
+  role="dialog"
+  aria-labelledby="mobile-page-title"
+  [inert]="!panel.isOpen()"
+  [cdkTrapFocus]="panel.isOpen()"
+>
+  <header class="header">
+    <h2 #heading id="mobile-page-title" class="title" tabindex="-1" i18n="@@mobile.title">Tableau de bord</h2>
+    <nav class="anchors" i18n-aria-label="@@mobile.anchors" aria-label="Aller à une carte">
+      @for (card of cards; track card.id) {
+        <button
+          matIconButton
+          type="button"
+          [attr.aria-label]="card.title"
+          [title]="card.title"
+          [attr.aria-controls]="cardElementId(card.id)"
+          (click)="scrollToCard(card.id)"
+        >
+          <mat-icon>{{ card.icon }}</mat-icon>
+        </button>
+      }
+    </nav>
+  </header>
+
+  <div #body class="body">
+    @if (rendered()) {
+      @for (card of cards; track card.id) {
+        <section class="card" [id]="cardElementId(card.id)" [attr.aria-label]="card.title">
+          <ng-container *ngComponentOutlet="card.component" />
+        </section>
+      }
+    }
+  </div>
+</section>
