@@ -1,5 +1,9 @@
 export * from './agenda.service';
 import { AgendaService } from './agenda.service';
+export * from './courses.service';
+import { CoursesService } from './courses.service';
+export * from './garde-manger.service';
+import { GardeMangerService } from './garde-manger.service';
 export * from './ingredients.service';
 import { IngredientsService } from './ingredients.service';
 export * from './membres.service';
@@ -12,4 +16,4 @@ export * from './reminders.service';
 import { RemindersService } from './reminders.service';
 export * from './repas.service';
 import { RepasService } from './repas.service';
-export const APIS = [AgendaService, IngredientsService, MembresService, MeteoService, RecettesService, RemindersService, RepasService];
+export const APIS = [AgendaService, CoursesService, GardeMangerService, IngredientsService, MembresService, MeteoService, RecettesService, RemindersService, RepasService];

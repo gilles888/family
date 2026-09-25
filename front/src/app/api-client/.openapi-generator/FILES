@@ -2,6 +2,8 @@ api.base.service.ts
 api.module.ts
 api/agenda.service.ts
 api/api.ts
+api/courses.service.ts
+api/garde-manger.service.ts
 api/ingredients.service.ts
 api/membres.service.ts
 api/meteo.service.ts
@@ -23,6 +25,8 @@ model/meteo-dto.ts
 model/meteo-jour-dto.ts
 model/models.ts
 model/month-summary-dto.ts
+model/pantry-item-dto.ts
+model/pantry-item-request.ts
 model/recipe-dto.ts
 model/recipe-ingredient-dto.ts
 model/recipe-ingredient-request.ts
@@ -34,6 +38,12 @@ model/recurrence-rule-request.ts
 model/reminder-dto.ts
 model/reminder-request.ts
 model/reminder-with-agenda-dto.ts
+model/shopping-item-dto.ts
+model/shopping-item-request.ts
+model/shopping-item-source-dto.ts
+model/shopping-item-status-request.ts
+model/shopping-list-dto.ts
+model/shopping-list-generate-request.ts
 model/year-summary-dto.ts
 param.ts
 provide-api.ts
