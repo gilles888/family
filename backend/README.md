@@ -157,6 +157,14 @@ Toutes les URL sont préfixées par `/v1`. Les endpoints de l'agenda acceptent `
 | DELETE | `/v1/courses/articles/achetes` | vider les articles achetés |
 | GET / POST | `/v1/garde-manger` | lister / ajouter (201, ou 200 si déjà présent ; marque « déjà à la maison » les lignes de même nom) |
 | DELETE | `/v1/garde-manger/{id}` | retirer du garde-manger |
+| GET | `/v1/membres/{id}/routines?date=` | routines du membre (actives ou non) avec leur état du jour demandé (aujourd'hui par défaut) |
+| POST | `/v1/membres/{id}/routines/modele` | `{modele: matin\|soir, langue: fr\|nl}` : copie modifiable d'un modèle |
+| GET | `/v1/membres/{id}/routines/historique?jours=` | routines terminées par jour (14 derniers jours par défaut, 62 max) |
+| GET | `/v1/routines/modeles?langue=` | modèles prêts à l'emploi (matin, soir) |
+| POST / GET / PUT / DELETE | `/v1/routines[/{id}]` | créer (avec `membreId`) / détail / modifier (étapes remplacées, une étape gardée par son id garde ses coches) / supprimer |
+| PUT | `/v1/routines/{id}/etapes/ordre` | réordonner : ids de toutes les étapes, dans le nouvel ordre |
+| POST | `/v1/routines/{id}/runs/{date}/etapes/{stepId}/toggle` | cocher / décocher une étape (aujourd'hui seulement) |
+| POST | `/v1/routines/{id}/runs/{date}/recompense` | marquer la récompense jouée (409 si pas terminée ou déjà jouée) |
 | GET | `/v1/meteo?jours=` | météo et tenue conseillée pour les enfants, à partir d'aujourd'hui : `jours` de 1 à 7, **2 par défaut** (400 hors bornes, 503 si indisponible) |
 
 Les erreurs sont au format RFC 9457 (`ProblemDetail`) ; les erreurs de validation ajoutent `errors` (champ → message), ex. `errors.dateHeureFin`, `errors["recurrence.dateFin"]`.
@@ -216,6 +224,17 @@ curl -s -X PATCH http://localhost:8080/v1/courses/articles/3 -H 'Content-Type: a
 - **Ligne générée modifiée** (PUT) : marquée `modifie` ; la régénération garde son nom, sa quantité et son unité (mais met à jour ses repas d'origine, et la retire si plus aucun repas n'en a besoin).
 - **Garde-manger** (`pantry_item`, initialisé avec sel, poivre, huile d'olive et sucre) : à la génération, une nouvelle ligne dont le nom normalisé y figure arrive **« déjà à la maison »**. L'ajout d'un article marque aussi les lignes existantes de même nom. La correspondance est exacte (« huile » ne couvre pas « huile d'olive »).
 - **Rayon** : celui de l'ingrédient (ligne générée, ou article manuel dont le nom correspond à un ingrédient connu).
+
+## Routines (`RoutineService`, `RoutineTemplates`)
+
+Tableaux de routine des enfants (« Mijn ochtendroutine », « Ma routine du soir ») : une liste d'étapes illustrées à cocher chaque jour (migration `V5__routines.sql`).
+
+- **Routine** : membre, nom, sous-titre, type (`MORNING`, `EVENING`, `CUSTOM`), thème (`DAY`, `NIGHT`), jours actifs, plage horaire indicative (`heureDebut` / `heureFin`, les deux ou aucune), active, ordre. **Étapes** : position, libellé libre (dans la langue du parent), icône (id du catalogue du front), couleur pastel de la ligne.
+- **Suivi du jour** (`routine_run`, unique par routine et par jour) : étapes cochées, `completedAt`, `rewardPlayed`. Les coches repartent de zéro chaque jour. La **fin est calculée par le serveur** : toutes les étapes cochées → `completedAt` renseigné ; décocher une étape l'efface. Seul **aujourd'hui** (horloge du serveur) peut être coché : pas de récompense en cochant la veille.
+- **Récompense** : une partie de mini-jeu par routine terminée et par jour ; décocher puis recocher ne redonne pas de partie.
+- **Modèles** (`RoutineTemplates`) : matin (lundi → vendredi, 6 h 30 – 8 h 30, 10 étapes) et soir (veilles de jour d'école, 18 h 30 – 20 h 30, 9 étapes), en **néerlandais et en français**. Appliquer un modèle en fait une copie modifiable. Les données de test donnent les deux routines à Léa (fr) et à Tom (nl).
+- Supprimer un membre supprime ses routines et leur historique (clés étrangères `on delete cascade`).
+- Pas de notion de parent / enfant ni d'authentification : la gestion est ouverte à tous (voir *Limites*).
 
 ## Météo et tenue conseillée (`MeteoService`, `TenueAdvisor`)
 
@@ -305,4 +324,5 @@ Breaking changes rencontrés :
 - **Sécurité** : aucune authentification (backend d'agenda familial en réseau de confiance).
 - **Job nocturne multi-instances** : sans verrou distribué (ShedLock), deux instances exécuteraient le job simultanément ; la contrainte d'unicité évite les doublons mais l'une des deux transactions échouerait (loggé).
 - La vue annuelle compte toutes les entrées, y compris annulées.
+- **Routines** : la gestion (mode parent) n'est pas protégée, faute de comptes ou de code parent. Le « jour » est celui de l'horloge du serveur : un serveur dans un autre fuseau que la famille décalerait le changement de jour.
 - **Liste de courses** : une ligne achetée ou retirée le reste à la régénération même si la quantité nécessaire augmente (un repas ajouté après les courses) ; il faut alors la décocher. Pas de conversion entre unités « de cuisine » (cuillères, pincées) et masses. Le rayon d'un ingrédient n'est pas encore modifiable par l'API.

@@ -15,6 +15,7 @@ import com.family.agenda.entity.ReminderType;
 import com.family.agenda.repository.IngredientRepository;
 import com.family.agenda.service.FamilyMemberService;
 import com.family.agenda.service.MealService;
+import com.family.agenda.service.RoutineService;
 import com.family.agenda.service.RecipeService;
 import com.family.agenda.service.ReminderService;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,7 @@ public class DataInitializer implements CommandLineRunner {
     private final ReminderService reminderService;
     private final RecipeService recipeService;
     private final MealService mealService;
+    private final RoutineService routineService;
     private final IngredientRepository ingredientRepository;
     private final Clock clock;
 
@@ -95,6 +97,13 @@ public class DataInitializer implements CommandLineRunner {
                 new RecurrenceRuleRequest(RecurrenceFrequency.YEARLY, 1, null, null, 10))));
 
         seedRecipesAndMeals(today);
+
+        // Routines des enfants : les deux modèles, en français pour Léa et en néerlandais pour Tom
+        for (String modele : List.of("matin", "soir")) {
+            routineService.applyTemplate(lea, modele, "fr");
+            routineService.applyTemplate(tom, modele, "nl");
+        }
+        log.info("Routines du matin et du soir créées pour Léa et Tom");
     }
 
     /** 3 recettes de démonstration, puis quelques repas dans la semaine en cours (lundi → dimanche). */
