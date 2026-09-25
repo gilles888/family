@@ -17,6 +17,10 @@ public interface MealRepository extends JpaRepository<Meal, Long> {
     @EntityGraph(attributePaths = "recipe")
     List<Meal> findByDateBetween(LocalDate debut, LocalDate fin);
 
+    /** Liste de courses : repas de la plage avec leur recette et ses ingrédients, en une requête. */
+    @EntityGraph(attributePaths = {"recipe", "recipe.ingredients", "recipe.ingredients.ingredient"})
+    List<Meal> findWithIngredientsByDateBetween(LocalDate debut, LocalDate fin);
+
     boolean existsByDateAndCreneauAndIdNot(LocalDate date, MealSlot creneau, Long id);
 
     boolean existsByDateAndCreneau(LocalDate date, MealSlot creneau);
