@@ -1,5 +1,10 @@
 <div class="backdrop" [class.active]="panel.isOpen()" (click)="panel.close()" aria-hidden="true"></div>
 
+@if (!panel.isOpen()) {
+  <!-- Swipe depuis le bord droit de l'écran -->
+  <div class="edge" (pointerdown)="onPointerDown($event, 'edge')"></div>
+}
+
 <button
   #tab
   type="button"
@@ -9,6 +14,7 @@
   [attr.aria-label]="panel.isOpen() ? closeLabel : openLabel"
   [title]="panel.isOpen() ? closeLabel : openLabel"
   (click)="panel.toggle()"
+  (pointerdown)="onPointerDown($event, 'tab')"
 >
   <mat-icon class="chevron">chevron_left</mat-icon>
 </button>
@@ -19,8 +25,9 @@
   class="sheet"
   role="dialog"
   aria-labelledby="mobile-page-title"
-  [inert]="!panel.isOpen()"
+  [inert]="!panel.isOpen() && dragProgress() === null"
   [cdkTrapFocus]="panel.isOpen()"
+  (pointerdown)="onPointerDown($event, 'sheet')"
 >
   <header class="header">
     <h2 #heading id="mobile-page-title" class="title" tabindex="-1" i18n="@@mobile.title">Tableau de bord</h2>

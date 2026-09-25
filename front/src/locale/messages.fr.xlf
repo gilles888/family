@@ -416,28 +416,28 @@
         <source>Tableau de bord</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dashboard/mobile-page.html</context>
-          <context context-type="linenumber">26,27</context>
+          <context context-type="linenumber">33,34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mobile.anchors" datatype="html">
         <source>Aller à une carte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dashboard/mobile-page.html</context>
-          <context context-type="linenumber">27,28</context>
+          <context context-type="linenumber">34,35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mobile.open" datatype="html">
         <source>Ouvrir le tableau de bord</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dashboard/mobile-page.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mobile.close" datatype="html">
         <source>Fermer le tableau de bord</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dashboard/mobile-page.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="members.title" datatype="html">

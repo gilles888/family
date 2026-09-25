@@ -81,6 +81,8 @@
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  // touch-action ne traverse pas un conteneur défilant : à répéter ici pour garder le glissement horizontal
+  touch-action: pan-y;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -134,6 +136,38 @@
   &:focus-visible {
     outline: 2px solid var(--mat-sys-primary);
     outline-offset: -2px;
+  }
+}
+
+// Bande invisible du bord droit (écrans tactiles) : un swipe vers la gauche ouvre la page
+.edge {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 899;
+  width: 20px;
+  touch-action: pan-y;
+}
+
+@media (any-pointer: coarse) {
+  .edge {
+    display: block;
+  }
+}
+
+// Pendant un glissement, tout suit le pointeur sans transition
+:host(.dragging) {
+  .backdrop,
+  .sheet,
+  .tab,
+  .chevron {
+    transition: none;
+  }
+
+  .sheet {
+    user-select: none;
   }
 }
 
