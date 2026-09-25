@@ -9,6 +9,7 @@
  */
 import { WeatherCard } from '../weather/weather-card';
 import { MealsCard } from './cards/meals-card';
+import { ShoppingCard } from './cards/shopping-card';
 import { TasksCard } from './cards/tasks-card';
 import { DashboardCard } from './dashboard-card';
 
@@ -33,6 +34,13 @@ export const DASHBOARD_CARDS: readonly DashboardCard[] = [
     icon: 'restaurant',
     component: MealsCard,
     order: 30,
+  },
+  {
+    id: 'shopping',
+    title: $localize`:@@dashboard.card.shopping:Courses`,
+    icon: 'shopping_cart',
+    component: ShoppingCard,
+    order: 40,
   },
 ];
 

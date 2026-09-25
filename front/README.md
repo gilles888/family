@@ -29,8 +29,9 @@ Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dan
 - **Clic sur une entrée** : détail, changement de statut (Prévu / Terminé / Annulé / Déplacé — une seule occurrence est modifiée), modification ou suppression du rappel.
 - **Membres** (`/membres`) : liste, ajout, modification, suppression.
 - **Recettes** (`/recettes`) et **repas de la semaine** : voir *Repas et recettes*.
+- **Courses** (`/courses`) : liste de courses générée depuis les repas, garde-manger (voir *Liste de courses*).
 - **Comment s'habiller ?** : carte en haut de la colonne des tâches (voir *Carte météo*).
-- **Page Mobile** : panneau qui glisse depuis la droite (languette ou swipe) et regroupe les cartes Météo, Tâches et Repas (voir *Page Mobile*).
+- **Page Mobile** : panneau qui glisse depuis la droite (languette ou swipe) et regroupe les cartes Météo, Tâches, Repas et Courses (voir *Page Mobile*).
 - **Erreurs d'API** : un intercepteur affiche un message **traduit** dans un `mat-snack-bar` (réseau, 400, 404, 409, 5xx). Une requête qui affiche elle-même son erreur pose `SKIP_ERROR_NOTIFICATION` dans son `HttpContext` pour ne pas avoir de snack-bar.
 
 ## Repas et recettes (`src/app/recipes/`, `src/app/meals/`)
@@ -44,6 +45,18 @@ Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dan
   Il n'y a pas de préférences utilisateur côté backend : ce choix et le filtre sont gardés **dans le navigateur** (`localStorage`, `MealDisplayPreference`), avec des valeurs par défaut si le stockage est indisponible.
 - **Fiche recette** (`RecipeSheetDialog`) : au clic sur un repas lié à une recette (ou depuis la page Recettes), ingrédients **recalculés au prorata** des portions du repas (`GET /v1/recettes/{id}/fiche?portions=`), ajustables en −/+, temps et instructions en étapes ; bouton « Modifier le repas ». Un repas en saisie libre ouvre directement sa modification.
 - Libellés des unités et des créneaux : `src/app/shared/labels.ts` (`@@unit.*`, `@@slot.*`), via le pipe `enumLabel`.
+
+## Liste de courses (`src/app/shopping/`)
+
+Page **`/courses`** (`ShoppingPage`), pensée d'abord pour le téléphone en magasin. Les règles (agrégation, régénération, garde-manger) sont côté backend : voir *Liste de courses et garde-manger* dans `../backend/README.md`.
+
+- **Générer / Régénérer** : repas d'une période (sélecteur de dates ; par défaut la période de la dernière génération si elle n'est pas passée, sinon aujourd'hui → +7 jours). Régénérer garde les articles manuels et les coches.
+- **Ajout rapide** en haut de liste : un nom puis Entrée (le champ garde le focus pour enchaîner) ; quantité et unité facultatives derrière le bouton « Quantité et unité » (icône de réglages).
+- **Lignes** de 56 px au moins, groupées par **rayon** de l'ingrédient (ordre du magasin, « Sans rayon » en dernier), par ordre alphabétique dans un rayon (`groupByAisle`, `shopping-list.ts`). Toute la ligne coche l'article **acheté** (barré, pas supprimé) ; la coche s'affiche tout de suite, sans attendre le réseau. Sous le nom : les repas d'origine (« pour : Lasagnes lun., Soupe jeu. »).
+- **Menu d'une ligne** : modifier (`ShoppingItemDialog` ; une ligne venant des repas garde ensuite la quantité saisie), déjà à la maison, ajouter au garde-manger, supprimer.
+- **Déjà à la maison** : section repliée en bas de liste, chaque article se remet dans les achats en un tap.
+- **Vider les achetés** (bouton du résumé ou menu ⋮) ; **Garde-manger** (menu ⋮, `PantryDialog`) : ajouter / retirer les ingrédients qu'on a toujours.
+- `ShoppingStore` (service racine) garde la liste pour la page **et** la carte Courses de la page Mobile : un chargement, modifications reportées localement.
 
 ## Page Mobile (`src/app/dashboard/`)
 
@@ -187,6 +200,7 @@ src/
 │   ├── recipes/           page Recettes, dialogue recette, fiche recette (prorata)
 │   ├── meals/             carte « Repas de la semaine », dialogue repas, affichage dans l'agenda
 │   ├── dashboard/         page Mobile : registre des cartes, panneau, gestes, état (MobilePanelService)
+│   ├── shopping/          page Courses, ShoppingStore, dialogues article et garde-manger
 │   ├── weather/           carte « Comment s'habiller ? », dialogue semaine, journée (weather-day), libellés emoji
 │   ├── shared/            intercepteur d'erreurs, notifications, pipe enumLabel, libellés, utilitaires de dates
 │   ├── app.config.ts      providers (client API, HttpClient + intercepteur, adaptateur de dates)

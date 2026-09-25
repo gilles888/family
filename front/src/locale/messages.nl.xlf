@@ -2350,6 +2350,54 @@
           <context context-type="linenumber">12,13</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="shoppingCard.title" datatype="html">
+        <source>Courses</source>
+        <target>Boodschappen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/cards/shopping-card.ts</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shoppingCard.open" datatype="html">
+        <source>Voir la liste</source>
+        <target>Lijstje bekijken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/cards/shopping-card.ts</context>
+          <context context-type="linenumber">22,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shoppingCard.period" datatype="html">
+        <source>Repas du <x id="INTERPOLATION" equiv-text="{{ p.from | date: &apos;d MMM&apos; }}"/> au <x id="INTERPOLATION_1" equiv-text="{{ p.to | date: &apos;d MMM&apos; }}"/></source>
+        <target>Maaltijden van <x id="INTERPOLATION" equiv-text="{{ p.from | date: 'd MMM' }}"/> tot <x id="INTERPOLATION_1" equiv-text="{{ p.to | date: 'd MMM' }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/cards/shopping-card.ts</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shoppingCard.never" datatype="html">
+        <source>Pas encore de liste : générez-la depuis les repas planifiés.</source>
+        <target>Nog geen lijstje: genereer het uit de geplande maaltijden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/cards/shopping-card.ts</context>
+          <context context-type="linenumber">37,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shoppingCard.error" datatype="html">
+        <source>Liste de courses indisponible.</source>
+        <target>Boodschappenlijstje niet beschikbaar.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/cards/shopping-card.ts</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dashboard.card.shopping" datatype="html">
+        <source>Courses</source>
+        <target>Boodschappen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/dashboard/dashboard-cards.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>
