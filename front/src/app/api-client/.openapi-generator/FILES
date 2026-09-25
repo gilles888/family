@@ -10,6 +10,7 @@ api/meteo.service.ts
 api/recettes.service.ts
 api/reminders.service.ts
 api/repas.service.ts
+api/routines.service.ts
 configuration.ts
 encoder.ts
 index.ts
@@ -38,6 +39,14 @@ model/recurrence-rule-request.ts
 model/reminder-dto.ts
 model/reminder-request.ts
 model/reminder-with-agenda-dto.ts
+model/routine-dto.ts
+model/routine-from-template-request.ts
+model/routine-history-dto.ts
+model/routine-request.ts
+model/routine-run-dto.ts
+model/routine-step-dto.ts
+model/routine-step-request.ts
+model/routine-template-dto.ts
 model/shopping-item-dto.ts
 model/shopping-item-request.ts
 model/shopping-item-source-dto.ts

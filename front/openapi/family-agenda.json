@@ -37,6 +37,10 @@
             "description": "Membres de la famille"
         },
         {
+            "name": "Routines",
+            "description": "Routines des membres (tableaux du matin, du soir\u2026) : gestion et suivi du jour"
+        },
+        {
             "name": "Recettes",
             "description": "Recettes types, partag\u00e9es par la famille et r\u00e9utilisables pour planifier les repas"
         },
@@ -50,6 +54,178 @@
         }
     ],
     "paths": {
+        "/v1/routines/{id}": {
+            "get": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "D\u00e9tail d'une routine, avec son \u00e9tat du jour",
+                "operationId": "getRoutine",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Jour de l'\u00e9tat (aujourd'hui par d\u00e9faut)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2026-09-25"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Routine",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoutineDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Routine introuvable"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "Modifier une routine",
+                "description": "Les \u00e9tapes sont remplac\u00e9es par la liste donn\u00e9e ; une \u00e9tape gard\u00e9e (m\u00eame id) conserve ses coches du jour.",
+                "operationId": "updateRoutine",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoutineRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Routine modifi\u00e9e",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoutineDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Donn\u00e9es invalides"
+                    },
+                    "404": {
+                        "description": "Routine introuvable"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "Supprimer une routine (et son historique)",
+                "operationId": "deleteRoutine",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Routine introuvable"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/v1/routines/{id}/etapes/ordre": {
+            "put": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "R\u00e9ordonner les \u00e9tapes",
+                "description": "Corps : les ids de toutes les \u00e9tapes de la routine, dans le nouvel ordre.",
+                "operationId": "reorderEtapesRoutine",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Routine, \u00e9tapes dans le nouvel ordre",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoutineDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Liste qui n'est pas exactement les \u00e9tapes de la routine"
+                    },
+                    "404": {
+                        "description": "Routine introuvable"
+                    }
+                }
+            }
+        },
         "/v1/repas/{id}": {
             "get": {
                 "tags": [
@@ -638,6 +814,148 @@
                 }
             }
         },
+        "/v1/routines": {
+            "post": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "Cr\u00e9er une routine pour un membre",
+                "operationId": "createRoutine",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoutineRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Routine cr\u00e9\u00e9e (en-t\u00eate Location renseign\u00e9)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoutineDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Donn\u00e9es invalides (plage horaire incoh\u00e9rente\u2026)"
+                    },
+                    "404": {
+                        "description": "Membre introuvable"
+                    }
+                }
+            }
+        },
+        "/v1/routines/{id}/runs/{date}/recompense": {
+            "post": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "Marquer la r\u00e9compense du jour comme jou\u00e9e",
+                "description": "Une seule partie par routine termin\u00e9e et par jour.",
+                "operationId": "jouerRecompenseRoutine",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\u00c9tat du jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoutineRunDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Autre jour qu'aujourd'hui"
+                    },
+                    "409": {
+                        "description": "Routine pas termin\u00e9e, ou r\u00e9compense d\u00e9j\u00e0 jou\u00e9e"
+                    }
+                }
+            }
+        },
+        "/v1/routines/{id}/runs/{date}/etapes/{stepId}/toggle": {
+            "post": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "Cocher / d\u00e9cocher une \u00e9tape de la routine du jour",
+                "description": "La routine est termin\u00e9e quand toutes ses \u00e9tapes sont coch\u00e9es (calcul\u00e9 par le serveur).",
+                "operationId": "toggleEtapeRoutine",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "stepId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\u00c9tat du jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoutineRunDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Autre jour qu'aujourd'hui"
+                    },
+                    "404": {
+                        "description": "Routine ou \u00e9tape introuvable"
+                    }
+                }
+            }
+        },
         "/v1/repas": {
             "get": {
                 "tags": [
@@ -911,6 +1229,54 @@
                 }
             }
         },
+        "/v1/membres/{memberId}/routines/modele": {
+            "post": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "Copier un mod\u00e8le de routine chez le membre (copie modifiable)",
+                "operationId": "appliquerModeleRoutine",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoutineFromTemplateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Routine cr\u00e9\u00e9e",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RoutineDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Mod\u00e8le ou langue inconnus"
+                    },
+                    "404": {
+                        "description": "Membre introuvable"
+                    }
+                }
+            }
+        },
         "/v1/garde-manger": {
             "get": {
                 "tags": [
@@ -1092,6 +1458,43 @@
                 }
             }
         },
+        "/v1/routines/modeles": {
+            "get": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "Mod\u00e8les de routines pr\u00eats \u00e0 l'emploi (matin, soir)",
+                "operationId": "listModelesRoutine",
+                "parameters": [
+                    {
+                        "name": "langue",
+                        "in": "query",
+                        "description": "fr ou nl (fr par d\u00e9faut)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "fr"
+                        },
+                        "example": "nl"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mod\u00e8les, libell\u00e9s dans la langue demand\u00e9e",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RoutineTemplateDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v1/recettes/{id}/fiche": {
             "get": {
                 "tags": [
@@ -1181,6 +1584,106 @@
                     },
                     "503": {
                         "description": "Open-Meteo injoignable et aucune pr\u00e9vision du jour en cache"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/routines": {
+            "get": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "Routines d'un membre, avec leur \u00e9tat pour un jour",
+                "description": "Toutes les routines (actives ou non), dans l'ordre. L'\u00e9cran enfant garde les actives du jour.",
+                "operationId": "listRoutinesMembre",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Jour de l'\u00e9tat (aujourd'hui par d\u00e9faut)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2026-09-25"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Routines",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RoutineDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Membre introuvable"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/routines/historique": {
+            "get": {
+                "tags": [
+                    "Routines"
+                ],
+                "summary": "Routines termin\u00e9es sur les derniers jours",
+                "description": "Un \u00e9l\u00e9ment par jour, du plus ancien \u00e0 aujourd'hui (14 jours par d\u00e9faut, 62 au plus).",
+                "operationId": "historiqueRoutinesMembre",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "jours",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 14
+                        },
+                        "example": 14
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Historique",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RoutineHistoryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Membre introuvable"
                     }
                 }
             }
@@ -1583,6 +2086,312 @@
     },
     "components": {
         "schemas": {
+            "RoutineRequest": {
+                "type": "object",
+                "description": "Cr\u00e9ation / modification d'une routine (les \u00e9tapes sont remplac\u00e9es par la liste donn\u00e9e)",
+                "example": {
+                    "membreId": 4,
+                    "nom": "Mijn ochtendroutine",
+                    "sousTitre": "Een goede start van de dag!",
+                    "type": "MORNING",
+                    "theme": "DAY",
+                    "jours": [
+                        "MONDAY",
+                        "TUESDAY"
+                    ],
+                    "heureDebut": "06:30",
+                    "heureFin": "08:30",
+                    "active": true,
+                    "etapes": [
+                        {
+                            "libelle": "Ik sta op.",
+                            "icone": "wake-up"
+                        }
+                    ]
+                },
+                "properties": {
+                    "membreId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Membre (cr\u00e9ation uniquement ; ignor\u00e9 en modification)",
+                        "example": 4
+                    },
+                    "nom": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "sousTitre": {
+                        "type": "string",
+                        "maxLength": 150,
+                        "minLength": 0
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "MORNING",
+                            "EVENING",
+                            "CUSTOM"
+                        ]
+                    },
+                    "theme": {
+                        "type": "string",
+                        "enum": [
+                            "DAY",
+                            "NIGHT"
+                        ]
+                    },
+                    "jours": {
+                        "type": "array",
+                        "description": "Jours o\u00f9 la routine est propos\u00e9e",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "MONDAY",
+                                "TUESDAY",
+                                "WEDNESDAY",
+                                "THURSDAY",
+                                "FRIDAY",
+                                "SATURDAY",
+                                "SUNDAY"
+                            ]
+                        },
+                        "uniqueItems": true
+                    },
+                    "heureDebut": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "example": "06:30"
+                    },
+                    "heureFin": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "example": "08:30"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "description": "Absent = active"
+                    },
+                    "etapes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RoutineStepRequest"
+                        },
+                        "maxItems": 30,
+                        "minItems": 0
+                    }
+                },
+                "required": [
+                    "jours",
+                    "nom",
+                    "theme",
+                    "type"
+                ]
+            },
+            "RoutineStepRequest": {
+                "type": "object",
+                "description": "\u00c9tape d'une routine. Avec un id : \u00e9tape existante (ses coches du jour sont gard\u00e9es) ; sans : nouvelle \u00e9tape.",
+                "properties": {
+                    "id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int64",
+                        "example": 12
+                    },
+                    "libelle": {
+                        "type": "string",
+                        "example": "Ik poets mijn tanden.",
+                        "maxLength": 150,
+                        "minLength": 0
+                    },
+                    "icone": {
+                        "type": "string",
+                        "example": "toothbrush",
+                        "minLength": 1,
+                        "pattern": "^[a-z0-9-]{1,40}$"
+                    },
+                    "couleur": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Couleur de la ligne #RRGGBB ; absente = couleur pastel suivante",
+                        "example": "#FDE2E4",
+                        "pattern": "^#[0-9A-Fa-f]{6}$"
+                    }
+                },
+                "required": [
+                    "icone",
+                    "libelle"
+                ]
+            },
+            "RoutineDTO": {
+                "type": "object",
+                "description": "Routine d'un membre, avec son \u00e9tat pour le jour demand\u00e9",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 3
+                    },
+                    "membreId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 4
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Mijn ochtendroutine"
+                    },
+                    "sousTitre": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "example": "Een goede start van de dag!"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "MORNING",
+                            "EVENING",
+                            "CUSTOM"
+                        ],
+                        "example": "MORNING"
+                    },
+                    "theme": {
+                        "type": "string",
+                        "enum": [
+                            "DAY",
+                            "NIGHT"
+                        ],
+                        "example": "DAY"
+                    },
+                    "jours": {
+                        "type": "array",
+                        "description": "Jours o\u00f9 la routine est propos\u00e9e",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "MONDAY",
+                                "TUESDAY",
+                                "WEDNESDAY",
+                                "THURSDAY",
+                                "FRIDAY",
+                                "SATURDAY",
+                                "SUNDAY"
+                            ]
+                        },
+                        "uniqueItems": true
+                    },
+                    "heureDebut": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "D\u00e9but de la plage horaire indicative",
+                        "example": "06:30"
+                    },
+                    "heureFin": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "example": "08:30"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "description": "D\u00e9sactiv\u00e9e = cach\u00e9e \u00e0 l'enfant"
+                    },
+                    "position": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Ordre d'affichage parmi les routines du membre"
+                    },
+                    "etapes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RoutineStepDTO"
+                        }
+                    },
+                    "etat": {
+                        "$ref": "#/components/schemas/RoutineRunDTO",
+                        "description": "\u00c9tat du jour demand\u00e9"
+                    }
+                }
+            },
+            "RoutineRunDTO": {
+                "type": "object",
+                "description": "\u00c9tat d'une routine pour un jour (les coches repartent de z\u00e9ro chaque jour)",
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-09-25"
+                    },
+                    "etapesCochees": {
+                        "type": "array",
+                        "description": "Ids des \u00e9tapes coch\u00e9es",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    "terminee": {
+                        "type": "boolean",
+                        "description": "Toutes les \u00e9tapes sont coch\u00e9es"
+                    },
+                    "termineeLe": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time",
+                        "description": "Moment o\u00f9 la derni\u00e8re \u00e9tape a \u00e9t\u00e9 coch\u00e9e"
+                    },
+                    "recompenseJouee": {
+                        "type": "boolean",
+                        "description": "La r\u00e9compense du jour (mini-jeu) a \u00e9t\u00e9 jou\u00e9e"
+                    }
+                }
+            },
+            "RoutineStepDTO": {
+                "type": "object",
+                "description": "\u00c9tape d'une routine",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 12
+                    },
+                    "position": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Ordre (0 = premi\u00e8re \u00e9tape)",
+                        "example": 2
+                    },
+                    "libelle": {
+                        "type": "string",
+                        "example": "Ik poets mijn tanden."
+                    },
+                    "icone": {
+                        "type": "string",
+                        "description": "Illustration du catalogue du front",
+                        "example": "toothbrush"
+                    },
+                    "couleur": {
+                        "type": "string",
+                        "description": "Couleur pastel de la ligne",
+                        "example": "#FDE2E4"
+                    }
+                }
+            },
             "MealRequest": {
                 "type": "object",
                 "description": "Cr\u00e9ation / modification d'un repas : une recette (recetteId) OU un libell\u00e9 libre, pas les deux",
@@ -2403,6 +3212,33 @@
                     }
                 }
             },
+            "RoutineFromTemplateRequest": {
+                "type": "object",
+                "description": "Copier un mod\u00e8le de routine chez un membre",
+                "example": {
+                    "modele": "matin",
+                    "langue": "nl"
+                },
+                "properties": {
+                    "modele": {
+                        "type": "string",
+                        "description": "matin ou soir",
+                        "example": "matin",
+                        "minLength": 1
+                    },
+                    "langue": {
+                        "type": "string",
+                        "description": "Langue des libell\u00e9s : fr ou nl",
+                        "example": "nl",
+                        "minLength": 1,
+                        "pattern": "^(fr|nl)$"
+                    }
+                },
+                "required": [
+                    "langue",
+                    "modele"
+                ]
+            },
             "PantryItemRequest": {
                 "type": "object",
                 "description": "Ajout au garde-manger",
@@ -2611,6 +3447,45 @@
                     }
                 }
             },
+            "RoutineTemplateDTO": {
+                "type": "object",
+                "description": "Mod\u00e8le de routine pr\u00eat \u00e0 l'emploi, copi\u00e9 (modifiable) chez un membre",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "matin"
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Mijn ochtendroutine"
+                    },
+                    "sousTitre": {
+                        "type": "string",
+                        "example": "Een goede start van de dag!"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "MORNING",
+                            "EVENING",
+                            "CUSTOM"
+                        ]
+                    },
+                    "theme": {
+                        "type": "string",
+                        "enum": [
+                            "DAY",
+                            "NIGHT"
+                        ]
+                    },
+                    "etapes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RoutineStepDTO"
+                        }
+                    }
+                }
+            },
             "RecipeSummaryDTO": {
                 "type": "object",
                 "description": "Recette type, sans ingr\u00e9dients ni instructions (listes, recherche)",
@@ -2814,6 +3689,25 @@
                         "type": "boolean",
                         "description": "Plus chaud l'apr\u00e8s-midi : pr\u00e9voir un pull qu'on pourra enlever",
                         "example": true
+                    }
+                }
+            },
+            "RoutineHistoryDTO": {
+                "type": "object",
+                "description": "Routines termin\u00e9es d'un jour (historique)",
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-09-24"
+                    },
+                    "routinesTerminees": {
+                        "type": "array",
+                        "description": "Ids des routines termin\u00e9es ce jour-l\u00e0",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
                     }
                 }
             },

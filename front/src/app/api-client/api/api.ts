@@ -16,4 +16,6 @@ export * from './reminders.service';
 import { RemindersService } from './reminders.service';
 export * from './repas.service';
 import { RepasService } from './repas.service';
-export const APIS = [AgendaService, CoursesService, GardeMangerService, IngredientsService, MembresService, MeteoService, RecettesService, RemindersService, RepasService];
+export * from './routines.service';
+import { RoutinesService } from './routines.service';
+export const APIS = [AgendaService, CoursesService, GardeMangerService, IngredientsService, MembresService, MeteoService, RecettesService, RemindersService, RepasService, RoutinesService];
