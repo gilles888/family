@@ -152,7 +152,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">33,35</context>
+          <context context-type="linenumber">42,44</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
@@ -217,7 +217,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">78</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
@@ -1899,7 +1899,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">71,72</context>
+          <context context-type="linenumber">72,73</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
@@ -2253,46 +2253,46 @@
         <source>Impossible de charger les routines.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">49,53</context>
+          <context context-type="linenumber">50,54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">32,33</context>
+          <context context-type="linenumber">41,42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="memberRoutines.fromTemplate" datatype="html">
         <source>Depuis un modèle</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">56,58</context>
+          <context context-type="linenumber">57,59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="memberRoutines.create" datatype="html">
         <source>Nouvelle routine</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">68,70</context>
+          <context context-type="linenumber">69,71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="memberRoutines.added" datatype="html">
         <source>« <x id="name" equiv-text="routine.nom"/> » ajoutée : vous pouvez l&apos;adapter.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="memberRoutines.deleteTitle" datatype="html">
         <source>Supprimer la routine ?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="memberRoutines.deleteMessage" datatype="html">
         <source>« <x id="name" equiv-text="routine.nom"/> » et son historique seront supprimés.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reward.title" datatype="html">
@@ -2307,6 +2307,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
           <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">26,27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reward.choose" datatype="html">
@@ -2568,6 +2572,20 @@
           <context context-type="linenumber">127,129</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routineHistory.title" datatype="html">
+        <source>Mes 14 derniers jours</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">23,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.total" datatype="html">
+        <source>{VAR_PLURAL, plural, =0 {Pas encore d&apos;étoile : à toi de jouer !} =1 {1 étoile gagnée} other {<x id="INTERPOLATION"/> étoiles gagnées}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">42,47</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routineIcon.wakeUp" datatype="html">
         <source>Réveil</source>
         <context-group purpose="location">
@@ -2782,7 +2800,7 @@
         <source>Pas de routine aujourd&apos;hui. Profite bien ! 🎈</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">36,38</context>
+          <context context-type="linenumber">45,47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.network" datatype="html">

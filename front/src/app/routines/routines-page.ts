@@ -11,6 +11,8 @@ import { Avatar } from '../avatar/avatar';
 import { toIsoDate } from '../shared/date-utils';
 import { RewardData, RewardDialog } from './reward-dialog';
 import { RoutineBoard } from './routine-board';
+import { RoutineHistory } from './routine-history';
+import { SoundService } from '../shared/sound.service';
 import { currentRoutine, routinesOfDay, toggledRun } from './routine-logic';
 
 /**
@@ -19,8 +21,9 @@ import { currentRoutine, routinesOfDay, toggledRun } from './routine-logic';
  */
 @Component({
   selector: 'app-routines-page',
-  imports: [MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, RoutineBoard],
+  imports: [MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, RoutineBoard, RoutineHistory],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[class.night]': "selected()?.theme === 'NIGHT'" },
   templateUrl: './routines-page.html',
   styleUrl: './routines-page.scss',
 })
@@ -30,6 +33,7 @@ export class RoutinesPage {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly dialog = inject(MatDialog);
+  protected readonly sound = inject(SoundService);
 
   protected readonly params = toSignal(this.route.queryParamMap.pipe(map((p) => ({ membre: Number(p.get('membre')) || null, routine: Number(p.get('routine')) || null }))), {
     initialValue: { membre: null, routine: null },
@@ -57,6 +61,9 @@ export class RoutinesPage {
     const routines = this.ofDay();
     return routines.find((r) => r.id === this.params().routine) ?? currentRoutine(routines, new Date());
   });
+
+  /** Routines finies aujourd'hui : l'historique se recharge quand une routine se termine. */
+  protected readonly finishedToday = computed(() => this.ofDay().filter((r) => r.etat?.terminee).length);
 
   /** Numéro de la dernière coche envoyée, par routine : une réponse lente ne défait pas un tap plus récent. */
   private readonly requests = new Map<number, number>();

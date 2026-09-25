@@ -14,6 +14,7 @@ import { WEEKDAY_REFERENCE_DATES, WEEK_DAYS } from '../shared/labels';
 import { NotificationService } from '../shared/notification.service';
 import { RoutineEditorData, RoutineEditorDialog } from './routine-editor-dialog';
 import { RoutineIllustration } from './routine-icon';
+import { RoutineHistory } from './routine-history';
 import { ROUTINE_TYPE_LABELS, hhmm, toRoutineRequest } from './routine-labels';
 
 export interface MemberRoutinesData {
@@ -26,7 +27,7 @@ export interface MemberRoutinesData {
  */
 @Component({
   selector: 'app-member-routines-dialog',
-  imports: [DatePipe, MatButtonModule, MatDialogModule, MatIconModule, MatMenuModule, MatProgressBarModule, MatSlideToggleModule, Avatar, RoutineIllustration],
+  imports: [DatePipe, MatButtonModule, MatDialogModule, MatIconModule, MatMenuModule, MatProgressBarModule, MatSlideToggleModule, Avatar, RoutineHistory, RoutineIllustration],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './member-routines-dialog.html',
   styleUrl: './member-routines-dialog.scss',

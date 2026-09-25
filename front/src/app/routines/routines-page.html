@@ -17,6 +17,15 @@
       <mat-icon>arrow_back</mat-icon>
       <ng-container i18n="@@routines.changePerson">Changer</ng-container>
     </button>
+    <button
+      matIconButton
+      (click)="sound.toggle()"
+      [attr.aria-pressed]="sound.enabled()"
+      i18n-aria-label="@@reward.sound"
+      aria-label="Son"
+    >
+      <mat-icon>{{ sound.enabled() ? 'volume_up' : 'volume_off' }}</mat-icon>
+    </button>
     @if (member(); as m) {
       <span class="me">
         <app-avatar [member]="m" [size]="44" />
@@ -59,5 +68,8 @@
     @if (selected(); as r) {
       <app-routine-board [routine]="r" [member]="member()" (toggle)="toggle(r, $event)" (reward)="openReward(r)" />
     }
+  }
+  @if (member(); as m) {
+    <app-routine-history class="history" [memberId]="m.id!" [version]="finishedToday()" />
   }
 }

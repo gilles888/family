@@ -3910,6 +3910,22 @@
           <context context-type="linenumber">60,62</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routineHistory.title" datatype="html">
+        <source>Mes 14 derniers jours</source>
+        <target>Mijn laatste 14 dagen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">23,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.total" datatype="html">
+        <source>{VAR_PLURAL, plural, =0 {Pas encore d&apos;étoile : à toi de jouer !} =1 {1 étoile gagnée} other {<x id="INTERPOLATION"/> étoiles gagnées}}</source>
+        <target>{VAR_PLURAL, plural, =0 {Nog geen ster: nu is het jouw beurt!} =1 {1 ster verdiend} other {<x id="INTERPOLATION"/> sterren verdiend}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">42,47</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

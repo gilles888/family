@@ -30,6 +30,7 @@ Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dan
 - **Membres** (`/membres`) : cartes avec le personnage de chacun, ajout, modification, suppression ; **éditeur de personnage** (voir *Personnages*).
 - **Recettes** (`/recettes`) et **repas de la semaine** : voir *Repas et recettes*.
 - **Courses** (`/courses`) : liste de courses générée depuis les repas, garde-manger (voir *Liste de courses*).
+- **Routines** (`/routines`) : tableaux de routine des enfants à cocher, récompensés par un mini-jeu (voir *Routines*).
 - **Comment s'habiller ?** : carte en haut de la colonne des tâches (voir *Carte météo*).
 - **Page Mobile** : panneau qui glisse depuis la droite (languette ou swipe) et regroupe les cartes Météo, Tâches, Repas et Courses (voir *Page Mobile*).
 - **Erreurs d'API** : un intercepteur affiche un message **traduit** dans un `mat-snack-bar` (réseau, 400, 404, 409, 5xx). Une requête qui affiche elle-même son erreur pose `SKIP_ERROR_NOTIFICATION` dans son `HttpContext` pour ne pas avoir de snack-bar.
@@ -57,6 +58,21 @@ Page **`/courses`** (`ShoppingPage`), pensée d'abord pour le téléphone en mag
 - **Déjà à la maison** : section repliée en bas de liste, chaque article se remet dans les achats en un tap.
 - **Vider les achetés** (bouton du résumé ou menu ⋮) ; **Garde-manger** (menu ⋮, `PantryDialog`) : ajouter / retirer les ingrédients qu'on a toujours.
 - `ShoppingStore` (service racine) garde la liste pour la page **et** la carte Courses de la page Mobile : un chargement, modifications reportées localement.
+
+## Routines (`src/app/routines/`, `src/app/games/`)
+
+Tableaux de routine des enfants (« Mijn ochtendroutine », « Ma routine du soir ») : des étapes illustrées et numérotées à cocher chaque jour, récompensées par un mini-jeu. Les règles (fin calculée par le serveur, un suivi par jour, une récompense par routine et par jour, modèles fr / nl) sont côté backend : voir *Routines* dans `../backend/README.md`.
+
+- **Écran enfant** (`/routines`, `RoutinesPage`) : on touche son personnage, ses routines **actives du jour** apparaissent ; celle du moment est mise en avant (plage horaire, sinon matin avant midi, soir à partir de 15 h). Membre et routine sont dans l'URL (le bouton retour revient au choix du personnage).
+- **Tableau** (`RoutineBoard`), dans l'esprit des tableaux papier : en-tête jour (soleil, arc-en-ciel) ou nuit (lune, étoiles), badge « Ik kan het! », lignes pastel alternées avec numéro, illustration, grand libellé et case à cocher de la couleur de la ligne. Toute la ligne se coche (souris, doigt, clavier) : « pop » et petits confettis, progression x / n, pied de page encourageant. La coche s'affiche tout de suite ; la dernière réponse du serveur fait foi.
+- **Illustrations** (`routine-icons.ts`) : 23 dessins originaux (même principe que les avatars : formes en données, `g[appShapes]`). Pour les étapes « avec personnage » (se lever, dents, coiffure, dormir, fini), l'avatar de l'enfant s'affiche à côté de l'objet.
+- **Fin de routine** : le personnage saute, des étoiles montent, bouton « 🎁 Ma récompense ».
+- **Mini-jeux** (`src/app/games/`) : registre `MINI_GAMES` (`MiniGame` : id, nom, durée, icône, composant) ; la fenêtre de récompense propose 3 jeux tirés au hasard. Chaque jeu injecte `GAME_CONTEXT` (le membre, dont l'avatar est le héros ; `finish()`). Jeux courts, **sans échec**, qui finissent sur « Bravo ! » : **Éclate les bulles** (30 s), **Memory** (6 paires, dos des cartes à l'effigie de l'enfant), **Attrape les étoiles** (40 s, le personnage suit le doigt), **Puzzle du personnage** (4 pièces, CDK DragDrop ou tap). SVG + Pointer Events, aucun moteur de jeu. La partie est marquée jouée côté serveur **au lancement** : « Rejouer » est désactivé, message doux « à demain ».
+- **Sons** (`SoundService`) : bips générés en Web Audio (aucun fichier), **coupés par défaut**, bouton muet visible sur l'écran enfant et dans la fenêtre de récompense ; choix gardé dans le navigateur.
+- **Historique** (`RoutineHistory`) : les 14 derniers jours, une étoile par routine terminée, sous le tableau et dans le mode parent.
+- **Mode parent** (onglet Membres, bouton ⭐ d'un membre) : routines du membre, copie d'un modèle (dans la langue de l'application), activer / désactiver, supprimer ; éditeur (`RoutineEditorDialog`) : nom, sous-titre, moment, décor, jours, plage horaire, étapes (libellé, illustration choisie dans une grille, couleur), réordonnées par **glisser-déposer** (poignée ⋮⋮, CDK, souris et doigt) ou flèches. **Aucune protection** : l'application n'a pas de comptes ni de code parent.
+- **Ajouter un mini-jeu** : un composant standalone qui injecte `GAME_CONTEXT` et appelle `finish()`, puis une entrée dans `games.ts`. **Ajouter une illustration** : une entrée dans `routine-icons.ts` (id stable, libellé traduit).
+- Animations coupées avec `prefers-reduced-motion`.
 
 ## Personnages (`src/app/avatar/`)
 
@@ -218,6 +234,8 @@ src/
 │   ├── dashboard/         page Mobile : registre des cartes, panneau, gestes, état (MobilePanelService)
 │   ├── shopping/          page Courses, ShoppingStore, dialogues article et garde-manger
 │   ├── avatar/            personnages : <app-avatar>, catalogue de pièces SVG, éditeur (tap + glisser-déposer)
+│   ├── routines/          routines : écran enfant, tableau, illustrations, mode parent, historique, récompense
+│   ├── games/             mini-jeux de récompense (registre + 4 jeux)
 │   ├── weather/           carte « Comment s'habiller ? », dialogue semaine, journée (weather-day), libellés emoji
 │   ├── shared/            intercepteur d'erreurs, notifications, pipe enumLabel, libellés, utilitaires de dates
 │   ├── app.config.ts      providers (client API, HttpClient + intercepteur, adaptateur de dates)

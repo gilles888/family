@@ -45,6 +45,7 @@
         </li>
       }
     </ul>
+    <app-routine-history class="history" [memberId]="member.id!" [version]="routines.value().length" />
   } @else if (routines.error()) {
     <p class="empty" i18n="@@routines.loadError">Impossible de charger les routines.</p>
   }

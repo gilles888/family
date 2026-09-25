@@ -3,6 +3,20 @@
   max-width: 760px;
   margin: 0 auto;
   padding: 16px;
+  border-radius: 0 0 32px 32px;
+  transition: background-color 600ms ease;
+}
+
+// Routine du soir : la page passe en douceur dans les tons de la nuit
+:host(.night) {
+  background-color: #ece9fb;
+}
+
+.history {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--mat-sys-surface-container-low);
 }
 
 .ask {
@@ -51,6 +65,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .me {
+    margin-left: auto;
+  }
+
   gap: 8px;
   margin-bottom: 12px;
 }
