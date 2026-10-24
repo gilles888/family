@@ -20,7 +20,7 @@ Prérequis : **JDK 25**. Maven n'est pas nécessaire (wrapper inclus).
 
 ```bash
 ./mvnw spring-boot:run          # profil "dev" par défaut : H2 en mémoire + données de test
-./mvnw test                     # 76 tests (récurrences, agenda, météo, recettes, repas, prorata des portions)
+./mvnw test                     # 132 tests
 ./mvnw package && java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 ```
 
@@ -30,8 +30,7 @@ Prérequis : **JDK 25**. Maven n'est pas nécessaire (wrapper inclus).
 | **Swagger UI** | http://localhost:8080/swagger-ui.html |
 | OpenAPI JSON | http://localhost:8080/v3/api-docs |
 
-Au démarrage en `dev`, un `CommandLineRunner` crée 4 membres (Maman, Papa, Léa, Tom) et 5 reminders (natation hebdo, football mardi+jeudi avec date de fin,
-prise de sang ponctuelle, dentiste, anniversaire annuel), ainsi que 3 recettes (spaghetti bolognaise, crêpes, soupe de légumes) et 6 repas dans la semaine en cours. Les dates sont **relatives à aujourd'hui**, l'agenda est donc immédiatement rempli :
+Au démarrage en `dev` (base vide), un `CommandLineRunner` (`DataInitializer`) crée la famille : **la vôtre** si un fichier `famille.json` est présent (voir *Votre famille : famille.json*), sinon une famille fictive de démonstration : 4 membres (Maman, Papa, Léa, Tom), 5 reminders (natation hebdo, football mardi+jeudi avec date de fin, prise de sang ponctuelle, dentiste, anniversaire annuel) et les routines des enfants. Dans les deux cas : 3 recettes (spaghetti bolognaise, crêpes, soupe de légumes) et 6 repas dans la semaine en cours. Les dates sont **relatives à aujourd'hui**, l'agenda est donc immédiatement rempli :
 
 ```bash
 curl "http://localhost:8080/v1/agenda?dateDebut=$(date +%F)&dateFin=$(date -d '+30 days' +%F)"
@@ -52,10 +51,56 @@ java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 | `DB_URL` / `DB_USERNAME` / `DB_PASSWORD` | localhost / `family` / *(obligatoire)* | connexion PostgreSQL |
 | `AGENDA_HORIZON_MONTHS` | `6` | fenêtre de génération des occurrences (tous profils) |
 | `AGENDA_EXTENSION_CRON` | `0 0 2 * * *` | horaire du job de prolongation (cron Spring à 6 champs) |
-| `AGENDA_SEED_ENABLED` | `false` | charger les données de test en prod |
+| `AGENDA_SEED_ENABLED` | `false` | créer les données de départ en prod (base vide uniquement) |
+| `AGENDA_SEED_FICHIER` | `./famille.json` | fichier de la famille réelle (tous profils) ; absent = famille de démonstration |
 | `SWAGGER_UI_ENABLED` | `true` | désactiver Swagger UI |
 | `APP_TIMEZONE` | `Europe/Paris` | fuseau JDBC |
 | `METEO_*` | Bruxelles | lieu de la carte météo (tous profils, voir *Météo et tenue conseillée*) |
+
+### Votre famille : famille.json
+
+Le dépôt est public : **aucune donnée de la famille n'y est commitée**. Elle est lue au démarrage depuis un fichier JSON hors du dépôt, `famille.json` (ignoré par git, à la racine comme dans `backend/`). Copier l'exemple et l'adapter :
+
+```bash
+cp famille.exemple.json famille.json     # dans backend/ : ./mvnw spring-boot:run le lit (chemin relatif au dossier de lancement)
+```
+
+```jsonc
+{
+  "membres": [
+    {
+      "cle": "lea",                       // identifiant dans le fichier (référencé par les activités)
+      "nom": "Léa",
+      "couleur": "#FF9800",               // #RRGGBB
+      "avatar": { "version": 1, "skin": "skin-2", "eyes": "eyes-happy", "eyeColor": "#1e88e5", "mouth": "mouth-grin",
+                  "hair": "hair-pigtails", "hairColor": "#d9772b", "outfit": "outfit-overalls", "outfitColor": "#22c55e",
+                  "hat": "none", "accessory": "none", "background": "bg-sunset" },   // facultatif : format avatar-config.ts du front
+      "routines": { "langue": "nl", "modeles": ["matin", "soir"] }                   // facultatif : fr ou nl ; matin, soir
+    }
+  ],
+  "activites": [
+    { "titre": "Natation", "description": "Piscine", "type": "SPORT", "membres": ["lea"],
+      "jours": ["SUNDAY"], "debut": "09:00", "fin": "10:00" }   // type : SPORT, TEST_MEDICAL, RENDEZ_VOUS, AUTRE ; fin facultative
+  ]
+}
+```
+
+- Le fichier n'est lu que si `agenda.seed.enabled=true` (défaut en `dev`) et que la base **n'a encore aucun membre**. Tout passe par les services métier : création du membre, `PUT …/avatar`, copie des modèles de routines, création de rappels.
+- **Activités** : hebdomadaires, sans date de fin, à partir d'**aujourd'hui** (seuls les jours cochés, à partir de cette date, donnent une occurrence), avec la plage horaire indiquée.
+- **Avatar** : objet libre, au format de `front/src/app/avatar/avatar-config.ts` ; une pièce inconnue retombe sur la pièce par défaut côté front. `eyeColor` est facultatif (noir sinon).
+- **Validation au chargement** : JSON illisible, clé inconnue (ex. `coleur`), couleur ou heure mal formée, type, jour, modèle ou langue inconnus, clé de membre inconnue dans une activité, fin avant le début… Toutes les erreurs sont listées dans un seul message, dans les logs (ex. `activites[1].membres : clé de membre « hana » inconnue`) et **le démarrage s'arrête** : pas de famille à moitié chargée.
+- Sans fichier : famille fictive de démonstration (message dans les logs avec le chemin attendu).
+
+**En production (PostgreSQL)**, la famille se charge **une seule fois**, sur une base vide :
+
+```bash
+export AGENDA_SEED_ENABLED=true
+export AGENDA_SEED_FICHIER=/chemin/vers/famille.json
+java -jar target/family-agenda-0.0.1-SNAPSHOT.jar      # 1er démarrage : famille, recettes et repas de démonstration
+unset AGENDA_SEED_ENABLED                              # ensuite : inutile (la base a des membres, le seed est ignoré)
+```
+
+Aux démarrages suivants, la base contient des membres : le fichier n'est plus lu (le modifier ne change rien ; passer par l'interface). En `dev`, la base H2 est en mémoire : la famille est rechargée depuis le fichier à chaque démarrage.
 
 ### Schéma de la base : Flyway
 
@@ -294,7 +339,7 @@ com.family.agenda
 │                RecipeController, IngredientController, MealController, ShoppingListController, PantryController
 ├── scheduler/   AgendaExtensionScheduler
 ├── exception/   GlobalExceptionHandler (@RestControllerAdvice) : 400 / 404 / 409 (ConflictException) / 503
-└── config/      versioning d'API, OpenAPI, propriétés, données de test
+└── config/      versioning d'API, OpenAPI, propriétés, données de départ (DataInitializer, famille.json : FamilySeedReader)
 ```
 
 ## Versions et compatibilité (Spring Boot 4.1)

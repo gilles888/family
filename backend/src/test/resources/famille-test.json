@@ -1,0 +1,37 @@
+{
+  "membres": [
+    {
+      "cle": "alice", "nom": "Alice", "couleur": "#E91E63",
+      "avatar": { "version": 1, "skin": "skin-3", "eyes": "eyes-round", "eyeColor": "#5d4037", "mouth": "mouth-smile",
+                  "hair": "hair-long", "hairColor": "#2b2118", "outfit": "outfit-sweater", "outfitColor": "#14b8a6",
+                  "hat": "none", "accessory": "none", "background": "#fed7aa" }
+    },
+    {
+      "cle": "bruno", "nom": "Bruno", "couleur": "#2196F3",
+      "avatar": { "version": 1, "skin": "skin-1", "eyes": "eyes-round", "eyeColor": "#1e88e5", "mouth": "mouth-smile",
+                  "hair": "hair-short", "hairColor": "#e8c267", "outfit": "outfit-shirt", "outfitColor": "#1e3a8a",
+                  "hat": "none", "accessory": "none", "background": "#bfdbfe" }
+    },
+    {
+      "cle": "chloe", "nom": "Chloé", "couleur": "#9C27B0",
+      "avatar": { "version": 1, "skin": "skin-2", "eyes": "eyes-happy", "mouth": "mouth-grin", "hair": "hair-ponytail",
+                  "hairColor": "#6b3e26", "outfit": "outfit-tshirt", "outfitColor": "#ec4899", "hat": "none",
+                  "accessory": "none", "background": "bg-sunset" },
+      "routines": { "langue": "nl", "modeles": ["matin", "soir"] }
+    },
+    {
+      "cle": "dylan", "nom": "Dylan", "couleur": "#4CAF50",
+      "routines": { "langue": "fr", "modeles": ["matin"] }
+    }
+  ],
+  "activites": [
+    { "titre": "Natation", "description": "Piscine du quartier", "type": "SPORT", "membres": ["chloe"],
+      "jours": ["SUNDAY"], "debut": "09:00", "fin": "10:00" },
+    { "titre": "Cours de musique", "type": "AUTRE", "membres": ["chloe"], "jours": ["SATURDAY"],
+      "debut": "09:00", "fin": "13:00" },
+    { "titre": "Atelier dessin", "type": "AUTRE", "membres": ["chloe", "alice"], "jours": ["WEDNESDAY"],
+      "debut": "14:00", "fin": "16:00" },
+    { "titre": "Judo", "type": "SPORT", "membres": ["chloe"], "jours": ["TUESDAY", "THURSDAY"],
+      "debut": "17:30", "fin": "18:30" }
+  ]
+}

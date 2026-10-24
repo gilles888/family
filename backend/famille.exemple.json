@@ -1,0 +1,49 @@
+{
+  "membres": [
+    {
+      "cle": "maman",
+      "nom": "Maman",
+      "couleur": "#E91E63",
+      "avatar": {
+        "version": 1, "skin": "skin-1", "eyes": "eyes-round", "eyeColor": "#2e7d32", "mouth": "mouth-smile",
+        "hair": "hair-bun", "hairColor": "#6b3e26", "outfit": "outfit-dress", "outfitColor": "#ec4899",
+        "hat": "none", "accessory": "acc-earrings", "background": "#fbcfe8"
+      }
+    },
+    {
+      "cle": "papa",
+      "nom": "Papa",
+      "couleur": "#2196F3",
+      "avatar": {
+        "version": 1, "skin": "skin-4", "eyes": "eyes-round", "eyeColor": "#5d4037", "mouth": "mouth-smile",
+        "hair": "hair-short", "hairColor": "#2b2118", "outfit": "outfit-shirt", "outfitColor": "#1e3a8a",
+        "hat": "none", "accessory": "acc-glasses", "background": "#bfdbfe"
+      }
+    },
+    {
+      "cle": "lea",
+      "nom": "Léa",
+      "couleur": "#FF9800",
+      "avatar": {
+        "version": 1, "skin": "skin-2", "eyes": "eyes-happy", "mouth": "mouth-grin",
+        "hair": "hair-pigtails", "hairColor": "#d9772b", "outfit": "outfit-overalls", "outfitColor": "#22c55e",
+        "hat": "none", "accessory": "none", "background": "bg-sunset"
+      },
+      "routines": { "langue": "fr", "modeles": ["matin", "soir"] }
+    },
+    {
+      "cle": "tom",
+      "nom": "Tom",
+      "couleur": "#4CAF50",
+      "routines": { "langue": "nl", "modeles": ["matin", "soir"] }
+    }
+  ],
+  "activites": [
+    { "titre": "Natation", "description": "Piscine municipale", "type": "SPORT", "membres": ["lea"],
+      "jours": ["WEDNESDAY"], "debut": "17:30", "fin": "18:30" },
+    { "titre": "Football", "description": "Entraînement au stade", "type": "SPORT", "membres": ["tom", "papa"],
+      "jours": ["TUESDAY", "THURSDAY"], "debut": "18:00", "fin": "19:30" },
+    { "titre": "Musique", "description": null, "type": "AUTRE", "membres": ["lea"],
+      "jours": ["SATURDAY"], "debut": "10:00", "fin": "11:00" }
+  ]
+}

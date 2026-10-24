@@ -24,6 +24,8 @@ agenda:
     cron: ${AGENDA_EXTENSION_CRON:0 0 2 * * *}
   seed:
     enabled: false
+    # Famille réelle (hors du dépôt, voir famille.exemple.json) ; fichier absent = famille fictive de démonstration
+    fichier: ${AGENDA_SEED_FICHIER:./famille.json}
 
 meteo:
   # Le dépôt est public : ne pas committer les coordonnées du domicile, les passer par variables d'environnement.

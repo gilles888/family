@@ -25,20 +25,30 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.DayOfWeek;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.EnumSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
- * Données de test (profil dev, {@code agenda.seed.enabled=true}). Elles passent par les services métier :
- * les AgendaEntry sont donc générées exactement comme lors d'un vrai POST /v1/reminders. Les dates sont
- * relatives à aujourd'hui pour que l'agenda ne soit jamais vide.
+ * Données de départ ({@code agenda.seed.enabled=true}, base sans membre uniquement). Elles passent par les services
+ * métier : les AgendaEntry sont donc générées exactement comme lors d'un vrai POST /v1/reminders.
+ * <ul>
+ *   <li>si le fichier {@code agenda.seed.fichier} (famille.json, hors du dépôt) existe : la vraie famille, ses
+ *       personnages, ses routines et ses activités hebdomadaires ;</li>
+ *   <li>sinon : une famille fictive de démonstration, aux dates relatives à aujourd'hui ;</li>
+ *   <li>dans les deux cas : recettes et repas de démonstration.</li>
+ * </ul>
  */
 @Component
 @ConditionalOnProperty(name = "agenda.seed.enabled", havingValue = "true")
@@ -52,6 +62,8 @@ public class DataInitializer implements CommandLineRunner {
     private final MealService mealService;
     private final RoutineService routineService;
     private final IngredientRepository ingredientRepository;
+    private final SeedProperties seedProperties;
+    private final FamilySeedReader familySeedReader;
     private final Clock clock;
 
     @Override
@@ -61,7 +73,54 @@ public class DataInitializer implements CommandLineRunner {
             return;
         }
         LocalDate today = LocalDate.now(clock);
+        Path file = Path.of(seedProperties.fichier());
+        if (Files.isRegularFile(file)) {
+            FamilySeed family;
+            try {
+                family = familySeedReader.read(file);
+            } catch (IllegalStateException e) {
+                // Pas de famille à moitié chargée : le démarrage s'arrête sur un message clair
+                log.error(e.getMessage());
+                throw e;
+            }
+            seedFamily(family, today, file);
+        } else {
+            log.info("Pas de fichier famille ({}) : famille fictive de démonstration", file.toAbsolutePath().normalize());
+            seedDemoFamily(today);
+        }
+        seedRecipesAndMeals(today);
+    }
 
+    /** Famille du fichier : membres et personnages, routines copiées des modèles, activités hebdomadaires dès aujourd'hui. */
+    private void seedFamily(FamilySeed family, LocalDate today, Path file) {
+        Map<String, Long> ids = new LinkedHashMap<>();
+        for (FamilySeed.Membre m : family.membres()) {
+            Long id = memberService.create(new FamilyMemberRequest(m.nom().strip(), m.couleur().toUpperCase())).id();
+            ids.put(m.cle(), id);
+            if (m.avatar() != null) {
+                memberService.updateAvatar(id, m.avatar());
+            }
+            if (m.routines() != null && m.routines().modeles() != null) {
+                m.routines().modeles().forEach(modele -> routineService.applyTemplate(id, modele, m.routines().langue()));
+            }
+        }
+        List<FamilySeed.Activite> activites = family.activites() == null ? List.of() : family.activites();
+        for (FamilySeed.Activite a : activites) {
+            // Hebdomadaire, sans fin, à partir d'aujourd'hui : seuls les jours cochés donnent une occurrence
+            Set<DayOfWeek> jours = a.jours().stream().map(DayOfWeek::valueOf)
+                    .collect(Collectors.toCollection(() -> EnumSet.noneOf(DayOfWeek.class)));
+            Set<Long> membres = a.membres().stream().map(ids::get).collect(Collectors.toSet());
+            report(reminderService.create(new ReminderRequest(a.titre().strip(), a.description(),
+                    ReminderType.valueOf(a.type()), LocalDateTime.of(today, LocalTime.parse(a.debut())),
+                    a.fin() == null ? null : LocalDateTime.of(today, LocalTime.parse(a.fin())),
+                    membres, true, new RecurrenceRuleRequest(RecurrenceFrequency.WEEKLY, 1, jours, null, null))));
+        }
+        log.info("Famille chargée depuis {} : {} membre(s), {} activité(s)", file.toAbsolutePath().normalize(), ids.size(),
+                activites.size());
+    }
+
+    /** Famille fictive (Maman, Papa, Léa, Tom) : rappels variés et routines des enfants. */
+    private void seedDemoFamily(LocalDate today) {
         Long maman = memberService.create(new FamilyMemberRequest("Maman", "#E91E63")).id();
         Long papa = memberService.create(new FamilyMemberRequest("Papa", "#2196F3")).id();
         Long lea = memberService.create(new FamilyMemberRequest("Léa", "#FF9800")).id();
@@ -95,8 +154,6 @@ public class DataInitializer implements CommandLineRunner {
                 at(today.plusDays(20), 12, 0), null,
                 Set.of(maman, papa, lea, tom), true,
                 new RecurrenceRuleRequest(RecurrenceFrequency.YEARLY, 1, null, null, 10))));
-
-        seedRecipesAndMeals(today);
 
         // Routines des enfants : les deux modèles, en français pour Léa et en néerlandais pour Tom
         for (String modele : List.of("matin", "soir")) {
