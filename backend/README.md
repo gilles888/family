@@ -20,20 +20,28 @@ Prérequis : **JDK 25**. Maven n'est pas nécessaire (wrapper inclus).
 
 ```bash
 ./mvnw spring-boot:run          # profil "dev" par défaut : H2 en mémoire + données de test
-./mvnw test                     # 132 tests
+./mvnw test                     # 174 tests
 ./mvnw package && java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 ```
 
 | | URL |
 |---|---|
-| API | http://localhost:8080/v1/... |
-| **Swagger UI** | http://localhost:8080/swagger-ui.html |
-| OpenAPI JSON | http://localhost:8080/v3/api-docs |
+| API | http://localhost:8080/v1/... (connexion exigée, voir *Comptes, connexion et rôles*) |
+| **Swagger UI** (dev seulement) | http://localhost:8080/swagger-ui.html |
+| OpenAPI JSON (dev seulement) | http://localhost:8080/v3/api-docs |
+| Santé | http://localhost:8080/actuator/health (sans détails) |
+
+En `dev`, sans `ADMIN_USERNAME` / `ADMIN_PASSWORD`, le compte parent **`admin` / `admin-dev-1234`** est créé au démarrage (avertissement dans les logs). Il n'existe jamais hors du profil dev.
 
 Au démarrage en `dev` (base vide), un `CommandLineRunner` (`DataInitializer`) crée la famille : **la vôtre** si un fichier `famille.json` est présent (voir *Votre famille : famille.json*), sinon une famille fictive de démonstration : 4 membres (Maman, Papa, Léa, Tom), 5 reminders (natation hebdo, football mardi+jeudi avec date de fin, prise de sang ponctuelle, dentiste, anniversaire annuel) et les routines des enfants. Dans les deux cas : 3 recettes (spaghetti bolognaise, crêpes, soupe de légumes) et 6 repas dans la semaine en cours. Les dates sont **relatives à aujourd'hui**, l'agenda est donc immédiatement rempli :
 
 ```bash
-curl "http://localhost:8080/v1/agenda?dateDebut=$(date +%F)&dateFin=$(date -d '+30 days' +%F)"
+# Connexion (cookie de session + jeton CSRF gardés dans cookies.txt), puis lecture de l'agenda
+curl -s -c cookies.txt -b cookies.txt -o /dev/null http://localhost:8080/v1/auth/me      # pose le cookie XSRF-TOKEN
+XSRF=$(awk '/XSRF-TOKEN/ {print $7}' cookies.txt)
+curl -s -c cookies.txt -b cookies.txt -H "X-XSRF-TOKEN: $XSRF" -H 'Content-Type: application/json' \
+  -d '{"identifiant": "admin", "motDePasse": "admin-dev-1234"}' http://localhost:8080/v1/auth/login
+curl -s -b cookies.txt "http://localhost:8080/v1/agenda?dateDebut=$(date +%F)&dateFin=$(date -d '+30 days' +%F)"
 ```
 
 ### Profil production (PostgreSQL)
@@ -43,6 +51,7 @@ export SPRING_PROFILES_ACTIVE=prod
 export DB_URL=jdbc:postgresql://db-host:5432/family_agenda
 export DB_USERNAME=family
 export DB_PASSWORD=secret
+export ADMIN_USERNAME=parent ADMIN_PASSWORD='une-longue-phrase-secrete'   # 1er démarrage (base sans compte) : obligatoires
 java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 ```
 
@@ -53,13 +62,15 @@ java -jar target/family-agenda-0.0.1-SNAPSHOT.jar
 | `AGENDA_EXTENSION_CRON` | `0 0 2 * * *` | horaire du job de prolongation (cron Spring à 6 champs) |
 | `AGENDA_SEED_ENABLED` | `false` | créer les données de départ en prod (base vide uniquement) |
 | `AGENDA_SEED_FICHIER` | `./famille.json` | fichier de la famille réelle (tous profils) ; absent = famille de démonstration |
-| `SWAGGER_UI_ENABLED` | `true` | désactiver Swagger UI |
+| `ADMIN_USERNAME` / `ADMIN_PASSWORD` | *(vides)* | premier compte parent, créé si **aucun compte** n'existe ; hors profil dev, leur absence sur une base sans compte **empêche le démarrage**. Mot de passe : 10 caractères minimum |
+| `AGENDA_COOKIE_SECURE` | `true` (`false` en dev) | cookies de session, XSRF-TOKEN et « rester connecté » réservés à HTTPS |
+| `AGENDA_REMEMBER_ME_KEY` | *(aléatoire)* | clé des jetons « rester connecté » (les jetons sont vérifiés en base : une clé aléatoire à chaque démarrage ne les invalide pas) |
 | `APP_TIMEZONE` | `Europe/Paris` | fuseau JDBC |
 | `METEO_*` | Bruxelles | lieu de la carte météo (tous profils, voir *Météo et tenue conseillée*) |
 
 ### Votre famille : famille.json
 
-Le dépôt est public : **aucune donnée de la famille n'y est commitée**. Elle est lue au démarrage depuis un fichier JSON hors du dépôt, `famille.json` (ignoré par git, à la racine comme dans `backend/`). Copier l'exemple et l'adapter :
+Le dépôt est public : **aucune donnée de la famille n'y est commitée**, et **`famille.json` ne doit jamais l'être** (il contient les mots de passe initiaux des comptes) : vérifier avec `git status --ignored` qu'il est bien ignoré. Elle est lue au démarrage depuis un fichier JSON hors du dépôt, `famille.json` (ignoré par git, à la racine comme dans `backend/`). Copier l'exemple et l'adapter :
 
 ```bash
 cp famille.exemple.json famille.json     # dans backend/ : ./mvnw spring-boot:run le lit (chemin relatif au dossier de lancement)
@@ -82,6 +93,10 @@ cp famille.exemple.json famille.json     # dans backend/ : ./mvnw spring-boot:ru
   "activites": [
     { "titre": "Natation", "description": "Piscine", "type": "SPORT", "membres": ["lea"],
       "jours": ["SUNDAY"], "debut": "09:00", "fin": "10:00" }   // type : SPORT, TEST_MEDICAL, RENDEZ_VOUS, AUTRE ; fin facultative
+  ],
+  "comptes": [                                                   // facultatif
+    { "identifiant": "lea", "role": "ENFANT", "membre": "lea", "motDePasseInitial": "a-changer-1234" },
+    { "identifiant": "tom", "role": "ENFANT", "membre": "tom" }   // sans mot de passe : inactif
   ]
 }
 ```
@@ -89,8 +104,9 @@ cp famille.exemple.json famille.json     # dans backend/ : ./mvnw spring-boot:ru
 - Le fichier n'est lu que si `agenda.seed.enabled=true` (défaut en `dev`) et que la base **n'a encore aucun membre**. Tout passe par les services métier : création du membre, `PUT …/avatar`, copie des modèles de routines, création de rappels.
 - **Activités** : hebdomadaires, sans date de fin, à partir d'**aujourd'hui** (seuls les jours cochés, à partir de cette date, donnent une occurrence), avec la plage horaire indiquée.
 - **Routines** : chaque modèle est copié chez le membre (modifiable ensuite dans le mode parent). Un modèle s'écrit par son nom (jours et horaires du modèle) ou par un objet `{ "modele", "jours", "debut", "fin" }` dont les champs absents reprennent ceux du modèle ; le même modèle peut figurer deux fois, par exemple les devoirs en semaine à 16h15 et le week-end l'après-midi.
+- **Comptes** : `role` PARENT ou ENFANT, `membre` = clé d'un membre (obligatoire pour un enfant). Avec `motDePasseInitial` (10 caractères minimum), il est **haché au chargement** (jamais stocké ni journalisé en clair) et le compte est actif, avec un mot de passe **à changer à la première connexion**. Sans, le compte reste inactif jusqu'à ce qu'un parent lui définisse un mot de passe (page *Comptes*). Si un compte porte le même identifiant que `ADMIN_USERNAME`, il n'y a pas de doublon : famille.json donne le rôle et le membre, `ADMIN_PASSWORD` sert de mot de passe initial.
 - **Avatar** : objet libre, au format de `front/src/app/avatar/avatar-config.ts` ; une pièce inconnue retombe sur la pièce par défaut côté front. `eyeColor` est facultatif (noir sinon).
-- **Validation au chargement** : JSON illisible, clé inconnue (ex. `coleur`), couleur ou heure mal formée, type, jour, modèle ou langue inconnus, clé de membre inconnue dans une activité, fin avant le début… Toutes les erreurs sont listées dans un seul message, dans les logs (ex. `activites[1].membres : clé de membre « hana » inconnue`) et **le démarrage s'arrête** : pas de famille à moitié chargée.
+- **Validation au chargement** : JSON illisible, clé inconnue (ex. `coleur`), couleur ou heure mal formée, type, jour, modèle, langue ou rôle inconnus, clé de membre inconnue dans une activité ou un compte, identifiant en double, mot de passe initial trop court (sa valeur n'apparaît jamais dans le message), fin avant le début… Toutes les erreurs sont listées dans un seul message, dans les logs (ex. `activites[1].membres : clé de membre « hana » inconnue`) et **le démarrage s'arrête** : pas de famille à moitié chargée.
 - Sans fichier : famille fictive de démonstration (message dans les logs avec le chemin attendu).
 
 > Déploiement complet (Docker : PostgreSQL + backend + nginx, sauvegardes) : voir [`deploy/README.md`](../deploy/README.md) et `./deploy/deploy.sh`.
@@ -106,6 +122,27 @@ unset AGENDA_SEED_ENABLED                              # ensuite : inutile (la b
 
 Aux démarrages suivants, la base contient des membres : le fichier n'est plus lu (le modifier ne change rien ; passer par l'interface). En `dev`, la base H2 est en mémoire : la famille est rechargée depuis le fichier à chaque démarrage.
 
+### Comptes, connexion et rôles
+
+Pas d'inscription publique : le premier compte parent vient de `ADMIN_USERNAME` / `ADMIN_PASSWORD` (ou du profil dev), les suivants sont créés par un parent (page *Comptes* du front, `/v1/comptes`) ou par la section `comptes` de famille.json.
+
+| Rôle | Droits |
+|---|---|
+| **PARENT** | tout |
+| **ENFANT** | lecture de l'agenda, de la météo, des repas (et de leurs recettes) et des membres ; ses **propres** routines (celles du membre lié à son compte) : les voir, cocher les étapes, lancer son mini-jeu. Rien d'autre (403) |
+
+Les contrôles sont faits par le backend (`SecurityConfig` pour les URL, `@PreAuthorize` + `RoutineAccess` pour « ses » routines) ; le front ne fait que masquer les boutons.
+
+- **Session** : cookie `JSESSIONID` HttpOnly, SameSite=Lax, Secure si `AGENDA_COOKIE_SECURE` (vrai par défaut, faux en dev pour http://localhost). L'identifiant de session est régénéré à la connexion.
+- **CSRF** : le backend pose le cookie `XSRF-TOKEN` (lisible par Angular) ; toute écriture doit renvoyer sa valeur dans l'en-tête `X-XSRF-TOKEN`, sinon 403 `CSRF_INVALIDE`. Un nouveau jeton est émis à la connexion et à la déconnexion.
+- **Rester connecté** : jeton persistant (table `persistent_logins`), 30 jours. Révoqué à la déconnexion, au changement ou à la réinitialisation du mot de passe, à la désactivation du compte et au changement de rôle ou de membre ; les sessions ouvertes avant ces changements sont aussi refusées (version de sécurité du compte).
+- **Mots de passe** : Argon2 (BCrypt si BouncyCastle est absent), 10 caractères minimum. Réinitialisé par un parent ou initial (famille.json, création par un parent) : **à changer à la prochaine connexion** ; d'ici là, tout appel autre que `/v1/auth/me`, `/password` et `/logout` répond 403 `MOT_DE_PASSE_A_CHANGER`.
+- **Blocage** : 5 échecs consécutifs bloquent la connexion 15 minutes. La réponse et le temps de réponse sont les mêmes que l'identifiant existe ou non (un identifiant inconnu est « bloqué » lui aussi).
+- **Réponses** : JSON (ProblemDetail avec un `code`), jamais de redirection : 401 `NON_CONNECTE`, 401 `IDENTIFIANTS_INVALIDES` / `COMPTE_BLOQUE` (+ `bloqueJusqua`) / `COMPTE_DESACTIVE` à la connexion, 403 `ACTION_NON_AUTORISEE`.
+- **Journaux** : une ligne stable par tentative, sans mot de passe, prête pour fail2ban : `AUTH_OK user=… ip=…`, `AUTH_FAIL user=… ip=…`, `AUTH_LOCKED user=… ip=…`. Derrière un reverse proxy, `server.forward-headers-strategy=framework` prend l'IP réelle dans `X-Forwarded-For`.
+- **Swagger** : profil dev seulement. **Actuator** : `/actuator/health` uniquement, sans détails.
+- **Test de non-régression** : `EndpointsRequireAuthenticationTest` appelle tous les endpoints enregistrés sans connexion et exige 401 (sauf `POST /v1/auth/login`) : un futur endpoint oublié fait échouer le build.
+
 ### Schéma de la base : Flyway
 
 Le schéma est créé et mis à jour par **Flyway** au démarrage, avec les scripts de `src/main/resources/db/migration` (`V1__schema_initial.sql`, `V2__...`). Hibernate ne fait que **valider** (`ddl-auto: validate`) : une entité qui ne correspond pas au schéma empêche le démarrage.
@@ -116,11 +153,13 @@ Le schéma est créé et mis à jour par **Flyway** au démarrage, avec les scri
 
 ## Exemple : créer un reminder récurrent, puis voir les entrées générées
 
+Après la connexion de *Lancer le projet* (cookies dans `cookies.txt`, jeton dans `$XSRF`) :
+
 **1. Créer un cours de piano hebdomadaire (12 séances) pour Léa (id 3)**
 
 ```bash
-curl -s -X POST http://localhost:8080/v1/reminders \
-  -H 'Content-Type: application/json' \
+curl -s -b cookies.txt -X POST http://localhost:8080/v1/reminders \
+  -H "X-XSRF-TOKEN: $XSRF" -H 'Content-Type: application/json' \
   -d '{
     "titre": "Cours de piano",
     "description": "Conservatoire, salle 4",
@@ -176,10 +215,17 @@ curl -s -X PATCH http://localhost:8080/v1/agenda/entries/65 \
 
 ## Endpoints
 
-Toutes les URL sont préfixées par `/v1`. Les endpoints de l'agenda acceptent `membreId` (optionnel) pour filtrer par membre.
+Toutes les URL sont préfixées par `/v1` et exigent d'être connecté, sauf `POST /v1/auth/login` ; les écritures exigent l'en-tête `X-XSRF-TOKEN`. Hors connexion, comptes et routines de l'enfant, tout est réservé aux parents (voir *Comptes, connexion et rôles*). Les endpoints de l'agenda acceptent `membreId` (optionnel) pour filtrer par membre.
 
 | Méthode | URL | Description |
 |---|---|---|
+| POST | `/v1/auth/login` | `{identifiant, motDePasse, resterConnecte}` : ouvre une session (401 avec un `code` si refusé) |
+| POST | `/v1/auth/logout` | ferme la session et révoque « rester connecté » (204) |
+| GET | `/v1/auth/me` | utilisateur connecté : identifiant, rôle, membre lié, mot de passe à changer (401 si personne) |
+| POST | `/v1/auth/password` | `{ancienMotDePasse, nouveauMotDePasse}` : changer son mot de passe |
+| GET / POST | `/v1/comptes` | lister / créer un compte (parents) ; avec `motDePasse` : actif, à changer à la première connexion |
+| GET / PUT | `/v1/comptes/{id}` | détail / modifier rôle, membre lié, activation (au moins un parent actif reste) |
+| POST | `/v1/comptes/{id}/mot-de-passe` | définir un nouveau mot de passe (à changer à la prochaine connexion, sessions révoquées) |
 | GET | `/v1/agenda?dateDebut=&dateFin=&membreId=` | entrées de la plage (jours inclus), ordre chronologique |
 | GET | `/v1/agenda/jour/{date}` | entrées détaillées d'un jour |
 | GET | `/v1/agenda/semaine/{date}` | entrées de la semaine ISO (lundi → dimanche) contenant `date`, ordre chronologique |
@@ -207,7 +253,7 @@ Toutes les URL sont préfixées par `/v1`. Les endpoints de l'agenda acceptent `
 | GET / POST | `/v1/garde-manger` | lister / ajouter (201, ou 200 si déjà présent ; marque « déjà à la maison » les lignes de même nom) |
 | DELETE | `/v1/garde-manger/{id}` | retirer du garde-manger |
 | GET | `/v1/membres/{id}/routines?date=` | routines du membre (actives ou non) avec leur état du jour demandé (aujourd'hui par défaut) |
-| POST | `/v1/membres/{id}/routines/modele` | `{modele: matin\|soir, langue: fr\|nl}` : copie modifiable d'un modèle |
+| POST | `/v1/membres/{id}/routines/modele` | `{modele: matin\|soir\|devoirs, langue: fr\|nl}` : copie modifiable d'un modèle |
 | GET | `/v1/membres/{id}/routines/historique?jours=` | routines terminées par jour (14 derniers jours par défaut, 62 max) |
 | GET | `/v1/routines/modeles?langue=` | modèles prêts à l'emploi (matin, soir, devoirs) |
 | POST / GET / PUT / DELETE | `/v1/routines[/{id}]` | créer (avec `membreId`) / détail / modifier (étapes remplacées, une étape gardée par son id garde ses coches) / supprimer |
@@ -330,7 +376,7 @@ Tableaux de routine des enfants (« Mijn ochtendroutine », « Ma routine du soi
 ```
 com.family.agenda
 ├── entity/      FamilyMember, Reminder, RecurrenceRule, AgendaEntry, Recipe, RecipeIngredient, Ingredient, Meal,
-│                ShoppingList, ShoppingItem (+ ShoppingItemSource), PantryItem + enums
+│                ShoppingList, ShoppingItem (+ ShoppingItemSource), PantryItem, Routine…, UserAccount + enums
 ├── dto/         records de requête/réponse (+ validation de cohérence des dates et de la récurrence), Ciel, Vetement
 ├── mapper/      MapStruct (Entity <-> DTO)
 ├── repository/  Spring Data JPA
@@ -338,12 +384,17 @@ com.family.agenda
 │                AgendaQueryService (jour/mois/année), ReminderService, FamilyMemberService,
 │                MeteoService (cache), OpenMeteoClient, TenueAdvisor (règles de tenue, pur),
 │                RecipeService, IngredientService, MealService, PortionCalculator (prorata, pur),
-│                ShoppingListService, ShoppingListAggregator (agrégation, pur), PantryService
+│                ShoppingListService, ShoppingListAggregator (agrégation, pur), PantryService, RoutineService,
+│                AccountService (comptes, mots de passe)
 ├── controller/  AgendaController, ReminderController, FamilyMemberController, MeteoController,
-│                RecipeController, IngredientController, MealController, ShoppingListController, PantryController
+│                RecipeController, IngredientController, MealController, ShoppingListController, PantryController,
+│                RoutineController, MemberRoutineController, AuthController (/auth), AccountController (/comptes)
+├── security/    SecurityConfig (règles, CSRF, rester connecté), LoginService (blocage, journaux AUTH_*),
+│                AccountStateFilter (compte désactivé, mot de passe à changer), RoutineAccess (@PreAuthorize)
 ├── scheduler/   AgendaExtensionScheduler
 ├── exception/   GlobalExceptionHandler (@RestControllerAdvice) : 400 / 404 / 409 (ConflictException) / 503
-└── config/      versioning d'API, OpenAPI, propriétés, données de départ (DataInitializer, famille.json : FamilySeedReader)
+└── config/      versioning d'API, OpenAPI, propriétés, mots de passe (Argon2), premier compte (AdminAccountInitializer),
+                 données de départ (DataInitializer, famille.json : FamilySeedReader)
 ```
 
 ## Versions et compatibilité (Spring Boot 4.1)
@@ -370,9 +421,9 @@ Breaking changes rencontrés :
 
 - **DEPLACE** ne change que le statut (le PATCH n'accepte pas de nouvelle date, conformément au besoin). L'occurrence garde sa date d'origine.
 - **Fuseau** : les dates sont des `LocalDateTime` (heure locale de la famille), sans fuseau.
-- **Sécurité** : aucune authentification (backend d'agenda familial en réseau de confiance).
+- **Sécurité** : pas de second facteur ni de réinitialisation de mot de passe par e-mail (un parent en définit un nouveau). La déconnexion révoque « rester connecté » sur **tous** les appareils du compte. Le blocage des identifiants inconnus est gardé en mémoire (remis à zéro au redémarrage).
 - **Job nocturne multi-instances** : sans verrou distribué (ShedLock), deux instances exécuteraient le job simultanément ; la contrainte d'unicité évite les doublons mais l'une des deux transactions échouerait (loggé).
 - La vue annuelle compte toutes les entrées, y compris annulées.
 - **H2 (dev)** : H2 en mémoire lie ses contraintes `check` à la connexion qui les a créées (celle des migrations Flyway). Si le pool la recycle, toute écriture sur ces tables échoue (« Check constraint invalid », renvoyé en **409**). Le profil dev désactive donc le recyclage des connexions (`spring.datasource.hikari.max-lifetime: 0`). PostgreSQL n'est pas concerné.
-- **Routines** : la gestion (mode parent) n'est pas protégée, faute de comptes ou de code parent. Le « jour » est celui de l'horloge du serveur : un serveur dans un autre fuseau que la famille décalerait le changement de jour.
+- **Routines** : le « jour » est celui de l'horloge du serveur : un serveur dans un autre fuseau que la famille décalerait le changement de jour.
 - **Liste de courses** : une ligne achetée ou retirée le reste à la régénération même si la quantité nécessaire augmente (un repas ajouté après les courses) ; il faut alors la décocher. Pas de conversion entre unités « de cuisine » (cuillères, pincées) et masses. Le rayon d'un ingrédient n'est pas encore modifiable par l'API.

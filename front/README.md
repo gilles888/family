@@ -18,6 +18,11 @@ npm test                 # tests unitaires (Vitest)
 
 En développement, les appels `/v1/...` sont **relayés vers `http://localhost:8080`** par `proxy.conf.json` : pas de CORS à configurer. Si votre backend écoute ailleurs, modifiez la `target` de ce fichier.
 
+**Connexion** : l'application demande de se connecter (compte de dev : `admin` / `admin-dev-1234`, voir le README du backend). La session et le jeton CSRF sont des cookies posés par le backend ; grâce au proxy, le navigateur les voit sur l'origine du front (`localhost:4200`), sans réglage : le proxy transmet `Cookie` et `Set-Cookie` tels quels, et les cookies n'ont pas d'attribut `Domain`. Angular recopie le cookie `XSRF-TOKEN` dans l'en-tête `X-XSRF-TOKEN` des écritures (`withXsrfConfiguration` dans `app.config.ts`).
+
+- `auth/` : `AuthService` (utilisateur connecté, via `/v1/auth/me`), gardes de route (`authGuard`, `parentGuard`), intercepteur (401 → connexion, 403 → « Action non autorisée »), pages de connexion et de changement de mot de passe, directive `*appParentOnly` qui masque les boutons d'ajout, de modification et de suppression à un compte enfant. Le backend reste la vraie protection.
+- `accounts/` : page *Comptes* (parents) : créer, activer / désactiver, définir un mot de passe, lier à un membre.
+
 Le sélecteur de langue (**FR / NL** dans l'en-tête) recharge l'application dans l'autre langue, sur la même page. Une langue = un build : en dev, il faut donc que les deux serveurs (`npm start` et `npm run start:nl`, dans deux terminaux) tournent pour basculer ; en production le sélecteur pointe vers `/fr/` et `/nl/`.
 
 ## Fonctionnalités
