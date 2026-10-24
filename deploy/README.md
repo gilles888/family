@@ -7,7 +7,7 @@ internet ──443──> nginx de l'hôte (TLS, en-têtes, limit_req, famille.a
                      └──> 127.0.0.1:8090  nginx du conteneur ──> backend:8080 ──> db:5432   (réseau Docker interne)
 ```
 
-> ⚠️ **Aucune sauvegarde automatique n'est en place.** `backup.sh` / `restore.sh` existent mais ne sont lancés par rien : voir *Sauvegardes*.
+> 💾 **Sauvegarde automatique chaque nuit à 3 h, sur le serveur seulement** (30 gardées). Aucune copie hors du VPS : une perte du disque ou du serveur emporterait aussi les sauvegardes. Voir *Sauvegardes*.
 
 Vos données (`famille.json`, mots de passe, `deploy/.env`) ne passent jamais par git : `deploy.sh` les copie directement sur le serveur, et retire `famille.json` et `ADMIN_PASSWORD` du serveur après le premier déploiement.
 
@@ -181,14 +181,32 @@ Remplacer `identifiant` par celui du compte. Le mot de passe provisoire devra ê
 
 ## Sauvegardes
 
-**Aucune sauvegarde automatique n'est en place.** Tant que ce n'est pas le cas, une panne du disque du VPS ou une erreur de manipulation fait perdre l'agenda. Manuellement, sur le serveur :
+**Chaque nuit à 3 h** (heure du serveur), une tâche cron de l'utilisateur lance `~/family/backup.sh` : dump PostgreSQL compressé dans `~/family/backups/family-AAAA-MM-JJ_HHMM.sql.gz` (mode 600, dossier 700), **les 30 dernières sont gardées**. Le script vérifie l'archive (gzip lisible, dump complet) avant de la garder et note chaque passage dans `backups/backup.log`.
+
+- La tâche est installée par `deploy.sh` à chaque déploiement (une seule ligne, repérée par `# family-backup`) ; son horaire vient de `BACKUP_CRON` dans `deploy/.env` (format cron ; vide = aucune sauvegarde automatique).
+- **Les sauvegardes restent sur le VPS** : elles protègent d'une erreur de manipulation ou d'une mise à jour ratée, **pas d'une perte du disque ou du serveur**. Pour une copie ailleurs, à la main : `scp 'vps-claude:family/backups/*.sql.gz' ~/sauvegardes-family/` (elles contiennent les données de la famille et les empreintes des mots de passe : à garder en lieu sûr).
 
 ```bash
-cd ~/family && ./backup.sh                 # backups/family-AAAA-MM-JJ_HHMM.sql.gz (30 gardées)
-./restore.sh backups/family-….sql.gz       # restauration (confirmation demandée)
+ssh vps-claude 'crontab -l; tail -n 4 family/backups/backup.log; ls -lt family/backups | head'   # état
+ssh vps-claude 'cd family && ./backup.sh'                                                       # sauvegarde immédiate
 ```
 
-et copier les sauvegardes ailleurs : `scp 'vps-claude:family/backups/*.sql.gz' ~/sauvegardes-family/`.
+**Restaurer** (sur le serveur, remplace TOUTES les données ; l'état actuel est d'abord sauvegardé) :
+
+```bash
+cd ~/family && ./restore.sh backups/family-AAAA-MM-JJ_HHMM.sql.gz
+```
+
+**Vérifier qu'une sauvegarde se restaure**, sans toucher à la base réelle (base temporaire) :
+
+```bash
+cd ~/family && F=$(ls -1t backups/family-*.sql.gz | head -1)
+docker compose exec -T db createdb -U family test_restauration </dev/null
+gunzip -c "$F" | docker compose exec -T db psql -q -v ON_ERROR_STOP=1 -U family -d test_restauration >/dev/null
+Q="select (select count(*) from family_member), (select count(*) from user_account), (select count(*) from agenda_entry)"
+docker compose exec -T db psql -U family -d test_restauration -tAc "$Q" </dev/null    # à comparer avec family_agenda
+docker compose exec -T db dropdb -U family test_restauration </dev/null
+```
 
 ## Contenu
 
@@ -201,4 +219,4 @@ et copier les sauvegardes ailleurs : `scp 'vps-claude:family/backups/*.sql.gz' ~
 | `host/nginx-famille-bootstrap.conf` | nginx de l'hôte, avant le certificat (port 80, ACME) |
 | `host/nginx-famille.conf` | nginx de l'hôte : HTTPS, en-têtes, limit_req, journal |
 | `host/fail2ban/` | filtre `famille-login`, jails, lignes de test pour `fail2ban-regex` |
-| `backup.sh` / `restore.sh` | sauvegarde et restauration manuelles de la base |
+| `backup.sh` / `restore.sh` | sauvegarde (chaque nuit par cron, ou à la main) et restauration de la base |

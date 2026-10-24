@@ -39,6 +39,7 @@ source "$DEPLOY/.env"
 DEPLOY_DIR="${DEPLOY_DIR:-family}"
 HTTP_PORT="${HTTP_PORT:-8090}"
 PUBLIC_URL="${PUBLIC_URL:-http://localhost:$HTTP_PORT}"
+BACKUP_CRON="${BACKUP_CRON-0 3 * * *}"
 FAMILLE="$ROOT/${FAMILLE_JSON:-backend/famille.json}"
 [[ "${FAMILLE_JSON:-}" == /* ]] && FAMILLE="$FAMILLE_JSON"
 
@@ -195,6 +196,17 @@ if [ "$FIRST" = true ]; then
   docker compose up -d --force-recreate backend
   echo "ADMIN_PASSWORD retiré du .env du serveur ; redémarrage du backend…"
   wait_backend
+fi
+
+# Sauvegardes automatiques : une seule ligne cron, repérée par son commentaire « # family-backup »
+mkdir -p backups && chmod 700 backups
+CRON_LINE="$BACKUP_CRON cd \$(pwd) && ./backup.sh >> backups/backup.log 2>&1 # family-backup"
+{ crontab -l 2>/dev/null | grep -v "# family-backup" || true; [ -n "$BACKUP_CRON" ] && echo "\$CRON_LINE"; } | crontab -
+echo
+if [ -n "$BACKUP_CRON" ]; then
+  echo "Sauvegarde automatique : \$(crontab -l | grep "# family-backup" | cut -d" " -f1-5) (cron), 30 gardées dans \$(pwd)/backups"
+else
+  echo "Sauvegarde automatique : désactivée (BACKUP_CRON vide)"
 fi
 
 echo
