@@ -4006,6 +4006,94 @@
           <context context-type="linenumber">344</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routineManager.more" datatype="html">
+        <source>Plus d&apos;actions</source>
+        <target>Meer acties</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.copyTo" datatype="html">
+        <source>Copier pour…</source>
+        <target>Kopiëren voor…</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">69,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.copyName" datatype="html">
+        <source><x id="name" equiv-text="routine.nom"/> (copie)</source>
+        <target><x id="name" equiv-text="routine.nom"/> (kopie)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.duplicated" datatype="html">
+        <source>« <x id="name" equiv-text="copy.nom"/> » créée.</source>
+        <target>« <x id="name" equiv-text="copy.nom"/> » aangemaakt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.copied" datatype="html">
+        <source>« <x id="name" equiv-text="copy.nom"/> » copiée pour <x id="member" equiv-text="target.nom"/>.</source>
+        <target>« <x id="name" equiv-text="copy.nom"/> » gekopieerd voor <x id="member" equiv-text="target.nom"/>.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.backToRoutines" datatype="html">
+        <source>Routines</source>
+        <target>Routines</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-manage-page.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.title" datatype="html">
+        <source>Gérer les routines</source>
+        <target>Routines beheren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-manage-page.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.noMembers" datatype="html">
+        <source>Ajoutez d&apos;abord des membres à la famille.</source>
+        <target>Voeg eerst gezinsleden toe.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-manage-page.html</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.membersError" datatype="html">
+        <source>Impossible de charger les membres.</source>
+        <target>De gezinsleden kunnen niet worden geladen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-manage-page.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routines.manage" datatype="html">
+        <source>Gérer les routines</source>
+        <target>Routines beheren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

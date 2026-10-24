@@ -39,3 +39,9 @@ export function toRoutineRequest(routine: RoutineDTO, changes: Partial<RoutineRe
     ...changes,
   };
 }
+
+/** Création d'une copie indépendante d'une routine chez un membre (nouvelles étapes : sans id). */
+export function copyRequest(routine: RoutineDTO, membreId: number, nom: string): RoutineRequest {
+  const request = toRoutineRequest(routine, { membreId, nom });
+  return { ...request, etapes: request.etapes?.map((s) => ({ ...s, id: undefined })) };
+}

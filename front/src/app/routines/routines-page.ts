@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,7 +21,7 @@ import { currentRoutine, routinesOfDay, toggledRun } from './routine-logic';
  */
 @Component({
   selector: 'app-routines-page',
-  imports: [MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, RoutineBoard, RoutineHistory],
+  imports: [RouterLink, MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, RoutineBoard, RoutineHistory],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[class.night]': "selected()?.theme === 'NIGHT'" },
   templateUrl: './routines-page.html',

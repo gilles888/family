@@ -152,7 +152,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">42,44</context>
+          <context context-type="linenumber">60,62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
@@ -212,16 +212,16 @@
           <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">42,43</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
           <context context-type="linenumber">119,120</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">73,75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
@@ -1357,8 +1357,12 @@
           <context context-type="linenumber">56,57</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">39,40</context>
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">65,66</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
@@ -1948,7 +1952,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">72,73</context>
+          <context context-type="linenumber">11,12</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/reward-dialog.html</context>
@@ -2277,73 +2281,6 @@
           <context context-type="linenumber">3,4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="memberRoutines.empty" datatype="html">
-        <source>Pas encore de routine. Partez d&apos;un modèle ou créez-en une.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">12,15</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="memberRoutines.steps" datatype="html">
-        <source>{VAR_PLURAL, plural, =1 {1 étape} other {<x id="INTERPOLATION"/> étapes}}</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="memberRoutines.activeToggle" datatype="html">
-        <source>Routine active</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">37,39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="routines.loadError" datatype="html">
-        <source>Impossible de charger les routines.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">50,54</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">41,42</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="memberRoutines.fromTemplate" datatype="html">
-        <source>Depuis un modèle</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">57,59</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="memberRoutines.create" datatype="html">
-        <source>Nouvelle routine</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.html</context>
-          <context context-type="linenumber">69,71</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="memberRoutines.added" datatype="html">
-        <source>« <x id="name" equiv-text="routine.nom"/> » ajoutée : vous pouvez l&apos;adapter.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="memberRoutines.deleteTitle" datatype="html">
-        <source>Supprimer la routine ?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
-          <context context-type="linenumber">76</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="memberRoutines.deleteMessage" datatype="html">
-        <source>« <x id="name" equiv-text="routine.nom"/> » et son historique seront supprimés.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/member-routines-dialog.ts</context>
-          <context context-type="linenumber">77</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="reward.title" datatype="html">
         <source>🎁 Ta récompense</source>
         <context-group purpose="location">
@@ -2359,7 +2296,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">26,27</context>
+          <context context-type="linenumber">32,33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reward.choose" datatype="html">
@@ -2852,6 +2789,136 @@
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="memberRoutines.create" datatype="html">
+        <source>Nouvelle routine</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.fromTemplate" datatype="html">
+        <source>Depuis un modèle</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">8,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.empty" datatype="html">
+        <source>Pas encore de routine. Partez d&apos;un modèle ou créez-en une.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">25,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.steps" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 étape} other {<x id="INTERPOLATION"/> étapes}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.activeToggle" datatype="html">
+        <source>Routine active</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">57,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.more" datatype="html">
+        <source>Plus d&apos;actions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.copyTo" datatype="html">
+        <source>Copier pour…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">69,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routines.loadError" datatype="html">
+        <source>Impossible de charger les routines.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.html</context>
+          <context context-type="linenumber">89,91</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.added" datatype="html">
+        <source>« <x id="name" equiv-text="routine.nom"/> » ajoutée : vous pouvez l&apos;adapter.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.copyName" datatype="html">
+        <source><x id="name" equiv-text="routine.nom"/> (copie)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.duplicated" datatype="html">
+        <source>« <x id="name" equiv-text="copy.nom"/> » créée.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.copied" datatype="html">
+        <source>« <x id="name" equiv-text="copy.nom"/> » copiée pour <x id="member" equiv-text="target.nom"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.deleteTitle" datatype="html">
+        <source>Supprimer la routine ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="memberRoutines.deleteMessage" datatype="html">
+        <source>« <x id="name" equiv-text="routine.nom"/> » et son historique seront supprimés.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-manager.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.backToRoutines" datatype="html">
+        <source>Routines</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-manage-page.html</context>
+          <context context-type="linenumber">4,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.title" datatype="html">
+        <source>Gérer les routines</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-manage-page.html</context>
+          <context context-type="linenumber">6,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.noMembers" datatype="html">
+        <source>Ajoutez d&apos;abord des membres à la famille.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-manage-page.html</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineManager.membersError" datatype="html">
+        <source>Impossible de charger les membres.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-manage-page.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routines.who" datatype="html">
         <source>Qui es-tu ?</source>
         <context-group purpose="location">
@@ -2859,18 +2926,33 @@
           <context context-type="linenumber">2,3</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routines.manage" datatype="html">
+        <source>Gérer les routines</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">49,51</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routines.changePerson" datatype="html">
         <source>Changer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">18,20</context>
+          <context context-type="linenumber">24,26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="routines.none" datatype="html">
         <source>Pas de routine aujourd&apos;hui. Profite bien ! 🎈</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">45,47</context>
+          <context context-type="linenumber">63,65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.network" datatype="html">

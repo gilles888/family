@@ -53,7 +53,7 @@ export class FamilyMembersPage {
   /** Mode parent : routines du membre. */
   protected editRoutines(member: FamilyMemberDTO): void {
     this.dialog.open<MemberRoutinesDialog, MemberRoutinesData>(MemberRoutinesDialog, {
-      data: { member },
+      data: { member, members: this.members.value() ?? [] },
       width: '640px',
       maxWidth: '100vw',
       maxHeight: '100dvh',

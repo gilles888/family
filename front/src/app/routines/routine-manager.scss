@@ -1,0 +1,111 @@
+:host {
+  display: block;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.empty {
+  padding: 16px 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.routine {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 14px;
+  background: var(--mat-sys-surface-container);
+
+  &.inactive {
+    opacity: 0.6;
+  }
+}
+
+.open {
+  all: unset;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+  }
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font: var(--mat-sys-title-medium);
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.days,
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.preview {
+  margin-top: 2px;
+}
+
+.day {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: var(--mat-sys-label-small);
+  text-transform: uppercase;
+  color: var(--mat-sys-outline);
+
+  &.on {
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+.copy-target {
+  ::ng-deep .mat-mdc-menu-item-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.history {
+  display: block;
+  margin-top: 16px;
+}

@@ -11,6 +11,12 @@
       </button>
     }
   </div>
+  <div class="manage">
+    <a matButton="outlined" routerLink="/routines/gerer">
+      <mat-icon>tune</mat-icon>
+      <ng-container i18n="@@routines.manage">Gérer les routines</ng-container>
+    </a>
+  </div>
 } @else {
   <div class="top">
     <button matButton (click)="back()">
@@ -32,6 +38,18 @@
         <span>{{ m.nom }}</span>
       </span>
     }
+    <a
+      matIconButton
+      class="settings"
+      routerLink="/routines/gerer"
+      [queryParams]="{ membre: params().membre }"
+      i18n-aria-label="@@routines.manage"
+      aria-label="Gérer les routines"
+      i18n-title="@@routines.manage"
+      title="Gérer les routines"
+    >
+      <mat-icon>tune</mat-icon>
+    </a>
   </div>
 
   @if (routines.isLoading() && !routines.hasValue()) {

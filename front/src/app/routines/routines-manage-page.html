@@ -1,0 +1,37 @@
+<div class="top">
+  <a matButton routerLink="/routines">
+    <mat-icon>arrow_back</mat-icon>
+    <ng-container i18n="@@routineManager.backToRoutines">Routines</ng-container>
+  </a>
+  <h1 i18n="@@routineManager.title">Gérer les routines</h1>
+</div>
+
+@if (members.isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+@if (members.hasValue()) {
+  @if (members.value().length === 0) {
+    <p class="empty" i18n="@@routineManager.noMembers">Ajoutez d'abord des membres à la famille.</p>
+  }
+  <div class="people" role="tablist">
+    @for (m of members.value(); track m.id) {
+      <button
+        type="button"
+        role="tab"
+        class="person"
+        [class.active]="m.id === member()?.id"
+        [attr.aria-selected]="m.id === member()?.id"
+        [style.--member-color]="m.couleur"
+        (click)="choose(m)"
+      >
+        <app-avatar [member]="m" [size]="44" />
+        <span>{{ m.nom }}</span>
+      </button>
+    }
+  </div>
+  @if (member(); as m) {
+    <app-routine-manager [member]="m" [members]="members.value()" />
+  }
+} @else if (members.error()) {
+  <p class="empty" i18n="@@routineManager.membersError">Impossible de charger les membres.</p>
+}
