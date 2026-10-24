@@ -1,0 +1,67 @@
+# Production : PostgreSQL + backend (jar) + nginx (front fr/nl, relais /v1).
+# Installé et lancé par deploy.sh ; les valeurs viennent du fichier .env (voir .env.example).
+name: family
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: family_agenda
+      POSTGRES_USER: family
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD manquant dans .env}
+      TZ: ${APP_TIMEZONE:-Europe/Brussels}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U family -d family_agenda"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    image: eclipse-temurin:25-jre
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    working_dir: /app
+    command: ["java", "-jar", "/app/app.jar"]
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:postgresql://db:5432/family_agenda
+      DB_USERNAME: family
+      DB_PASSWORD: ${DB_PASSWORD}
+      # true au premier déploiement seulement (base vide) : deploy.sh s'en charge
+      AGENDA_SEED_ENABLED: ${AGENDA_SEED_ENABLED:-false}
+      AGENDA_SEED_FICHIER: /config/famille.json
+      SWAGGER_UI_ENABLED: "false"
+      APP_TIMEZONE: ${APP_TIMEZONE:-Europe/Brussels}
+      TZ: ${APP_TIMEZONE:-Europe/Brussels}
+      METEO_LIEU: ${METEO_LIEU:-Bruxelles}
+      METEO_LATITUDE: ${METEO_LATITUDE:-50.85}
+      METEO_LONGITUDE: ${METEO_LONGITUDE:-4.35}
+      METEO_FUSEAU: ${APP_TIMEZONE:-Europe/Brussels}
+      METEO_HEURE_DEPART: ${METEO_HEURE_DEPART:-8}
+    volumes:
+      - ./app:/app:ro
+      # Dossier (et non fichier) : sans famille.json, Docker ne crée pas de dossier à sa place
+      - ./config:/config:ro
+
+  web:
+    image: nginx:1.28-alpine
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    environment:
+      # « off » = sans mot de passe ; sinon nom de la zone protégée (APP_USER / APP_PASSWORD dans .env)
+      AUTH_BASIC: ${AUTH_BASIC:-off}
+    volumes:
+      - ./www:/usr/share/nginx/html:ro
+      - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ./auth:/etc/nginx/auth:ro
+
+volumes:
+  pgdata:

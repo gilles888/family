@@ -19,3 +19,4 @@ front/.angular/
 # Famille réelle (données personnelles, dépôt public) : voir backend/famille.exemple.json
 famille.json
 backend/famille.json
+!.env.example

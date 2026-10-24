@@ -93,6 +93,8 @@ cp famille.exemple.json famille.json     # dans backend/ : ./mvnw spring-boot:ru
 - **Validation au chargement** : JSON illisible, clé inconnue (ex. `coleur`), couleur ou heure mal formée, type, jour, modèle ou langue inconnus, clé de membre inconnue dans une activité, fin avant le début… Toutes les erreurs sont listées dans un seul message, dans les logs (ex. `activites[1].membres : clé de membre « hana » inconnue`) et **le démarrage s'arrête** : pas de famille à moitié chargée.
 - Sans fichier : famille fictive de démonstration (message dans les logs avec le chemin attendu).
 
+> Déploiement complet (Docker : PostgreSQL + backend + nginx, sauvegardes) : voir [`deploy/README.md`](../deploy/README.md) et `./deploy/deploy.sh`.
+
 **En production (PostgreSQL)**, la famille se charge **une seule fois**, sur une base vide :
 
 ```bash
