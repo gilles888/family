@@ -5,6 +5,9 @@ server {
     server_name _;
     root /usr/share/nginx/html;
     server_tokens off;
+    # Redirections relatives (« Location: /fr/ ») : ce nginx ne voit que du http, une redirection absolue
+    # renverrait vers http:// au lieu de l'https du nginx de l'hôte
+    absolute_redirect off;
 
     # IP du client : celle que le nginx de l'hôte a écrite dans X-Forwarded-For (il l'écrase avec $remote_addr,
     # un en-tête envoyé par le client est donc ignoré). Il nous joint par la passerelle du réseau Docker.
