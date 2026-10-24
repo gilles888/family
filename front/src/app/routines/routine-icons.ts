@@ -317,6 +317,42 @@ export const ROUTINE_ICONS: RoutineIcon[] = [
       rect(40, 64, 20, 6, 3, '#fb8c00'),
     ],
   },
+  {
+    id: 'snack',
+    label: $localize`:@@routineIcon.snack:Goûter`,
+    shapes: [
+      path('M50 30 Q30 18 18 36 Q8 60 26 82 Q38 94 50 86 Q62 94 74 82 Q92 60 82 36 Q70 18 50 30 Z', '#ef5350'),
+      ellipse(32, 48, 5, 10, '#ef9a9a'),
+      line('M50 30 Q50 18 56 10', '#6d4c41', 4),
+      path('M54 20 Q66 6 80 12 Q70 26 54 20 Z', '#66bb6a'),
+    ],
+  },
+  {
+    id: 'notebook',
+    label: $localize`:@@routineIcon.notebook:Journal de classe`,
+    shapes: [
+      rect(20, 10, 64, 80, 6, '#5c6bc0'),
+      rect(30, 10, 54, 80, 4, '#7986cb'),
+      ...[20, 34, 48, 62, 76].map((y) => circle(22, y, 4, '#eceff1')),
+      rect(38, 22, 38, 18, 3, '#ffffff'),
+      line('M44 31 H70', '#9fa8da', 3),
+      line('M42 64 L50 72 L66 54', '#c5e1a5', 5),
+    ],
+  },
+  {
+    id: 'homework',
+    label: $localize`:@@routineIcon.homework:Devoirs`,
+    shapes: [
+      rect(12, 10, 58, 76, 6, '#ffffff', { stroke: '#cfd8dc', sw: 2 }),
+      ...[26, 38, 50, 62].map((y) => line(`M22 ${y} H60`, '#90caf9', 3)),
+      path('M40 80 L78 42 L90 54 L52 92 Z', '#ffca28'),
+      line('M46 86 L84 48', '#ffb300', 2.5),
+      path('M74 46 L78 42 L90 54 L86 58 Z', '#b0bec5'),
+      path('M78 42 L84 36 Q90 34 94 40 Q98 44 96 48 L90 54 Z', '#f48fb1'),
+      path('M40 80 L52 92 L36 96 Z', '#ffe0b2'),
+      path('M37.6 89.6 L42.4 94.4 L36 96 Z', INK),
+    ],
+  },
 ];
 
 const BY_ID = new Map(ROUTINE_ICONS.map((icon) => [icon.id, icon]));

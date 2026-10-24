@@ -14,7 +14,7 @@
  */
 export interface RoutineFromTemplateRequest { 
     /**
-     * matin ou soir
+     * matin, soir ou devoirs
      */
     modele: string;
     /**

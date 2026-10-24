@@ -173,6 +173,18 @@ class RoutineServiceTest {
     }
 
     @Test
+    void modeleDevoirs() {
+        RoutineDTO devoirs = service.applyTemplate(tom, "devoirs", "fr");
+
+        assertThat(devoirs.nom()).isEqualTo("Mes devoirs");
+        assertThat(devoirs.type()).isEqualTo(RoutineType.CUSTOM);
+        assertThat(devoirs.jours()).containsExactlyInAnyOrder(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
+                DayOfWeek.THURSDAY, DayOfWeek.FRIDAY);
+        assertThat(devoirs.etapes()).extracting(RoutineStepDTO::icone).contains("notebook", "homework");
+        assertThat(devoirs.etapes().getLast().libelle()).isEqualTo("J'ai fini, bravo !");
+    }
+
+    @Test
     void historiqueDesRoutinesTerminees() {
         for (int i = 0; i < 3; i++) {
             service.toggleStep(routine.id(), today, stepId(i));

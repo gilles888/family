@@ -3222,7 +3222,7 @@
                 "properties": {
                     "modele": {
                         "type": "string",
-                        "description": "matin ou soir",
+                        "description": "matin, soir ou devoirs",
                         "example": "matin",
                         "minLength": 1
                     },

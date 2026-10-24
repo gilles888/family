@@ -55,10 +55,11 @@ class RoutineApiTest {
     void modelesEnDeuxLangues() throws Exception {
         mvc.perform(get("/v1/routines/modeles").param("langue", "nl"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].nom").value("Mijn ochtendroutine"))
                 .andExpect(jsonPath("$[0].etapes", hasSize(10)))
-                .andExpect(jsonPath("$[1].sousTitre").value("Rustig naar een fijne nacht!"));
+                .andExpect(jsonPath("$[1].sousTitre").value("Rustig naar een fijne nacht!"))
+                .andExpect(jsonPath("$[2].nom").value("Mijn huiswerk"));
         mvc.perform(get("/v1/routines/modeles"))
                 .andExpect(jsonPath("$[0].nom").value("Ma routine du matin"));
     }

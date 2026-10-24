@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Modèles de routines prêts à l'emploi (matin, soir), en néerlandais et en français. Appliquer un modèle en fait une
+ * Modèles de routines prêts à l'emploi (matin, soir, devoirs), en néerlandais et en français. Appliquer un modèle en fait une
  * copie modifiable chez le membre : modifier un modèle ici ne touche pas les routines déjà créées.
  */
 public final class RoutineTemplates {
@@ -62,7 +62,18 @@ public final class RoutineTemplates {
                             "fr", new Text("Ma routine du soir", "Tout doux vers une belle nuit !", List.of(
                                     "Je range mon cartable.", "J'enlève mes vêtements.",
                                     "Je prends une douche ou je me lave.", "Je me brosse les dents.", "Je mets mon pyjama.",
-                                    "Je prépare mon cartable.", "Je lis un livre.", "Je vais au lit.", "Bonne nuit !")))));
+                                    "Je prépare mon cartable.", "Je lis un livre.", "Je vais au lit.", "Bonne nuit !")))),
+            new Template("devoirs", RoutineType.CUSTOM, RoutineTheme.DAY, SEMAINE, LocalTime.of(16, 15), LocalTime.of(17, 15),
+                    List.of("snack", "washbasin", "notebook", "homework", "clock", "book", "schoolbag", "finish"),
+                    Map.of(
+                            "nl", new Text("Mijn huiswerk", "Eerst werken, dan spelen!", List.of(
+                                    "Ik eet mijn vieruurtje.", "Ik was mijn handen.", "Ik kijk in mijn schoolagenda.",
+                                    "Ik maak mijn huiswerk.", "Ik neem een korte pauze.", "Ik leer mijn lessen.",
+                                    "Ik ruim mijn boekentas op.", "Klaar, goed gedaan!")),
+                            "fr", new Text("Mes devoirs", "D'abord le travail, ensuite on joue !", List.of(
+                                    "Je prends mon goûter.", "Je me lave les mains.", "Je regarde mon journal de classe.",
+                                    "Je fais mes devoirs.", "Je fais une petite pause.", "J'étudie mes leçons.",
+                                    "Je range mon cartable.", "J'ai fini, bravo !")))));
 
     private RoutineTemplates() {
     }

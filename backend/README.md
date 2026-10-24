@@ -75,7 +75,7 @@ cp famille.exemple.json famille.json     # dans backend/ : ./mvnw spring-boot:ru
       "avatar": { "version": 1, "skin": "skin-2", "eyes": "eyes-happy", "eyeColor": "#1e88e5", "mouth": "mouth-grin",
                   "hair": "hair-pigtails", "hairColor": "#d9772b", "outfit": "outfit-overalls", "outfitColor": "#22c55e",
                   "hat": "none", "accessory": "none", "background": "bg-sunset" },   // facultatif : format avatar-config.ts du front
-      "routines": { "langue": "nl", "modeles": ["matin", "soir"] }                   // facultatif : fr ou nl ; matin, soir
+      "routines": { "langue": "nl", "modeles": ["matin", "soir"] }                   // facultatif : fr ou nl ; matin, soir, devoirs
     }
   ],
   "activites": [
@@ -205,7 +205,7 @@ Toutes les URL sont préfixées par `/v1`. Les endpoints de l'agenda acceptent `
 | GET | `/v1/membres/{id}/routines?date=` | routines du membre (actives ou non) avec leur état du jour demandé (aujourd'hui par défaut) |
 | POST | `/v1/membres/{id}/routines/modele` | `{modele: matin\|soir, langue: fr\|nl}` : copie modifiable d'un modèle |
 | GET | `/v1/membres/{id}/routines/historique?jours=` | routines terminées par jour (14 derniers jours par défaut, 62 max) |
-| GET | `/v1/routines/modeles?langue=` | modèles prêts à l'emploi (matin, soir) |
+| GET | `/v1/routines/modeles?langue=` | modèles prêts à l'emploi (matin, soir, devoirs) |
 | POST / GET / PUT / DELETE | `/v1/routines[/{id}]` | créer (avec `membreId`) / détail / modifier (étapes remplacées, une étape gardée par son id garde ses coches) / supprimer |
 | PUT | `/v1/routines/{id}/etapes/ordre` | réordonner : ids de toutes les étapes, dans le nouvel ordre |
 | POST | `/v1/routines/{id}/runs/{date}/etapes/{stepId}/toggle` | cocher / décocher une étape (aujourd'hui seulement) |

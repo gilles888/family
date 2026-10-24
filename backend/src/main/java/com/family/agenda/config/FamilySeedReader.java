@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Lit et valide le fichier famille. Toutes les erreurs sont rassemblées dans un seul message (« membres[2].couleur :
@@ -87,7 +88,7 @@ public class FamilySeedReader {
                 }
                 for (String modele : m.routines().modeles() == null ? List.<String>of() : m.routines().modeles()) {
                     if (RoutineTemplates.find(modele).isEmpty()) {
-                        errors.add(at + ".routines.modeles : modèle « %s » inconnu (attendu : matin, soir)".formatted(modele));
+                        errors.add(at + ".routines.modeles : modèle « %s » inconnu (attendu : %s)".formatted(modele, RoutineTemplates.ALL.stream().map(RoutineTemplates.Template::id).collect(Collectors.joining(", "))));
                     }
                 }
             }
