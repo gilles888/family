@@ -2,6 +2,8 @@ api.base.service.ts
 api.module.ts
 api/agenda.service.ts
 api/api.ts
+api/comptes.service.ts
+api/connexion.service.ts
 api/courses.service.ts
 api/garde-manger.service.ts
 api/ingredients.service.ts
@@ -14,12 +16,17 @@ api/routines.service.ts
 configuration.ts
 encoder.ts
 index.ts
+model/account-create-request.ts
+model/account-dto.ts
+model/account-update-request.ts
 model/agenda-entry-dto.ts
 model/agenda-entry-status-request.ts
 model/agenda-generation-summary-dto.ts
 model/family-member-dto.ts
 model/family-member-request.ts
 model/ingredient-dto.ts
+model/login-request.ts
+model/me-dto.ts
 model/meal-dto.ts
 model/meal-request.ts
 model/meteo-dto.ts
@@ -28,6 +35,8 @@ model/models.ts
 model/month-summary-dto.ts
 model/pantry-item-dto.ts
 model/pantry-item-request.ts
+model/password-change-request.ts
+model/password-reset-request.ts
 model/recipe-dto.ts
 model/recipe-ingredient-dto.ts
 model/recipe-ingredient-request.ts

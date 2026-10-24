@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>
+  @if (data.account) {
+    <ng-container i18n="@@accounts.editTitle">Modifier le compte</ng-container>
+  } @else {
+    <ng-container i18n="@@accounts.createTitle">Nouveau compte</ng-container>
+  }
+</h2>
+<form [formGroup]="form" (ngSubmit)="save()" id="account-form">
+  <mat-dialog-content class="content">
+    <mat-form-field>
+      <mat-label i18n="@@login.username">Identifiant</mat-label>
+      <input matInput formControlName="identifiant" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="50" required />
+      <mat-hint i18n="@@accounts.usernameHint">Lettres, chiffres, point, tiret : 3 caractères minimum.</mat-hint>
+      @if (form.controls.identifiant.invalid) {
+        <mat-error i18n="@@accounts.usernameInvalid">Identifiant invalide.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label i18n="@@accounts.role">Rôle</mat-label>
+      <mat-select formControlName="role">
+        @for (r of roles; track r) {
+          <mat-option [value]="r">{{ roleLabels[r] }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label i18n="@@accounts.member">Membre de la famille</mat-label>
+      <mat-select formControlName="membreId">
+        <mat-option [value]="null" i18n="@@accounts.noMember">Aucun</mat-option>
+        @for (m of data.members; track m.id) {
+          <mat-option [value]="m.id">{{ m.nom }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    @if (form.hasError('memberRequired')) {
+      <p class="error" i18n="@@accounts.memberRequired">Un compte enfant doit être lié à un membre : ce sont ses routines qu'il coche.</p>
+    }
+
+    @if (!data.account) {
+      <mat-form-field>
+        <mat-label i18n="@@accounts.initialPassword">Mot de passe initial</mat-label>
+        <input matInput formControlName="motDePasse" autocomplete="new-password" spellcheck="false" />
+        <button type="button" matIconSuffix matIconButton (click)="generate()" i18n-aria-label="@@accounts.generate" aria-label="Générer">
+          <mat-icon>casino</mat-icon>
+        </button>
+        <mat-hint i18n="@@accounts.initialPasswordHint">Facultatif ({{ minLength }} caractères minimum), à changer à la première connexion. Vide : compte inactif.</mat-hint>
+        @if (form.controls.motDePasse.hasError('minlength')) {
+          <mat-error i18n="@@password.tooShort">{{ minLength }} caractères minimum.</mat-error>
+        }
+      </mat-form-field>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button type="button" matButton mat-dialog-close i18n="@@common.cancel">Annuler</button>
+    <button type="submit" matButton="filled" [disabled]="saving()" i18n="@@common.save">Enregistrer</button>
+  </mat-dialog-actions>
+</form>

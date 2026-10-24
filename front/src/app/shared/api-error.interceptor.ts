@@ -11,6 +11,8 @@ export function apiErrorMessage(error: HttpErrorResponse): string {
   switch (true) {
     case error.status === 0:
       return $localize`:@@error.network:Impossible de joindre le serveur. Vérifiez votre connexion.`;
+    case error.status === 403:
+      return $localize`:@@error.forbidden:Action non autorisée.`;
     case error.status === 400:
       return $localize`:@@error.badRequest:Les données envoyées sont invalides. Vérifiez le formulaire.`;
     case error.status === 404:
@@ -24,12 +26,17 @@ export function apiErrorMessage(error: HttpErrorResponse): string {
   }
 }
 
+/** 401 et mot de passe à changer : authInterceptor redirige, sans message. */
+function handledByAuth(error: HttpErrorResponse): boolean {
+  return error.status === 401 || (error.status === 403 && error.error?.code === 'MOT_DE_PASSE_A_CHANGER');
+}
+
 /** Affiche toute erreur d'API dans un snack-bar, puis la relance pour que l'appelant puisse arrêter ses indicateurs de chargement. */
 export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const notifications = inject(NotificationService);
   return next(req).pipe(
     catchError((error: unknown) => {
-      if (error instanceof HttpErrorResponse && !req.context.get(SKIP_ERROR_NOTIFICATION)) {
+      if (error instanceof HttpErrorResponse && !req.context.get(SKIP_ERROR_NOTIFICATION) && !handledByAuth(error)) {
         notifications.error(apiErrorMessage(error));
       }
       return throwError(() => error);

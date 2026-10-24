@@ -2,7 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { HttpContext } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { MealDTO, RecettesService, RecipeSheetDTO } from '../api-client';
+import { MealDTO, MeDTO, RecettesService, RecipeSheetDTO } from '../api-client';
+import { provideFakeAuth } from '../auth/testing';
 import { SKIP_ERROR_NOTIFICATION } from '../shared/api-error.interceptor';
 import { RecipeSheetDialog, RecipeSheetDialogData } from './recipe-sheet-dialog';
 
@@ -16,13 +17,14 @@ const fiche = (portions: number): RecipeSheetDTO => ({
   ingredients: [{ ingredientId: 1, nom: 'Farine', quantite: (250 * portions) / 4, unite: 'G' }],
 });
 
-async function render(data: RecipeSheetDialogData) {
+async function render(data: RecipeSheetDialogData, role: MeDTO.RoleEnum = 'PARENT') {
   const getFicheRecette = vi.fn((_id: number, portions?: number) => of(fiche(portions ?? 4)));
   TestBed.configureTestingModule({
     providers: [
       { provide: RecettesService, useValue: { getFicheRecette } },
       { provide: MAT_DIALOG_DATA, useValue: data },
       { provide: MatDialogRef, useValue: { close: vi.fn() } },
+      provideFakeAuth(role),
     ],
   });
   const fixture = TestBed.createComponent(RecipeSheetDialog);
@@ -54,6 +56,14 @@ describe('RecipeSheetDialog', () => {
 
     expect(getFicheRecette.mock.calls.at(-1)![1]).toBe(5);
     expect(el.querySelector('.count')!.textContent).toContain('5');
+    expect(el.textContent).not.toContain('Modifier le repas');
+  });
+
+  it('ne propose pas de modifier le repas à un enfant', async () => {
+    const meal: MealDTO = { id: 3, recetteId: 1, portions: 6, titre: 'Crêpes' };
+    const { el } = await render({ recipeId: 1, portions: 6, meal }, 'ENFANT');
+
+    expect(el.querySelector('.ingredients li')!.textContent).toContain('375');
     expect(el.textContent).not.toContain('Modifier le repas');
   });
 });

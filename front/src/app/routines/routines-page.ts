@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, linkedSignal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
@@ -14,6 +14,8 @@ import { RoutineBoard } from './routine-board';
 import { RoutineHistory } from './routine-history';
 import { SoundService } from '../shared/sound.service';
 import { currentRoutine, routinesOfDay, toggledRun } from './routine-logic';
+import { AuthService } from '../auth/auth.service';
+import { ParentOnly } from '../auth/parent-only.directive';
 
 /**
  * Écran enfant : on touche son personnage, puis on coche les étapes de sa routine du moment (matin le matin, soir
@@ -21,7 +23,7 @@ import { currentRoutine, routinesOfDay, toggledRun } from './routine-logic';
  */
 @Component({
   selector: 'app-routines-page',
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, RoutineBoard, RoutineHistory],
+  imports: [RouterLink, ParentOnly, MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, RoutineBoard, RoutineHistory],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[class.night]': "selected()?.theme === 'NIGHT'" },
   templateUrl: './routines-page.html',
@@ -34,6 +36,7 @@ export class RoutinesPage {
   private readonly route = inject(ActivatedRoute);
   private readonly dialog = inject(MatDialog);
   protected readonly sound = inject(SoundService);
+  protected readonly auth = inject(AuthService);
 
   protected readonly params = toSignal(this.route.queryParamMap.pipe(map((p) => ({ membre: Number(p.get('membre')) || null, routine: Number(p.get('routine')) || null }))), {
     initialValue: { membre: null, routine: null },
@@ -64,6 +67,16 @@ export class RoutinesPage {
 
   /** Routines finies aujourd'hui : l'historique se recharge quand une routine se termine. */
   protected readonly finishedToday = computed(() => this.ofDay().filter((r) => r.etat?.terminee).length);
+
+  constructor() {
+    // Enfant : directement ses routines (le backend refuse celles des autres membres)
+    effect(() => {
+      const own = this.auth.isChild() ? this.auth.user()?.membreId : null;
+      if (own != null && this.params().membre !== own) {
+        void this.router.navigate([], { queryParams: { membre: own }, replaceUrl: true });
+      }
+    });
+  }
 
   /** Numéro de la dernière coche envoyée, par routine : une réponse lente ne défait pas un tap plus récent. */
   private readonly requests = new Map<number, number>();

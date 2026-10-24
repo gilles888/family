@@ -59,7 +59,7 @@
               >
                 {{ meal.titre }}
               </button>
-            } @else {
+            } @else if (auth.isParent()) {
               <button
                 type="button"
                 class="cell empty"

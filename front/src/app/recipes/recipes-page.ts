@@ -13,11 +13,12 @@ import { ConfirmDialog } from '../shared/confirm-dialog';
 import { NotificationService } from '../shared/notification.service';
 import { RecipeDialog, RecipeDialogData } from './recipe-dialog';
 import { RecipeSheetDialog, RecipeSheetDialogData } from './recipe-sheet-dialog';
+import { ParentOnly } from '../auth/parent-only.directive';
 
 /** Recettes types de la famille : recherche, ajout, modification, suppression. */
 @Component({
   selector: 'app-recipes-page',
-  imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatProgressBarModule],
+  imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatProgressBarModule, ParentOnly],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './recipes-page.html',
   styleUrl: './recipes-page.scss',

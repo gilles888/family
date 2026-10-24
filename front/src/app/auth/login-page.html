@@ -1,0 +1,33 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <mat-icon class="logo">calendar_month</mat-icon>
+  <h1 i18n="@@login.title">Connexion</h1>
+
+  <mat-form-field>
+    <mat-label i18n="@@login.username">Identifiant</mat-label>
+    <input matInput formControlName="identifiant" autocomplete="username" autocapitalize="none" spellcheck="false" required />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label i18n="@@login.password">Mot de passe</mat-label>
+    <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="motDePasse" autocomplete="current-password" required />
+    <button
+      type="button"
+      matIconSuffix
+      matIconButton
+      (click)="hidePassword.set(!hidePassword())"
+      [attr.aria-pressed]="!hidePassword()"
+      i18n-aria-label="@@login.showPassword"
+      aria-label="Afficher le mot de passe"
+    >
+      <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-checkbox formControlName="resterConnecte" i18n="@@login.rememberMe">Rester connecté (30 jours sur cet appareil)</mat-checkbox>
+
+  @if (error(); as message) {
+    <p class="error" role="alert">{{ message }}</p>
+  }
+
+  <button matButton="filled" type="submit" [disabled]="submitting()" i18n="@@login.submit">Se connecter</button>
+</form>

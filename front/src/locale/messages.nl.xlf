@@ -4094,6 +4094,523 @@
           <context context-type="linenumber">49,51</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="accounts.editTitle" datatype="html">
+        <source>Modifier le compte</source>
+        <target>Account wijzigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.createTitle" datatype="html">
+        <source>Nouveau compte</source>
+        <target>Nieuw account</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">5,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.username" datatype="html">
+        <source>Identifiant</source>
+        <target>Gebruikersnaam</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.usernameHint" datatype="html">
+        <source>Lettres, chiffres, point, tiret : 3 caractères minimum.</source>
+        <target>Letters, cijfers, punt, streepje: minstens 3 tekens.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.usernameInvalid" datatype="html">
+        <source>Identifiant invalide.</source>
+        <target>Ongeldige gebruikersnaam.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.role" datatype="html">
+        <source>Rôle</source>
+        <target>Rol</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.member" datatype="html">
+        <source>Membre de la famille</source>
+        <target>Gezinslid</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.noMember" datatype="html">
+        <source>Aucun</source>
+        <target>Geen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.memberRequired" datatype="html">
+        <source>Un compte enfant doit être lié à un membre : ce sont ses routines qu&apos;il coche.</source>
+        <target>Een kinderaccount moet aan een gezinslid gekoppeld zijn: het vinkt diens routines af.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">38,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.initialPassword" datatype="html">
+        <source>Mot de passe initial</source>
+        <target>Eerste wachtwoord</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.generate" datatype="html">
+        <source>Générer</source>
+        <target>Genereren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/password-reset-dialog.ts</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.initialPasswordHint" datatype="html">
+        <source>Facultatif (<x id="INTERPOLATION" equiv-text="{{ minLength }}"/> caractères minimum), à changer à la première connexion. Vide : compte inactif.</source>
+        <target>Optioneel (minstens <x id="INTERPOLATION" equiv-text="{{ minLength }}"/> tekens), te wijzigen bij de eerste aanmelding. Leeg: account inactief.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.tooShort" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ minLength }}"/> caractères minimum.</source>
+        <target>Minstens <x id="INTERPOLATION" equiv-text="{{ minLength }}"/> tekens.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.html</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/password-reset-dialog.ts</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.saved" datatype="html">
+        <source>Compte « <x id="name" equiv-text="account.identifiant"/> » enregistré.</source>
+        <target>Account « <x id="name" equiv-text="account.identifiant"/> » opgeslagen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.created" datatype="html">
+        <source>Compte « <x id="name" equiv-text="account.identifiant"/> » créé.</source>
+        <target>Account « <x id="name" equiv-text="account.identifiant"/> » aangemaakt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-dialog.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.role.parent" datatype="html">
+        <source>Parent</source>
+        <target>Ouder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-labels.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="account.role.child" datatype="html">
+        <source>Enfant</source>
+        <target>Kind</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/account-labels.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.title" datatype="html">
+        <source>Comptes</source>
+        <target>Accounts</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.create" datatype="html">
+        <source>Nouveau compte</source>
+        <target>Nieuw account</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">5,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.intro" datatype="html">
+        <source> Chaque personne qui utilise l&apos;agenda a son compte. Un compte enfant ne peut que consulter l&apos;agenda et les repas, et cocher ses propres routines.
+</source>
+        <target>Iedereen die de agenda gebruikt, heeft een eigen account. Een kinderaccount kan alleen de agenda en de maaltijden bekijken en de eigen routines afvinken.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">9,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.loadError" datatype="html">
+        <source>Impossible de charger les comptes.</source>
+        <target>De accounts kunnen niet worden geladen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.you" datatype="html">
+        <source>(vous)</source>
+        <target>(jij)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">34,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.noPassword" datatype="html">
+        <source>Sans mot de passe</source>
+        <target>Geen wachtwoord</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.inactive" datatype="html">
+        <source>Désactivé</source>
+        <target>Uitgeschakeld</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">47,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.locked" datatype="html">
+        <source>Bloqué jusqu&apos;à <x id="INTERPOLATION" equiv-text="{{ until | date: &apos;shortTime&apos; }}"/></source>
+        <target>Geblokkeerd tot <x id="INTERPOLATION" equiv-text="{{ until | date: &apos;shortTime&apos; }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.mustChange" datatype="html">
+        <source>Mot de passe à changer</source>
+        <target>Wachtwoord te wijzigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">53,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.lastLogin" datatype="html">
+        <source>Dernière connexion : <x id="INTERPOLATION" equiv-text="{{ a.derniereConnexion | date: &apos;short&apos; }}"/></source>
+        <target>Laatste aanmelding: <x id="INTERPOLATION" equiv-text="{{ a.derniereConnexion | date: &apos;short&apos; }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">56,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.activeToggle" datatype="html">
+        <source>Compte actif</source>
+        <target>Account actief</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.setPassword" datatype="html">
+        <source>Définir un mot de passe</source>
+        <target>Wachtwoord instellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.html</context>
+          <context context-type="linenumber">77,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.enabled" datatype="html">
+        <source>Compte « <x id="name" equiv-text="account.identifiant"/> » activé.</source>
+        <target>Account « <x id="name" equiv-text="account.identifiant"/> » ingeschakeld.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.disabled" datatype="html">
+        <source>Compte « <x id="name" equiv-text="account.identifiant"/> » désactivé : ses sessions sont fermées.</source>
+        <target>Account « <x id="name" equiv-text="account.identifiant"/> » uitgeschakeld: de sessies zijn gesloten.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/accounts-page.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.resetTitle" datatype="html">
+        <source>Mot de passe de <x id="INTERPOLATION" equiv-text="{{ data.account.identifiant }}"/></source>
+        <target>Wachtwoord van <x id="INTERPOLATION" equiv-text="{{ data.account.identifiant }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/password-reset-dialog.ts</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.resetIntro" datatype="html">
+        <source>Il devra être changé à la prochaine connexion. Les appareils connectés à ce compte sont déconnectés.</source>
+        <target>Het moet bij de volgende aanmelding worden gewijzigd. Apparaten die met dit account verbonden zijn, worden afgemeld.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/password-reset-dialog.ts</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.new" datatype="html">
+        <source>Nouveau mot de passe</source>
+        <target>Nieuw wachtwoord</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/password-reset-dialog.ts</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accounts.passwordSet" datatype="html">
+        <source>Mot de passe de « <x id="name" equiv-text="this.data.account.identifiant"/> » défini.</source>
+        <target>Wachtwoord van « <x id="name" equiv-text="this.data.account.identifiant"/> » ingesteld.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/accounts/password-reset-dialog.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menu.account" datatype="html">
+        <source>Mon compte</source>
+        <target>Mijn account</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menu.changePassword" datatype="html">
+        <source>Changer mon mot de passe</source>
+        <target>Mijn wachtwoord wijzigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">56,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menu.accounts" datatype="html">
+        <source>Comptes</source>
+        <target>Accounts</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">61,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menu.logout" datatype="html">
+        <source>Se déconnecter</source>
+        <target>Afmelden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">66,68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">39,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.title" datatype="html">
+        <source>Connexion</source>
+        <target>Aanmelden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.html</context>
+          <context context-type="linenumber">3,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.password" datatype="html">
+        <source>Mot de passe</source>
+        <target>Wachtwoord</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.showPassword" datatype="html">
+        <source>Afficher le mot de passe</source>
+        <target>Wachtwoord tonen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.html</context>
+          <context context-type="linenumber">20,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.rememberMe" datatype="html">
+        <source>Rester connecté (30 jours sur cet appareil)</source>
+        <target>Aangemeld blijven (30 dagen op dit toestel)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.html</context>
+          <context context-type="linenumber">26,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.submit" datatype="html">
+        <source>Se connecter</source>
+        <target>Aanmelden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.html</context>
+          <context context-type="linenumber">32,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.unknown" datatype="html">
+        <source>Connexion impossible. Réessayez.</source>
+        <target>Aanmelden is niet gelukt. Probeer opnieuw.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.locked" datatype="html">
+        <source>Trop de tentatives. Réessayez après <x id="time" equiv-text="time"/>.</source>
+        <target>Te veel pogingen. Probeer opnieuw na <x id="time" equiv-text="time"/>.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.lockedNoTime" datatype="html">
+        <source>Trop de tentatives. Réessayez dans quelques minutes.</source>
+        <target>Te veel pogingen. Probeer over enkele minuten opnieuw.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.disabled" datatype="html">
+        <source>Ce compte est désactivé. Demandez à un parent.</source>
+        <target>Dit account is uitgeschakeld. Vraag het aan een ouder.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.invalid" datatype="html">
+        <source>Identifiant ou mot de passe incorrect.</source>
+        <target>Gebruikersnaam of wachtwoord onjuist.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.error.expired" datatype="html">
+        <source>La page a expiré. Rechargez-la puis réessayez.</source>
+        <target>De pagina is verlopen. Herlaad ze en probeer opnieuw.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login-page.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.title" datatype="html">
+        <source>Changer mon mot de passe</source>
+        <target>Mijn wachtwoord wijzigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.required" datatype="html">
+        <source>Bienvenue ! Choisissez votre propre mot de passe pour continuer.</source>
+        <target>Welkom! Kies je eigen wachtwoord om verder te gaan.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">5,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.current" datatype="html">
+        <source>Mot de passe actuel</source>
+        <target>Huidig wachtwoord</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.hint" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ minLength }}"/> caractères minimum. Une phrase de quelques mots est facile à retenir.</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ minLength }}"/> tekens minimum. Een zin van enkele woorden onthoud je makkelijk.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.confirm" datatype="html">
+        <source>Confirmer le nouveau mot de passe</source>
+        <target>Nieuw wachtwoord bevestigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.mismatch" datatype="html">
+        <source>Les deux nouveaux mots de passe sont différents.</source>
+        <target>De twee nieuwe wachtwoorden zijn verschillend.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">30,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.submit" datatype="html">
+        <source>Enregistrer</source>
+        <target>Opslaan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.changed" datatype="html">
+        <source>Mot de passe changé.</source>
+        <target>Wachtwoord gewijzigd.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.error.invalid" datatype="html">
+        <source>Mot de passe actuel incorrect, ou nouveau mot de passe identique à l&apos;actuel.</source>
+        <target>Huidig wachtwoord onjuist, of nieuw wachtwoord gelijk aan het huidige.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="password.error.unknown" datatype="html">
+        <source>Le mot de passe n&apos;a pas pu être changé. Réessayez.</source>
+        <target>Het wachtwoord kon niet worden gewijzigd. Probeer opnieuw.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/password-page.ts</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="error.forbidden" datatype="html">
+        <source>Action non autorisée.</source>
+        <target>Actie niet toegestaan.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/api-error.interceptor.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

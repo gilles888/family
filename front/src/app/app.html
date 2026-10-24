@@ -4,23 +4,27 @@
     <span i18n="@@app.title">Agenda familial</span>
   </a>
 
-  <nav>
-    <a matButton routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      <mat-icon class="nav-icon">event</mat-icon><span class="nav-label" i18n="@@nav.agenda">Agenda</span>
-    </a>
-    <a matButton routerLink="/routines" routerLinkActive="active">
-      <mat-icon class="nav-icon">stars</mat-icon><span class="nav-label" i18n="@@nav.routines">Routines</span>
-    </a>
-    <a matButton routerLink="/recettes" routerLinkActive="active">
-      <mat-icon class="nav-icon">menu_book</mat-icon><span class="nav-label" i18n="@@nav.recipes">Recettes</span>
-    </a>
-    <a matButton routerLink="/courses" routerLinkActive="active">
-      <mat-icon class="nav-icon">shopping_cart</mat-icon><span class="nav-label" i18n="@@nav.shopping">Courses</span>
-    </a>
-    <a matButton routerLink="/membres" routerLinkActive="active">
-      <mat-icon class="nav-icon">group</mat-icon><span class="nav-label" i18n="@@nav.members">Membres</span>
-    </a>
-  </nav>
+  @if (auth.isLoggedIn() && !auth.mustChangePassword()) {
+    <nav>
+      <a matButton routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon class="nav-icon">event</mat-icon><span class="nav-label" i18n="@@nav.agenda">Agenda</span>
+      </a>
+      <a matButton routerLink="/routines" routerLinkActive="active">
+        <mat-icon class="nav-icon">stars</mat-icon><span class="nav-label" i18n="@@nav.routines">Routines</span>
+      </a>
+      <a matButton routerLink="/recettes" routerLinkActive="active">
+        <mat-icon class="nav-icon">menu_book</mat-icon><span class="nav-label" i18n="@@nav.recipes">Recettes</span>
+      </a>
+      @if (auth.isParent()) {
+        <a matButton routerLink="/courses" routerLinkActive="active">
+          <mat-icon class="nav-icon">shopping_cart</mat-icon><span class="nav-label" i18n="@@nav.shopping">Courses</span>
+        </a>
+        <a matButton routerLink="/membres" routerLinkActive="active">
+          <mat-icon class="nav-icon">group</mat-icon><span class="nav-label" i18n="@@nav.members">Membres</span>
+        </a>
+      }
+    </nav>
+  }
 
   <span class="spacer"></span>
 
@@ -36,6 +40,33 @@
       <mat-button-toggle [value]="l.code" [attr.lang]="l.code" [title]="l.label">{{ l.code.toUpperCase() }}</mat-button-toggle>
     }
   </mat-button-toggle-group>
+
+  @if (auth.user(); as me) {
+    <button matButton class="account" [matMenuTriggerFor]="accountMenu" i18n-aria-label="@@menu.account" aria-label="Mon compte">
+      <mat-icon>account_circle</mat-icon>
+      <span class="account-name">{{ auth.displayName() }}</span>
+    </button>
+    <mat-menu #accountMenu="matMenu" xPosition="before">
+      <div class="menu-who" mat-menu-item disabled>
+        <span>{{ me.identifiant }}</span>
+        <span class="role">{{ me.role === 'PARENT' ? parentLabel : childLabel }}</span>
+      </div>
+      <a mat-menu-item routerLink="/mot-de-passe">
+        <mat-icon>key</mat-icon>
+        <span i18n="@@menu.changePassword">Changer mon mot de passe</span>
+      </a>
+      @if (auth.isParent() && !auth.mustChangePassword()) {
+        <a mat-menu-item routerLink="/comptes">
+          <mat-icon>manage_accounts</mat-icon>
+          <span i18n="@@menu.accounts">Comptes</span>
+        </a>
+      }
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span i18n="@@menu.logout">Se déconnecter</span>
+      </button>
+    </mat-menu>
+  }
 </mat-toolbar>
 
 <main>

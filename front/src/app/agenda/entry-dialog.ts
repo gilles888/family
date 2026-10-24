@@ -11,6 +11,7 @@ import { Avatar } from '../avatar/avatar';
 import { NotificationService } from '../shared/notification.service';
 import { contrastColor, entryColor } from '../shared/entry-utils';
 import { ENTRY_STATUSES, EntryStatus, STATUS_ICONS } from '../shared/labels';
+import { AuthService } from '../auth/auth.service';
 
 export interface EntryDialogData {
   entry: AgendaEntryDTO;
@@ -32,6 +33,8 @@ export class EntryDialog {
   private readonly ref = inject<MatDialogRef<EntryDialog, EntryDialogResult>>(MatDialogRef);
   private readonly agendaApi = inject(AgendaService);
   private readonly notifications = inject(NotificationService);
+  /** Enfant : lecture seule (le backend refuse de toute façon la modification). */
+  protected readonly auth = inject(AuthService);
 
   protected readonly statuses = ENTRY_STATUSES;
   protected readonly statusIcons = STATUS_ICONS;

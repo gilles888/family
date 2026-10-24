@@ -10,6 +10,7 @@ import { SKIP_ERROR_NOTIFICATION } from '../shared/api-error.interceptor';
 import { addDays, startOfDay, startOfWeek, toIsoDate } from '../shared/date-utils';
 import { MEAL_SLOTS, MealSlot, SLOT_LABELS, SLOT_SHORT_LABELS } from '../shared/labels';
 import { MealCell, MealDay, buildMealWeek } from './meal-week';
+import { AuthService } from '../auth/auth.service';
 
 /** Demande d'ajout d'un repas dans une case vide. */
 export interface MealSlotRequest {
@@ -31,6 +32,7 @@ export interface MealSlotRequest {
 })
 export class MealsWeekCard {
   private readonly repasApi = inject(RepasService);
+  protected readonly auth = inject(AuthService);
   private readonly locale = inject(LOCALE_ID);
 
   readonly addMeal = output<MealSlotRequest>();

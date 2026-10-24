@@ -20,6 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { enabledDashboardCards } from './dashboard-cards';
 import { MobilePanelService } from './mobile-panel.service';
+import { AuthService } from '../auth/auth.service';
 
 /** Espace laissé au-dessus d'une carte quand on défile jusqu'à elle (px). */
 const CARD_SCROLL_MARGIN = 12;
@@ -75,7 +76,8 @@ export class MobilePageComponent {
   private readonly heading = viewChild.required<ElementRef<HTMLElement>>('heading');
   private readonly tab = viewChild.required<ElementRef<HTMLElement>>('tab');
 
-  protected readonly cards = enabledDashboardCards();
+  private readonly auth = inject(AuthService);
+  protected readonly cards = computed(() => enabledDashboardCards(undefined, this.auth.isParent()));
   protected readonly openLabel = $localize`:@@mobile.open:Ouvrir le tableau de bord`;
   protected readonly closeLabel = $localize`:@@mobile.close:Fermer le tableau de bord`;
 

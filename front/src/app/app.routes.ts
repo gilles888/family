@@ -1,14 +1,42 @@
 import { Routes } from '@angular/router';
+import { authGuard, guestGuard, parentGuard, signedInGuard } from './auth/auth.guards';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', loadComponent: () => import('./agenda/agenda-page').then((m) => m.AgendaPage) },
+  { path: 'connexion', canActivate: [guestGuard], loadComponent: () => import('./auth/login-page').then((m) => m.LoginPage) },
   {
-    path: 'membres',
-    loadComponent: () => import('./family-members/family-members-page').then((m) => m.FamilyMembersPage),
+    path: 'mot-de-passe',
+    canActivate: [signedInGuard],
+    loadComponent: () => import('./auth/password-page').then((m) => m.PasswordPage),
   },
-  { path: 'routines/gerer', loadComponent: () => import('./routines/routines-manage-page').then((m) => m.RoutinesManagePage) },
-  { path: 'routines', loadComponent: () => import('./routines/routines-page').then((m) => m.RoutinesPage) },
-  { path: 'courses', loadComponent: () => import('./shopping/shopping-page').then((m) => m.ShoppingPage) },
-  { path: 'recettes', loadComponent: () => import('./recipes/recipes-page').then((m) => m.RecipesPage) },
+  {
+    // Tout le reste exige d'être connecté ; les pages de gestion, d'être parent
+    path: '',
+    canActivateChild: [authGuard],
+    children: [
+      { path: '', pathMatch: 'full', loadComponent: () => import('./agenda/agenda-page').then((m) => m.AgendaPage) },
+      {
+        path: 'membres',
+        canActivate: [parentGuard],
+        loadComponent: () => import('./family-members/family-members-page').then((m) => m.FamilyMembersPage),
+      },
+      {
+        path: 'routines/gerer',
+        canActivate: [parentGuard],
+        loadComponent: () => import('./routines/routines-manage-page').then((m) => m.RoutinesManagePage),
+      },
+      { path: 'routines', loadComponent: () => import('./routines/routines-page').then((m) => m.RoutinesPage) },
+      {
+        path: 'courses',
+        canActivate: [parentGuard],
+        loadComponent: () => import('./shopping/shopping-page').then((m) => m.ShoppingPage),
+      },
+      { path: 'recettes', loadComponent: () => import('./recipes/recipes-page').then((m) => m.RecipesPage) },
+      {
+        path: 'comptes',
+        canActivate: [parentGuard],
+        loadComponent: () => import('./accounts/accounts-page').then((m) => m.AccountsPage),
+      },
+    ],
+  },
   { path: '**', redirectTo: '' },
 ];

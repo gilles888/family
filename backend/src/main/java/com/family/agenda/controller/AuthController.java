@@ -12,6 +12,7 @@ import com.family.agenda.security.LoginService;
 import com.family.agenda.security.SecurityConfig;
 import com.family.agenda.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,7 +64,8 @@ public class AuthController {
                     de 30 jours. 5 échecs consécutifs bloquent la connexion 15 minutes. Un nouveau jeton CSRF \
                     (cookie XSRF-TOKEN) est émis.""")
     @ApiResponse(responseCode = "200", description = "Connecté")
-    @ApiResponse(responseCode = "401", description = "code : IDENTIFIANTS_INVALIDES, COMPTE_BLOQUE (bloqueJusqua), COMPTE_DESACTIVE")
+    @ApiResponse(responseCode = "401", description = "code : IDENTIFIANTS_INVALIDES, COMPTE_BLOQUE (bloqueJusqua), COMPTE_DESACTIVE",
+            content = @Content)
     public MeDTO login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         AccountPrincipal principal = loginService.login(request.identifiant(), request.motDePasse(), httpRequest.getRemoteAddr());
         principal.eraseCredentials();
@@ -91,7 +93,8 @@ public class AuthController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         rememberMeServices.logout(request, response, authentication);
         new SecurityContextLogoutHandler().logout(request, response, authentication);
-        csrfRepository.saveToken(null, request, response);
+        // Nouveau jeton CSRF (pas seulement supprimé) : la connexion suivante, depuis la même page, doit passer
+        csrfRepository.saveToken(csrfRepository.generateToken(request), request, response);
     }
 
     @GetMapping("/me")
@@ -107,7 +110,9 @@ public class AuthController {
     @PostMapping(path = "/password", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(operationId = "changePassword", summary = "Changer son mot de passe",
             description = "L'ancien mot de passe est exigé. Les autres sessions et les jetons « rester connecté » sont révoqués ; la session courante reste ouverte.")
-    @ApiResponse(responseCode = "400", description = "Ancien mot de passe incorrect, ou nouveau trop court ou identique")
+    @ApiResponse(responseCode = "200", description = "Mot de passe changé")
+    @ApiResponse(responseCode = "400", description = "Ancien mot de passe incorrect, ou nouveau trop court ou identique",
+            content = @Content)
     public MeDTO changePassword(@AuthenticationPrincipal AccountPrincipal principal, @Valid @RequestBody PasswordChangeRequest request,
                                 HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
         UserAccount account = accountService.changeOwnPassword(principal.id(), request.ancienMotDePasse(), request.nouveauMotDePasse());

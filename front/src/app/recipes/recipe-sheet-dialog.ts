@@ -9,6 +9,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MealDTO, RecettesService, RecipeSheetDTO } from '../api-client';
 import { SKIP_ERROR_NOTIFICATION } from '../shared/api-error.interceptor';
 import { EnumLabelPipe } from '../shared/enum-label.pipe';
+import { ParentOnly } from '../auth/parent-only.directive';
 
 export interface RecipeSheetDialogData {
   recipeId: number;
@@ -27,7 +28,7 @@ const MAX_PORTIONS = 100;
 /** Fiche recette : ingrédients recalculés au prorata des portions, temps, instructions. */
 @Component({
   selector: 'app-recipe-sheet-dialog',
-  imports: [DecimalPipe, MatButtonModule, MatDialogModule, MatIconModule, MatProgressBarModule, EnumLabelPipe],
+  imports: [DecimalPipe, MatButtonModule, MatDialogModule, MatIconModule, MatProgressBarModule, EnumLabelPipe, ParentOnly],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './recipe-sheet-dialog.html',
   styleUrl: './recipe-sheet-dialog.scss',

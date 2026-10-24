@@ -14,4 +14,6 @@ export interface DashboardCard {
   order: number;
   /** `false` masque la carte sans la retirer du registre. */
   enabled?: boolean;
+  /** Carte réservée aux comptes parents (ses données sont refusées à un enfant). */
+  parentOnly?: boolean;
 }

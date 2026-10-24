@@ -46,13 +46,13 @@
 
   <span class="spacer"></span>
 
-  @if (mealDisplay.mode() === 'agenda') {
+  @if (mealDisplay.mode() === 'agenda' && auth.isParent()) {
     <button matButton="outlined" (click)="newMealForDay()">
       <mat-icon>restaurant</mat-icon>
       <ng-container i18n="@@agenda.newMeal">Repas</ng-container>
     </button>
   }
-  <button matButton="filled" (click)="newReminder()">
+  <button *appParentOnly matButton="filled" (click)="newReminder()">
     <mat-icon>add</mat-icon>
     <ng-container i18n="@@agenda.newReminder">Nouveau rappel</ng-container>
   </button>

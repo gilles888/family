@@ -33,8 +33,16 @@
             "description": "Consultation de l'agenda : les AgendaEntry sont persist\u00e9es, pas calcul\u00e9es \u00e0 la vol\u00e9e"
         },
         {
+            "name": "Comptes",
+            "description": "Comptes de connexion de la famille (parents seulement)"
+        },
+        {
             "name": "Membres",
             "description": "Membres de la famille"
+        },
+        {
+            "name": "Connexion",
+            "description": "Connexion, d\u00e9connexion, utilisateur connect\u00e9, changement de mot de passe"
         },
         {
             "name": "Routines",
@@ -814,6 +822,72 @@
                 }
             }
         },
+        "/v1/comptes/{id}": {
+            "get": {
+                "tags": [
+                    "Comptes"
+                ],
+                "summary": "D\u00e9tail d'un compte",
+                "operationId": "getCompte",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Compte introuvable"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Comptes"
+                ],
+                "summary": "Modifier un compte (r\u00f4le, membre li\u00e9, activation)",
+                "description": "D\u00e9sactiver un compte ferme ses sessions et r\u00e9voque \u00ab rester connect\u00e9 \u00bb. Il reste toujours au moins un parent actif.",
+                "operationId": "updateCompte",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AccountUpdateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v1/routines": {
             "post": {
                 "tags": [
@@ -1413,6 +1487,191 @@
                 }
             }
         },
+        "/v1/comptes": {
+            "get": {
+                "tags": [
+                    "Comptes"
+                ],
+                "summary": "Lister les comptes",
+                "operationId": "listComptes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AccountDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Comptes"
+                ],
+                "summary": "Cr\u00e9er un compte",
+                "description": "Avec un mot de passe : actif, \u00e0 changer \u00e0 la premi\u00e8re connexion. Sans : inactif jusqu'\u00e0 ce qu'un mot de passe soit d\u00e9fini.",
+                "operationId": "createCompte",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AccountCreateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Compte cr\u00e9\u00e9",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountDTO"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Identifiant d\u00e9j\u00e0 utilis\u00e9"
+                    }
+                }
+            }
+        },
+        "/v1/comptes/{id}/mot-de-passe": {
+            "post": {
+                "tags": [
+                    "Comptes"
+                ],
+                "summary": "D\u00e9finir un nouveau mot de passe",
+                "description": "\u00c0 changer \u00e0 la prochaine connexion ; sessions et \u00ab rester connect\u00e9 \u00bb r\u00e9voqu\u00e9s ; compte d\u00e9bloqu\u00e9.",
+                "operationId": "resetMotDePasseCompte",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/auth/password": {
+            "post": {
+                "tags": [
+                    "Connexion"
+                ],
+                "summary": "Changer son mot de passe",
+                "description": "L'ancien mot de passe est exig\u00e9. Les autres sessions et les jetons \u00ab rester connect\u00e9 \u00bb sont r\u00e9voqu\u00e9s ; la session courante reste ouverte.",
+                "operationId": "changePassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordChangeRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mot de passe chang\u00e9",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ancien mot de passe incorrect, ou nouveau trop court ou identique"
+                    }
+                }
+            }
+        },
+        "/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "Connexion"
+                ],
+                "summary": "Se d\u00e9connecter",
+                "description": "Ferme la session et r\u00e9voque les jetons \u00ab rester connect\u00e9 \u00bb du compte.",
+                "operationId": "logout",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Connexion"
+                ],
+                "summary": "Se connecter",
+                "description": "Ouvre une session (cookie HttpOnly) ; avec `resterConnecte`, ajoute un cookie \u00ab rester connect\u00e9 \u00bb de 30 jours. 5 \u00e9checs cons\u00e9cutifs bloquent la connexion 15 minutes. Un nouveau jeton CSRF (cookie XSRF-TOKEN) est \u00e9mis.",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Connect\u00e9",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeDTO"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "code : IDENTIFIANTS_INVALIDES, COMPTE_BLOQUE (bloqueJusqua), COMPTE_DESACTIVE"
+                    }
+                }
+            }
+        },
         "/v1/agenda/entries/{id}": {
             "patch": {
                 "tags": [
@@ -1755,6 +2014,27 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ShoppingListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/auth/me": {
+            "get": {
+                "tags": [
+                    "Connexion"
+                ],
+                "summary": "Utilisateur connect\u00e9 (401 si personne)",
+                "operationId": "getMe",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MeDTO"
                                 }
                             }
                         }
@@ -3212,6 +3492,99 @@
                     }
                 }
             },
+            "AccountUpdateRequest": {
+                "type": "object",
+                "description": "Modification d'un compte par un parent : r\u00f4le, membre li\u00e9, activation",
+                "properties": {
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "PARENT",
+                            "ENFANT"
+                        ],
+                        "example": "ENFANT"
+                    },
+                    "membreId": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int64",
+                        "example": 4
+                    },
+                    "actif": {
+                        "type": "boolean",
+                        "description": "Faux = d\u00e9sactiv\u00e9 : connexion refus\u00e9e, sessions et \u00ab rester connect\u00e9 \u00bb r\u00e9voqu\u00e9s"
+                    }
+                },
+                "required": [
+                    "actif",
+                    "role"
+                ]
+            },
+            "AccountDTO": {
+                "type": "object",
+                "description": "Compte de connexion (jamais de mot de passe ni d'empreinte)",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 3
+                    },
+                    "identifiant": {
+                        "type": "string",
+                        "example": "lea"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "PARENT",
+                            "ENFANT"
+                        ],
+                        "example": "ENFANT"
+                    },
+                    "membreId": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int64",
+                        "description": "Membre de la famille li\u00e9",
+                        "example": 4
+                    },
+                    "actif": {
+                        "type": "boolean",
+                        "description": "D\u00e9sactiv\u00e9 = connexion refus\u00e9e"
+                    },
+                    "motDePasseDefini": {
+                        "type": "boolean",
+                        "description": "Faux tant qu'un parent n'a pas d\u00e9fini de mot de passe"
+                    },
+                    "doitChangerMotDePasse": {
+                        "type": "boolean",
+                        "description": "Le mot de passe doit \u00eatre chang\u00e9 \u00e0 la prochaine connexion"
+                    },
+                    "bloqueJusqua": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time",
+                        "description": "Bloqu\u00e9 apr\u00e8s 5 \u00e9checs de connexion, jusqu'\u00e0 cette date"
+                    },
+                    "derniereConnexion": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "creeLe": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
             "RoutineFromTemplateRequest": {
                 "type": "object",
                 "description": "Copier un mod\u00e8le de routine chez un membre",
@@ -3333,6 +3706,148 @@
                         }
                     }
                 }
+            },
+            "AccountCreateRequest": {
+                "type": "object",
+                "description": "Cr\u00e9ation d'un compte par un parent",
+                "properties": {
+                    "identifiant": {
+                        "type": "string",
+                        "description": "3 \u00e0 50 caract\u00e8res : lettres, chiffres, point, tiret, soulign\u00e9 (insensible \u00e0 la casse)",
+                        "example": "lea",
+                        "maxLength": 50,
+                        "minLength": 0
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "PARENT",
+                            "ENFANT"
+                        ],
+                        "example": "ENFANT"
+                    },
+                    "membreId": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int64",
+                        "description": "Membre de la famille li\u00e9 (obligatoire pour un enfant)",
+                        "example": 4
+                    },
+                    "motDePasse": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Mot de passe initial (10 caract\u00e8res minimum), \u00e0 changer \u00e0 la premi\u00e8re connexion ; absent = compte inactif tant qu'un mot de passe n'est pas d\u00e9fini",
+                        "maxLength": 128,
+                        "minLength": 10
+                    }
+                },
+                "required": [
+                    "identifiant",
+                    "role"
+                ]
+            },
+            "PasswordResetRequest": {
+                "type": "object",
+                "description": "Nouveau mot de passe d\u00e9fini par un parent (\u00e0 changer \u00e0 la prochaine connexion)",
+                "properties": {
+                    "motDePasse": {
+                        "type": "string",
+                        "description": "10 caract\u00e8res minimum",
+                        "maxLength": 128,
+                        "minLength": 10
+                    }
+                },
+                "required": [
+                    "motDePasse"
+                ]
+            },
+            "PasswordChangeRequest": {
+                "type": "object",
+                "description": "Changement de son propre mot de passe",
+                "properties": {
+                    "ancienMotDePasse": {
+                        "type": "string",
+                        "maxLength": 128,
+                        "minLength": 0
+                    },
+                    "nouveauMotDePasse": {
+                        "type": "string",
+                        "description": "10 caract\u00e8res minimum",
+                        "maxLength": 128,
+                        "minLength": 10
+                    }
+                },
+                "required": [
+                    "ancienMotDePasse",
+                    "nouveauMotDePasse"
+                ]
+            },
+            "MeDTO": {
+                "type": "object",
+                "description": "Utilisateur connect\u00e9",
+                "properties": {
+                    "identifiant": {
+                        "type": "string",
+                        "example": "lea"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "PARENT",
+                            "ENFANT"
+                        ],
+                        "example": "ENFANT"
+                    },
+                    "membreId": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int64",
+                        "description": "Membre de la famille li\u00e9",
+                        "example": 4
+                    },
+                    "membreNom": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "example": "L\u00e9a"
+                    },
+                    "doitChangerMotDePasse": {
+                        "type": "boolean",
+                        "description": "Vrai : seul le changement de mot de passe est possible"
+                    }
+                }
+            },
+            "LoginRequest": {
+                "type": "object",
+                "description": "Connexion",
+                "properties": {
+                    "identifiant": {
+                        "type": "string",
+                        "example": "lea",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "motDePasse": {
+                        "type": "string",
+                        "maxLength": 128,
+                        "minLength": 0
+                    },
+                    "resterConnecte": {
+                        "type": "boolean",
+                        "description": "Rester connect\u00e9 30 jours sur cet appareil"
+                    }
+                },
+                "required": [
+                    "identifiant",
+                    "motDePasse"
+                ]
             },
             "ShoppingItemStatusRequest": {
                 "type": "object",

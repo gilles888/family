@@ -41,10 +41,13 @@ export const DASHBOARD_CARDS: readonly DashboardCard[] = [
     icon: 'shopping_cart',
     component: ShoppingCard,
     order: 40,
+    parentOnly: true,
   },
 ];
 
-/** Cartes actives, dans l'ordre d'affichage. */
-export function enabledDashboardCards(cards: readonly DashboardCard[] = DASHBOARD_CARDS): DashboardCard[] {
-  return cards.filter((card) => card.enabled !== false).sort((a, b) => a.order - b.order);
+/** Cartes actives, dans l'ordre d'affichage ; sans les cartes réservées aux parents pour un enfant. */
+export function enabledDashboardCards(cards: readonly DashboardCard[] = DASHBOARD_CARDS, isParent = true): DashboardCard[] {
+  return cards
+    .filter((card) => card.enabled !== false && (isParent || !card.parentOnly))
+    .sort((a, b) => a.order - b.order);
 }

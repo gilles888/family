@@ -74,3 +74,31 @@ nav a.active {
     padding: 0 10px;
   }
 }
+
+.account {
+  min-width: 0;
+}
+
+.account-name {
+  max-width: 12ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-who {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+
+  .role {
+    font: var(--mat-sys-body-small);
+  }
+}
+
+// Téléphone : l'icône du compte suffit
+@media (max-width: 599.98px) {
+  .account-name {
+    display: none;
+  }
+}

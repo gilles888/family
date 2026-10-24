@@ -38,6 +38,8 @@ import { AgendaCardsContext } from '../dashboard/agenda-cards-context';
 import { MobilePageComponent } from '../dashboard/mobile-page';
 import { MobilePanelService } from '../dashboard/mobile-panel.service';
 import { Avatar } from '../avatar/avatar';
+import { AuthService } from '../auth/auth.service';
+import { ParentOnly } from '../auth/parent-only.directive';
 
 export type Mode = 'day' | 'week' | 'month' | 'year';
 
@@ -67,6 +69,7 @@ type MemberFilter = 'all' | number;
     WeatherCard,
     MobilePageComponent,
     Avatar,
+    ParentOnly,
   ],
   // Les cartes de la page Mobile lisent les données de l'agenda et lui délèguent les dialogues
   providers: [{ provide: AgendaCardsContext, useExisting: forwardRef(() => AgendaPage) }],
@@ -83,6 +86,7 @@ export class AgendaPage implements AgendaCardsContext {
   private readonly notifications = inject(NotificationService);
   protected readonly mealDisplay = inject(MealDisplayPreference);
   private readonly mobilePanel = inject(MobilePanelService);
+  protected readonly auth = inject(AuthService);
 
   protected readonly mode = signal<Mode>('month');
   /** Jour de référence : la vue affichée (jour / semaine / mois / année) est celle qui le contient. */
@@ -330,13 +334,19 @@ export class AgendaPage implements AgendaCardsContext {
   }
 
   newMeal(request: MealSlotRequest): void {
+    if (!this.auth.isParent()) {
+      return;
+    }
     this.openMealDialog({ date: request.date, slot: request.slot, defaultPortions: this.defaultPortions() });
   }
 
   /** Repas lié à une recette : fiche recette (quantités pour ses portions), d'où l'on peut le modifier. Sinon : modification. */
   openMeal(meal: MealDTO): void {
     if (!meal.recetteId) {
-      this.openMealDialog({ meal });
+      // Enfant : lecture seule, rien de plus à montrer qu'un repas sans recette
+      if (this.auth.isParent()) {
+        this.openMealDialog({ meal });
+      }
       return;
     }
     this.dialog
@@ -346,7 +356,7 @@ export class AgendaPage implements AgendaCardsContext {
         maxWidth: '95vw',
       })
       .afterClosed()
-      .subscribe((result) => result === 'edit-meal' && this.openMealDialog({ meal }));
+      .subscribe((result) => result === 'edit-meal' && this.auth.isParent() && this.openMealDialog({ meal }));
   }
 
   private openMealDialog(data: MealDialogData): void {

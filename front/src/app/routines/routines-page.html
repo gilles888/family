@@ -11,7 +11,7 @@
       </button>
     }
   </div>
-  <div class="manage">
+  <div *appParentOnly class="manage">
     <a matButton="outlined" routerLink="/routines/gerer">
       <mat-icon>tune</mat-icon>
       <ng-container i18n="@@routines.manage">Gérer les routines</ng-container>
@@ -19,10 +19,12 @@
   </div>
 } @else {
   <div class="top">
-    <button matButton (click)="back()">
-      <mat-icon>arrow_back</mat-icon>
-      <ng-container i18n="@@routines.changePerson">Changer</ng-container>
-    </button>
+    @if (auth.isParent()) {
+      <button matButton (click)="back()">
+        <mat-icon>arrow_back</mat-icon>
+        <ng-container i18n="@@routines.changePerson">Changer</ng-container>
+      </button>
+    }
     <button
       matIconButton
       (click)="sound.toggle()"
@@ -39,6 +41,7 @@
       </span>
     }
     <a
+      *appParentOnly
       matIconButton
       class="settings"
       routerLink="/routines/gerer"

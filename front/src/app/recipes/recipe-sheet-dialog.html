@@ -90,7 +90,7 @@
 
 <mat-dialog-actions align="end">
   @if (data.meal) {
-    <button matButton [mat-dialog-close]="'edit-meal'">
+    <button *appParentOnly matButton [mat-dialog-close]="'edit-meal'">
       <mat-icon>edit</mat-icon>
       <ng-container i18n="@@sheet.editMeal">Modifier le repas</ng-container>
     </button>

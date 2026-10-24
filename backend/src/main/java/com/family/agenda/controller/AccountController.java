@@ -7,6 +7,7 @@ import com.family.agenda.dto.PasswordResetRequest;
 import com.family.agenda.security.AccountPrincipal;
 import com.family.agenda.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -45,7 +46,7 @@ public class AccountController {
 
     @GetMapping("/{id}")
     @Operation(operationId = "getCompte", summary = "Détail d'un compte")
-    @ApiResponse(responseCode = "404", description = "Compte introuvable")
+    @ApiResponse(responseCode = "404", description = "Compte introuvable", content = @Content)
     public AccountDTO get(@PathVariable Long id) {
         return service.findById(id);
     }
@@ -54,7 +55,7 @@ public class AccountController {
     @Operation(operationId = "createCompte", summary = "Créer un compte",
             description = "Avec un mot de passe : actif, à changer à la première connexion. Sans : inactif jusqu'à ce qu'un mot de passe soit défini.")
     @ApiResponse(responseCode = "201", description = "Compte créé")
-    @ApiResponse(responseCode = "409", description = "Identifiant déjà utilisé")
+    @ApiResponse(responseCode = "409", description = "Identifiant déjà utilisé", content = @Content)
     public ResponseEntity<AccountDTO> create(@Valid @RequestBody AccountCreateRequest request) {
         AccountDTO created = service.create(request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(created.id()).toUri();

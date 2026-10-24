@@ -1,0 +1,82 @@
+<div class="top">
+  <h1 i18n="@@accounts.title">Comptes</h1>
+  <button matButton="filled" (click)="create()">
+    <mat-icon>person_add</mat-icon>
+    <ng-container i18n="@@accounts.create">Nouveau compte</ng-container>
+  </button>
+</div>
+<p class="intro" i18n="@@accounts.intro">
+  Chaque personne qui utilise l'agenda a son compte. Un compte enfant ne peut que consulter l'agenda et les repas, et cocher ses
+  propres routines.
+</p>
+
+@if (accounts.isLoading() && !accounts.hasValue()) {
+  <mat-progress-bar mode="indeterminate" />
+} @else if (accounts.error()) {
+  <div class="empty">
+    <p i18n="@@accounts.loadError">Impossible de charger les comptes.</p>
+    <button matButton="outlined" (click)="accounts.reload()" i18n="@@common.retry">Réessayer</button>
+  </div>
+}
+
+<ul class="list">
+  @for (a of accounts.value() ?? []; track a.id) {
+    <li class="account" [class.inactive]="!a.actif">
+      @if (member(a); as m) {
+        <app-avatar [member]="m" [size]="44" />
+      } @else {
+        <mat-icon class="no-member">person</mat-icon>
+      }
+      <span class="info">
+        <span class="name">
+          {{ a.identifiant }}
+          @if (isMe(a)) {
+            <span class="me" i18n="@@accounts.you">(vous)</span>
+          }
+        </span>
+        <span class="meta">
+          {{ roleLabels[a.role!] }}
+          @if (member(a); as m) {
+            · {{ m.nom }}
+          }
+        </span>
+        <span class="status">
+          @if (!a.motDePasseDefini) {
+            <span class="badge warn" i18n="@@accounts.noPassword">Sans mot de passe</span>
+          } @else if (!a.actif) {
+            <span class="badge" i18n="@@accounts.inactive">Désactivé</span>
+          }
+          @if (lockedUntil(a); as until) {
+            <span class="badge warn" i18n="@@accounts.locked">Bloqué jusqu'à {{ until | date: 'shortTime' }}</span>
+          }
+          @if (a.doitChangerMotDePasse) {
+            <span class="badge" i18n="@@accounts.mustChange">Mot de passe à changer</span>
+          }
+          @if (a.derniereConnexion) {
+            <span class="last" i18n="@@accounts.lastLogin">Dernière connexion : {{ a.derniereConnexion | date: 'short' }}</span>
+          }
+        </span>
+      </span>
+      <mat-slide-toggle
+        [checked]="a.actif"
+        [disabled]="isMe(a) || !a.motDePasseDefini"
+        (change)="setActive(a, $event.checked)"
+        i18n-aria-label="@@accounts.activeToggle"
+        aria-label="Compte actif"
+      />
+      <button matIconButton [matMenuTriggerFor]="more" i18n-aria-label="@@routineManager.more" aria-label="Plus d'actions">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #more="matMenu">
+        <button mat-menu-item (click)="edit(a)">
+          <mat-icon>edit</mat-icon>
+          <span i18n="@@common.edit">Modifier</span>
+        </button>
+        <button mat-menu-item (click)="resetPassword(a)">
+          <mat-icon>key</mat-icon>
+          <span i18n="@@accounts.setPassword">Définir un mot de passe</span>
+        </button>
+      </mat-menu>
+    </li>
+  }
+</ul>
