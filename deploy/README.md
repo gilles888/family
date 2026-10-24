@@ -62,26 +62,26 @@ Deux modèles dans `deploy/host/`, rendus avec `envsubst` (seules les variables 
 # a. Port 80 seulement (défi ACME), le temps d'obtenir le certificat
 DOMAIN=famille.gilmotech.be envsubst '${DOMAIN}' < deploy/host/nginx-famille-bootstrap.conf > /tmp/famille.conf
 scp /tmp/famille.conf vps-claude:/tmp/famille.conf
-ssh -t vps-claude 'sudo mkdir -p /var/www/certbot \
-  && sudo cp /tmp/famille.conf /etc/nginx/sites-available/famille.gilmotech.be \
-  && sudo ln -sf /etc/nginx/sites-available/famille.gilmotech.be /etc/nginx/sites-enabled/ \
+ssh -t vps-claude 'sudo cp /tmp/famille.conf /etc/nginx/sites-available/zz-famille.gilmotech.be \
+  && sudo ln -s /etc/nginx/sites-available/zz-famille.gilmotech.be /etc/nginx/sites-enabled/ \
   && sudo nginx -t && sudo systemctl reload nginx'
 
 # b. Certificat (webroot : Certbot ne modifie pas la configuration nginx ; recharge nginx à chaque renouvellement)
-ssh -t vps-claude 'sudo certbot certonly --webroot -w /var/www/certbot -d famille.gilmotech.be \
+ssh -t vps-claude 'sudo certbot certonly --webroot -w /var/www/html -d famille.gilmotech.be \
   --deploy-hook "systemctl reload nginx"'
 
 # c. Configuration complète (HTTPS, en-têtes, limit_req, journal dédié)
 DOMAIN=famille.gilmotech.be HTTP_PORT=8090 envsubst '${DOMAIN} ${HTTP_PORT}' < deploy/host/nginx-famille.conf > /tmp/famille.conf
 scp /tmp/famille.conf vps-claude:/tmp/famille.conf
-ssh -t vps-claude 'sudo cp /tmp/famille.conf /etc/nginx/sites-available/famille.gilmotech.be \
+ssh -t vps-claude 'sudo cp /tmp/famille.conf /etc/nginx/sites-available/zz-famille.gilmotech.be \
   && sudo nginx -t && sudo systemctl reload nginx'
 ```
 
 **Toujours `sudo nginx -t` avant `reload`** : une erreur dans ce fichier empêcherait aussi le rechargement des autres sites. Ce que fait `nginx-famille.conf` :
 
 - port 80 : défi ACME et redirection 301 vers HTTPS, rien d'autre ;
-- port 443 : http2, TLS 1.2 et 1.3 (profil Mozilla « intermediate ») ;
+- port 443 : TLS 1.2 et 1.3 (`options-ssl-nginx.conf` de Certbot, comme les autres sites) ; **sans http2** : avec nginx 1.24, il s'activerait pour tous les sites de `0.0.0.0:443` ;
+- fichier préfixé `zz-` : chargé après les sites existants, il ne devient pas le site par défaut des ports 80 / 443 ;
 - en-têtes : HSTS 1 an (sans preload), `nosniff`, `X-Frame-Options DENY`, `Referrer-Policy same-origin`, `Permissions-Policy` (géolocalisation, caméra, micro), CSP (`script-src 'self'` ; styles en ligne et polices Google nécessaires au build Angular) ; `server_tokens off` ;
 - `limit_req` : 10 requêtes/s par IP (rafale 40) ; `POST /v1/auth/login` : 5/min (rafale 5), puis 429 ; corps limité à 1 Mo ;
 - **`X-Forwarded-For` écrasé** par l'IP du client vue par nginx (jamais `$proxy_add_x_forwarded_for`) ;
