@@ -1,0 +1,20 @@
+# Jails fail2ban de l'agenda familial. À installer dans /etc/fail2ban/jail.d/famille.local.
+# Les IP Tailscale (100.64.0.0/10) et locales ne sont jamais bannies.
+
+[famille-login]
+enabled  = true
+port     = http,https
+filter   = famille-login
+logpath  = /var/log/nginx/famille.access.log
+maxretry = 10
+findtime = 10m
+bantime  = 1h
+ignoreip = 127.0.0.1/8 ::1 100.64.0.0/10
+
+# Récidive : 5 bannissements (toutes jails) en 1 jour → 24 h
+[recidive]
+enabled  = true
+bantime  = 24h
+findtime = 1d
+maxretry = 5
+ignoreip = 127.0.0.1/8 ::1 100.64.0.0/10

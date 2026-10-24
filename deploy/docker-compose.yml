@@ -1,5 +1,7 @@
 # Production : PostgreSQL + backend (jar) + nginx (front fr/nl, relais /v1).
 # Installé et lancé par deploy.sh ; les valeurs viennent du fichier .env (voir .env.example).
+# Seul nginx publie un port, et sur 127.0.0.1 uniquement : Docker contourne UFW, un port publié sur 0.0.0.0
+# serait joignable depuis internet. HTTPS est assuré par le nginx de l'hôte (deploy/host/).
 name: family
 
 services:
@@ -20,7 +22,8 @@ services:
       retries: 20
 
   backend:
-    image: eclipse-temurin:25-jre
+    # Java 25 (comme java.version du pom), version exacte : voir deploy/README.md « Mettre à jour Java »
+    image: eclipse-temurin:25.0.4.1_1-jre-noble
     restart: unless-stopped
     depends_on:
       db:
@@ -32,10 +35,14 @@ services:
       DB_URL: jdbc:postgresql://db:5432/family_agenda
       DB_USERNAME: family
       DB_PASSWORD: ${DB_PASSWORD}
-      # true au premier déploiement seulement (base vide) : deploy.sh s'en charge
+      # Premier compte parent (base sans compte) ; vide après le premier déploiement
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      AGENDA_COOKIE_SECURE: ${AGENDA_COOKIE_SECURE:-true}
+      AGENDA_REMEMBER_ME_KEY: ${AGENDA_REMEMBER_ME_KEY:?AGENDA_REMEMBER_ME_KEY manquant dans .env}
+      # true tant que le premier déploiement n'a pas réussi : deploy.sh s'en charge
       AGENDA_SEED_ENABLED: ${AGENDA_SEED_ENABLED:-false}
       AGENDA_SEED_FICHIER: /config/famille.json
-      SWAGGER_UI_ENABLED: "false"
       APP_TIMEZONE: ${APP_TIMEZONE:-Europe/Brussels}
       TZ: ${APP_TIMEZONE:-Europe/Brussels}
       METEO_LIEU: ${METEO_LIEU:-Bruxelles}
@@ -54,14 +61,10 @@ services:
     depends_on:
       - backend
     ports:
-      - "${HTTP_PORT:-80}:80"
-    environment:
-      # « off » = sans mot de passe ; sinon nom de la zone protégée (APP_USER / APP_PASSWORD dans .env)
-      AUTH_BASIC: ${AUTH_BASIC:-off}
+      - "127.0.0.1:${HTTP_PORT:-8090}:80"
     volumes:
       - ./www:/usr/share/nginx/html:ro
       - ./nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
-      - ./auth:/etc/nginx/auth:ro
 
 volumes:
   pgdata:
