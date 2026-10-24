@@ -48,7 +48,11 @@ class FamilySeedReaderTest {
                     { "cle": "a", "nom": "B", "couleur": "#000000" } ],
                   "activites": [
                     { "titre": "Judo", "type": "KARATE", "membres": ["zz"], "jours": ["LUNDI"], "debut": "9h", "fin": "25:00" },
-                    { "titre": "Piano", "type": "AUTRE", "membres": ["a"], "jours": ["MONDAY"], "debut": "18:00", "fin": "17:00" } ] }""");
+                    { "titre": "Piano", "type": "AUTRE", "membres": ["a"], "jours": ["MONDAY"], "debut": "18:00", "fin": "17:00" } ],
+                  "comptes": [
+                    { "identifiant": "x", "role": "ADMIN", "membre": "zz", "motDePasseInitial": "court-123" },
+                    { "identifiant": "Lea", "role": "ENFANT" },
+                    { "identifiant": "lea", "role": "PARENT" } ] }""");
 
         assertThatThrownBy(() -> reader.read(f))
                 .isInstanceOf(IllegalStateException.class)
@@ -63,7 +67,15 @@ class FamilySeedReaderTest {
                 .hasMessageContaining("« LUNDI » n'est pas un jour")
                 .hasMessageContaining("activites[0].debut : « 9h » n'est pas une heure HH:mm")
                 .hasMessageContaining("activites[0].fin : « 25:00 » n'est pas une heure HH:mm")
-                .hasMessageContaining("activites[1].fin : 17:00 doit suivre le début (18:00)");
+                .hasMessageContaining("activites[1].fin : 17:00 doit suivre le début (18:00)")
+                .hasMessageContaining("comptes[0].identifiant : « x » invalide")
+                .hasMessageContaining("comptes[0].role : « ADMIN » inconnu")
+                .hasMessageContaining("comptes[0].membre : clé de membre « zz » inconnue")
+                .hasMessageContaining("comptes[0].motDePasseInitial : de 10 à 128 caractères")
+                .hasMessageContaining("comptes[1].membre : obligatoire pour un compte ENFANT")
+                .hasMessageContaining("comptes[2].identifiant : « lea » est déjà utilisé")
+                // jamais le mot de passe dans les messages
+                .satisfies(e -> assertThat(e.getMessage()).doesNotContain("court-123"));
     }
 
     @Test

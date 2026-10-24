@@ -1,6 +1,9 @@
 package com.family.agenda.config;
 
+import com.family.agenda.dto.AccountRules;
+import com.family.agenda.entity.AccountRole;
 import com.family.agenda.entity.ReminderType;
+import com.family.agenda.service.AccountService;
 import com.family.agenda.service.RoutineTemplates;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -144,6 +147,38 @@ public class FamilySeedReader {
             LocalTime fin = time(a.fin(), at + ".fin", false, errors);
             if (debut != null && fin != null && !fin.isAfter(debut)) {
                 errors.add(at + ".fin : %s doit suivre le début (%s)".formatted(a.fin(), a.debut()));
+            }
+        }
+        List<FamilySeed.Compte> comptes = seed.comptes() == null ? List.of() : seed.comptes();
+        Set<String> identifiants = new HashSet<>();
+        for (int i = 0; i < comptes.size(); i++) {
+            FamilySeed.Compte c = comptes.get(i);
+            String at = "comptes[%d]".formatted(i);
+            if (c == null) {
+                errors.add(at + " : compte vide");
+                continue;
+            }
+            String identifiant = AccountService.normalize(c.identifiant());
+            if (identifiant == null || !identifiant.matches(AccountRules.IDENTIFIANT)) {
+                errors.add(at + ".identifiant : « %s » invalide (3 à 50 caractères : lettres, chiffres, point, tiret, souligné)"
+                        .formatted(c.identifiant()));
+            } else if (!identifiants.add(identifiant)) {
+                errors.add(at + ".identifiant : « %s » est déjà utilisé".formatted(identifiant));
+            }
+            if (c.role() == null || !isEnum(AccountRole.class, c.role())) {
+                errors.add(at + ".role : « %s » inconnu (attendu : PARENT ou ENFANT)".formatted(c.role()));
+            }
+            if (c.membre() != null && !cles.contains(c.membre())) {
+                errors.add(at + ".membre : clé de membre « %s » inconnue".formatted(c.membre()));
+            } else if (c.membre() == null && AccountRole.ENFANT.name().equals(c.role())) {
+                errors.add(at + ".membre : obligatoire pour un compte ENFANT");
+            }
+            // Jamais la valeur du mot de passe dans le message
+            String motDePasse = c.motDePasseInitial();
+            if (motDePasse != null && (motDePasse.length() < AccountRules.MOT_DE_PASSE_MIN
+                    || motDePasse.length() > AccountRules.MOT_DE_PASSE_MAX)) {
+                errors.add(at + ".motDePasseInitial : de %d à %d caractères"
+                        .formatted(AccountRules.MOT_DE_PASSE_MIN, AccountRules.MOT_DE_PASSE_MAX));
             }
         }
         return errors;

@@ -3,6 +3,9 @@ package com.family.agenda.config;
 import com.family.agenda.dto.AgendaEntryDTO;
 import com.family.agenda.dto.FamilyMemberDTO;
 import com.family.agenda.dto.RoutineDTO;
+import com.family.agenda.entity.AccountRole;
+import com.family.agenda.entity.UserAccount;
+import com.family.agenda.repository.UserAccountRepository;
 import com.family.agenda.service.AgendaQueryService;
 import com.family.agenda.service.FamilyMemberService;
 import com.family.agenda.service.RecipeService;
@@ -11,6 +14,7 @@ import com.family.agenda.service.RoutineService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Clock;
 import java.time.DayOfWeek;
@@ -37,6 +41,8 @@ class FamilySeedTest {
     @Autowired AgendaQueryService agendaQueryService;
     @Autowired RoutineService routineService;
     @Autowired RecipeService recipeService;
+    @Autowired UserAccountRepository accountRepository;
+    @Autowired PasswordEncoder passwordEncoder;
     @Autowired Clock clock;
 
     private Map<String, FamilyMemberDTO> members() {
@@ -95,5 +101,42 @@ class FamilySeedTest {
     @Test
     void recettesDeDemonstrationAussiCreees() {
         assertThat(recipeService.findAll(null)).hasSize(3);
+    }
+
+    @Test
+    void comptesDuFichierAvecMotDePasseInitialHacheEtAChanger() {
+        Map<String, Long> ids = members().values().stream().collect(Collectors.toMap(FamilyMemberDTO::nom, FamilyMemberDTO::id));
+        UserAccount alice = accountRepository.findByIdentifiant("alice").orElseThrow();
+
+        assertThat(alice.getRole()).isEqualTo(AccountRole.PARENT);
+        assertThat(alice.getMemberId()).isEqualTo(ids.get("Alice"));
+        assertThat(alice.isActif()).isTrue();
+        assertThat(alice.isDoitChangerMotDePasse()).isTrue();
+        assertThat(alice.getPasswordHash()).startsWith("{argon2}").doesNotContain("a-changer-1234");
+        assertThat(passwordEncoder.matches("a-changer-1234", alice.getPasswordHash())).isTrue();
+
+        UserAccount chloe = accountRepository.findByIdentifiant("chloe").orElseThrow();
+        assertThat(chloe.getRole()).isEqualTo(AccountRole.ENFANT);
+        assertThat(chloe.getMemberId()).isEqualTo(ids.get("Chloé"));
+    }
+
+    @Test
+    void compteSansMotDePasseInactif() {
+        UserAccount dylan = accountRepository.findByIdentifiant("dylan").orElseThrow();
+
+        assertThat(dylan.isActif()).isFalse();
+        assertThat(dylan.getPasswordHash()).isNull();
+    }
+
+    @Test
+    void compteAdministrateurCompleteParLeFichierSansDoublon() {
+        UserAccount admin = accountRepository.findByIdentifiant("admin").orElseThrow();
+
+        assertThat(accountRepository.count()).isEqualTo(4);
+        assertThat(admin.getMemberId()).isEqualTo(members().get("Bruno").id());
+        assertThat(admin.getRole()).isEqualTo(AccountRole.PARENT);
+        // mot de passe de l'administrateur (profil dev) gardé comme mot de passe initial
+        assertThat(passwordEncoder.matches("admin-dev-1234", admin.getPasswordHash())).isTrue();
+        assertThat(admin.isDoitChangerMotDePasse()).isTrue();
     }
 }

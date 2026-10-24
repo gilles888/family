@@ -34,5 +34,11 @@
       "debut": "14:00", "fin": "16:00" },
     { "titre": "Judo", "type": "SPORT", "membres": ["chloe"], "jours": ["TUESDAY", "THURSDAY"],
       "debut": "17:30", "fin": "18:30" }
+  ],
+  "comptes": [
+    { "identifiant": "Alice", "role": "PARENT", "membre": "alice", "motDePasseInitial": "a-changer-1234" },
+    { "identifiant": "chloe", "role": "ENFANT", "membre": "chloe", "motDePasseInitial": "a-changer-5678" },
+    { "identifiant": "dylan", "role": "ENFANT", "membre": "dylan" },
+    { "identifiant": "admin", "role": "PARENT", "membre": "bruno" }
   ]
 }

@@ -17,6 +17,10 @@ spring:
         jdbc.time_zone: ${APP_TIMEZONE:Europe/Paris}
 
 agenda:
+  # Premier compte parent, créé si aucun compte n'existe (obligatoire hors profil dev, voir README)
+  admin:
+    username: ${ADMIN_USERNAME:}
+    password: ${ADMIN_PASSWORD:}
   generation:
     # Fenêtre d'AgendaEntry générées à l'avance pour les reminders récurrents
     horizon-months: ${AGENDA_HORIZON_MONTHS:6}

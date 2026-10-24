@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Contenu du fichier famille ({@code agenda.seed.fichier}, ex. famille.json) : membres, personnages, routines et
- * activités hebdomadaires. Format documenté dans le README du backend, exemple dans famille.exemple.json.
+ * Contenu du fichier famille ({@code agenda.seed.fichier}, ex. famille.json) : membres, personnages, routines,
+ * activités hebdomadaires et comptes de connexion. Format documenté dans le README du backend, exemple dans famille.exemple.json.
  */
-public record FamilySeed(List<Membre> membres, List<Activite> activites) {
+public record FamilySeed(List<Membre> membres, List<Activite> activites, List<Compte> comptes) {
 
     /**
      * @param cle      identifiant du membre dans le fichier (référencé par les activités)
@@ -61,5 +61,23 @@ public record FamilySeed(List<Membre> membres, List<Activite> activites) {
      */
     public record Activite(String titre, String description, String type, List<String> membres, List<String> jours,
                            String debut, String fin) {
+    }
+
+    /**
+     * Compte de connexion.
+     *
+     * @param role              PARENT ou ENFANT
+     * @param membre            clé du membre lié (obligatoire pour un enfant)
+     * @param motDePasseInitial facultatif : haché au chargement, à changer à la première connexion ; absent = compte
+     *                          inactif tant qu'un parent n'a pas défini de mot de passe
+     */
+    public record Compte(String identifiant, String role, String membre, String motDePasseInitial) {
+
+        /** Jamais le mot de passe dans les journaux ni les messages d'erreur. */
+        @Override
+        public String toString() {
+            return "Compte[identifiant=%s, role=%s, membre=%s, motDePasseInitial=%s]"
+                    .formatted(identifiant, role, membre, motDePasseInitial == null ? null : "***");
+        }
     }
 }

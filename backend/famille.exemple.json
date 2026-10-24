@@ -45,5 +45,11 @@
       "jours": ["TUESDAY", "THURSDAY"], "debut": "18:00", "fin": "19:30" },
     { "titre": "Musique", "description": null, "type": "AUTRE", "membres": ["lea"],
       "jours": ["SATURDAY"], "debut": "10:00", "fin": "11:00" }
+  ],
+  "comptes": [
+    { "identifiant": "maman", "role": "PARENT", "membre": "maman", "motDePasseInitial": "a-changer-1234" },
+    { "identifiant": "papa", "role": "PARENT", "membre": "papa", "motDePasseInitial": "a-changer-1234" },
+    { "identifiant": "lea", "role": "ENFANT", "membre": "lea", "motDePasseInitial": "a-changer-1234" },
+    { "identifiant": "tom", "role": "ENFANT", "membre": "tom" }
   ]
 }

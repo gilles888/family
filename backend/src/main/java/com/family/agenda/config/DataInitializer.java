@@ -7,12 +7,14 @@ import com.family.agenda.dto.RecipeRequest;
 import com.family.agenda.dto.RecurrenceRuleRequest;
 import com.family.agenda.dto.ReminderRequest;
 import com.family.agenda.dto.ReminderWithAgendaDTO;
+import com.family.agenda.entity.AccountRole;
 import com.family.agenda.entity.Aisle;
 import com.family.agenda.entity.IngredientUnit;
 import com.family.agenda.entity.MealSlot;
 import com.family.agenda.entity.RecurrenceFrequency;
 import com.family.agenda.entity.ReminderType;
 import com.family.agenda.repository.IngredientRepository;
+import com.family.agenda.service.AccountService;
 import com.family.agenda.service.FamilyMemberService;
 import com.family.agenda.service.MealService;
 import com.family.agenda.service.RoutineService;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -52,6 +55,8 @@ import java.util.stream.Collectors;
  */
 @Component
 @ConditionalOnProperty(name = "agenda.seed.enabled", havingValue = "true")
+// Après AdminAccountInitializer : un compte de famille.json peut compléter le compte administrateur
+@Order(1)
 @RequiredArgsConstructor
 @Slf4j
 public class DataInitializer implements CommandLineRunner {
@@ -61,6 +66,7 @@ public class DataInitializer implements CommandLineRunner {
     private final RecipeService recipeService;
     private final MealService mealService;
     private final RoutineService routineService;
+    private final AccountService accountService;
     private final IngredientRepository ingredientRepository;
     private final SeedProperties seedProperties;
     private final FamilySeedReader familySeedReader;
@@ -121,8 +127,14 @@ public class DataInitializer implements CommandLineRunner {
                     a.fin() == null ? null : LocalDateTime.of(today, LocalTime.parse(a.fin())),
                     membres, true, new RecurrenceRuleRequest(RecurrenceFrequency.WEEKLY, 1, jours, null, null))));
         }
-        log.info("Famille chargée depuis {} : {} membre(s), {} activité(s)", file.toAbsolutePath().normalize(), ids.size(),
-                activites.size());
+        // Comptes : avec motDePasseInitial, actifs et à changer à la première connexion ; sans, inactifs
+        List<FamilySeed.Compte> comptes = family.comptes() == null ? List.of() : family.comptes();
+        for (FamilySeed.Compte c : comptes) {
+            accountService.seed(c.identifiant(), AccountRole.valueOf(c.role()), c.membre() == null ? null : ids.get(c.membre()),
+                    c.motDePasseInitial());
+        }
+        log.info("Famille chargée depuis {} : {} membre(s), {} activité(s), {} compte(s)", file.toAbsolutePath().normalize(),
+                ids.size(), activites.size(), comptes.size());
     }
 
     /** Famille fictive (Maman, Papa, Léa, Tom) : rappels variés et routines des enfants. */
