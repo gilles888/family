@@ -1,0 +1,101 @@
+# Déploiement en production (https://famille.gilmotech.be) : à chaque push sur main, ou à la main
+# (onglet Actions → « Déploiement » → Run workflow). Les tests doivent passer d'abord.
+#
+# Le runner rejoint le tailnet le temps du job (nœud éphémère tag:ci) et lance deploy/deploy.sh, comme depuis
+# le poste de développement. Dépôt public : les journaux sont publics ; adresse, utilisateur SSH et configuration
+# sont des secrets (masqués « *** » dans les journaux). Secrets à créer : deploy/README.md, « GitHub Actions ».
+name: Déploiement
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Jamais deux déploiements en même temps ; un déploiement commencé va au bout
+concurrency:
+  group: deploiement-production
+  cancel-in-progress: false
+
+jobs:
+  tests:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    name: Déploiement sur le VPS
+    needs: tests
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://famille.gilmotech.be/fr/
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: front/package-lock.json
+
+      - name: Tailscale (nœud éphémère tag:ci)
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Accès SSH au VPS
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
+          SSH_USER: ${{ secrets.DEPLOY_SSH_USER }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          # Même alias que sur le poste de développement : deploy/.env (DEPLOY_HOST=vps-claude) reste identique
+          cat > ~/.ssh/config <<CONF
+          Host vps-claude
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+          CONF
+          ssh vps-claude true && echo "SSH : OK"
+
+      - name: Configuration (deploy/.env)
+        env:
+          DEPLOY_ENV: ${{ secrets.DEPLOY_ENV }}
+        run: |
+          umask 077
+          printf '%s\n' "$DEPLOY_ENV" > deploy/.env
+
+      - name: npm ci
+        working-directory: front
+        run: npm ci
+
+      # Tests déjà passés (job « tests ») : build, envoi, redémarrage
+      - name: deploy.sh
+        run: ./deploy/deploy.sh --skip-tests
+
+      - name: Vérification en ligne
+        run: |
+          for i in $(seq 1 20); do
+            curl -fsS https://famille.gilmotech.be/actuator/health | grep -q '"UP"' && { echo "En ligne : UP"; exit 0; }
+            sleep 3
+          done
+          echo "Le site ne répond pas UP" >&2; exit 1
+
+      - name: Nettoyage
+        if: always()
+        run: rm -f deploy/.env ~/.ssh/deploy_key

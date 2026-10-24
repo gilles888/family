@@ -136,6 +136,46 @@ L'image du backend est fixée à une version exacte (`eclipse-temurin:25.0.4.1_1
 
 Changer de version majeure demande aussi de changer `java.version` dans `backend/pom.xml` et le JDK du poste de développement.
 
+## Déploiement par GitHub Actions
+
+- `.github/workflows/ci.yml` (**Tests**) : backend (`mvn verify`) et front (tests + build fr/nl) à chaque push (sauf `main`) et pull request.
+- `.github/workflows/deploy.yml` (**Déploiement**) : à chaque push sur **`main`** (ou bouton *Run workflow* dans l'onglet Actions), relance les tests, puis le runner rejoint le tailnet (nœud éphémère `tag:ci`), se connecte au VPS par Tailscale et lance `deploy.sh --skip-tests`. Un seul déploiement à la fois ; vérification finale de `/actuator/health`.
+
+Flux de travail : on développe sur `dev` ; **fusionner `dev` dans `main` met en production**.
+
+Le dépôt est public, **ses journaux d'Actions aussi** : tout ce qui identifie le serveur est en secret (masqué `***` dans les journaux). Le premier déploiement (famille.json, `ADMIN_*`) se fait depuis le poste de développement, jamais par GitHub.
+
+### Mise en place (une fois)
+
+1. **Clé SSH de déploiement**, propre à GitHub, utilisable seulement depuis le tailnet :
+   ```bash
+   ssh-keygen -t ed25519 -N "" -C family-deploy-github -f ~/.ssh/family_deploy_github
+   ssh vps-claude "echo 'from=\"100.64.0.0/10\",no-agent-forwarding,no-port-forwarding,no-X11-forwarding,no-pty $(cat ~/.ssh/family_deploy_github.pub)' >> ~/.ssh/authorized_keys"
+   ```
+2. **Tailscale** (console d'administration) :
+   - *Access controls* : déclarer le tag et ne lui ouvrir que le SSH du VPS, par exemple
+     ```jsonc
+     "tagOwners": { "tag:ci": ["autogroup:admin"] },
+     // dans "acls" (ou l'équivalent dans "grants") :
+     { "action": "accept", "src": ["tag:ci"], "dst": ["<IP Tailscale du VPS>:22"] }
+     ```
+     Avec la politique par défaut (« tout le monde voit tout »), le nœud `tag:ci` verrait aussi les autres machines du tailnet le temps du job : restreindre la règle `*` si besoin.
+   - *Settings → OAuth clients* : un client avec le droit d'écriture **Auth Keys**, limité au tag `tag:ci`.
+3. **Secrets GitHub** (*Settings → Secrets and variables → Actions → New repository secret*) :
+
+   | Secret | Valeur |
+   |---|---|
+   | `TS_OAUTH_CLIENT_ID` / `TS_OAUTH_SECRET` | client OAuth Tailscale |
+   | `DEPLOY_SSH_KEY` | contenu de `~/.ssh/family_deploy_github` (clé **privée**) |
+   | `DEPLOY_SSH_HOST` | IP Tailscale du VPS |
+   | `DEPLOY_SSH_USER` | utilisateur SSH du VPS |
+   | `DEPLOY_KNOWN_HOSTS` | `ssh-keyscan -t ed25519 <IP Tailscale du VPS>` (vérifier l'empreinte avec `ssh-keygen -lf`) |
+   | `DEPLOY_ENV` | contenu de `deploy/.env` (sans `ADMIN_PASSWORD`, inutile après le premier déploiement) |
+
+4. Créer la branche `main` (`git push origin dev:main`) : premier déploiement par GitHub.
+
+Révoquer l'accès : supprimer la ligne `family-deploy-github` de `~/.ssh/authorized_keys` sur le VPS et le client OAuth Tailscale.
+
 ## Sur le serveur
 
 Dans `~/family` :
@@ -212,7 +252,8 @@ docker compose exec -T db dropdb -U family test_restauration </dev/null
 
 | Fichier | Rôle |
 |---|---|
-| `deploy.sh` | vérifications, build, envoi, démarrage, nettoyage du premier déploiement |
+| `deploy.sh` | vérifications, build, envoi, démarrage, nettoyage du premier déploiement (poste de développement ou GitHub Actions) |
+| `../.github/workflows/` | tests (`ci.yml`) et déploiement sur push `main` (`deploy.yml`) |
 | `docker-compose.yml` | les trois conteneurs ; base dans le volume `family_pgdata` |
 | `nginx.conf.template` | nginx du conteneur : langues `/fr/` `/nl/`, cache, relais `/v1` avec l'IP de l'hôte |
 | `.env.example` | modèle de `deploy/.env` (ignoré par git) |
