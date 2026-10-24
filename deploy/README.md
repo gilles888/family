@@ -37,7 +37,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.
   | sudo tee /etc/apt/sources.list.d/docker.list
 sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 # deploy.sh lance docker sans sudo : l'utilisateur rejoint le groupe docker (équivalent root, comme sudo)
-sudo usermod -aG docker gilmo        # puis se reconnecter
+sudo usermod -aG docker "$USER"      # puis se reconnecter
 ```
 
 **Docker contourne UFW** : un port publié sur `0.0.0.0` serait joignable depuis internet malgré le pare-feu. Le `docker-compose.yml` ne publie que `127.0.0.1:${HTTP_PORT}` ; la base et le backend ne publient rien.
