@@ -30,10 +30,9 @@ fail() { printf '\033[1;31mErreur : %s\033[0m\n' "$*" >&2; exit 1; }
 
 # ---------- configuration
 [[ -f "$DEPLOY/.env" ]] || fail "deploy/.env absent. Créez-le : cp deploy/.env.example deploy/.env, puis adaptez-le."
-set -a
+# Lu sans export : les tests du build ne doivent pas hériter de la configuration de production (ADMIN_*, METEO_*…)
 # shellcheck source=/dev/null
 source "$DEPLOY/.env"
-set +a
 [[ -n "${DEPLOY_HOST:-}" ]] || fail "DEPLOY_HOST vide dans deploy/.env (alias ssh, utilisateur@serveur ou « local »)."
 [[ -n "${DB_PASSWORD:-}" ]] || fail "DB_PASSWORD vide dans deploy/.env (ex. : openssl rand -base64 24)."
 [[ -n "${AGENDA_REMEMBER_ME_KEY:-}" ]] || fail "AGENDA_REMEMBER_ME_KEY vide dans deploy/.env (ex. : openssl rand -base64 32)."
@@ -154,14 +153,17 @@ set -euo pipefail
 cd "$TARGET"
 export AGENDA_SEED_ENABLED=$FIRST
 
+# Prêt = /actuator/health « UP » : seulement après les initialisations (premier compte, famille.json),
+# alors que « Started » est journalisé avant elles
 wait_backend() {
   for i in \$(seq 1 90); do
-    if docker compose logs backend 2>&1 | grep -q "Started FamilyAgendaApplication"; then
+    # </dev/null : sinon « exec » lit la suite de ce script, envoyé sur l'entrée standard de bash par ssh
+    if docker compose exec -T web wget -qO- http://backend:8080/actuator/health </dev/null 2>/dev/null | grep -q '"UP"'; then
       return 0
     fi
     sleep 2
   done
-  echo "Le backend n'a pas démarré. Dernières lignes :" >&2
+  echo "Le backend n'est pas prêt. Dernières lignes :" >&2
   docker compose logs --tail 60 backend >&2
   exit 1
 }
@@ -176,10 +178,13 @@ docker compose logs backend 2>&1 | grep -E "Famille chargée|Compte administrate
   | sed -E 's/^.* : //' || true
 
 if [ "$FIRST" = true ]; then
-  if ! docker compose logs backend 2>&1 | grep -q "Famille chargée"; then
+  # Famille en base (chargée à ce démarrage ou lors d'une tentative précédente interrompue)
+  MEMBRES=\$(docker compose exec -T db psql -U family -d family_agenda -tAc "select count(*) from family_member" </dev/null)
+  if [ "\${MEMBRES:-0}" -eq 0 ]; then
     echo "La famille n'a pas été chargée : famille.json et ADMIN_PASSWORD restent sur le serveur ; corrigez puis relancez deploy.sh." >&2
     exit 1
   fi
+  echo "Famille en base : \$MEMBRES membre(s)."
   # Les mots de passe initiaux ne restent pas sur le serveur
   rm -f config/famille.json
   echo "config/famille.json supprimé du serveur (contenu de config/ : \$(ls -A config | wc -l) fichier)."
@@ -194,7 +199,7 @@ fi
 
 echo
 echo "Java du conteneur backend :"
-docker compose exec -T backend java -version 2>&1
+docker compose exec -T backend java -version </dev/null 2>&1
 EOF
 
 step "Terminé"
