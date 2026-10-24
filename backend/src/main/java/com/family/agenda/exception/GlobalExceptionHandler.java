@@ -1,5 +1,6 @@
 package com.family.agenda.exception;
 
+import com.family.agenda.security.LoginFailedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -43,6 +45,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MeteoIndisponibleException.class)
     ProblemDetail handleMeteoIndisponible(MeteoIndisponibleException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
+    }
+
+    /** Connexion refusée : 401 avec un code (IDENTIFIANTS_INVALIDES, COMPTE_BLOQUE, COMPTE_DESACTIVE). */
+    @ExceptionHandler(LoginFailedException.class)
+    ProblemDetail handleLoginFailed(LoginFailedException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        problem.setProperty("code", ex.getCode().name());
+        if (ex.getBloqueJusqua() != null) {
+            problem.setProperty("bloqueJusqua", ex.getBloqueJusqua().toString());
+        }
+        return problem;
+    }
+
+    /** @PreAuthorize refusé dans un contrôleur (ex. routine d'un autre membre) : 403, pas 500. */
+    @ExceptionHandler(AccessDeniedException.class)
+    ProblemDetail handleAccessDenied(AccessDeniedException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, "Action non autorisée");
+        problem.setProperty("code", "ACTION_NON_AUTORISEE");
+        return problem;
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

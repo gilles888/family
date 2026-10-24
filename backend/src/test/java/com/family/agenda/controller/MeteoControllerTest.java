@@ -1,5 +1,6 @@
 package com.family.agenda.controller;
 
+import com.family.agenda.support.ParentMockMvc;
 import com.family.agenda.service.MeteoFixtures;
 import com.family.agenda.service.OpenMeteoClient;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /** GET /v1/meteo avec un faux Open-Meteo renvoyant 7 jours à partir d'aujourd'hui. */
 @SpringBootTest(properties = {"agenda.seed.enabled=false", "meteo.fuseau=Europe/Brussels"})
 @AutoConfigureMockMvc
+@Import(ParentMockMvc.class)
 class MeteoControllerTest {
 
     @Autowired

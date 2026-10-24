@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class MemberRoutineController {
     private final RoutineService service;
     private final Clock clock;
 
+    @PreAuthorize("@routineAccess.member(#memberId)")
     @GetMapping
     @Operation(operationId = "listRoutinesMembre", summary = "Routines d'un membre, avec leur état pour un jour",
             description = "Toutes les routines (actives ou non), dans l'ordre. L'écran enfant garde les actives du jour.")
@@ -59,6 +61,7 @@ public class MemberRoutineController {
         return service.applyTemplate(memberId, request.modele(), request.langue());
     }
 
+    @PreAuthorize("@routineAccess.member(#memberId)")
     @GetMapping("/historique")
     @Operation(operationId = "historiqueRoutinesMembre", summary = "Routines terminées sur les derniers jours",
             description = "Un élément par jour, du plus ancien à aujourd'hui (14 jours par défaut, 62 au plus).")

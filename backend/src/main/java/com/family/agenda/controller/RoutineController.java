@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,7 @@ public class RoutineController {
         return service.templates(langue);
     }
 
+    @PreAuthorize("@routineAccess.routine(#id)")
     @GetMapping("/{id}")
     @Operation(operationId = "getRoutine", summary = "Détail d'une routine, avec son état du jour")
     @ApiResponse(responseCode = "200", description = "Routine")
@@ -101,6 +103,7 @@ public class RoutineController {
         return service.reorder(id, etapeIds);
     }
 
+    @PreAuthorize("@routineAccess.routine(#id)")
     @PostMapping("/{id}/runs/{date}/etapes/{stepId}/toggle")
     @Operation(operationId = "toggleEtapeRoutine", summary = "Cocher / décocher une étape de la routine du jour",
             description = "La routine est terminée quand toutes ses étapes sont cochées (calculé par le serveur).")
@@ -112,6 +115,7 @@ public class RoutineController {
         return service.toggleStep(id, date, stepId);
     }
 
+    @PreAuthorize("@routineAccess.routine(#id)")
     @PostMapping("/{id}/runs/{date}/recompense")
     @Operation(operationId = "jouerRecompenseRoutine", summary = "Marquer la récompense du jour comme jouée",
             description = "Une seule partie par routine terminée et par jour.")

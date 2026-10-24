@@ -1,9 +1,11 @@
 package com.family.agenda.controller;
 
+import com.family.agenda.support.ParentMockMvc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -22,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /** Endpoints recettes, ingrédients et repas (H2, chaque test annulé en fin d'exécution). */
 @SpringBootTest(properties = "agenda.seed.enabled=false")
 @AutoConfigureMockMvc
+@Import(ParentMockMvc.class)
 @Transactional
 class MealPlanningApiTest {
 

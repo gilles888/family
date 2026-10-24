@@ -1,5 +1,6 @@
 package com.family.agenda.controller;
 
+import com.family.agenda.support.ParentMockMvc;
 import com.family.agenda.repository.AgendaEntryRepository;
 import com.family.agenda.repository.FamilyMemberRepository;
 import com.family.agenda.repository.ReminderRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
@@ -36,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest(properties = "agenda.seed.enabled=false")
 @AutoConfigureMockMvc
+@Import(ParentMockMvc.class)
 class AgendaFlowIntegrationTest {
 
     static class MutableClock extends Clock {

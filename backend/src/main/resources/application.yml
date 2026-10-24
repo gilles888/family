@@ -28,6 +28,11 @@ agenda:
     cron: ${AGENDA_EXTENSION_CRON:0 0 2 * * *}
   seed:
     enabled: false
+  security:
+    # Cookies (session, XSRF-TOKEN, « rester connecté ») réservés à HTTPS ; false en dev (http://localhost)
+    cookie-secure: ${AGENDA_COOKIE_SECURE:true}
+    # Clé des jetons « rester connecté » (vide = aléatoire à chaque démarrage ; les jetons restent valides)
+    remember-me-key: ${AGENDA_REMEMBER_ME_KEY:}
     # Famille réelle (hors du dépôt, voir famille.exemple.json) ; fichier absent = famille fictive de démonstration
     fichier: ${AGENDA_SEED_FICHIER:./famille.json}
 
@@ -42,8 +47,32 @@ meteo:
   cache: ${METEO_CACHE:30m}
   base-url: ${METEO_BASE_URL:https://api.open-meteo.com}
 
+server:
+  # Derrière un reverse proxy HTTPS : X-Forwarded-For / -Proto pris en compte (IP des journaux AUTH_*, URL https)
+  forward-headers-strategy: framework
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${agenda.security.cookie-secure}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      show-components: never
+
 springdoc:
+  # Documentation de l'API : profil dev seulement
+  api-docs:
+    enabled: false
   swagger-ui:
+    enabled: false
     path: /swagger-ui.html
     operations-sorter: method
     tags-sorter: alpha
@@ -71,6 +100,15 @@ spring:
 agenda:
   seed:
     enabled: true
+  # Sans ADMIN_USERNAME / ADMIN_PASSWORD : compte « admin » / « admin-dev-1234 » (voir AdminAccountInitializer)
+  security:
+    cookie-secure: ${AGENDA_COOKIE_SECURE:false}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
 
 logging:
   level:
@@ -90,7 +128,3 @@ spring:
 agenda:
   seed:
     enabled: ${AGENDA_SEED_ENABLED:false}
-
-springdoc:
-  swagger-ui:
-    enabled: ${SWAGGER_UI_ENABLED:true}
