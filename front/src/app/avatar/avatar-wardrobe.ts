@@ -7,6 +7,7 @@ import {
   ColorOption,
   DropZone,
   EYES,
+  EYE_COLORS,
   HAIRS,
   HAIR_COLORS,
   HATS,
@@ -49,7 +50,7 @@ export interface WardrobeCategory {
 }
 
 type PartField = 'eyes' | 'mouth' | 'hair' | 'outfit' | 'hat' | 'accessory';
-type ColorField = 'hairColor' | 'outfitColor' | 'background';
+type ColorField = 'hairColor' | 'eyeColor' | 'outfitColor' | 'background';
 
 function parts(field: PartField, list: AvatarPart[], zone: DropZone): WardrobeOption[] {
   return list.map((part) => ({
@@ -69,7 +70,7 @@ function colors(field: ColorField, list: ColorOption[], zone: DropZone): Wardrob
     zone,
     swatch: color.value,
     apply: (c) => ({ ...c, [field]: color.value }),
-    isSelected: (c) => c[field].toLowerCase() === color.value.toLowerCase(),
+    isSelected: (c) => (c[field] ?? '').toLowerCase() === color.value.toLowerCase(),
   }));
 }
 
@@ -94,6 +95,7 @@ export const WARDROBE: WardrobeCategory[] = [
         })),
       },
       { id: 'eyes', title: $localize`:@@avatar.group.eyes:Yeux`, kind: 'thumbs', viewBox: '55 55 90 90', options: parts('eyes', EYES, 'eyes') },
+      { id: 'eyeColor', title: $localize`:@@avatar.group.eyeColor:Couleur des yeux`, kind: 'swatches', options: colors('eyeColor', EYE_COLORS, 'eyes') },
       { id: 'mouth', title: $localize`:@@avatar.group.mouth:Bouche`, kind: 'thumbs', viewBox: '55 55 90 90', options: parts('mouth', MOUTHS, 'mouth') },
     ],
   },

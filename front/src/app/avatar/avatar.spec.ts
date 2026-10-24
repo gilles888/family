@@ -1,6 +1,6 @@
 import { ComponentRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AvatarConfig, defaultAvatar, normalizeAvatar } from './avatar-config';
+import { AvatarConfig, DEFAULT_EYE_COLOR, defaultAvatar, normalizeAvatar } from './avatar-config';
 import { LAYER_ORDER } from './avatar-layers';
 import { Avatar } from './avatar';
 
@@ -81,5 +81,33 @@ describe('Avatar', () => {
     expect(config.hairColor).toBe(fallback.hairColor);
     expect(config.background).toBe(fallback.background);
     expect(config.eyes).toBe('eyes-happy');
+  });
+
+  describe('couleur des yeux', () => {
+    const iris = () => el.querySelector('g[data-layer="eyes"] circle')?.getAttribute('fill');
+
+    it('normalisation : couleur valide gardée, absente ou mal formée → noir', () => {
+      const fallback = defaultAvatar(1);
+
+      expect(normalizeAvatar({ ...CONFIG, eyeColor: '#1e88e5' }, fallback).eyeColor).toBe('#1e88e5');
+      expect(normalizeAvatar(CONFIG, fallback).eyeColor).toBe(DEFAULT_EYE_COLOR);
+      expect(normalizeAvatar({ ...CONFIG, eyeColor: 'blue' }, fallback).eyeColor).toBe(DEFAULT_EYE_COLOR);
+      expect(normalizeAvatar({ ...CONFIG, eyeColor: '#12" onload="x' }, fallback).eyeColor).toBe(DEFAULT_EYE_COLOR);
+      expect(normalizeAvatar(null, fallback).eyeColor).toBe(DEFAULT_EYE_COLOR);
+    });
+
+    it('rendu : l’iris prend la couleur des yeux, la pupille reste noire', () => {
+      render({ config: { ...CONFIG, eyes: 'eyes-round', eyeColor: '#1e88e5' } });
+
+      const fills = [...el.querySelectorAll('g[data-layer="eyes"] circle')].map((c) => c.getAttribute('fill'));
+      expect(iris()).toBe('#1e88e5');
+      expect(fills).toContain(DEFAULT_EYE_COLOR);
+    });
+
+    it('ancien avatar sans couleur des yeux : iris noir', () => {
+      render({ config: normalizeAvatar({ ...CONFIG, eyes: 'eyes-round' }, defaultAvatar(1)) });
+
+      expect(iris()).toBe(DEFAULT_EYE_COLOR);
+    });
   });
 });

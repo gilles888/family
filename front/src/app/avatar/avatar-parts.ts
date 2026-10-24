@@ -83,9 +83,21 @@ export const SKIN_TONES: SkinTone[] = [
   { id: 'skin-6', value: '#5c3a1e', label: $localize`:@@avatar.skin.6:Teint très foncé` },
 ];
 
-// ---------- yeux (y = 90, x = 84 et 116)
+// ---------- yeux (y = 90, x = 84 et 116) ; $c = couleur des yeux (iris), la pupille reste noire
 
-const PUPILS = [circle(84, 90, 5.5, INK), circle(116, 90, 5.5, INK), circle(86, 88, 1.8, '#ffffff'), circle(118, 88, 1.8, '#ffffff')];
+/** Œil ouvert : iris de la couleur des yeux, pupille, reflet. */
+const openEye = (x: number): Shape[] => [circle(x, 90, 5.5, '$c'), circle(x, 90, 2.6, INK), circle(x + 2, 88, 1.8, '#ffffff')];
+
+const PUPILS = [...openEye(84), ...openEye(116)];
+
+export const EYE_COLORS: ColorOption[] = [
+  { value: INK, label: $localize`:@@avatar.eyeColor.black:Yeux noirs` },
+  { value: '#5d4037', label: $localize`:@@avatar.eyeColor.brown:Yeux bruns` },
+  { value: '#8d6e3f', label: $localize`:@@avatar.eyeColor.hazel:Yeux noisette` },
+  { value: '#2e7d32', label: $localize`:@@avatar.eyeColor.green:Yeux verts` },
+  { value: '#1e88e5', label: $localize`:@@avatar.eyeColor.blue:Yeux bleus` },
+  { value: '#78909c', label: $localize`:@@avatar.eyeColor.grey:Yeux gris` },
+];
 
 export const EYES: AvatarPart[] = [
   { id: 'eyes-round', slot: 'eyes', label: $localize`:@@avatar.eyes.round:Yeux ronds`, shapes: PUPILS },
@@ -99,7 +111,7 @@ export const EYES: AvatarPart[] = [
     id: 'eyes-wink',
     slot: 'eyes',
     label: $localize`:@@avatar.eyes.wink:Clin d'œil`,
-    shapes: [circle(84, 90, 5.5, INK), circle(86, 88, 1.8, '#ffffff'), line('M109 90 Q116 96 123 90'), line('M108 80 Q116 77 124 81', INK, 2.5)],
+    shapes: [...openEye(84), line('M109 90 Q116 96 123 90'), line('M108 80 Q116 77 124 81', INK, 2.5)],
   },
   {
     id: 'eyes-surprised',
@@ -108,8 +120,10 @@ export const EYES: AvatarPart[] = [
     shapes: [
       circle(84, 90, 8.5, '#ffffff', { stroke: INK, sw: 2 }),
       circle(116, 90, 8.5, '#ffffff', { stroke: INK, sw: 2 }),
-      circle(84, 91, 4, INK),
-      circle(116, 91, 4, INK),
+      circle(84, 91, 4, '$c'),
+      circle(116, 91, 4, '$c'),
+      circle(84, 91, 1.8, INK),
+      circle(116, 91, 1.8, INK),
       line('M75 74 Q84 68 93 74', INK, 2.5),
       line('M107 74 Q116 68 125 74', INK, 2.5),
     ],

@@ -3,6 +3,7 @@ import {
   BACKGROUND_COLORS,
   BACKGROUND_GRADIENTS,
   EYES,
+  EYE_COLORS,
   HAIRS,
   HAIR_COLORS,
   HATS,
@@ -17,11 +18,16 @@ import { isHexColor, lighten } from '../shared/svg/shapes';
 /** Version du catalogue : à incrémenter si le sens d'un champ change (les ids retirés, eux, sont tolérés). */
 export const AVATAR_VERSION = 1;
 
+/** Couleur des yeux des avatars qui n'en ont pas (anciens avatars, avatar par défaut) : noir. */
+export const DEFAULT_EYE_COLOR = EYE_COLORS[0].value;
+
 /** Personnage d'un membre, tel qu'enregistré par le backend (champ avatarConfig). */
 export interface AvatarConfig {
   version: number;
   skin: string;
   eyes: string;
+  /** Couleur des yeux (iris), #RRGGBB. Facultative (ajoutée après la version 1) : noir par défaut. */
+  eyeColor?: string;
   mouth: string;
   hair: string;
   hairColor: string;
@@ -39,7 +45,7 @@ export interface AvatarConfig {
  */
 export function normalizeAvatar(raw: unknown, fallback: AvatarConfig): AvatarConfig {
   if (!raw || typeof raw !== 'object') {
-    return fallback;
+    return { ...fallback, eyeColor: fallback.eyeColor ?? DEFAULT_EYE_COLOR };
   }
   const r = raw as Record<string, unknown>;
   const pick = (key: keyof AvatarConfig, valid: (v: unknown) => boolean) => (valid(r[key]) ? (r[key] as string) : fallback[key]);
@@ -48,6 +54,7 @@ export function normalizeAvatar(raw: unknown, fallback: AvatarConfig): AvatarCon
     version: AVATAR_VERSION,
     skin: pick('skin', among(SKIN_TONES.map((s) => s.id))) as string,
     eyes: pick('eyes', among(EYES.map((p) => p.id))) as string,
+    eyeColor: isHexColor(r['eyeColor']) ? r['eyeColor'] : (fallback.eyeColor ?? DEFAULT_EYE_COLOR),
     mouth: pick('mouth', among(MOUTHS.map((p) => p.id))) as string,
     hair: pick('hair', among(HAIRS.map((p) => p.id))) as string,
     hairColor: pick('hairColor', isHexColor) as string,
@@ -67,6 +74,7 @@ export function defaultAvatar(seed: number, memberColor?: string): AvatarConfig 
   const avatar = randomAvatar(seededRandom(seed));
   return {
     ...avatar,
+    eyeColor: DEFAULT_EYE_COLOR,
     hat: NONE,
     accessory: NONE,
     background: isHexColor(memberColor) ? lighten(memberColor, 0.6) : avatar.background,
@@ -80,6 +88,7 @@ export function randomAvatar(random: () => number = Math.random): AvatarConfig {
     version: AVATAR_VERSION,
     skin: any(SKIN_TONES).id,
     eyes: any(EYES).id,
+    eyeColor: any(EYE_COLORS).value,
     mouth: any(MOUTHS).id,
     hair: any(HAIRS).id,
     hairColor: any(HAIR_COLORS).value,

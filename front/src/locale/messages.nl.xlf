@@ -3926,6 +3926,62 @@
           <context context-type="linenumber">42,47</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="avatar.eyeColor.black" datatype="html">
+        <source>Yeux noirs</source>
+        <target>Zwarte ogen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.eyeColor.brown" datatype="html">
+        <source>Yeux bruns</source>
+        <target>Bruine ogen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.eyeColor.hazel" datatype="html">
+        <source>Yeux noisette</source>
+        <target>Hazelnootbruine ogen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.eyeColor.green" datatype="html">
+        <source>Yeux verts</source>
+        <target>Groene ogen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.eyeColor.blue" datatype="html">
+        <source>Yeux bleus</source>
+        <target>Blauwe ogen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.eyeColor.grey" datatype="html">
+        <source>Yeux gris</source>
+        <target>Grijze ogen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.group.eyeColor" datatype="html">
+        <source>Couleur des yeux</source>
+        <target>Oogkleur</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

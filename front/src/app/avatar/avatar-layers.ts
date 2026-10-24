@@ -1,4 +1,4 @@
-import { AvatarConfig } from './avatar-config';
+import { AvatarConfig, DEFAULT_EYE_COLOR } from './avatar-config';
 import { BACKGROUND_GRADIENTS, GradientOption, HEAD_SHAPES, SKIN_TONES, findPart } from './avatar-parts';
 import { PaintContext, Shape, resolvePaint } from '../shared/svg/shapes';
 
@@ -49,7 +49,7 @@ export function drawAvatar(config: AvatarConfig): AvatarDrawing {
     layer('hair-back', config.hair, hair?.back, ctx(config.hairColor)),
     layer('head', config.skin, HEAD_SHAPES, ctx(skin)),
     layer('body-front', config.outfit, outfit?.front, ctx(config.outfitColor)),
-    layer('eyes', config.eyes, findPart('eyes', config.eyes)?.shapes, ctx(skin)),
+    layer('eyes', config.eyes, findPart('eyes', config.eyes)?.shapes, ctx(config.eyeColor ?? DEFAULT_EYE_COLOR)),
     layer('mouth', config.mouth, findPart('mouth', config.mouth)?.shapes, ctx(skin)),
     layer('hair-front', config.hair, hair?.shapes, ctx(config.hairColor)),
     layer('hat', config.hat, findPart('hat', config.hat)?.shapes, ctx(config.hairColor)),
