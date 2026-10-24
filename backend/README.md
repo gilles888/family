@@ -75,7 +75,8 @@ cp famille.exemple.json famille.json     # dans backend/ : ./mvnw spring-boot:ru
       "avatar": { "version": 1, "skin": "skin-2", "eyes": "eyes-happy", "eyeColor": "#1e88e5", "mouth": "mouth-grin",
                   "hair": "hair-pigtails", "hairColor": "#d9772b", "outfit": "outfit-overalls", "outfitColor": "#22c55e",
                   "hat": "none", "accessory": "none", "background": "bg-sunset" },   // facultatif : format avatar-config.ts du front
-      "routines": { "langue": "nl", "modeles": ["matin", "soir"] }                   // facultatif : fr ou nl ; matin, soir, devoirs
+      "routines": { "langue": "nl", "modeles": ["matin", "soir", "devoirs",         // facultatif : fr ou nl ; matin, soir, devoirs
+        { "modele": "devoirs", "jours": ["SATURDAY", "SUNDAY"], "debut": "14:30", "fin": "15:30" }] }   // autres jours / horaires
     }
   ],
   "activites": [
@@ -87,6 +88,7 @@ cp famille.exemple.json famille.json     # dans backend/ : ./mvnw spring-boot:ru
 
 - Le fichier n'est lu que si `agenda.seed.enabled=true` (défaut en `dev`) et que la base **n'a encore aucun membre**. Tout passe par les services métier : création du membre, `PUT …/avatar`, copie des modèles de routines, création de rappels.
 - **Activités** : hebdomadaires, sans date de fin, à partir d'**aujourd'hui** (seuls les jours cochés, à partir de cette date, donnent une occurrence), avec la plage horaire indiquée.
+- **Routines** : chaque modèle est copié chez le membre (modifiable ensuite dans le mode parent). Un modèle s'écrit par son nom (jours et horaires du modèle) ou par un objet `{ "modele", "jours", "debut", "fin" }` dont les champs absents reprennent ceux du modèle ; le même modèle peut figurer deux fois, par exemple les devoirs en semaine à 16h15 et le week-end l'après-midi.
 - **Avatar** : objet libre, au format de `front/src/app/avatar/avatar-config.ts` ; une pièce inconnue retombe sur la pièce par défaut côté front. `eyeColor` est facultatif (noir sinon).
 - **Validation au chargement** : JSON illisible, clé inconnue (ex. `coleur`), couleur ou heure mal formée, type, jour, modèle ou langue inconnus, clé de membre inconnue dans une activité, fin avant le début… Toutes les erreurs sont listées dans un seul message, dans les logs (ex. `activites[1].membres : clé de membre « hana » inconnue`) et **le démarrage s'arrête** : pas de famille à moitié chargée.
 - Sans fichier : famille fictive de démonstration (message dans les logs avec le chemin attendu).

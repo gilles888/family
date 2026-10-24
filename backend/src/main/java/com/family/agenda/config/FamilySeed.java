@@ -1,5 +1,8 @@
 package com.family.agenda.config;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +20,34 @@ public record FamilySeed(List<Membre> membres, List<Activite> activites) {
     public record Membre(String cle, String nom, String couleur, Map<String, Object> avatar, Routines routines) {
     }
 
-    /** @param langue fr ou nl ; @param modeles matin, soir */
-    public record Routines(String langue, List<String> modeles) {
+    /** @param langue fr ou nl ; @param modeles modèles à copier (voir {@link Modele}) */
+    public record Routines(String langue, List<Modele> modeles) {
+    }
+
+    /**
+     * Modèle de routine à copier : son nom seul ({@code "matin"}) ou un objet qui change ses jours et sa plage horaire
+     * ({@code {"modele": "devoirs", "jours": ["SATURDAY"], "debut": "14:00", "fin": "15:00"}}).
+     *
+     * @param modele matin, soir, devoirs
+     * @param jours  jours de la semaine (MONDAY … SUNDAY) ; absent = jours du modèle
+     * @param debut  heure de début HH:mm ; absente = celle du modèle
+     * @param fin    heure de fin HH:mm ; absente = celle du modèle
+     */
+    public record Modele(String modele, List<String> jours, String debut, String fin) {
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        public Modele(@JsonProperty("modele") String modele, @JsonProperty("jours") List<String> jours,
+                      @JsonProperty("debut") String debut, @JsonProperty("fin") String fin) {
+            this.modele = modele;
+            this.jours = jours;
+            this.debut = debut;
+            this.fin = fin;
+        }
+
+        @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+        public static Modele of(String modele) {
+            return new Modele(modele, null, null, null);
+        }
     }
 
     /**

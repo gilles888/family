@@ -27,6 +27,7 @@ import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -143,6 +144,12 @@ public class RoutineService {
 
     /** Copie modifiable d'un modèle chez le membre, dans la langue demandée. */
     public RoutineDTO applyTemplate(Long memberId, String templateId, String langue) {
+        return applyTemplate(memberId, templateId, langue, null, null, null);
+    }
+
+    /** Idem, avec d'autres jours ou une autre plage horaire que ceux du modèle (null = valeur du modèle). */
+    public RoutineDTO applyTemplate(Long memberId, String templateId, String langue, Set<DayOfWeek> jours,
+                                    LocalTime debut, LocalTime fin) {
         Template template = RoutineTemplates.find(templateId)
                 .orElseThrow(() -> new BusinessRuleException("Modèle inconnu : " + templateId));
         Text text = template.text(langue);
@@ -150,7 +157,8 @@ public class RoutineService {
                 .mapToObj(i -> new RoutineStepRequest(null, text.etapes().get(i), template.icones().get(i), null))
                 .toList();
         return create(new RoutineRequest(memberId, text.nom(), text.sousTitre(), template.type(), template.theme(),
-                EnumSet.copyOf(template.jours()), template.debut(), template.fin(), true, etapes));
+                EnumSet.copyOf(jours == null ? template.jours() : jours), debut == null ? template.debut() : debut,
+                fin == null ? template.fin() : fin, true, etapes));
     }
 
     // ---------- suivi du jour (écran enfant)

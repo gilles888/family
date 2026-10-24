@@ -17,7 +17,8 @@
       "avatar": { "version": 1, "skin": "skin-2", "eyes": "eyes-happy", "mouth": "mouth-grin", "hair": "hair-ponytail",
                   "hairColor": "#6b3e26", "outfit": "outfit-tshirt", "outfitColor": "#ec4899", "hat": "none",
                   "accessory": "none", "background": "bg-sunset" },
-      "routines": { "langue": "nl", "modeles": ["matin", "soir"] }
+      "routines": { "langue": "nl", "modeles": ["matin", "soir",
+        { "modele": "devoirs", "jours": ["SATURDAY", "SUNDAY"], "debut": "14:30", "fin": "15:30" }] }
     },
     {
       "cle": "dylan", "nom": "Dylan", "couleur": "#4CAF50",

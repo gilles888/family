@@ -43,7 +43,8 @@ class FamilySeedReaderTest {
     void erreursRassembleesAvecLeurChemin() throws Exception {
         Path f = file("""
                 { "membres": [
-                    { "cle": "a", "nom": "A", "couleur": "rouge", "routines": { "langue": "de", "modeles": ["midi"] } },
+                    { "cle": "a", "nom": "A", "couleur": "rouge", "routines": { "langue": "de", "modeles": ["midi",
+                        { "modele": "devoirs", "jours": ["SAMEDI"], "debut": "16:00", "fin": "15:00" }] } },
                     { "cle": "a", "nom": "B", "couleur": "#000000" } ],
                   "activites": [
                     { "titre": "Judo", "type": "KARATE", "membres": ["zz"], "jours": ["LUNDI"], "debut": "9h", "fin": "25:00" },
@@ -53,7 +54,9 @@ class FamilySeedReaderTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("membres[0].couleur : « rouge »")
                 .hasMessageContaining("membres[0].routines.langue : « de »")
-                .hasMessageContaining("modèle « midi » inconnu")
+                .hasMessageContaining("membres[0].routines.modeles[0] : modèle « midi » inconnu (attendu : matin, soir, devoirs)")
+                .hasMessageContaining("membres[0].routines.modeles[1].jours : « SAMEDI » n'est pas un jour")
+                .hasMessageContaining("membres[0].routines.modeles[1].fin : 15:00 doit suivre le début (16:00)")
                 .hasMessageContaining("membres[1].cle : « a » est déjà utilisée")
                 .hasMessageContaining("activites[0].type : « KARATE » inconnu")
                 .hasMessageContaining("clé de membre « zz » inconnue")

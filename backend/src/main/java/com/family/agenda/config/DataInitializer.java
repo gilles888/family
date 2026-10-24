@@ -101,7 +101,13 @@ public class DataInitializer implements CommandLineRunner {
                 memberService.updateAvatar(id, m.avatar());
             }
             if (m.routines() != null && m.routines().modeles() != null) {
-                m.routines().modeles().forEach(modele -> routineService.applyTemplate(id, modele, m.routines().langue()));
+                for (FamilySeed.Modele modele : m.routines().modeles()) {
+                    Set<DayOfWeek> jours = modele.jours() == null ? null : modele.jours().stream().map(DayOfWeek::valueOf)
+                            .collect(Collectors.toCollection(() -> EnumSet.noneOf(DayOfWeek.class)));
+                    routineService.applyTemplate(id, modele.modele(), m.routines().langue(), jours,
+                            modele.debut() == null ? null : LocalTime.parse(modele.debut()),
+                            modele.fin() == null ? null : LocalTime.parse(modele.fin()));
+                }
             }
         }
         List<FamilySeed.Activite> activites = family.activites() == null ? List.of() : family.activites();

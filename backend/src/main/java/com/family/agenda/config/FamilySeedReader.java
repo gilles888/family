@@ -86,9 +86,30 @@ public class FamilySeedReader {
                 if (!LANGUES.contains(m.routines().langue())) {
                     errors.add(at + ".routines.langue : « %s » (attendu : fr ou nl)".formatted(m.routines().langue()));
                 }
-                for (String modele : m.routines().modeles() == null ? List.<String>of() : m.routines().modeles()) {
-                    if (RoutineTemplates.find(modele).isEmpty()) {
-                        errors.add(at + ".routines.modeles : modèle « %s » inconnu (attendu : %s)".formatted(modele, RoutineTemplates.ALL.stream().map(RoutineTemplates.Template::id).collect(Collectors.joining(", "))));
+                List<FamilySeed.Modele> modeles = m.routines().modeles() == null ? List.of() : m.routines().modeles();
+                for (int k = 0; k < modeles.size(); k++) {
+                    FamilySeed.Modele modele = modeles.get(k);
+                    String atModele = at + ".routines.modeles[%d]".formatted(k);
+                    if (modele == null || RoutineTemplates.find(modele.modele()).isEmpty()) {
+                        errors.add(atModele + " : modèle « %s » inconnu (attendu : %s)".formatted(
+                                modele == null ? null : modele.modele(), RoutineTemplates.ALL.stream()
+                                        .map(RoutineTemplates.Template::id).collect(Collectors.joining(", "))));
+                        continue;
+                    }
+                    if (modele.jours() != null) {
+                        if (modele.jours().isEmpty()) {
+                            errors.add(atModele + ".jours : au moins un jour (MONDAY … SUNDAY)");
+                        }
+                        modele.jours().stream().filter(j -> j == null || !isEnum(DayOfWeek.class, j)).forEach(j ->
+                                errors.add(atModele + ".jours : « %s » n'est pas un jour (MONDAY … SUNDAY)".formatted(j)));
+                    }
+                    LocalTime debut = time(modele.debut(), atModele + ".debut", false, errors);
+                    LocalTime fin = time(modele.fin(), atModele + ".fin", false, errors);
+                    RoutineTemplates.Template template = RoutineTemplates.find(modele.modele()).orElseThrow();
+                    LocalTime from = debut != null ? debut : template.debut();
+                    LocalTime to = fin != null ? fin : template.fin();
+                    if ((debut != null || fin != null) && !to.isAfter(from)) {
+                        errors.add(atModele + ".fin : %s doit suivre le début (%s)".formatted(to, from));
                     }
                 }
             }

@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Clock;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -74,10 +76,20 @@ class FamilySeedTest {
         LocalDate today = LocalDate.now(clock);
 
         assertThat(routineService.findForMember(members().get("Chloé").id(), today)).extracting(RoutineDTO::nom)
-                .containsExactly("Mijn ochtendroutine", "Mijn avondroutine");
+                .containsExactly("Mijn ochtendroutine", "Mijn avondroutine", "Mijn huiswerk");
         assertThat(routineService.findForMember(members().get("Dylan").id(), today)).extracting(RoutineDTO::nom)
                 .containsExactly("Ma routine du matin");
         assertThat(routineService.findForMember(members().get("Alice").id(), today)).isEmpty();
+    }
+
+    @Test
+    void modeleAvecSesPropresJoursEtHoraires() {
+        RoutineDTO devoirs = routineService.findForMember(members().get("Chloé").id(), LocalDate.now(clock)).getLast();
+
+        assertThat(devoirs.jours()).containsExactlyInAnyOrder(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+        assertThat(devoirs.heureDebut()).isEqualTo(LocalTime.of(14, 30));
+        assertThat(devoirs.heureFin()).isEqualTo(LocalTime.of(15, 30));
+        assertThat(devoirs.etapes()).hasSize(8);
     }
 
     @Test
