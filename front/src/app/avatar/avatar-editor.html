@@ -21,10 +21,18 @@
       (cdkDropListEntered)="overStage.set(true)"
       (cdkDropListExited)="overStage.set(false)"
       [class.targeted]="dragged()?.kind === 'option'"
-      [style.--zone-left]="dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['left'] : null"
-      [style.--zone-top]="dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['top'] : null"
-      [style.--zone-width]="dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['width'] : null"
-      [style.--zone-height]="dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['height'] : null"
+      [style.--zone-left]="
+        dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['left'] : null
+      "
+      [style.--zone-top]="
+        dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['top'] : null
+      "
+      [style.--zone-width]="
+        dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['width'] : null
+      "
+      [style.--zone-height]="
+        dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['height'] : null
+      "
     >
       <app-avatar [config]="shown()" [size]="null" [round]="false" [label]="member.nom ?? ''" />
       @if (dragged(); as d) {
@@ -46,47 +54,72 @@
           [title]="wornLabels[w.field]"
         >
           <div *cdkDragPreview class="worn-preview">
-            <app-avatar [config]="config()" [only]="[w.field]" [size]="96" [round]="false" [viewBox]="zoneViewBox(w.zone)" />
+            <app-avatar
+              [config]="config()"
+              [only]="[w.field]"
+              [size]="96"
+              [round]="false"
+              [viewBox]="zoneViewBox(w.zone)"
+            />
           </div>
           <span *cdkDragPlaceholder class="placeholder-hidden"></span>
         </div>
       }
     </div>
-    <button type="button" matButton="tonal" class="surprise" (click)="surprise()">
-      <span aria-hidden="true">🎲</span>
-      <ng-container i18n="@@avatarEditor.surprise">Surprise !</ng-container>
-    </button>
-
-    @if (ideas().length) {
-      <button type="button" matButton="tonal" class="stage-button" [attr.aria-expanded]="ideasOpen()" (click)="ideasOpen.set(!ideasOpen())">
-        <mat-icon>auto_awesome</mat-icon>
-        <ng-container i18n="@@avatarEditor.ideas">Idées pour {{ themeName() }}</ng-container>
+    <div class="stage-actions">
+      <button type="button" matButton="tonal" class="surprise" (click)="surprise()">
+        <span aria-hidden="true">🎲</span>
+        <ng-container i18n="@@avatarEditor.surprise">Surprise !</ng-container>
       </button>
-      @if (ideasOpen()) {
-        <ul class="ideas">
-          @for (idea of ideas(); track $index) {
-            <li>
-              <button type="button" class="idea" (click)="applyIdea(idea.idea)">
-                <app-avatar [config]="idea.config" [member]="member" [size]="null" [round]="false" label="" />
-                <span class="idea-title">{{ idea.title }}</span>
-                <span class="idea-price">
-                  @if (idea.price > 0) {
-                    <span>🪙 {{ idea.price }}</span>
-                  } @else {
-                    <mat-icon>check_circle</mat-icon>
-                  }
-                </span>
-              </button>
-            </li>
-          }
-        </ul>
+      @if (ideas().length) {
+        <button
+          type="button"
+          matButton="tonal"
+          class="stage-button"
+          [attr.aria-expanded]="ideasOpen()"
+          (click)="ideasOpen.set(!ideasOpen())"
+        >
+          <mat-icon>auto_awesome</mat-icon>
+          <ng-container i18n="@@avatarEditor.ideas">Idées pour {{ themeName() }}</ng-container>
+        </button>
       }
-    }
+      <button
+        type="button"
+        matButton="tonal"
+        class="stage-button"
+        [attr.aria-expanded]="outfitsOpen()"
+        (click)="outfitsOpen.set(!outfitsOpen())"
+      >
+        <mat-icon>checkroom</mat-icon>
+        <ng-container i18n="@@avatarEditor.themeOutfits">Mes tenues de thème</ng-container>
+      </button>
+    </div>
 
-    <button type="button" matButton="tonal" class="stage-button" [attr.aria-expanded]="outfitsOpen()" (click)="outfitsOpen.set(!outfitsOpen())">
-      <mat-icon>checkroom</mat-icon>
-      <ng-container i18n="@@avatarEditor.themeOutfits">Mes tenues de thème</ng-container>
-    </button>
+    @if (ideas().length && ideasOpen()) {
+      <ul class="ideas">
+        @for (idea of ideas(); track $index) {
+          <li>
+            <button type="button" class="idea" (click)="applyIdea(idea.idea)">
+              <app-avatar
+                [config]="idea.config"
+                [member]="member"
+                [size]="null"
+                [round]="false"
+                label=""
+              />
+              <span class="idea-title">{{ idea.title }}</span>
+              <span class="idea-price">
+                @if (idea.price > 0) {
+                  <span>🪙 {{ idea.price }}</span>
+                } @else {
+                  <mat-icon>check_circle</mat-icon>
+                }
+              </span>
+            </button>
+          </li>
+        }
+      </ul>
+    }
     @if (outfitsOpen()) {
       <div class="outfits">
         <mat-form-field subscriptSizing="dynamic">
@@ -98,19 +131,47 @@
           </mat-select>
         </mat-form-field>
         @if (savedOutfit()) {
-          <app-avatar [config]="savedConfig()" [member]="member" [size]="64" [round]="false" label="" />
+          <app-avatar
+            [config]="savedConfig()"
+            [member]="member"
+            [size]="64"
+            [round]="false"
+            label=""
+          />
           <span class="outfit-actions">
-            <button type="button" matButton (click)="tryOutfit()" i18n="@@avatarEditor.outfitTry">Essayer</button>
-            <button type="button" matButton (click)="removeOutfit()" i18n="@@avatarEditor.outfitRemove">Supprimer</button>
+            <button type="button" matButton (click)="tryOutfit()" i18n="@@avatarEditor.outfitTry">
+              Essayer
+            </button>
+            <button
+              type="button"
+              matButton
+              (click)="removeOutfit()"
+              i18n="@@avatarEditor.outfitRemove"
+            >
+              Supprimer
+            </button>
           </span>
         }
-        <button type="button" matButton="filled" [disabled]="missing().length > 0" (click)="saveOutfit()">
-          <ng-container i18n="@@avatarEditor.outfitSave">Enregistrer ma tenue {{ themeLabel() }}</ng-container>
+        <button
+          type="button"
+          matButton="filled"
+          [disabled]="missing().length > 0"
+          (click)="saveOutfit()"
+        >
+          <ng-container i18n="@@avatarEditor.outfitSave"
+            >Enregistrer ma tenue {{ themeLabel() }}</ng-container
+          >
         </button>
         @if (missing().length > 0) {
-          <p class="hint" i18n="@@avatarEditor.outfitMissing">Achète d'abord les articles à essayer.</p>
+          <p class="hint" i18n="@@avatarEditor.outfitMissing">
+            Achète d'abord les articles à essayer.
+          </p>
         }
-        <mat-slide-toggle [checked]="outfitAuto()" (change)="setOutfitAuto($event.checked)" i18n="@@avatarEditor.outfitAuto">
+        <mat-slide-toggle
+          [checked]="outfitAuto()"
+          (change)="setOutfitAuto($event.checked)"
+          i18n="@@avatarEditor.outfitAuto"
+        >
           Porter automatiquement ma tenue de thème
         </mat-slide-toggle>
       </div>
@@ -121,7 +182,12 @@
     @if (dragged()?.kind === 'worn') {
       <p class="drop-hint" i18n="@@avatarEditor.dropToRemove">Lâche ici pour l'enlever</p>
     }
-    <div class="tabs" role="tablist" i18n-aria-label="@@avatarEditor.wardrobe" aria-label="Garde-robe">
+    <div
+      class="tabs"
+      role="tablist"
+      i18n-aria-label="@@avatarEditor.wardrobe"
+      aria-label="Garde-robe"
+    >
       @for (c of categories; track c.id) {
         <button
           type="button"
@@ -137,9 +203,20 @@
       }
     </div>
 
-    <div class="filters" role="group" i18n-aria-label="@@shop.filter.label" aria-label="Filtrer les articles">
+    <div
+      class="filters"
+      role="group"
+      i18n-aria-label="@@shop.filter.label"
+      aria-label="Filtrer les articles"
+    >
       @for (f of filters; track f.id) {
-        <button type="button" class="filter" [class.active]="filter() === f.id" [attr.aria-pressed]="filter() === f.id" (click)="filter.set(f.id)">
+        <button
+          type="button"
+          class="filter"
+          [class.active]="filter() === f.id"
+          [attr.aria-pressed]="filter() === f.id"
+          (click)="filter.set(f.id)"
+        >
           <mat-icon>{{ f.icon }}</mat-icon>
           <span>{{ f.label }}</span>
         </button>
@@ -184,7 +261,13 @@
                   @if (option.none) {
                     <mat-icon class="none">block</mat-icon>
                   } @else {
-                    <app-avatar [config]="thumbs().get(option.key)" [member]="member" [size]="null" [round]="false" [viewBox]="group.viewBox ?? null" />
+                    <app-avatar
+                      [config]="thumbs().get(option.key)"
+                      [member]="member"
+                      [size]="null"
+                      [round]="false"
+                      [viewBox]="group.viewBox ?? null"
+                    />
                   }
                   @if (option.theme && option.theme === activeTheme()) {
                     <span class="special" i18n="@@shop.special">Spécial {{ themeName() }}</span>
@@ -193,7 +276,9 @@
                     <span class="veil" aria-hidden="true"></span>
                     <span class="lock" aria-hidden="true"><mat-icon>lock</mat-icon></span>
                     <span class="price-badge">🪙 {{ price(option) }}</span>
-                    <span class="sr" i18n="@@shop.notOwned">À acheter : {{ price(option) }} 🪙</span>
+                    <span class="sr" i18n="@@shop.notOwned"
+                      >À acheter : {{ price(option) }} 🪙</span
+                    >
                   }
                 </button>
               } @else {
@@ -225,7 +310,13 @@
 
 <mat-dialog-actions align="end">
   <button type="button" matButton (click)="cancel()" i18n="@@common.cancel">Annuler</button>
-  <button type="button" matButton="filled" class="save" (click)="saveOrBuy()" [disabled]="saving() || (!isParent() && lacking() > 0)">
+  <button
+    type="button"
+    matButton="filled"
+    class="save"
+    (click)="saveOrBuy()"
+    [disabled]="saving() || (!isParent() && lacking() > 0)"
+  >
     <mat-icon>{{ saveIcon() }}</mat-icon>
     @if (missing().length === 0) {
       <ng-container i18n="@@common.save">Enregistrer</ng-container>

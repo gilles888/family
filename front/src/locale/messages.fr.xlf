@@ -125,7 +125,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">227,228</context>
+          <context context-type="linenumber">312,314</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
@@ -192,7 +192,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">231,232</context>
+          <context context-type="linenumber">322,323</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
@@ -1106,126 +1106,126 @@
         <source>Surprise !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">57,60</context>
+          <context context-type="linenumber">72,74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.ideas" datatype="html">
         <source>Idées pour <x id="INTERPOLATION" equiv-text="{{ themeName() }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">63,64</context>
+          <context context-type="linenumber">83,84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.themeOutfits" datatype="html">
         <source>Mes tenues de thème</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">88,90</context>
+          <context context-type="linenumber">94,96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.outfitTheme" datatype="html">
         <source>Thème</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">93,94</context>
+          <context context-type="linenumber">126,127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.outfitTry" datatype="html">
-        <source>Essayer</source>
+        <source> Essayer </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">103,104</context>
+          <context context-type="linenumber">143,145</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.outfitRemove" datatype="html">
-        <source>Supprimer</source>
+        <source> Supprimer </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">104,107</context>
+          <context context-type="linenumber">151,153</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.outfitSave" datatype="html">
         <source>Enregistrer ma tenue <x id="INTERPOLATION" equiv-text="{{ themeLabel() }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">108,109</context>
+          <context context-type="linenumber">162,163</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.outfitMissing" datatype="html">
-        <source>Achète d&apos;abord les articles à essayer.</source>
+        <source> Achète d&apos;abord les articles à essayer. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">111,113</context>
+          <context context-type="linenumber">167,170</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.outfitAuto" datatype="html">
         <source> Porter automatiquement ma tenue de thème </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">114,116</context>
+          <context context-type="linenumber">175,177</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.dropToRemove" datatype="html">
         <source>Lâche ici pour l&apos;enlever</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">122,124</context>
+          <context context-type="linenumber">183,187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.wardrobe" datatype="html">
         <source>Garde-robe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">124,125</context>
+          <context context-type="linenumber">189,191</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.filter.label" datatype="html">
         <source>Filtrer les articles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">140,141</context>
+          <context context-type="linenumber">210,212</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.filter.empty" datatype="html">
         <source>Rien ici pour le moment.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">151,153</context>
+          <context context-type="linenumber">228,230</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.special" datatype="html">
         <source>Spécial <x id="INTERPOLATION" equiv-text="{{ themeName() }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">190,191</context>
+          <context context-type="linenumber">273,274</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.notOwned" datatype="html">
         <source>À acheter : <x id="INTERPOLATION" equiv-text="{{ price(option) }}"/> 🪙</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">196,197</context>
+          <context context-type="linenumber">280,281</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.giftAndSave" datatype="html">
         <source>Offrir et enregistrer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">233,234</context>
+          <context context-type="linenumber">324,325</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.buyFor" datatype="html">
         <source>Acheter pour <x id="INTERPOLATION" equiv-text="{{ totalPrice() }}"/> 🪙</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">235,236</context>
+          <context context-type="linenumber">326,327</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.lacking" datatype="html">
         <source>Il te manque <x id="INTERPOLATION" equiv-text="{{ lacking() }}"/> 🪙</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">237,238</context>
+          <context context-type="linenumber">328,329</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.filter.all" datatype="html">

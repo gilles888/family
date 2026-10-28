@@ -142,7 +142,7 @@
 
 .lock {
   position: absolute;
-  top: 3px;
+  bottom: 3px;
   right: 3px;
   display: grid;
   place-items: center;
@@ -163,9 +163,8 @@
 .price-badge {
   position: absolute;
   bottom: 3px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 1px 8px;
+  left: 3px;
+  padding: 1px 7px;
   border-radius: 12px;
   background: #ffd54f;
   color: #3e2723;
@@ -177,7 +176,7 @@
   position: absolute;
   top: 3px;
   left: 3px;
-  max-width: calc(100% - 32px);
+  right: 3px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -195,4 +194,57 @@
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+// Boutons du personnage regroupés ; les panneaux (idées, tenues) s'ouvrent dessous
+.stage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.stage-actions .surprise,
+.stage-actions .stage-button {
+  min-height: 44px;
+  font: var(--mat-sys-label-large);
+}
+
+.stage {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+// Onglets défilants (neuf catégories) plutôt que sur plusieurs lignes
+.tabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: none;
+  grid-auto-columns: minmax(60px, 1fr);
+  overflow-x: auto;
+}
+
+// Téléphone en portrait : tout défile, le personnage est plus petit, la garde-robe garde de la place
+@media (max-width: 599.98px), (max-width: 899.98px) and (orientation: portrait) {
+  .content {
+    display: block;
+    overflow-y: auto;
+  }
+
+  .stage {
+    overflow: visible;
+    margin-bottom: 12px;
+  }
+
+  .preview {
+    width: min(100%, 26dvh, 260px);
+  }
+
+  .wardrobe {
+    height: 64dvh;
+  }
+
+  .bank-row {
+    padding: 0 16px 6px;
+  }
 }
