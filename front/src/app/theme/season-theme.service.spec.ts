@@ -5,13 +5,34 @@ import { FamilyMemberDTO, MeDTO, ThemeSettingsDTO, provideApi } from '../api-cli
 import { provideFakeAuth } from '../auth/testing';
 import { SeasonThemeService } from './season-theme.service';
 
-const alice: FamilyMemberDTO = { id: 4, nom: 'Alice', couleur: '#e91e63', dateNaissance: '2017-10-12' };
-const AUTO: ThemeSettingsDTO = { mode: 'AUTO', anniversairesActifs: true, enfantsPeuventChoisir: false };
+const alice: FamilyMemberDTO = {
+  id: 4,
+  nom: 'Alice',
+  couleur: '#e91e63',
+  dateNaissance: '2017-10-12',
+};
+const AUTO: ThemeSettingsDTO = {
+  mode: 'AUTO',
+  anniversairesActifs: true,
+  enfantsPeuventChoisir: false,
+};
 
-function demarrer(role: MeDTO.RoleEnum | null, aujourdhui: string, reglage: ThemeSettingsDTO = AUTO, membres = [alice]) {
+function demarrer(
+  role: MeDTO.RoleEnum | null,
+  aujourdhui: string,
+  reglage: ThemeSettingsDTO = AUTO,
+  membres = [alice],
+) {
   const [y, m, d] = aujourdhui.split('-').map(Number);
   vi.useFakeTimers({ now: new Date(y, m - 1, d, 10), toFake: ['Date'] });
-  TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting(), provideApi(''), provideFakeAuth(role)] });
+  TestBed.configureTestingModule({
+    providers: [
+      provideHttpClient(),
+      provideHttpClientTesting(),
+      provideApi(''),
+      provideFakeAuth(role),
+    ],
+  });
   const service = TestBed.inject(SeasonThemeService);
   const backend = TestBed.inject(HttpTestingController);
   TestBed.tick();
@@ -63,23 +84,41 @@ describe('SeasonThemeService', () => {
 
   it('thème forcé par la famille : il passe avant la date et la préférence de l’appareil', () => {
     localStorage.setItem('famille.theme', 'hiver');
-    const { service } = demarrer('PARENT', '2026-10-20', { ...AUTO, mode: 'FORCE', theme: 'NOEL', jusqua: '2026-12-31' });
+    const { service } = demarrer('PARENT', '2026-10-20', {
+      ...AUTO,
+      mode: 'FORCE',
+      theme: 'NOEL',
+      jusqua: '2026-12-31',
+    });
     expect(service.actif()).toMatchObject({ id: 'noel', phase: 'jourJ' });
   });
 
   it('thème forcé sans date de fin', () => {
-    const { service } = demarrer('ENFANT', '2026-10-20', { ...AUTO, mode: 'FORCE', theme: 'SAINT_NICOLAS' });
+    const { service } = demarrer('ENFANT', '2026-10-20', {
+      ...AUTO,
+      mode: 'FORCE',
+      theme: 'SAINT_NICOLAS',
+    });
     expect(service.actif().id).toBe('saint-nicolas');
   });
 
   it('anniversaire forcé : avec le membre choisi', () => {
-    const { service } = demarrer('ENFANT', '2026-04-01', { ...AUTO, mode: 'FORCE', theme: 'ANNIVERSAIRE', membreId: 4 });
+    const { service } = demarrer('ENFANT', '2026-04-01', {
+      ...AUTO,
+      mode: 'FORCE',
+      theme: 'ANNIVERSAIRE',
+      membreId: 4,
+    });
     expect(service.actif()).toMatchObject({ id: 'anniversaire', membres: [alice] });
   });
 
   it('désactivé : thème neutre, même avec une préférence d’appareil', () => {
     localStorage.setItem('famille.theme', 'hiver');
-    const { service } = demarrer('PARENT', '2026-10-20', { ...AUTO, mode: 'OFF', enfantsPeuventChoisir: true });
+    const { service } = demarrer('PARENT', '2026-10-20', {
+      ...AUTO,
+      mode: 'OFF',
+      enfantsPeuventChoisir: true,
+    });
     expect(service.actif().id).toBe('neutre');
   });
 

@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, LOCALE_ID, computed, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  LOCALE_ID,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -38,17 +47,26 @@ type Mode = 'AUTO' | 'FORCE' | 'OFF';
     <h2 mat-dialog-title i18n="@@theme.family.title">Thème de la famille</h2>
     <mat-dialog-content class="content">
       <p class="info" role="status">
-        <ng-container i18n="@@theme.family.now">Thème du moment en automatique : {{ moment() }}</ng-container>
+        <ng-container i18n="@@theme.family.now"
+          >Thème du moment en automatique : {{ moment() }}</ng-container
+        >
         @if (prochain(); as p) {
           —
           <ng-container i18n="@@theme.family.next">{p.jours, plural,
             =0 {prochain anniversaire : {{ p.noms }} aujourd'hui}
             =1 {prochain anniversaire : {{ p.noms }} demain}
-            other {prochain anniversaire : {{ p.noms }} dans {{ p.jours }} jours}}</ng-container>
+            other {prochain anniversaire : {{ p.noms }} dans {{ p.jours }} jours}
+          }</ng-container>
         }
       </p>
 
-      <mat-radio-group class="modes" [ngModel]="mode()" (ngModelChange)="mode.set($event)" aria-label="Mode" i18n-aria-label="@@theme.family.mode">
+      <mat-radio-group
+        class="modes"
+        [ngModel]="mode()"
+        (ngModelChange)="mode.set($event)"
+        aria-label="Mode"
+        i18n-aria-label="@@theme.family.mode"
+      >
         <mat-radio-button value="AUTO" i18n="@@theme.family.auto">Automatique</mat-radio-button>
         <mat-radio-button value="FORCE" i18n="@@theme.family.force">Thème choisi</mat-radio-button>
         <mat-radio-button value="OFF" i18n="@@theme.family.off">Désactivé</mat-radio-button>
@@ -77,23 +95,47 @@ type Mode = 'AUTO' | 'FORCE' | 'OFF';
 
         <mat-form-field>
           <mat-label i18n="@@theme.family.until">Jusqu'au (facultatif)</mat-label>
-          <input matInput [matDatepicker]="finPicker" [min]="aujourdhui" [ngModel]="jusqua()" (ngModelChange)="jusqua.set($event)" />
+          <input
+            matInput
+            [matDatepicker]="finPicker"
+            [min]="aujourdhui"
+            [ngModel]="jusqua()"
+            (ngModelChange)="jusqua.set($event)"
+          />
           <mat-datepicker-toggle matIconSuffix [for]="finPicker" />
           <mat-datepicker #finPicker />
-          <mat-hint i18n="@@theme.family.untilHint">Ensuite, retour automatique au thème de la date.</mat-hint>
+          <mat-hint i18n="@@theme.family.untilHint"
+            >Ensuite, retour automatique au thème de la date.</mat-hint
+          >
         </mat-form-field>
       }
 
-      <mat-checkbox [ngModel]="anniversairesActifs()" (ngModelChange)="anniversairesActifs.set($event)" i18n="@@theme.family.birthdays">
+      <mat-checkbox
+        [ngModel]="anniversairesActifs()"
+        (ngModelChange)="anniversairesActifs.set($event)"
+        i18n="@@theme.family.birthdays"
+      >
         Fêter les anniversaires automatiquement
       </mat-checkbox>
-      <mat-checkbox [ngModel]="enfantsPeuventChoisir()" (ngModelChange)="enfantsPeuventChoisir.set($event)" i18n="@@theme.family.children">
+      <mat-checkbox
+        [ngModel]="enfantsPeuventChoisir()"
+        (ngModelChange)="enfantsPeuventChoisir.set($event)"
+        i18n="@@theme.family.children"
+      >
         Les enfants peuvent choisir leur thème sur leur appareil
       </mat-checkbox>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button matButton type="button" mat-dialog-close i18n="@@common.cancel">Annuler</button>
-      <button matButton="filled" type="button" [disabled]="!valide() || saving()" (click)="save()" i18n="@@common.save">Enregistrer</button>
+      <button
+        matButton="filled"
+        type="button"
+        [disabled]="!valide() || saving()"
+        (click)="save()"
+        i18n="@@common.save"
+      >
+        Enregistrer
+      </button>
     </mat-dialog-actions>
   `,
   styles: `
@@ -128,16 +170,22 @@ export class FamilyThemeDialog {
 
   private readonly depart = this.service.reglage();
   protected readonly mode = signal<Mode>(this.depart?.mode ?? 'AUTO');
-  protected readonly theme = signal<SeasonId | null>(this.depart?.theme ? toSeasonId(this.depart.theme) : null);
+  protected readonly theme = signal<SeasonId | null>(
+    this.depart?.theme ? toSeasonId(this.depart.theme) : null,
+  );
   protected readonly membreId = signal<number | null>(this.depart?.membreId ?? null);
-  protected readonly jusqua = signal<Date | null>(this.depart?.jusqua ? parseIsoDate(this.depart.jusqua) : null);
+  protected readonly jusqua = signal<Date | null>(
+    this.depart?.jusqua ? parseIsoDate(this.depart.jusqua) : null,
+  );
   protected readonly anniversairesActifs = signal(this.depart?.anniversairesActifs ?? true);
   protected readonly enfantsPeuventChoisir = signal(this.depart?.enfantsPeuventChoisir ?? false);
   /** Vignette survolée (aperçu provisoire). */
   protected readonly survol = signal<ThemeChoice | null>(null);
 
   protected readonly valide = computed(
-    () => this.mode() !== 'FORCE' || (this.theme() !== null && (this.theme() !== 'anniversaire' || this.membreId() !== null)),
+    () =>
+      this.mode() !== 'FORCE' ||
+      (this.theme() !== null && (this.theme() !== 'anniversaire' || this.membreId() !== null)),
   );
 
   protected readonly moment = computed(() => {
@@ -150,7 +198,9 @@ export class FamilyThemeDialog {
     if (!p) {
       return null;
     }
-    const noms = new Intl.ListFormat(this.locale, { style: 'long', type: 'conjunction' }).format(p.membres.map((m) => m.nom ?? ''));
+    const noms = new Intl.ListFormat(this.locale, { style: 'long', type: 'conjunction' }).format(
+      p.membres.map((m) => m.nom ?? ''),
+    );
     return { noms, jours: p.jours };
   });
 
@@ -159,8 +209,18 @@ export class FamilyThemeDialog {
     effect(() => {
       const survol = this.survol();
       const mode = this.mode();
-      const cible: ThemeChoice | null = survol && mode === 'FORCE' ? survol : mode === 'OFF' ? 'neutre' : mode === 'FORCE' ? this.theme() : 'auto';
-      const membre = this.membres().find((m) => m.id === this.membreId()) ?? this.membres().find((m) => m.dateNaissance) ?? this.membres()[0];
+      const cible: ThemeChoice | null =
+        survol && mode === 'FORCE'
+          ? survol
+          : mode === 'OFF'
+            ? 'neutre'
+            : mode === 'FORCE'
+              ? this.theme()
+              : 'auto';
+      const membre =
+        this.membres().find((m) => m.id === this.membreId()) ??
+        this.membres().find((m) => m.dateNaissance) ??
+        this.membres()[0];
       this.service.previsualiser(cible ?? 'auto', membre);
     });
     // Fermer sans enregistrer annule l'aperçu

@@ -8,7 +8,10 @@ import { SeasonId } from './seasons';
 
 const point = (cx: number, cy: number, r: number, deg: number): [number, number] => {
   const a = (deg * Math.PI) / 180;
-  return [Math.round((cx + r * Math.cos(a)) * 10) / 10, Math.round((cy + r * Math.sin(a)) * 10) / 10];
+  return [
+    Math.round((cx + r * Math.cos(a)) * 10) / 10,
+    Math.round((cy + r * Math.sin(a)) * 10) / 10,
+  ];
 };
 
 const branche = (deg: number, color: string): Shape[] => {
@@ -71,7 +74,10 @@ export const SEASON_PICTOS: Record<SeasonId, Shape[]> = {
   ],
   // masque
   carnaval: [
-    path('M18 88 Q100 30 182 88 Q178 150 134 142 Q116 132 100 124 Q84 132 66 142 Q22 150 18 88Z', '#8e24aa'),
+    path(
+      'M18 88 Q100 30 182 88 Q178 150 134 142 Q116 132 100 124 Q84 132 66 142 Q22 150 18 88Z',
+      '#8e24aa',
+    ),
     path('M18 88 Q100 30 182 88', 'none', { stroke: '#ffd54f', sw: 6 }),
     ellipse(64, 104, 22, 15, '#fffde7'),
     ellipse(136, 104, 22, 15, '#fffde7'),
@@ -88,7 +94,11 @@ export const SEASON_PICTOS: Record<SeasonId, Shape[]> = {
     circle(100, 62, 9, '#80deea'),
   ],
   // soleil
-  ete: [...rayons(), circle(100, 100, 42, '#ffb300'), circle(100, 100, 42, 'none', { stroke: '#ff8f00', sw: 5 })],
+  ete: [
+    ...rayons(),
+    circle(100, 100, 42, '#ffb300'),
+    circle(100, 100, 42, 'none', { stroke: '#ff8f00', sw: 5 }),
+  ],
   // cartable
   rentree: [
     path('M72 70 Q100 18 128 70', 'none', { stroke: '#0d47a1', sw: 10 }),
@@ -111,7 +121,12 @@ export const SEASON_PICTOS: Record<SeasonId, Shape[]> = {
     line('M100 92 L142 66 M100 120 L148 98 M100 92 L58 66 M100 120 L52 98', '#8d3a0c', 5),
   ],
   // flocon
-  hiver: [...branche(-90, '#29b6f6'), ...branche(-30, '#29b6f6'), ...branche(30, '#29b6f6'), circle(100, 100, 10, '#e1f5fe')],
+  hiver: [
+    ...branche(-90, '#29b6f6'),
+    ...branche(-30, '#29b6f6'),
+    ...branche(30, '#29b6f6'),
+    circle(100, 100, 10, '#e1f5fe'),
+  ],
   // gâteau
   anniversaire: [
     rect(76, 40, 9, 30, 3, '#4fc3f7'),
@@ -119,7 +134,10 @@ export const SEASON_PICTOS: Record<SeasonId, Shape[]> = {
     ellipse(80.5, 32, 7, 11, '#ffb300'),
     ellipse(119.5, 32, 7, 11, '#ffb300'),
     rect(46, 70, 108, 44, 10, '#f48fb1'),
-    path('M46 92 Q60 108 74 92 Q88 108 102 92 Q116 108 130 92 Q144 108 154 92 L154 80 L46 80Z', '#fff8e1'),
+    path(
+      'M46 92 Q60 108 74 92 Q88 108 102 92 Q116 108 130 92 Q144 108 154 92 L154 80 L46 80Z',
+      '#fff8e1',
+    ),
     rect(34, 112, 132, 52, 10, '#ce93d8'),
     rect(22, 164, 156, 12, 6, '#bdbdbd'),
     circle(60, 138, 5, '#fff8e1'),

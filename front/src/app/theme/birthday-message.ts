@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, LOCALE_ID, computed, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  LOCALE_ID,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Avatar } from '../avatar/avatar';
 import { ThemeActif } from './season-theme.service';
@@ -23,17 +30,22 @@ import { ageAnniversaire } from './seasons';
       @if (theme().phase === 'approche') {
         <ng-container i18n="@@season.birthday.soon">{restants(), plural,
           =1 {Plus que 1 dodo avant l'anniversaire de {{ noms() }} !}
-          other {Plus que {{ restants() }} dodos avant l'anniversaire de {{ noms() }} !}}</ng-container>
+          other {Plus que {{ restants() }} dodos avant l'anniversaire de {{ noms() }} !}
+        }</ng-container>
       } @else if (moi() && !plusieurs()) {
         <ng-container i18n="@@season.birthday.me">{age(), plural,
           =1 {Joyeux anniversaire {{ noms() }} ! Tu as 1 an aujourd'hui 🎉}
-          other {Joyeux anniversaire {{ noms() }} ! Tu as {{ age() }} ans aujourd'hui 🎉}}</ng-container>
+          other {Joyeux anniversaire {{ noms() }} ! Tu as {{ age() }} ans aujourd'hui 🎉}
+        }</ng-container>
       } @else if (!plusieurs()) {
         <ng-container i18n="@@season.birthday.one">{age(), plural,
           =1 {C'est l'anniversaire de {{ noms() }} aujourd'hui : 1 an ! 🎂}
-          other {C'est l'anniversaire de {{ noms() }} aujourd'hui : {{ age() }} ans ! 🎂}}</ng-container>
+          other {C'est l'anniversaire de {{ noms() }} aujourd'hui : {{ age() }} ans ! 🎂}
+        }</ng-container>
       } @else {
-        <ng-container i18n="@@season.birthday.many">Joyeux anniversaire {{ noms() }} ! 🎉</ng-container>
+        <ng-container i18n="@@season.birthday.many"
+          >Joyeux anniversaire {{ noms() }} ! 🎉</ng-container
+        >
       }
     </span>
   `,
@@ -49,6 +61,7 @@ import { ageAnniversaire } from './seasons';
     }
     .text {
       font: var(--mat-sys-title-small);
+      text-wrap: balance;
     }
   `,
 })
@@ -66,7 +79,9 @@ export class BirthdayMessage {
     return membreId != null && this.membres().some((m) => m.id === membreId);
   });
   protected readonly noms = computed(() =>
-    new Intl.ListFormat(this.locale, { style: 'long', type: 'conjunction' }).format(this.membres().map((m) => m.nom ?? '')),
+    new Intl.ListFormat(this.locale, { style: 'long', type: 'conjunction' }).format(
+      this.membres().map((m) => m.nom ?? ''),
+    ),
   );
   protected readonly age = computed(() => {
     const naissance = this.membres()[0]?.dateNaissance;

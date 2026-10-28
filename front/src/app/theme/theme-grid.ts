@@ -35,7 +35,8 @@ export type ThemeChoice = ThemeId | 'auto';
           }
           @if (choix !== 'auto') {
             <span class="couleurs" [attr.data-season-preview]="choix" aria-hidden="true">
-              <span class="primaire"></span><span class="tertiaire"></span><span class="fond"></span>
+              <span class="primaire"></span><span class="tertiaire"></span
+              ><span class="fond"></span>
             </span>
           }
           <span class="nom">{{ nom(choix) }}</span>

@@ -161,11 +161,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
-          <context context-type="linenumber">20,21</context>
+          <context context-type="linenumber">35,36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">95,96</context>
+          <context context-type="linenumber">129,131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="common.save" datatype="html">
@@ -212,11 +212,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
-          <context context-type="linenumber">21,22</context>
+          <context context-type="linenumber">37,39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">96,97</context>
+          <context context-type="linenumber">137,139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="accounts.saved" datatype="html">
@@ -830,7 +830,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.agenda" datatype="html">
@@ -4315,141 +4315,141 @@
         <source>{VAR_PLURAL, plural, =1 {Plus que 1 dodo avant l&apos;anniversaire de <x id="INTERPOLATION"/> !} other {Plus que <x id="INTERPOLATION_1"/> dodos avant l&apos;anniversaire de <x id="INTERPOLATION"/> !}}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
-          <context context-type="linenumber">24,27</context>
+          <context context-type="linenumber">31,34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.birthday.me" datatype="html">
         <source>{VAR_PLURAL, plural, =1 {Joyeux anniversaire <x id="INTERPOLATION"/> ! Tu as 1 an aujourd&apos;hui 🎉} other {Joyeux anniversaire <x id="INTERPOLATION"/> ! Tu as <x id="INTERPOLATION_1"/> ans aujourd&apos;hui 🎉}}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
-          <context context-type="linenumber">28,31</context>
+          <context context-type="linenumber">36,40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.birthday.one" datatype="html">
         <source>{VAR_PLURAL, plural, =1 {C&apos;est l&apos;anniversaire de <x id="INTERPOLATION"/> aujourd&apos;hui : 1 an ! 🎂} other {C&apos;est l&apos;anniversaire de <x id="INTERPOLATION"/> aujourd&apos;hui : <x id="INTERPOLATION_1"/> ans ! 🎂}}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
-          <context context-type="linenumber">32,35</context>
+          <context context-type="linenumber">41,45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.birthday.many" datatype="html">
         <source>Joyeux anniversaire <x id="INTERPOLATION" equiv-text="{{ noms() }}"/> ! 🎉</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
-          <context context-type="linenumber">36,37</context>
+          <context context-type="linenumber">47,48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.device.title" datatype="html">
         <source>Mon thème</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
-          <context context-type="linenumber">14,16</context>
+          <context context-type="linenumber">22,24</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">28,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.device.hint" datatype="html">
         <source>Ce choix ne vaut que pour cet appareil.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
-          <context context-type="linenumber">16,17</context>
+          <context context-type="linenumber">24,26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.title" datatype="html">
         <source>Thème de la famille</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">38,39</context>
+          <context context-type="linenumber">47,48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.now" datatype="html">
         <source>Thème du moment en automatique : <x id="INTERPOLATION" equiv-text="{{ moment() }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">41,42</context>
+          <context context-type="linenumber">51,52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.next" datatype="html">
         <source>{VAR_PLURAL, plural, =0 {prochain anniversaire : <x id="INTERPOLATION"/> aujourd&apos;hui} =1 {prochain anniversaire : <x id="INTERPOLATION"/> demain} other {prochain anniversaire : <x id="INTERPOLATION"/> dans <x id="INTERPOLATION_1"/> jours}}</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">44,47</context>
+          <context context-type="linenumber">55,59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.mode" datatype="html">
         <source>Mode</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.auto" datatype="html">
         <source>Automatique</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">52,53</context>
+          <context context-type="linenumber">70,71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.force" datatype="html">
         <source>Thème choisi</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">71,72</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">61,62</context>
+          <context context-type="linenumber">79,80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.off" datatype="html">
         <source>Désactivé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">54,55</context>
+          <context context-type="linenumber">72,73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.member" datatype="html">
         <source>Membre fêté</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">69,70</context>
+          <context context-type="linenumber">87,88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.until" datatype="html">
         <source>Jusqu&apos;au (facultatif)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">79,80</context>
+          <context context-type="linenumber">97,99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.untilHint" datatype="html">
         <source>Ensuite, retour automatique au thème de la date.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">83,84</context>
+          <context context-type="linenumber">108,110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.birthdays" datatype="html">
         <source> Fêter les anniversaires automatiquement </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">88,90</context>
+          <context context-type="linenumber">118,120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.children" datatype="html">
         <source> Les enfants peuvent choisir leur thème sur leur appareil </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">91,93</context>
+          <context context-type="linenumber">125,127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.family.saved" datatype="html">
         <source>Thème enregistré.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
-          <context context-type="linenumber">189</context>
+          <context context-type="linenumber">249</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.name.halloween" datatype="html">
@@ -4540,98 +4540,98 @@
         <source>approche</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.phase.jourJ" datatype="html">
         <source>en cours</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.halloween" datatype="html">
         <source>Joyeux Halloween !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.saintNicolas" datatype="html">
         <source>Joyeuse Saint-Nicolas !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.noel" datatype="html">
         <source>Joyeux Noël !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.carnaval" datatype="html">
         <source>Joyeux carnaval !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.paques" datatype="html">
         <source>Joyeuses Pâques !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.ete" datatype="html">
         <source>Bonnes vacances !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.rentree" datatype="html">
         <source>Bonne rentrée !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.printemps" datatype="html">
         <source>Bon printemps !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.automne" datatype="html">
         <source>Bel automne !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.hiver" datatype="html">
         <source>Bon hiver !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="season.greeting.anniversaire" datatype="html">
         <source>Joyeux anniversaire !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="theme.auto" datatype="html">
         <source>Automatique</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/theme/theme-grid.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="weather.title" datatype="html">

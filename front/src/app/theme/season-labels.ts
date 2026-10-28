@@ -31,7 +31,9 @@ export function seasonLabel(id: ThemeId): string {
 }
 
 export function seasonPhaseLabel(phase: SeasonPhase): string {
-  return phase === 'approche' ? $localize`:@@season.phase.approche:approche` : $localize`:@@season.phase.jourJ:en cours`;
+  return phase === 'approche'
+    ? $localize`:@@season.phase.approche:approche`
+    : $localize`:@@season.phase.jourJ:en cours`;
 }
 
 /** Souhait affiché sur le tableau de bord pendant l'événement (anniversaire : voir BirthdayMessage). */

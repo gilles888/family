@@ -2,11 +2,26 @@ import { DOCUMENT } from '@angular/common';
 import { HttpContext } from '@angular/common/http';
 import { Injectable, OnDestroy, computed, effect, inject, signal, untracked } from '@angular/core';
 import { Observable, forkJoin, tap } from 'rxjs';
-import { FamilyMemberDTO, MembresService, ParametresService, ThemeSettingsDTO, ThemeSettingsRequest } from '../api-client';
+import {
+  FamilyMemberDTO,
+  MembresService,
+  ParametresService,
+  ThemeSettingsDTO,
+  ThemeSettingsRequest,
+} from '../api-client';
 import { AuthService } from '../auth/auth.service';
 import { SKIP_ERROR_NOTIFICATION } from '../shared/api-error.interceptor';
 import { SCHOOL_CALENDAR } from './school-calendar';
-import { SEASON_IDS, SeasonId, SeasonPhase, SeasonResult, ThemeId, prochainAnniversaire, seasonFor, toSeasonId } from './seasons';
+import {
+  SEASON_IDS,
+  SeasonId,
+  SeasonPhase,
+  SeasonResult,
+  ThemeId,
+  prochainAnniversaire,
+  seasonFor,
+  toSeasonId,
+} from './seasons';
 
 /** Le thème est un confort : une erreur de chargement ne doit jamais déranger l'utilisateur. */
 const QUIET = { context: new HttpContext().set(SKIP_ERROR_NOTIFICATION, true) };
@@ -48,17 +63,27 @@ export class SeasonThemeService implements OnDestroy {
 
   /** Thème qu'aurait l'application en mode automatique (sans thème forcé ni préférence). */
   readonly automatique = computed<SeasonResult>(() => {
-    const fetes = this.auth.isLoggedIn() && (this.reglageSignal()?.anniversairesActifs ?? true) ? this.membresSignal() : [];
+    const fetes =
+      this.auth.isLoggedIn() && (this.reglageSignal()?.anniversairesActifs ?? true)
+        ? this.membresSignal()
+        : [];
     return seasonFor(this.maintenant(), fetes, SCHOOL_CALENDAR);
   });
 
   /** Prochain anniversaire (pour l'écran de réglage). */
-  readonly prochainAnniversaire = computed(() => prochainAnniversaire(this.maintenant(), this.membresSignal()));
+  readonly prochainAnniversaire = computed(() =>
+    prochainAnniversaire(this.maintenant(), this.membresSignal()),
+  );
 
   /** La préférence de l'appareil s'applique-t-elle, et peut-elle être choisie ? */
   readonly choixAppareilPossible = computed(() => {
     const reglage = this.reglageSignal();
-    return this.auth.isLoggedIn() && reglage !== null && reglage.mode === 'AUTO' && (this.auth.isParent() || reglage.enfantsPeuventChoisir === true);
+    return (
+      this.auth.isLoggedIn() &&
+      reglage !== null &&
+      reglage.mode === 'AUTO' &&
+      (this.auth.isParent() || reglage.enfantsPeuventChoisir === true)
+    );
   });
 
   private readonly base = computed<ThemeActif>(() => {
@@ -171,7 +196,11 @@ export class SeasonThemeService implements OnDestroy {
     } else if (id === 'neutre') {
       this.apercu.set(NEUTRE);
     } else {
-      this.apercu.set({ id, phase: 'jourJ', ...(id === 'anniversaire' && membre ? { membres: [membre], joursRestants: 0 } : {}) });
+      this.apercu.set({
+        id,
+        phase: 'jourJ',
+        ...(id === 'anniversaire' && membre ? { membres: [membre], joursRestants: 0 } : {}),
+      });
     }
   }
 
@@ -184,7 +213,14 @@ export class SeasonThemeService implements OnDestroy {
   /** À minuit, le thème du jour peut changer : on relit tout, puis on reprogramme. */
   private planifierMinuit(): void {
     const maintenant = new Date();
-    const prochain = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate() + 1, 0, 0, 1);
+    const prochain = new Date(
+      maintenant.getFullYear(),
+      maintenant.getMonth(),
+      maintenant.getDate() + 1,
+      0,
+      0,
+      1,
+    );
     this.minuit = setTimeout(() => {
       this.recharger();
       this.planifierMinuit();
@@ -194,7 +230,9 @@ export class SeasonThemeService implements OnDestroy {
   private lirePreference(): ThemeId | null {
     try {
       const valeur = localStorage.getItem(CLE_PREFERENCE);
-      return valeur === 'neutre' || (SEASON_IDS as readonly string[]).includes(valeur ?? '') ? (valeur as ThemeId) : null;
+      return valeur === 'neutre' || (SEASON_IDS as readonly string[]).includes(valeur ?? '')
+        ? (valeur as ThemeId)
+        : null;
     } catch {
       return null;
     }

@@ -53,7 +53,11 @@ const ANNEES: Record<number, Record<Communaute, EntreeAnnee>> = {
 
 /** Valeurs de repli quand l'année n'est pas dans le tableau : 1er juillet au 31 août, rentrée le 1er septembre. */
 function repli(annee: number): GrandesVacances {
-  return { debut: new Date(annee, 6, 1), fin: new Date(annee, 7, 31), rentree: new Date(annee, 8, 1) };
+  return {
+    debut: new Date(annee, 6, 1),
+    fin: new Date(annee, 7, 31),
+    rentree: new Date(annee, 8, 1),
+  };
 }
 
 export function schoolCalendar(communaute: Communaute = COMMUNAUTE): SchoolCalendar {

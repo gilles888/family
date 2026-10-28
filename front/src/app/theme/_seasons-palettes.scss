@@ -7,15 +7,15 @@
 
 $seasons: (
   'halloween': (mat.$orange-palette, mat.$violet-palette),
-  'saint-nicolas': (mat.$red-palette, mat.$yellow-palette),
+  'saint-nicolas': (mat.$red-palette, mat.$orange-palette),
   'noel': (mat.$green-palette, mat.$red-palette),
   'carnaval': (mat.$magenta-palette, mat.$cyan-palette),
-  'paques': (mat.$rose-palette, mat.$yellow-palette),
-  'ete': (mat.$yellow-palette, mat.$orange-palette),
+  'paques': (mat.$rose-palette, mat.$chartreuse-palette),
+  'ete': (mat.$cyan-palette, mat.$orange-palette),
   'rentree': (mat.$violet-palette, mat.$chartreuse-palette),
   'printemps': (mat.$chartreuse-palette, mat.$cyan-palette),
-  'automne': (mat.$orange-palette, mat.$yellow-palette),
-  'hiver': (mat.$cyan-palette, mat.$blue-palette),
+  'automne': (mat.$orange-palette, mat.$red-palette),
+  'hiver': (mat.$blue-palette, mat.$cyan-palette),
   // Festif et fixe ; la couleur du membre fêté n'est utilisée que dans les décors (fill SVG)
   'anniversaire': (mat.$magenta-palette, mat.$yellow-palette),
 );

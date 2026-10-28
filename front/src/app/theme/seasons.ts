@@ -53,9 +53,21 @@ interface SeasonRule {
 
 export const REGLES: readonly SeasonRule[] = [
   { id: 'halloween', kind: 'evenement', dateCle: (a) => new Date(a, 9, 31), avant: 21, apres: 1 },
-  { id: 'saint-nicolas', kind: 'evenement', dateCle: (a) => new Date(a, 11, 6), avant: 21, apres: 0 },
+  {
+    id: 'saint-nicolas',
+    kind: 'evenement',
+    dateCle: (a) => new Date(a, 11, 6),
+    avant: 21,
+    apres: 0,
+  },
   { id: 'noel', kind: 'evenement', dateCle: (a) => new Date(a, 11, 25), avant: 18, apres: 12 },
-  { id: 'carnaval', kind: 'evenement', dateCle: (a) => ajouterJours(paques(a), -47), avant: 10, apres: 0 }, // Mardi gras
+  {
+    id: 'carnaval',
+    kind: 'evenement',
+    dateCle: (a) => ajouterJours(paques(a), -47),
+    avant: 10,
+    apres: 0,
+  }, // Mardi gras
   { id: 'paques', kind: 'evenement', dateCle: (a) => paques(a), avant: 21, apres: 1 },
   // Début des grandes vacances, jusqu'à leur fin
   {
@@ -65,11 +77,20 @@ export const REGLES: readonly SeasonRule[] = [
     avant: 14,
     apres: (a, cal) => joursEntre(cal.vacances(a).debut, cal.vacances(a).fin),
   },
-  { id: 'rentree', kind: 'evenement', dateCle: (a, cal) => cal.vacances(a).rentree, avant: 14, apres: 10 },
+  {
+    id: 'rentree',
+    kind: 'evenement',
+    dateCle: (a, cal) => cal.vacances(a).rentree,
+    avant: 14,
+    apres: 10,
+  },
 ];
 
 /** Saisons de fond, quand aucun événement n'est actif : mois (1-12) et jour de début. Hiver court jusqu'au 28/29 février. */
-export const SAISONS_DE_FOND: readonly { id: 'printemps' | 'ete' | 'automne' | 'hiver'; mois: number }[] = [
+export const SAISONS_DE_FOND: readonly {
+  id: 'printemps' | 'ete' | 'automne' | 'hiver';
+  mois: number;
+}[] = [
   { id: 'printemps', mois: 3 },
   { id: 'ete', mois: 6 }, // couleurs seulement
   { id: 'automne', mois: 9 },
@@ -133,7 +154,10 @@ export function ageAnniversaire(dateNaissance: string, annee: number): number {
 }
 
 /** Prochain anniversaire (aujourd'hui compris) parmi les membres ayant une date de naissance. */
-export function prochainAnniversaire(date: Date, membres: FamilyMemberDTO[]): { membres: FamilyMemberDTO[]; jours: number } | null {
+export function prochainAnniversaire(
+  date: Date,
+  membres: FamilyMemberDTO[],
+): { membres: FamilyMemberDTO[]; jours: number } | null {
   let meilleur: { membres: FamilyMemberDTO[]; jours: number } | null = null;
   for (const membre of membres) {
     if (!membre.dateNaissance) {
@@ -171,7 +195,12 @@ function candidats(date: Date, membres: FamilyMemberDTO[], calendrier: SchoolCal
     for (const regle of REGLES) {
       const cle = regle.dateCle(a, calendrier);
       const apres = typeof regle.apres === 'function' ? regle.apres(a, calendrier) : regle.apres;
-      resultat.push({ id: regle.id, cle, debut: ajouterJours(cle, -regle.avant), fin: ajouterJours(cle, apres) });
+      resultat.push({
+        id: regle.id,
+        cle,
+        debut: ajouterJours(cle, -regle.avant),
+        fin: ajouterJours(cle, apres),
+      });
     }
     const parJour = new Map<number, Candidat>();
     for (const membre of membres) {
@@ -183,12 +212,20 @@ function candidats(date: Date, membres: FamilyMemberDTO[], calendrier: SchoolCal
       if (existant) {
         existant.membres!.push(membre);
       } else {
-        parJour.set(numeroJour(cle), { id: 'anniversaire', cle, debut: ajouterJours(cle, -ANNIVERSAIRE_AVANT), fin: cle, membres: [membre] });
+        parJour.set(numeroJour(cle), {
+          id: 'anniversaire',
+          cle,
+          debut: ajouterJours(cle, -ANNIVERSAIRE_AVANT),
+          fin: cle,
+          membres: [membre],
+        });
       }
     }
     resultat.push(...parJour.values());
   }
-  return resultat.filter((c) => numeroJour(c.debut) <= numeroJour(date) && numeroJour(date) <= numeroJour(c.fin));
+  return resultat.filter(
+    (c) => numeroJour(c.debut) <= numeroJour(date) && numeroJour(date) <= numeroJour(c.fin),
+  );
 }
 
 function saisonDeFond(date: Date): SeasonId {
@@ -202,7 +239,11 @@ function saisonDeFond(date: Date): SeasonId {
  * Thème du jour : un anniversaire le jour même l'emporte ; sinon l'événement actif dont la date clé est la plus proche
  * dans le futur (ou aujourd'hui), à défaut le plus récemment passé ; sinon la saison de fond.
  */
-export function seasonFor(date: Date, membres: FamilyMemberDTO[], calendrier: SchoolCalendar = SCHOOL_CALENDAR): SeasonResult {
+export function seasonFor(
+  date: Date,
+  membres: FamilyMemberDTO[],
+  calendrier: SchoolCalendar = SCHOOL_CALENDAR,
+): SeasonResult {
   const aujourdhui = numeroJour(date);
   const actifs = candidats(date, membres, calendrier);
 
@@ -212,7 +253,11 @@ export function seasonFor(date: Date, membres: FamilyMemberDTO[], calendrier: Sc
     actifs
       .filter((c) => numeroJour(c.cle) >= aujourdhui)
       // à date clé égale, l'anniversaire passe avant
-      .sort((x, y) => numeroJour(x.cle) - numeroJour(y.cle) || Number(y.id === 'anniversaire') - Number(x.id === 'anniversaire'))[0] ??
+      .sort(
+        (x, y) =>
+          numeroJour(x.cle) - numeroJour(y.cle) ||
+          Number(y.id === 'anniversaire') - Number(x.id === 'anniversaire'),
+      )[0] ??
     actifs.sort((x, y) => numeroJour(y.cle) - numeroJour(x.cle))[0];
 
   if (!gagnant) {
@@ -231,7 +276,17 @@ export function seasonFor(date: Date, membres: FamilyMemberDTO[], calendrier: Sc
 
 /** Tous les thèmes saisonniers, dans l'ordre de l'année (écran de choix). */
 export const SEASON_IDS: readonly SeasonId[] = [
-  'printemps', 'carnaval', 'paques', 'ete', 'rentree', 'automne', 'halloween', 'saint-nicolas', 'noel', 'hiver', 'anniversaire',
+  'printemps',
+  'carnaval',
+  'paques',
+  'ete',
+  'rentree',
+  'automne',
+  'halloween',
+  'saint-nicolas',
+  'noel',
+  'hiver',
+  'anniversaire',
 ];
 
 /** HALLOWEEN, SAINT_NICOLAS… (API) → halloween, saint-nicolas… */

@@ -75,24 +75,68 @@ function elements(couleurs: string[] | null): Element[] {
 
     @if (fete(); as t) {
       @if (t.phase === 'jourJ') {
-        <svg class="guirlande" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0 6 Q150 44 300 6 Q450 44 600 6" fill="none" stroke="#8d6e63" stroke-width="2" />
-          @for (f of fanions; track $index) {
-            <path [attr.d]="f.d" [attr.fill]="couleurs()[$index % couleurs().length]" />
-          }
-        </svg>
         @for (cote of cotes; track cote) {
           <svg class="ballons" [class]="'ballons ' + cote" viewBox="0 0 120 200" aria-hidden="true">
             @for (b of ballonsDessin; track $index) {
-              <path [attr.d]="'M' + b.x + ' ' + (b.y + 44) + ' Q' + (b.x + 4) + ' 150 60 190'" fill="none" stroke="#9e9e9e" stroke-width="1.5" />
-              <ellipse [attr.cx]="b.x" [attr.cy]="b.y" rx="26" ry="32" [attr.fill]="couleurs()[$index % couleurs().length]" />
-              <ellipse [attr.cx]="b.x - 9" [attr.cy]="b.y - 12" rx="6" ry="10" fill="#fff" opacity="0.35" />
-              <path [attr.d]="'M' + (b.x - 5) + ' ' + (b.y + 34) + ' L' + b.x + ' ' + (b.y + 28) + ' L' + (b.x + 5) + ' ' + (b.y + 34) + 'Z'" [attr.fill]="couleurs()[$index % couleurs().length]" />
+              <path
+                [attr.d]="'M' + b.x + ' ' + (b.y + 44) + ' Q' + (b.x + 4) + ' 150 60 190'"
+                fill="none"
+                stroke="#9e9e9e"
+                stroke-width="1.5"
+              />
+              <ellipse
+                [attr.cx]="b.x"
+                [attr.cy]="b.y"
+                rx="26"
+                ry="32"
+                [attr.fill]="couleurs()[$index % couleurs().length]"
+              />
+              <ellipse
+                [attr.cx]="b.x - 9"
+                [attr.cy]="b.y - 12"
+                rx="6"
+                ry="10"
+                fill="#fff"
+                opacity="0.35"
+              />
+              <path
+                [attr.d]="
+                  'M' +
+                  (b.x - 5) +
+                  ' ' +
+                  (b.y + 34) +
+                  ' L' +
+                  b.x +
+                  ' ' +
+                  (b.y + 28) +
+                  ' L' +
+                  (b.x + 5) +
+                  ' ' +
+                  (b.y + 34) +
+                  'Z'
+                "
+                [attr.fill]="couleurs()[$index % couleurs().length]"
+              />
             }
           </svg>
         }
       }
-      <div class="bandeau" role="status"><app-birthday-message [theme]="t" /></div>
+      <div class="bandeau" role="status">
+        <app-birthday-message [theme]="t" />
+        @if (t.phase === 'jourJ') {
+          <svg class="guirlande" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true">
+            <path
+              d="M0 6 Q150 44 300 6 Q450 44 600 6"
+              fill="none"
+              stroke="#8d6e63"
+              stroke-width="2"
+            />
+            @for (f of fanions; track $index) {
+              <path [attr.d]="f.d" [attr.fill]="couleurs()[$index % couleurs().length]" />
+            }
+          </svg>
+        }
+      </div>
     }
   `,
   styles: `
@@ -102,7 +146,6 @@ function elements(couleurs: string[] | null): Element[] {
 
     // Derrière le contenu, au-dessus du fond de page
     .fond,
-    .guirlande,
     .ballons {
       position: fixed;
       pointer-events: none;
@@ -167,11 +210,15 @@ function elements(couleurs: string[] | null): Element[] {
       }
     }
 
+    // Sous le bandeau, derrière le contenu (le bandeau ne crée pas de contexte d'empilement)
     .guirlande {
-      top: 64px;
+      position: absolute;
+      top: 100%;
       left: 0;
       width: 100%;
       height: 40px;
+      pointer-events: none;
+      z-index: -1;
     }
     .ballons {
       bottom: 0;
@@ -193,11 +240,12 @@ function elements(couleurs: string[] | null): Element[] {
     }
 
     .bandeau {
+      position: relative;
       display: flex;
       justify-content: center;
       padding: 6px 16px;
-      background: var(--mat-sys-tertiary-container);
-      color: var(--mat-sys-on-tertiary-container);
+      background: var(--mat-sys-primary-container);
+      color: var(--mat-sys-on-primary-container);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -234,12 +282,22 @@ export class SeasonDecor {
 
   /** Couleurs des membres fêtés (ballons, guirlande, confettis), avec leurs variantes claires et foncées. */
   protected readonly couleurs = computed(() => {
-    const bases = (this.theme().membres ?? []).map((m) => (isHexColor(m.couleur) ? m.couleur : PAR_DEFAUT));
+    const bases = (this.theme().membres ?? []).map((m) =>
+      isHexColor(m.couleur) ? m.couleur : PAR_DEFAUT,
+    );
     const base = bases.length ? bases : [PAR_DEFAUT];
     return [...base, ...base.map((c) => lighten(c, 0.35)), ...base.map((c) => darken(c, 0.2))];
   });
 
-  protected readonly fond = computed(() => elements(this.theme().id === 'anniversaire' ? [...this.couleurs(), ...CONFETTIS] : this.theme().id === 'carnaval' || this.theme().id === 'rentree' ? CONFETTIS : null));
+  protected readonly fond = computed(() =>
+    elements(
+      this.theme().id === 'anniversaire'
+        ? [...this.couleurs(), ...CONFETTIS]
+        : this.theme().id === 'carnaval' || this.theme().id === 'rentree'
+          ? CONFETTIS
+          : null,
+    ),
+  );
 
   /** Fanions de la guirlande, répartis le long de la courbe (triangles pointe en bas). */
   protected readonly fanions = Array.from({ length: 13 }, (_, i) => {
@@ -247,7 +305,9 @@ export class SeasonDecor {
     // hauteur de la corde (courbe de Bézier) approchée par une parabole par arche
     const t = ((x % 300) / 300) * 2 - 1;
     const y = 6 + 19 * (1 - t * t) * 1;
-    return { d: `M${x - 9} ${y.toFixed(1)} L${x + 9} ${y.toFixed(1)} L${x} ${(y + 18).toFixed(1)}Z` };
+    return {
+      d: `M${x - 9} ${y.toFixed(1)} L${x + 9} ${y.toFixed(1)} L${x} ${(y + 18).toFixed(1)}Z`,
+    };
   });
 
   protected readonly cotes = ['gauche', 'droite'];

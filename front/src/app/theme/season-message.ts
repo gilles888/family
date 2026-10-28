@@ -32,8 +32,8 @@ import { SeasonId } from './seasons';
       margin: 0 auto;
       padding: 10px 14px;
       border-radius: var(--mat-sys-corner-medium);
-      background: var(--mat-sys-tertiary-container);
-      color: var(--mat-sys-on-tertiary-container);
+      background: var(--mat-sys-primary-container);
+      color: var(--mat-sys-on-primary-container);
     }
     .text {
       font: var(--mat-sys-title-medium);

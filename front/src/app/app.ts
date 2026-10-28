@@ -23,7 +23,18 @@ const LANGUAGES = [
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatButtonModule, MatButtonToggleModule, MatIconModule, MatMenuModule, MatToolbarModule, SeasonDecor, SeasonPicto],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatIconModule,
+    MatMenuModule,
+    MatToolbarModule,
+    SeasonDecor,
+    SeasonPicto,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -37,7 +48,9 @@ export class App {
   protected readonly themes = inject(SeasonThemeService);
   private readonly theme = this.themes.actif;
   private readonly dialog = inject(MatDialog);
-  protected readonly pictoId = computed(() => (this.theme().id === 'neutre' ? null : (this.theme().id as SeasonId)));
+  protected readonly pictoId = computed(() =>
+    this.theme().id === 'neutre' ? null : (this.theme().id as SeasonId),
+  );
   protected readonly parentLabel = ACCOUNT_ROLE_LABELS.PARENT;
   protected readonly childLabel = ACCOUNT_ROLE_LABELS.ENFANT;
 
