@@ -211,7 +211,8 @@ export function seasonFor(date: Date, membres: FamilyMemberDTO[], calendrier: Sc
     fete ??
     actifs
       .filter((c) => numeroJour(c.cle) >= aujourdhui)
-      .sort((x, y) => numeroJour(x.cle) - numeroJour(y.cle))[0] ??
+      // à date clé égale, l'anniversaire passe avant
+      .sort((x, y) => numeroJour(x.cle) - numeroJour(y.cle) || Number(y.id === 'anniversaire') - Number(x.id === 'anniversaire'))[0] ??
     actifs.sort((x, y) => numeroJour(y.cle) - numeroJour(x.cle))[0];
 
   if (!gagnant) {

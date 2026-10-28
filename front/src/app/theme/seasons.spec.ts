@@ -112,6 +112,9 @@ describe('seasonFor — anniversaires', () => {
   it('anniversaire le 31 octobre : le jour même l’emporte, sur Halloween', () => {
     expect(seasonFor(jour('2026-10-31'), [membre('Jules', '2015-10-31')], CAL).id).toBe('anniversaire');
   });
+  it('anniversaire le 31 octobre : les jours d’avant, il passe avant Halloween (même date clé)', () => {
+    expect(seasonFor(jour('2026-10-28'), [membre('Jules', '2015-10-31')], CAL)).toMatchObject({ id: 'anniversaire', phase: 'approche' });
+  });
   it('Halloween plus proche que l’anniversaire : Halloween gagne', () => {
     const m = membre('Alice', '2017-11-03');
     expect(seasonFor(jour('2026-10-29'), [m], CAL).id).toBe('halloween');
