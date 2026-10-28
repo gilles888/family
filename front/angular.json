@@ -66,6 +66,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/app/labo.routes.ts",
+                  "with": "src/app/labo.routes.prod.ts"
                 }
               ]
             },

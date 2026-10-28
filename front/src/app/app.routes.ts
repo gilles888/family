@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { LAB_ROUTES } from './labo.routes';
 import { roomMemberResolver } from './room/room-member.resolver';
 import { authGuard, guestGuard, parentGuard, signedInGuard } from './auth/auth.guards';
 
@@ -30,6 +31,7 @@ export const routes: Routes = [
         resolve: { member: roomMemberResolver },
         loadComponent: () => import('./room/room-view').then((m) => m.RoomView),
       },
+      ...LAB_ROUTES,
       { path: 'routines', loadComponent: () => import('./routines/routines-page').then((m) => m.RoutinesPage) },
       {
         path: 'courses',
