@@ -1,0 +1,34 @@
+// Palettes des thèmes saisonniers : un bloc `html[data-season='…']` par thème, posé par SeasonThemeService.
+// Le thème neutre (azure / blue) reste celui de `html` dans styles.scss. Seules les couleurs changent
+// (typographie et densité viennent de `html`). Les palettes Material sont conçues pour respecter le contraste AA
+// (texte sur primary, sur surface-container…) ; le mode reste `light`.
+@use 'sass:list';
+@use '@angular/material' as mat;
+
+$seasons: (
+  'halloween': (mat.$orange-palette, mat.$violet-palette),
+  'saint-nicolas': (mat.$red-palette, mat.$yellow-palette),
+  'noel': (mat.$green-palette, mat.$red-palette),
+  'carnaval': (mat.$magenta-palette, mat.$cyan-palette),
+  'paques': (mat.$rose-palette, mat.$yellow-palette),
+  'ete': (mat.$yellow-palette, mat.$orange-palette),
+  'rentree': (mat.$violet-palette, mat.$chartreuse-palette),
+  'printemps': (mat.$chartreuse-palette, mat.$cyan-palette),
+  'automne': (mat.$orange-palette, mat.$yellow-palette),
+  'hiver': (mat.$cyan-palette, mat.$blue-palette),
+  // Festif et fixe ; la couleur du membre fêté n'est utilisée que dans les décors (fill SVG)
+  'anniversaire': (mat.$magenta-palette, mat.$yellow-palette),
+);
+
+@each $id, $palettes in $seasons {
+  html[data-season='#{$id}'] {
+    @include mat.theme(
+      (
+        color: (
+          primary: list.nth($palettes, 1),
+          tertiary: list.nth($palettes, 2),
+        ),
+      )
+    );
+  }
+}
