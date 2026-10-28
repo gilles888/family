@@ -25,6 +25,7 @@ import java.util.EnumSet;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -101,7 +102,7 @@ class ChildRoleApiTest {
         expectForbidden(HttpMethod.POST, "/v1/garde-manger");
         expectForbidden(HttpMethod.POST, "/v1/membres");
         expectForbidden(HttpMethod.PUT, "/v1/membres/" + leaId);
-        expectForbidden(HttpMethod.PUT, "/v1/membres/" + leaId + "/avatar");
+        expectForbidden(HttpMethod.PUT, "/v1/membres/" + tomId + "/avatar");
         expectForbidden(HttpMethod.DELETE, "/v1/membres/" + tomId);
         expectForbidden(HttpMethod.POST, "/v1/comptes");
         expectForbidden(HttpMethod.PUT, "/v1/comptes/1");
@@ -143,5 +144,21 @@ class ChildRoleApiTest {
         expectForbidden(HttpMethod.GET, "/v1/routines/" + routineTom.id());
         expectForbidden(HttpMethod.POST, "/v1/routines/%d/runs/%s/etapes/%d/toggle".formatted(routineTom.id(), today, step));
         expectForbidden(HttpMethod.POST, "/v1/routines/%d/runs/%s/recompense".formatted(routineTom.id(), today));
+    }
+
+    @Test
+    void modifieSonPropreAvatar() throws Exception {
+        mvc.perform(put("/v1/membres/{id}/avatar", leaId).session(lea).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"version\": 1, \"hat\": \"crown\" }"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.avatarConfig.hat").value("crown"));
+    }
+
+    @Test
+    void avatarDUnAutreMembreInterdit() throws Exception {
+        mvc.perform(put("/v1/membres/{id}/avatar", tomId).session(lea).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"version\": 1, \"hat\": \"crown\" }"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("ACTION_NON_AUTORISEE"));
     }
 }

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,6 +65,7 @@ public class FamilyMemberController {
         return service.update(id, request);
     }
 
+    @PreAuthorize("@memberAccess.member(#id)")
     @PutMapping(path = "/{id}/avatar", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(operationId = "updateAvatarMembre", summary = "Enregistrer le personnage (avatar) d'un membre",
             description = """
@@ -71,6 +73,7 @@ public class FamilyMemberController {
                     2000 caractères au plus une fois sérialisé. `null` revient à l'avatar par défaut.""")
     @ApiResponse(responseCode = "200", description = "Membre, avec son avatar")
     @ApiResponse(responseCode = "400", description = "Corps qui n'est pas un objet JSON, ou trop long", content = @Content)
+    @ApiResponse(responseCode = "403", description = "Un enfant ne peut modifier que son propre personnage", content = @Content)
     @ApiResponse(responseCode = "404", description = "Membre introuvable", content = @Content)
     public FamilyMemberDTO updateAvatar(@PathVariable Long id,
                                         @RequestBody(required = false) Map<String, Object> avatarConfig) {

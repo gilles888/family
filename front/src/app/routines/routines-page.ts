@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FamilyMemberDTO, MembresService, RoutineDTO, RoutineRunDTO, RoutinesService } from '../api-client';
 import { Avatar } from '../avatar/avatar';
+import { AvatarEditor, AvatarEditorData } from '../avatar/avatar-editor';
 import { toIsoDate } from '../shared/date-utils';
 import { RewardData, RewardDialog } from './reward-dialog';
 import { RoutineBoard } from './routine-board';
@@ -56,6 +57,9 @@ export class RoutinesPage {
     stream: ({ params: id }) => this.api.listRoutinesMembre(id, this.todayIso),
   });
 
+  /** « Mon personnage » : l'enfant sur son propre membre (le parent passe par la page Membres). */
+  protected readonly canEditAvatar = computed(() => this.auth.isChild() && this.auth.user()?.membreId === this.params().membre);
+
   /** Routines proposées aujourd'hui (actives, jour de la semaine). */
   protected readonly ofDay = computed(() => (this.routines.hasValue() ? routinesOfDay(this.routines.value(), this.today) : []));
 
@@ -102,6 +106,22 @@ export class RoutinesPage {
       next: (etat) => latest() && this.patch(routine.id!, (r) => ({ ...r, etat })),
       error: () => latest() && this.routines.reload(),
     });
+  }
+
+  /** Éditeur de personnage : plein écran sur téléphone, grand dialogue ailleurs. */
+  protected editAvatar(member: FamilyMemberDTO): void {
+    this.dialog
+      .open<AvatarEditor, AvatarEditorData, FamilyMemberDTO>(AvatarEditor, {
+        data: { member },
+        width: '960px',
+        maxWidth: '100vw',
+        height: '720px',
+        maxHeight: '100dvh',
+        panelClass: 'avatar-editor-panel',
+        autoFocus: 'dialog',
+      })
+      .afterClosed()
+      .subscribe((saved) => saved && this.members.reload());
   }
 
   /** Mini-jeu de récompense (plein écran) ; au retour, la routine sait que la partie du jour est jouée. */

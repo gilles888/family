@@ -284,7 +284,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">63,65</context>
+          <context context-type="linenumber">69,71</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
@@ -3338,7 +3338,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">62,63</context>
+          <context context-type="linenumber">68,69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="memberRoutines.added" datatype="html">
@@ -3426,11 +3426,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">50,51</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">52,54</context>
+          <context context-type="linenumber">58,60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="routines.changePerson" datatype="html">
@@ -3440,11 +3440,18 @@
           <context context-type="linenumber">25,27</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routines.myCharacter" datatype="html">
+        <source>Mon personnage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routines.none" datatype="html">
         <source>Pas de routine aujourd&apos;hui. Profite bien ! 🎈</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">66,68</context>
+          <context context-type="linenumber">72,74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.forbidden" datatype="html">

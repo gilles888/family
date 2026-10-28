@@ -39,6 +39,12 @@
         <app-avatar [member]="m" [size]="44" />
         <span>{{ m.nom }}</span>
       </span>
+      @if (canEditAvatar()) {
+        <button matButton="outlined" class="my-character" (click)="editAvatar(m)">
+          <mat-icon>face</mat-icon>
+          <ng-container i18n="@@routines.myCharacter">Mon personnage</ng-container>
+        </button>
+      }
     }
     <a
       *appParentOnly
