@@ -1,5 +1,6 @@
 package com.family.agenda.controller;
 
+import com.family.agenda.dto.StarBalanceDTO;
 import com.family.agenda.dto.StarPenaltyDTO;
 import com.family.agenda.dto.StarPenaltyRequest;
 import com.family.agenda.security.AccountPrincipal;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/membres/{memberId}/etoiles/retraits", version = "1", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/membres/{memberId}/etoiles", version = "1", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Tag(name = "Etoiles", description = "Étoiles retirées aux membres")
 public class StarPenaltyController {
@@ -35,6 +36,15 @@ public class StarPenaltyController {
 
     @PreAuthorize("@memberAccess.member(#memberId)")
     @GetMapping
+    @Operation(operationId = "getSoldeEtoiles", summary = "Solde d'étoiles depuis le début : gagnées, retirées, total")
+    @ApiResponse(responseCode = "200", description = "Solde")
+    @ApiResponse(responseCode = "404", description = "Membre introuvable", content = @Content)
+    public StarBalanceDTO balance(@PathVariable Long memberId) {
+        return service.balance(memberId);
+    }
+
+    @PreAuthorize("@memberAccess.member(#memberId)")
+    @GetMapping("/retraits")
     @Operation(operationId = "listRetraitsEtoiles", summary = "Étoiles retirées à un membre (les plus récentes d'abord)")
     @ApiResponse(responseCode = "200", description = "Retraits")
     @ApiResponse(responseCode = "404", description = "Membre introuvable", content = @Content)
@@ -42,7 +52,7 @@ public class StarPenaltyController {
         return service.findForMember(memberId);
     }
 
-    @PostMapping
+    @PostMapping("/retraits")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(operationId = "retirerEtoiles", summary = "Retirer des étoiles à un membre, avec un motif (parent)",
             description = "Le commentaire est obligatoire pour le motif AUTRE.")
@@ -55,7 +65,7 @@ public class StarPenaltyController {
         return service.create(memberId, request, accountId);
     }
 
-    @DeleteMapping("/{penaltyId}")
+    @DeleteMapping("/retraits/{penaltyId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(operationId = "annulerRetraitEtoiles", summary = "Annuler un retrait d'étoiles (parent) : les étoiles sont rendues")
     @ApiResponse(responseCode = "404", description = "Membre ou retrait introuvable", content = @Content)

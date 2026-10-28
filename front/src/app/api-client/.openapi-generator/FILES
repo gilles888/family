@@ -63,6 +63,7 @@ model/shopping-item-source-dto.ts
 model/shopping-item-status-request.ts
 model/shopping-list-dto.ts
 model/shopping-list-generate-request.ts
+model/star-balance-dto.ts
 model/star-penalty-dto.ts
 model/star-penalty-request.ts
 model/year-summary-dto.ts

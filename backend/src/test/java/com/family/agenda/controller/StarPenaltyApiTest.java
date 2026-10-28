@@ -85,6 +85,10 @@ class StarPenaltyApiTest {
                 retirees += retrait.get("nombre").asInt();
             }
         }
+        mvc.perform(get("/v1/membres/{id}/etoiles", tom))
+                .andExpect(jsonPath("$.gagnees").value(1))
+                .andExpect(jsonPath("$.retirees").value(3))
+                .andExpect(jsonPath("$.solde").value(0)); // 1 − 3, jamais négatif
         org.junit.jupiter.api.Assertions.assertEquals(1, gagnees);
         org.junit.jupiter.api.Assertions.assertEquals(3, retirees);
         mvc.perform(get("/v1/membres/{id}/routines/historique", tom))

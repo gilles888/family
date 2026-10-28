@@ -1,5 +1,6 @@
 package com.family.agenda.service;
 
+import com.family.agenda.dto.StarBalanceDTO;
 import com.family.agenda.dto.StarPenaltyDTO;
 import com.family.agenda.dto.StarPenaltyRequest;
 import com.family.agenda.entity.FamilyMember;
@@ -8,6 +9,7 @@ import com.family.agenda.entity.StarPenaltyReason;
 import com.family.agenda.exception.BusinessRuleException;
 import com.family.agenda.exception.ResourceNotFoundException;
 import com.family.agenda.repository.FamilyMemberRepository;
+import com.family.agenda.repository.RoutineRunRepository;
 import com.family.agenda.repository.StarPenaltyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,12 +32,22 @@ public class StarPenaltyService {
 
     private final StarPenaltyRepository repository;
     private final FamilyMemberRepository memberRepository;
+    private final RoutineRunRepository runRepository;
     private final Clock clock;
 
     @Transactional(readOnly = true)
     public List<StarPenaltyDTO> findForMember(Long memberId) {
         loadMember(memberId);
         return repository.findByMemberIdOrderByDateDescIdDesc(memberId).stream().map(StarPenaltyService::toDto).toList();
+    }
+
+    /** Solde depuis le début : routines terminées moins étoiles retirées (jamais négatif). */
+    @Transactional(readOnly = true)
+    public StarBalanceDTO balance(Long memberId) {
+        loadMember(memberId);
+        long gagnees = runRepository.countByRoutineMemberIdAndCompletedAtNotNull(memberId);
+        long retirees = repository.totalRemoved(memberId);
+        return new StarBalanceDTO(gagnees, retirees, Math.max(0, gagnees - retirees));
     }
 
     /** {@code accountId} : compte du parent (null si inconnu). */

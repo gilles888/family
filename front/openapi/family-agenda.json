@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080",
+            "url": "http://localhost:8089",
             "description": "Generated server url"
         }
     ],
@@ -2068,6 +2068,41 @@
                                     "items": {
                                         "$ref": "#/components/schemas/RoutineHistoryDTO"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Membre introuvable"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/etoiles": {
+            "get": {
+                "tags": [
+                    "Etoiles"
+                ],
+                "summary": "Solde d'\u00e9toiles depuis le d\u00e9but : gagn\u00e9es, retir\u00e9es, total",
+                "operationId": "getSoldeEtoiles",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Solde",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StarBalanceDTO"
                                 }
                             }
                         }
@@ -4477,6 +4512,30 @@
                         "items": {
                             "$ref": "#/components/schemas/StarPenaltyDTO"
                         }
+                    }
+                }
+            },
+            "StarBalanceDTO": {
+                "type": "object",
+                "description": "\u00c9toiles d'un membre depuis le d\u00e9but : gagn\u00e9es, retir\u00e9es et solde",
+                "properties": {
+                    "gagnees": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "\u00c9toiles gagn\u00e9es (une par routine termin\u00e9e)",
+                        "example": 12
+                    },
+                    "retirees": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "\u00c9toiles retir\u00e9es par un parent",
+                        "example": 3
+                    },
+                    "solde": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Gagn\u00e9es moins retir\u00e9es, jamais n\u00e9gatif",
+                        "example": 9
                     }
                 }
             },

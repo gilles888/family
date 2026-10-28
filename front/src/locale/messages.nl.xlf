@@ -3918,14 +3918,6 @@
           <context context-type="linenumber">23,25</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="routineHistory.total" datatype="html">
-        <source>{VAR_PLURAL, plural, =0 {Pas encore d&apos;étoile : à toi de jouer !} =1 {1 étoile gagnée} other {<x id="INTERPOLATION"/> étoiles gagnées}}</source>
-        <target>{VAR_PLURAL, plural, =0 {Nog geen ster: nu is het jouw beurt!} =1 {1 ster verdiend} other {<x id="INTERPOLATION"/> sterren verdiend}}</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
-          <context context-type="linenumber">42,47</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="avatar.eyeColor.black" datatype="html">
         <source>Yeux noirs</source>
         <target>Zwarte ogen</target>
@@ -4619,14 +4611,6 @@
           <context context-type="linenumber">45,47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="routineHistory.removed" datatype="html">
-        <source>{VAR_PLURAL, plural, =1 {1 étoile retirée} other {<x id="INTERPOLATION"/> étoiles retirées}}</source>
-        <target>{VAR_PLURAL, plural, =1 {1 ster afgenomen} other {<x id="INTERPOLATION"/> sterren afgenomen}}</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
-          <context context-type="linenumber">65,67</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="routineHistory.take" datatype="html">
         <source>Retirer des étoiles</source>
         <target>Sterren afnemen</target>
@@ -4837,6 +4821,30 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
           <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.mine" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {étoile} other {étoiles}}</source>
+        <target>{VAR_PLURAL, plural, =1 {ster} other {sterren}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.lostLabel" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {étoile retirée} other {étoiles retirées}}</source>
+        <target>{VAR_PLURAL, plural, =1 {ster afgenomen} other {sterren afgenomen}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">50,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.detail" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ stats().gagnees }}"/> gagnées depuis le début</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ stats().gagnees }}"/> verdiend sinds het begin</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">53,54</context>
         </context-group>
       </trans-unit>
     </body>

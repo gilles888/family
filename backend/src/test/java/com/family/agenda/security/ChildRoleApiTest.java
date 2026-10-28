@@ -152,6 +152,8 @@ class ChildRoleApiTest {
     @Test
     void litSesRetraitsDEtoilesMaisPasCeuxDesAutres() throws Exception {
         mvc.perform(get("/v1/membres/{id}/etoiles/retraits", leaId).session(lea)).andExpect(status().isOk());
+        mvc.perform(get("/v1/membres/{id}/etoiles", leaId).session(lea)).andExpect(status().isOk());
+        expectForbidden(HttpMethod.GET, "/v1/membres/" + tomId + "/etoiles");
         expectForbidden(HttpMethod.GET, "/v1/membres/" + tomId + "/etoiles/retraits");
     }
 
