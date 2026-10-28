@@ -60,6 +60,18 @@
         <span i18n="@@menu.changePassword">Changer mon mot de passe</span>
       </a>
       @if (auth.isParent() && !auth.mustChangePassword()) {
+        <button mat-menu-item (click)="openFamilyTheme()">
+          <mat-icon>palette</mat-icon>
+          <span i18n="@@menu.familyTheme">Thème de la famille</span>
+        </button>
+      }
+      @if (themes.choixAppareilPossible() && !auth.mustChangePassword()) {
+        <button mat-menu-item (click)="openDeviceTheme()">
+          <mat-icon>brush</mat-icon>
+          <span i18n="@@menu.myTheme">Mon thème</span>
+        </button>
+      }
+      @if (auth.isParent() && !auth.mustChangePassword()) {
         <a mat-menu-item routerLink="/comptes">
           <mat-icon>manage_accounts</mat-icon>
           <span i18n="@@menu.accounts">Comptes</span>

@@ -21,7 +21,9 @@ $seasons: (
 );
 
 @each $id, $palettes in $seasons {
-  html[data-season='#{$id}'] {
+  // [data-season-preview] : mêmes couleurs sur une vignette de l'écran de réglage
+  html[data-season='#{$id}'],
+  [data-season-preview='#{$id}'] {
     @include mat.theme(
       (
         color: (
@@ -31,4 +33,16 @@ $seasons: (
       )
     );
   }
+}
+
+// Thème neutre (azure / blue, comme `html` dans styles.scss), pour sa vignette
+[data-season-preview='neutre'] {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+    )
+  );
 }

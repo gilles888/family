@@ -4983,6 +4983,270 @@
           <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="menu.familyTheme" datatype="html">
+        <source>Thème de la famille</source>
+        <target>Thema van het gezin</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menu.myTheme" datatype="html">
+        <source>Mon thème</source>
+        <target>Mijn thema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">71,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.device.title" datatype="html">
+        <source>Mon thème</source>
+        <target>Mijn thema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
+          <context context-type="linenumber">14,16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.device.hint" datatype="html">
+        <source>Ce choix ne vaut que pour cet appareil.</source>
+        <target>Deze keuze geldt alleen voor dit apparaat.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.title" datatype="html">
+        <source>Thème de la famille</source>
+        <target>Thema van het gezin</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.now" datatype="html">
+        <source>Thème du moment en automatique : <x id="INTERPOLATION" equiv-text="{{ moment() }}"/></source>
+        <target>Huidig thema in automatische modus: <x id="INTERPOLATION" equiv-text="{{ moment() }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.next" datatype="html">
+        <source>{VAR_PLURAL, plural, =0 {prochain anniversaire : <x id="INTERPOLATION"/> aujourd&apos;hui} =1 {prochain anniversaire : <x id="INTERPOLATION"/> demain} other {prochain anniversaire : <x id="INTERPOLATION"/> dans <x id="INTERPOLATION_1"/> jours}}</source>
+        <target>{VAR_PLURAL, plural, =0 {volgende verjaardag: <x id="INTERPOLATION"/> vandaag} =1 {volgende verjaardag: <x id="INTERPOLATION"/> morgen} other {volgende verjaardag: <x id="INTERPOLATION"/> over <x id="INTERPOLATION_1"/> dagen}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">44,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.mode" datatype="html">
+        <source>Mode</source>
+        <target>Modus</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.auto" datatype="html">
+        <source>Automatique</source>
+        <target>Automatisch</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.force" datatype="html">
+        <source>Thème choisi</source>
+        <target>Gekozen thema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.off" datatype="html">
+        <source>Désactivé</source>
+        <target>Uitgeschakeld</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.member" datatype="html">
+        <source>Membre fêté</source>
+        <target>Jarige</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.until" datatype="html">
+        <source>Jusqu&apos;au (facultatif)</source>
+        <target>Tot (optioneel)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.untilHint" datatype="html">
+        <source>Ensuite, retour automatique au thème de la date.</source>
+        <target>Daarna keert het thema automatisch terug naar dat van de datum.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">83,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.birthdays" datatype="html">
+        <source> Fêter les anniversaires automatiquement </source>
+        <target> Verjaardagen automatisch vieren </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">88,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.children" datatype="html">
+        <source> Les enfants peuvent choisir leur thème sur leur appareil </source>
+        <target> Kinderen kunnen hun thema op hun eigen apparaat kiezen </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">91,93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.saved" datatype="html">
+        <source>Thème enregistré.</source>
+        <target>Thema opgeslagen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">189</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.halloween" datatype="html">
+        <source>Halloween</source>
+        <target>Halloween</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.saintNicolas" datatype="html">
+        <source>Saint-Nicolas</source>
+        <target>Sinterklaas</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.noel" datatype="html">
+        <source>Noël</source>
+        <target>Kerstmis</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.carnaval" datatype="html">
+        <source>Carnaval</source>
+        <target>Carnaval</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.paques" datatype="html">
+        <source>Pâques</source>
+        <target>Pasen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.ete" datatype="html">
+        <source>Été</source>
+        <target>Zomer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.rentree" datatype="html">
+        <source>Rentrée</source>
+        <target>Schoolstart</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.printemps" datatype="html">
+        <source>Printemps</source>
+        <target>Lente</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.automne" datatype="html">
+        <source>Automne</source>
+        <target>Herfst</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.hiver" datatype="html">
+        <source>Hiver</source>
+        <target>Winter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.anniversaire" datatype="html">
+        <source>Anniversaire</source>
+        <target>Verjaardag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.neutre" datatype="html">
+        <source>Sans thème</source>
+        <target>Geen thema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.phase.approche" datatype="html">
+        <source>approche</source>
+        <target>komt eraan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.phase.jourJ" datatype="html">
+        <source>en cours</source>
+        <target>bezig</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.auto" datatype="html">
+        <source>Automatique</source>
+        <target>Automatisch</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/theme-grid.ts</context>
+          <context context-type="linenumber">117</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

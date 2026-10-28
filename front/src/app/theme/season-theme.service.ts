@@ -162,10 +162,12 @@ export class SeasonThemeService implements OnDestroy {
     }
   }
 
-  /** Aperçu en direct d'un thème (fermer sans enregistrer : `previsualiser(null)`). */
-  previsualiser(id: SeasonId | 'neutre' | null, membre?: FamilyMemberDTO): void {
+  /** Aperçu en direct d'un thème ('auto' : celui de la date ; null : fin de l'aperçu, ex. fermer sans enregistrer). */
+  previsualiser(id: SeasonId | 'neutre' | 'auto' | null, membre?: FamilyMemberDTO): void {
     if (id === null) {
       this.apercu.set(null);
+    } else if (id === 'auto') {
+      this.apercu.set(this.automatique());
     } else if (id === 'neutre') {
       this.apercu.set(NEUTRE);
     } else {
