@@ -17,6 +17,10 @@
             "description": "Ce qu'on a toujours \u00e0 la maison : marqu\u00e9 \u00ab d\u00e9j\u00e0 \u00e0 la maison \u00bb dans la liste de courses"
         },
         {
+            "name": "Boutique",
+            "description": "\u00c9toiles, pi\u00e8ces d'or et articles du personnage"
+        },
+        {
             "name": "Courses",
             "description": "Liste de courses : g\u00e9n\u00e9r\u00e9e depuis les repas planifi\u00e9s, compl\u00e9t\u00e9e \u00e0 la main"
         },
@@ -59,6 +63,10 @@
         {
             "name": "Connexion",
             "description": "Connexion, d\u00e9connexion, utilisateur connect\u00e9, changement de mot de passe"
+        },
+        {
+            "name": "Tenues",
+            "description": "Tenues de th\u00e8me des personnages"
         },
         {
             "name": "Routines",
@@ -600,6 +608,205 @@
                 "responses": {
                     "400": {
                         "description": "Mode FORCE sans th\u00e8me, ANNIVERSAIRE sans membre, fin dans le pass\u00e9"
+                    }
+                }
+            }
+        },
+        "/v1/parametres/boutique": {
+            "get": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "R\u00e9glages de la boutique (parent)",
+                "operationId": "getReglageBoutique",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BoutiqueSettingsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Modifier le taux de change \u00e9toiles \u2192 pi\u00e8ces (parent)",
+                "description": "Ne change pas les \u00e9changes d\u00e9j\u00e0 faits.",
+                "operationId": "updateReglageBoutique",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BoutiqueSettingsDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BoutiqueSettingsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/tenues/{theme}": {
+            "put": {
+                "tags": [
+                    "Tenues"
+                ],
+                "summary": "Enregistrer la tenue d'un th\u00e8me",
+                "description": "Corps : config du personnage (objet JSON). Refus\u00e9e (400) si elle contient un article payant non poss\u00e9d\u00e9.",
+                "operationId": "updateTenue",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "theme",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "HALLOWEEN",
+                                "SAINT_NICOLAS",
+                                "NOEL",
+                                "CARNAVAL",
+                                "PAQUES",
+                                "ETE",
+                                "RENTREE",
+                                "PRINTEMPS",
+                                "AUTOMNE",
+                                "HIVER",
+                                "ANNIVERSAIRE"
+                            ]
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": {}
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Config invalide, trop longue, ou article non poss\u00e9d\u00e9"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tenues"
+                ],
+                "summary": "Supprimer la tenue d'un th\u00e8me",
+                "operationId": "deleteTenue",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "theme",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "HALLOWEEN",
+                                "SAINT_NICOLAS",
+                                "NOEL",
+                                "CARNAVAL",
+                                "PAQUES",
+                                "ETE",
+                                "RENTREE",
+                                "PRINTEMPS",
+                                "AUTOMNE",
+                                "HIVER",
+                                "ANNIVERSAIRE"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/tenues/auto": {
+            "put": {
+                "tags": [
+                    "Tenues"
+                ],
+                "summary": "Porter automatiquement la tenue du th\u00e8me du moment, ou non",
+                "operationId": "updateTenueAuto",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TenueAutoRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
                     }
                 }
             }
@@ -1406,6 +1613,77 @@
                 }
             }
         },
+        "/v1/membres/{memberId}/porte-monnaie/echange": {
+            "post": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "\u00c9changer des \u00e9toiles contre des pi\u00e8ces d'or",
+                "description": "Chaque pi\u00e8ce co\u00fbte \u00ab \u00e9toiles par pi\u00e8ce \u00bb \u00e9toiles disponibles.",
+                "operationId": "echangerEtoiles",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EchangeRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Pas assez d'\u00e9toiles"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/porte-monnaie/ajustements": {
+            "post": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Ajouter ou retirer des pi\u00e8ces, avec un motif (parent)",
+                "operationId": "ajusterPieces",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AjustementRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Ajustement nul, motif manquant ou solde de pi\u00e8ces qui deviendrait n\u00e9gatif"
+                    }
+                }
+            }
+        },
         "/v1/membres/{memberId}/etoiles/retraits": {
             "get": {
                 "tags": [
@@ -1487,6 +1765,118 @@
                     },
                     "404": {
                         "description": "Membre introuvable"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/boutique/remboursements": {
+            "post": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Rembourser un article (parent)",
+                "description": "L'article est retir\u00e9 et les pi\u00e8ces pay\u00e9es sont rendues. S'il \u00e9tait port\u00e9, le personnage revient \u00e0 la pi\u00e8ce par d\u00e9faut de l'emplacement.",
+                "operationId": "rembourserArticle",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RemboursementRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "404": {
+                        "description": "Article non poss\u00e9d\u00e9"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/boutique/cadeaux": {
+            "post": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Offrir un article sans payer (parent)",
+                "operationId": "offrirArticle",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AchatRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "409": {
+                        "description": "Article d\u00e9j\u00e0 poss\u00e9d\u00e9"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/boutique/achats": {
+            "post": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Acheter un article avec des pi\u00e8ces d'or",
+                "operationId": "acheterArticle",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AchatRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Pas assez de pi\u00e8ces, ou article gratuit"
+                    },
+                    "404": {
+                        "description": "Membre ou article introuvable"
+                    },
+                    "409": {
+                        "description": "Article d\u00e9j\u00e0 poss\u00e9d\u00e9"
                     }
                 }
             }
@@ -2026,6 +2416,77 @@
                 }
             }
         },
+        "/v1/membres/{memberId}/transactions": {
+            "get": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Mouvements de pi\u00e8ces d'un membre (les plus r\u00e9cents d'abord)",
+                "operationId": "listTransactionsPieces",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CoinTransactionDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/tenues": {
+            "get": {
+                "tags": [
+                    "Tenues"
+                ],
+                "summary": "Tenues de th\u00e8me d'un membre : config du personnage par th\u00e8me",
+                "operationId": "listTenues",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v1/membres/{memberId}/routines": {
             "get": {
                 "tags": [
@@ -2126,6 +2587,31 @@
                 }
             }
         },
+        "/v1/membres/{memberId}/porte-monnaie": {
+            "get": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "\u00c9toiles disponibles, pi\u00e8ces d'or et taux de change d'un membre",
+                "operationId": "getPorteMonnaie",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Membre introuvable"
+                    }
+                }
+            }
+        },
         "/v1/membres/{memberId}/etoiles": {
             "get": {
                 "tags": [
@@ -2157,6 +2643,41 @@
                     },
                     "404": {
                         "description": "Membre introuvable"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/articles": {
+            "get": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Articles payants poss\u00e9d\u00e9s par un membre (les gratuits le sont d'office)",
+                "operationId": "listArticlesPossedes",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MemberItemDTO"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2228,6 +2749,30 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ShoppingListDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/boutique/catalogue": {
+            "get": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Catalogue : tous les articles, avec leur prix en pi\u00e8ces (0 = gratuit)",
+                "operationId": "getCatalogueBoutique",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ArticleDTO"
+                                    }
                                 }
                             }
                         }
@@ -3228,6 +3773,18 @@
                         "format": "date",
                         "description": "Date de naissance (facultative)",
                         "example": "2017-03-14"
+                    },
+                    "tenueAuto": {
+                        "type": "boolean",
+                        "description": "Porter automatiquement la tenue enregistr\u00e9e pour le th\u00e8me du moment"
+                    },
+                    "tenues": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object",
+                            "additionalProperties": {}
+                        },
+                        "description": "Tenues de th\u00e8me : config du personnage par th\u00e8me (HALLOWEEN, NOEL\u2026), absent = aucune"
                     }
                 }
             },
@@ -3625,6 +4182,29 @@
                     "mode"
                 ]
             },
+            "BoutiqueSettingsDTO": {
+                "type": "object",
+                "description": "R\u00e9glages de la boutique",
+                "properties": {
+                    "etoilesParPiece": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "\u00c9toiles \u00e0 \u00e9changer pour une pi\u00e8ce d'or",
+                        "example": 10,
+                        "maximum": 1000,
+                        "minimum": 1
+                    }
+                }
+            },
+            "TenueAutoRequest": {
+                "type": "object",
+                "description": "Porter automatiquement la tenue du th\u00e8me du moment",
+                "properties": {
+                    "actif": {
+                        "type": "boolean"
+                    }
+                }
+            },
             "FamilyMemberRequest": {
                 "type": "object",
                 "description": "Cr\u00e9ation / modification d'un membre de la famille",
@@ -3944,6 +4524,44 @@
                     "modele"
                 ]
             },
+            "EchangeRequest": {
+                "type": "object",
+                "description": "\u00c9change d'\u00e9toiles contre des pi\u00e8ces d'or",
+                "properties": {
+                    "pieces": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Nombre de pi\u00e8ces voulues (chacune co\u00fbte \u00ab \u00e9toiles par pi\u00e8ce \u00bb \u00e9toiles)",
+                        "example": 2,
+                        "maximum": 1000,
+                        "minimum": 1
+                    }
+                }
+            },
+            "AjustementRequest": {
+                "type": "object",
+                "description": "Ajustement manuel des pi\u00e8ces d'un membre (parent)",
+                "properties": {
+                    "pieces": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Pi\u00e8ces ajout\u00e9es (positif) ou retir\u00e9es (n\u00e9gatif), non nul",
+                        "example": -2,
+                        "maximum": 1000,
+                        "minimum": -1000
+                    },
+                    "commentaire": {
+                        "type": "string",
+                        "description": "Motif, obligatoire",
+                        "example": "Pi\u00e8ces rendues apr\u00e8s une erreur",
+                        "maxLength": 255,
+                        "minLength": 0
+                    }
+                },
+                "required": [
+                    "commentaire"
+                ]
+            },
             "StarPenaltyRequest": {
                 "type": "object",
                 "description": "Retrait d'\u00e9toiles",
@@ -4020,6 +4638,46 @@
                         ]
                     }
                 }
+            },
+            "RemboursementRequest": {
+                "type": "object",
+                "description": "Remboursement d'un article (parent)",
+                "properties": {
+                    "articleId": {
+                        "type": "string",
+                        "example": "costume-witch",
+                        "maxLength": 60,
+                        "minLength": 0
+                    },
+                    "commentaire": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Motif, facultatif",
+                        "maxLength": 255,
+                        "minLength": 0
+                    }
+                },
+                "required": [
+                    "articleId"
+                ]
+            },
+            "AchatRequest": {
+                "type": "object",
+                "description": "Achat (ou cadeau d'un parent) d'un article de la boutique",
+                "properties": {
+                    "articleId": {
+                        "type": "string",
+                        "description": "Id de l'article",
+                        "example": "costume-witch",
+                        "maxLength": 60,
+                        "minLength": 0
+                    }
+                },
+                "required": [
+                    "articleId"
+                ]
             },
             "PantryItemRequest": {
                 "type": "object",
@@ -4679,6 +5337,56 @@
                     }
                 }
             },
+            "CoinTransactionDTO": {
+                "type": "object",
+                "description": "Mouvement de pi\u00e8ces d'un membre",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "ECHANGE",
+                            "ACHAT",
+                            "CADEAU",
+                            "REMBOURSEMENT",
+                            "AJUSTEMENT"
+                        ]
+                    },
+                    "pieces": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Sign\u00e9 : positif = gagn\u00e9es, n\u00e9gatif = d\u00e9pens\u00e9es",
+                        "example": -5
+                    },
+                    "etoiles": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int32",
+                        "description": "\u00c9toiles \u00e9chang\u00e9es (type ECHANGE)"
+                    },
+                    "articleId": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "commentaire": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "creeLe": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
             "RoutineHistoryDTO": {
                 "type": "object",
                 "description": "\u00c9toiles d'un jour (historique) : routines termin\u00e9es et \u00e9toiles retir\u00e9es",
@@ -4721,11 +5429,37 @@
                         "description": "\u00c9toiles retir\u00e9es par un parent",
                         "example": 3
                     },
+                    "converties": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "\u00c9toiles \u00e9chang\u00e9es contre des pi\u00e8ces d'or",
+                        "example": 10
+                    },
                     "solde": {
                         "type": "integer",
                         "format": "int64",
-                        "description": "Gagn\u00e9es moins retir\u00e9es, jamais n\u00e9gatif",
+                        "description": "Gagn\u00e9es \u2212 retir\u00e9es \u2212 \u00e9chang\u00e9es, jamais n\u00e9gatif",
                         "example": 9
+                    }
+                }
+            },
+            "MemberItemDTO": {
+                "type": "object",
+                "description": "Article payant poss\u00e9d\u00e9 par un membre",
+                "properties": {
+                    "articleId": {
+                        "type": "string",
+                        "example": "costume-witch"
+                    },
+                    "acquisLe": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "prixPaye": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Prix pay\u00e9, 0 pour un cadeau",
+                        "example": 5
                     }
                 }
             },
@@ -4759,6 +5493,53 @@
                             "AUTRE"
                         ],
                         "example": "EPICERIE"
+                    }
+                }
+            },
+            "ArticleDTO": {
+                "type": "object",
+                "description": "Article de la boutique (pi\u00e8ce du personnage)",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id de la pi\u00e8ce dans le catalogue du front",
+                        "example": "costume-witch"
+                    },
+                    "emplacement": {
+                        "type": "string",
+                        "description": "Emplacement : champ de la config du personnage (costume, hat, face, back, held\u2026)",
+                        "example": "costume"
+                    },
+                    "prix": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Prix en pi\u00e8ces d'or ; 0 = gratuit, poss\u00e9d\u00e9 d'office",
+                        "example": 5
+                    },
+                    "rarete": {
+                        "type": "string",
+                        "description": "commun, rare ou super",
+                        "example": "super"
+                    },
+                    "theme": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Th\u00e8me de l'article, absent = toute l'ann\u00e9e",
+                        "enum": [
+                            "HALLOWEEN",
+                            "SAINT_NICOLAS",
+                            "NOEL",
+                            "CARNAVAL",
+                            "PAQUES",
+                            "ETE",
+                            "RENTREE",
+                            "PRINTEMPS",
+                            "AUTOMNE",
+                            "HIVER",
+                            "ANNIVERSAIRE"
+                        ]
                     }
                 }
             },

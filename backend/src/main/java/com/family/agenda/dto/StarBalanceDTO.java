@@ -6,5 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record StarBalanceDTO(
         @Schema(description = "Étoiles gagnées (une par routine terminée)", example = "12") long gagnees,
         @Schema(description = "Étoiles retirées par un parent", example = "3") long retirees,
-        @Schema(description = "Gagnées moins retirées, jamais négatif", example = "9") long solde) {
+        @Schema(description = "Étoiles échangées contre des pièces d'or", example = "10") long converties,
+        @Schema(description = "Gagnées − retirées − échangées, jamais négatif", example = "9") long solde) {
 }

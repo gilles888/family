@@ -1,5 +1,7 @@
 export * from './agenda.service';
 import { AgendaService } from './agenda.service';
+export * from './boutique.service';
+import { BoutiqueService } from './boutique.service';
 export * from './comptes.service';
 import { ComptesService } from './comptes.service';
 export * from './connexion.service';
@@ -26,4 +28,6 @@ export * from './repas.service';
 import { RepasService } from './repas.service';
 export * from './routines.service';
 import { RoutinesService } from './routines.service';
-export const APIS = [AgendaService, ComptesService, ConnexionService, CoursesService, EtoilesService, GardeMangerService, IngredientsService, MembresService, MeteoService, ParametresService, RecettesService, RemindersService, RepasService, RoutinesService];
+export * from './tenues.service';
+import { TenuesService } from './tenues.service';
+export const APIS = [AgendaService, BoutiqueService, ComptesService, ConnexionService, CoursesService, EtoilesService, GardeMangerService, IngredientsService, MembresService, MeteoService, ParametresService, RecettesService, RemindersService, RepasService, RoutinesService, TenuesService];

@@ -11,13 +11,17 @@ import org.mapstruct.MappingTarget;
 @Mapper(uses = AvatarConfigConverter.class)
 public interface FamilyMemberMapper {
 
+    /** Les tenues de thème sont ajoutées par FamilyMemberService (elles sont dans une autre table). */
+    @Mapping(target = "tenues", ignore = true)
     FamilyMemberDTO toDto(FamilyMember member);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "avatarConfig", ignore = true)
+    @Mapping(target = "tenueAuto", ignore = true)
     FamilyMember toEntity(FamilyMemberRequest request);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "avatarConfig", ignore = true)
+    @Mapping(target = "tenueAuto", ignore = true)
     void update(FamilyMemberRequest request, @MappingTarget FamilyMember member);
 }

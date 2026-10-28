@@ -67,7 +67,12 @@ class ChildRoleApiTest {
     }
 
     private void expectForbidden(HttpMethod method, String url) throws Exception {
-        mvc.perform(request(method, url).session(lea).with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
+        expectForbidden(method, url, "{}");
+    }
+
+    /** Corps valide : la validation du corps passe avant @PreAuthorize, un corps vide ferait répondre 400. */
+    private void expectForbidden(HttpMethod method, String url, String body) throws Exception {
+        mvc.perform(request(method, url).session(lea).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(body))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.code").value("ACTION_NON_AUTORISEE"));
     }
@@ -174,6 +179,40 @@ class ChildRoleApiTest {
                         .content("{ \"mode\": \"OFF\", \"anniversairesActifs\": true, \"enfantsPeuventChoisir\": true }"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.code").value("ACTION_NON_AUTORISEE"));
+    }
+
+    @Test
+    void boutiqueSeulementPourSonPropreMembre() throws Exception {
+        mvc.perform(get("/v1/boutique/catalogue").session(lea)).andExpect(status().isOk());
+        mvc.perform(get("/v1/membres/{id}/porte-monnaie", leaId).session(lea)).andExpect(status().isOk()).andExpect(jsonPath("$.pieces").value(0));
+        mvc.perform(get("/v1/membres/{id}/articles", leaId).session(lea)).andExpect(status().isOk());
+        mvc.perform(get("/v1/membres/{id}/transactions", leaId).session(lea)).andExpect(status().isOk());
+        mvc.perform(get("/v1/membres/{id}/tenues", leaId).session(lea)).andExpect(status().isOk());
+        // pas d'étoiles ni de pièces : refus métier (400), pas un refus d'accès
+        mvc.perform(post("/v1/membres/{id}/porte-monnaie/echange", leaId).session(lea).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"pieces\": 1 }")).andExpect(status().isBadRequest());
+        mvc.perform(post("/v1/membres/{id}/boutique/achats", leaId).session(lea).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"articleId\": \"costume-witch\" }")).andExpect(status().isBadRequest());
+        mvc.perform(put("/v1/membres/{id}/tenues/HALLOWEEN", leaId).session(lea).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"version\": 2, \"face\": \"face-freckles\" }")).andExpect(status().isOk());
+
+        expectForbidden(HttpMethod.GET, "/v1/membres/" + tomId + "/porte-monnaie");
+        expectForbidden(HttpMethod.GET, "/v1/membres/" + tomId + "/articles");
+        expectForbidden(HttpMethod.GET, "/v1/membres/" + tomId + "/transactions");
+        expectForbidden(HttpMethod.GET, "/v1/membres/" + tomId + "/tenues");
+        expectForbidden(HttpMethod.POST, "/v1/membres/" + tomId + "/porte-monnaie/echange", "{ \"pieces\": 1 }");
+        expectForbidden(HttpMethod.POST, "/v1/membres/" + tomId + "/boutique/achats", "{ \"articleId\": \"costume-witch\" }");
+        expectForbidden(HttpMethod.PUT, "/v1/membres/" + tomId + "/tenues/HALLOWEEN", "{ \"version\": 2 }");
+        expectForbidden(HttpMethod.PUT, "/v1/membres/" + tomId + "/tenues/auto", "{ \"actif\": true }");
+    }
+
+    @Test
+    void cadeauRemboursementAjustementEtTauxReservesAuxParents() throws Exception {
+        expectForbidden(HttpMethod.POST, "/v1/membres/" + leaId + "/boutique/cadeaux");
+        expectForbidden(HttpMethod.POST, "/v1/membres/" + leaId + "/boutique/remboursements");
+        expectForbidden(HttpMethod.POST, "/v1/membres/" + leaId + "/porte-monnaie/ajustements");
+        expectForbidden(HttpMethod.GET, "/v1/parametres/boutique");
+        expectForbidden(HttpMethod.PUT, "/v1/parametres/boutique");
     }
 
     @Test

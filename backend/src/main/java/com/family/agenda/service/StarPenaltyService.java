@@ -4,11 +4,13 @@ import com.family.agenda.dto.StarBalanceDTO;
 import com.family.agenda.dto.StarPenaltyDTO;
 import com.family.agenda.dto.StarPenaltyRequest;
 import com.family.agenda.entity.FamilyMember;
+import com.family.agenda.entity.MemberWallet;
 import com.family.agenda.entity.StarPenalty;
 import com.family.agenda.entity.StarPenaltyReason;
 import com.family.agenda.exception.BusinessRuleException;
 import com.family.agenda.exception.ResourceNotFoundException;
 import com.family.agenda.repository.FamilyMemberRepository;
+import com.family.agenda.repository.MemberWalletRepository;
 import com.family.agenda.repository.RoutineRunRepository;
 import com.family.agenda.repository.StarPenaltyRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class StarPenaltyService {
     private final StarPenaltyRepository repository;
     private final FamilyMemberRepository memberRepository;
     private final RoutineRunRepository runRepository;
+    private final MemberWalletRepository walletRepository;
     private final Clock clock;
 
     @Transactional(readOnly = true)
@@ -41,13 +44,14 @@ public class StarPenaltyService {
         return repository.findByMemberIdOrderByDateDescIdDesc(memberId).stream().map(StarPenaltyService::toDto).toList();
     }
 
-    /** Solde depuis le début : routines terminées moins étoiles retirées (jamais négatif). */
+    /** Solde depuis le début : routines terminées moins étoiles retirées et échangées contre des pièces (jamais négatif). */
     @Transactional(readOnly = true)
     public StarBalanceDTO balance(Long memberId) {
         loadMember(memberId);
         long gagnees = runRepository.countByRoutineMemberIdAndCompletedAtNotNull(memberId);
         long retirees = repository.totalRemoved(memberId);
-        return new StarBalanceDTO(gagnees, retirees, Math.max(0, gagnees - retirees));
+        long converties = walletRepository.findById(memberId).map(MemberWallet::getEtoilesConverties).orElse(0);
+        return new StarBalanceDTO(gagnees, retirees, converties, Math.max(0, gagnees - retirees - converties));
     }
 
     /** {@code accountId} : compte du parent (null si inconnu). */

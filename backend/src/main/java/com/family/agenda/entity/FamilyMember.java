@@ -38,4 +38,8 @@ public class FamilyMember {
     /** Facultative : sert à fêter l'anniversaire dans le thème de l'application. */
     @Column(name = "date_naissance")
     private LocalDate dateNaissance;
+
+    /** Porter automatiquement la tenue enregistrée pour le thème du moment (voir MemberOutfit). */
+    @Column(name = "tenue_auto", nullable = false)
+    private boolean tenueAuto = true;
 }

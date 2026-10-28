@@ -8,6 +8,8 @@ import com.family.agenda.exception.ResourceNotFoundException;
 import com.family.agenda.mapper.AvatarConfigConverter;
 import com.family.agenda.mapper.FamilyMemberMapper;
 import com.family.agenda.repository.FamilyMemberRepository;
+import com.family.agenda.entity.MemberWallet;
+import com.family.agenda.repository.MemberWalletRepository;
 import com.family.agenda.repository.ReminderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -29,25 +31,32 @@ public class FamilyMemberService {
     private final ReminderRepository reminderRepository;
     private final FamilyMemberMapper mapper;
     private final AvatarConfigConverter avatarConverter;
+    private final OutfitService outfitService;
+    private final ShopService shop;
+    private final MemberWalletRepository walletRepository;
 
     @Transactional(readOnly = true)
     public List<FamilyMemberDTO> findAll() {
-        return repository.findAll(Sort.by("nom")).stream().map(mapper::toDto).toList();
+        Map<Long, Map<String, Map<String, Object>>> tenues = outfitService.findAllByMember();
+        return repository.findAll(Sort.by("nom")).stream().map(m -> toDto(m, tenues.get(m.getId()))).toList();
     }
 
     @Transactional(readOnly = true)
     public FamilyMemberDTO findById(Long id) {
-        return mapper.toDto(load(id));
+        FamilyMember member = load(id);
+        return toDto(member, outfitService.findForMember(id));
     }
 
     public FamilyMemberDTO create(FamilyMemberRequest request) {
-        return mapper.toDto(repository.save(mapper.toEntity(request)));
+        FamilyMember member = repository.save(mapper.toEntity(request));
+        walletRepository.save(new MemberWallet(member.getId()));
+        return toDto(member, Map.of());
     }
 
     public FamilyMemberDTO update(Long id, FamilyMemberRequest request) {
         FamilyMember member = load(id);
         mapper.update(request, member);
-        return mapper.toDto(member);
+        return toDto(member, outfitService.findForMember(id));
     }
 
     /**
@@ -60,8 +69,9 @@ public class FamilyMemberService {
         if (json != null && json.length() > AVATAR_MAX) {
             throw new BusinessRuleException("La configuration d'avatar dépasse " + AVATAR_MAX + " caractères");
         }
+        shop.assertOwned(id, config);
         member.setAvatarConfig(json);
-        return mapper.toDto(member);
+        return toDto(member, outfitService.findForMember(id));
     }
 
     /** Le membre est retiré des reminders auxquels il participait ; les reminders et leur agenda restent. */
@@ -69,6 +79,12 @@ public class FamilyMemberService {
         FamilyMember member = load(id);
         reminderRepository.findByMemberId(id).forEach(r -> r.getMembres().remove(member));
         repository.delete(member);
+    }
+
+    private FamilyMemberDTO toDto(FamilyMember member, Map<String, Map<String, Object>> tenues) {
+        FamilyMemberDTO d = mapper.toDto(member);
+        return new FamilyMemberDTO(d.id(), d.nom(), d.couleur(), d.avatarConfig(), d.dateNaissance(), d.tenueAuto(),
+                tenues == null || tenues.isEmpty() ? null : tenues);
     }
 
     private FamilyMember load(Long id) {

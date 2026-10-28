@@ -46,6 +46,10 @@ public class FamilySettings {
     @Column(name = "enfants_peuvent_choisir", nullable = false)
     private boolean enfantsPeuventChoisir = false;
 
+    /** Taux de change de la boutique : étoiles à échanger pour une pièce d'or. */
+    @Column(name = "etoiles_par_piece", nullable = false)
+    private int etoilesParPiece = 10;
+
     @Column(name = "modifie_par")
     private Long modifiePar;
 

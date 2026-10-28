@@ -14,5 +14,8 @@ public record FamilyMemberDTO(
                 example = "{\"version\": 1, \"skin\": \"skin-3\", \"hair\": \"hair-curly\", \"hairColor\": \"#6b3e26\"}",
                 nullable = true)
         Map<String, Object> avatarConfig,
-        @Schema(description = "Date de naissance (facultative)", example = "2017-03-14", nullable = true) LocalDate dateNaissance) {
+        @Schema(description = "Date de naissance (facultative)", example = "2017-03-14", nullable = true) LocalDate dateNaissance,
+        @Schema(description = "Porter automatiquement la tenue enregistrée pour le thème du moment") boolean tenueAuto,
+        @Schema(description = "Tenues de thème : config du personnage par thème (HALLOWEEN, NOEL…), absent = aucune")
+        Map<String, Map<String, Object>> tenues) {
 }

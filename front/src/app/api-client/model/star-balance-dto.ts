@@ -22,7 +22,11 @@ export interface StarBalanceDTO {
      */
     retirees?: number;
     /**
-     * Gagnées moins retirées, jamais négatif
+     * Étoiles échangées contre des pièces d\'or
+     */
+    converties?: number;
+    /**
+     * Gagnées − retirées − échangées, jamais négatif
      */
     solde?: number;
 }
