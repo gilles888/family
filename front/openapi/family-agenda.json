@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8089",
+            "url": "http://localhost:8080",
             "description": "Generated server url"
         }
     ],
@@ -63,6 +63,10 @@
         {
             "name": "Routines",
             "description": "Routines des membres (tableaux du matin, du soir\u2026) : gestion et suivi du jour"
+        },
+        {
+            "name": "Parametres",
+            "description": "R\u00e9glages de la famille"
         }
     ],
     "paths": {
@@ -552,6 +556,50 @@
                     },
                     "204": {
                         "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/v1/parametres/theme": {
+            "get": {
+                "tags": [
+                    "Parametres"
+                ],
+                "summary": "Th\u00e8me de l'application pour la famille",
+                "description": "Un th\u00e8me forc\u00e9 dont la date de fin est d\u00e9pass\u00e9e est remis en AUTO.",
+                "operationId": "getThemeFamille",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThemeSettingsDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Parametres"
+                ],
+                "summary": "Modifier le th\u00e8me de la famille (parent)",
+                "operationId": "updateThemeFamille",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ThemeSettingsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Mode FORCE sans th\u00e8me, ANNIVERSAIRE sans membre, fin dans le pass\u00e9"
                     }
                 }
             }
@@ -3171,6 +3219,15 @@
                             "hair": "hair-curly",
                             "hairColor": "#6b3e26"
                         }
+                    },
+                    "dateNaissance": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date",
+                        "description": "Date de naissance (facultative)",
+                        "example": "2017-03-14"
                     }
                 }
             },
@@ -3505,6 +3562,69 @@
                     }
                 }
             },
+            "ThemeSettingsRequest": {
+                "type": "object",
+                "description": "Modification du th\u00e8me de la famille",
+                "properties": {
+                    "mode": {
+                        "type": "string",
+                        "enum": [
+                            "AUTO",
+                            "FORCE",
+                            "OFF"
+                        ]
+                    },
+                    "theme": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Obligatoire en mode FORCE",
+                        "enum": [
+                            "HALLOWEEN",
+                            "SAINT_NICOLAS",
+                            "NOEL",
+                            "CARNAVAL",
+                            "PAQUES",
+                            "ETE",
+                            "RENTREE",
+                            "PRINTEMPS",
+                            "AUTOMNE",
+                            "HIVER",
+                            "ANNIVERSAIRE"
+                        ]
+                    },
+                    "membreId": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int64",
+                        "description": "Obligatoire si le th\u00e8me forc\u00e9 est ANNIVERSAIRE",
+                        "example": 1
+                    },
+                    "jusqua": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date",
+                        "description": "Dernier jour du th\u00e8me forc\u00e9 (pas dans le pass\u00e9) ; absent = sans limite",
+                        "example": "2026-12-31"
+                    },
+                    "anniversairesActifs": {
+                        "type": "boolean"
+                    },
+                    "enfantsPeuventChoisir": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "anniversairesActifs",
+                    "enfantsPeuventChoisir",
+                    "mode"
+                ]
+            },
             "FamilyMemberRequest": {
                 "type": "object",
                 "description": "Cr\u00e9ation / modification d'un membre de la famille",
@@ -3522,6 +3642,15 @@
                         "example": "#E91E63",
                         "minLength": 1,
                         "pattern": "^#[0-9A-Fa-f]{6}$"
+                    },
+                    "dateNaissance": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date",
+                        "description": "Date de naissance (facultative, pas dans le futur)",
+                        "example": "2017-03-14"
                     }
                 },
                 "required": [
@@ -4371,6 +4500,67 @@
                         "items": {
                             "$ref": "#/components/schemas/RecipeIngredientDTO"
                         }
+                    }
+                }
+            },
+            "ThemeSettingsDTO": {
+                "type": "object",
+                "description": "Th\u00e8me de l'application pour la famille",
+                "properties": {
+                    "mode": {
+                        "type": "string",
+                        "description": "AUTO : selon la date ; FORCE : th\u00e8me choisi ; OFF : th\u00e8me neutre",
+                        "enum": [
+                            "AUTO",
+                            "FORCE",
+                            "OFF"
+                        ]
+                    },
+                    "theme": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Th\u00e8me forc\u00e9 (mode FORCE)",
+                        "enum": [
+                            "HALLOWEEN",
+                            "SAINT_NICOLAS",
+                            "NOEL",
+                            "CARNAVAL",
+                            "PAQUES",
+                            "ETE",
+                            "RENTREE",
+                            "PRINTEMPS",
+                            "AUTOMNE",
+                            "HIVER",
+                            "ANNIVERSAIRE"
+                        ]
+                    },
+                    "membreId": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int64",
+                        "description": "Membre f\u00eat\u00e9 (th\u00e8me ANNIVERSAIRE forc\u00e9)",
+                        "example": 1
+                    },
+                    "jusqua": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date",
+                        "description": "Dernier jour du th\u00e8me forc\u00e9, absent = sans limite",
+                        "example": "2026-12-31"
+                    },
+                    "anniversairesActifs": {
+                        "type": "boolean",
+                        "description": "F\u00eater automatiquement les anniversaires"
+                    },
+                    "enfantsPeuventChoisir": {
+                        "type": "boolean",
+                        "description": "Les enfants peuvent choisir leur th\u00e8me sur leur appareil"
                     }
                 }
             },

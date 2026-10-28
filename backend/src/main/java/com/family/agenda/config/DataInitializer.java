@@ -101,7 +101,7 @@ public class DataInitializer implements CommandLineRunner {
     private void seedFamily(FamilySeed family, LocalDate today, Path file) {
         Map<String, Long> ids = new LinkedHashMap<>();
         for (FamilySeed.Membre m : family.membres()) {
-            Long id = memberService.create(new FamilyMemberRequest(m.nom().strip(), m.couleur().toUpperCase())).id();
+            Long id = memberService.create(new FamilyMemberRequest(m.nom().strip(), m.couleur().toUpperCase(), null)).id();
             ids.put(m.cle(), id);
             if (m.avatar() != null) {
                 memberService.updateAvatar(id, m.avatar());
@@ -139,10 +139,10 @@ public class DataInitializer implements CommandLineRunner {
 
     /** Famille fictive (Maman, Papa, Léa, Tom) : rappels variés et routines des enfants. */
     private void seedDemoFamily(LocalDate today) {
-        Long maman = memberService.create(new FamilyMemberRequest("Maman", "#E91E63")).id();
-        Long papa = memberService.create(new FamilyMemberRequest("Papa", "#2196F3")).id();
-        Long lea = memberService.create(new FamilyMemberRequest("Léa", "#FF9800")).id();
-        Long tom = memberService.create(new FamilyMemberRequest("Tom", "#4CAF50")).id();
+        Long maman = memberService.create(new FamilyMemberRequest("Maman", "#E91E63", null)).id();
+        Long papa = memberService.create(new FamilyMemberRequest("Papa", "#2196F3", null)).id();
+        Long lea = memberService.create(new FamilyMemberRequest("Léa", "#FF9800", null)).id();
+        Long tom = memberService.create(new FamilyMemberRequest("Tom", "#4CAF50", null)).id();
 
         // Sport récurrent hebdo, sans fin : Léa, natation tous les mercredis
         report(reminderService.create(new ReminderRequest("Natation", "Piscine municipale", ReminderType.SPORT,

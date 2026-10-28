@@ -36,7 +36,7 @@ class AccountServiceTest {
     void setUp() {
         // compte « admin » du profil dev, créé au démarrage
         admin = repository.findByIdentifiant("admin").orElseThrow().getId();
-        lea = memberService.create(new FamilyMemberRequest("Léa", "#FF9800")).id();
+        lea = memberService.create(new FamilyMemberRequest("Léa", "#FF9800", null)).id();
     }
 
     @Test

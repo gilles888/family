@@ -4847,6 +4847,22 @@
           <context context-type="linenumber">53,54</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="member.birthDate" datatype="html">
+        <source>Date de naissance</source>
+        <target>Geboortedatum</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.birthDateInvalid" datatype="html">
+        <source>Date invalide ou dans le futur.</source>
+        <target>Ongeldige datum of datum in de toekomst.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">46,48</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

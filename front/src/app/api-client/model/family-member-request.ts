@@ -21,5 +21,9 @@ export interface FamilyMemberRequest {
      * Couleur hexadécimale #RRGGBB
      */
     couleur: string;
+    /**
+     * Date de naissance (facultative, pas dans le futur)
+     */
+    dateNaissance?: string | null;
 }
 

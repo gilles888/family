@@ -2,9 +2,11 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FamilyMemberDTO, MembresService } from '../api-client';
+import { parseIsoDate, startOfDay, toIsoDate } from '../shared/date-utils';
 import { NotificationService } from '../shared/notification.service';
 
 export interface MemberDialogData {
@@ -16,7 +18,7 @@ const PALETTE = ['#e91e63', '#2196f3', '#ff9800', '#4caf50', '#9c27b0', '#00bcd4
 
 @Component({
   selector: 'app-member-dialog',
-  imports: [ReactiveFormsModule, MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [ReactiveFormsModule, MatDialogModule, MatButtonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h2 mat-dialog-title>
@@ -33,6 +35,15 @@ const PALETTE = ['#e91e63', '#2196f3', '#ff9800', '#4caf50', '#9c27b0', '#00bcd4
           <input matInput formControlName="nom" maxlength="100" required />
           @if (form.controls.nom.hasError('required')) {
             <mat-error i18n="@@form.required">Ce champ est obligatoire.</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label i18n="@@member.birthDate">Date de naissance</mat-label>
+          <input matInput [matDatepicker]="birthPicker" [max]="today" formControlName="dateNaissance" />
+          <mat-datepicker-toggle matIconSuffix [for]="birthPicker" />
+          <mat-datepicker #birthPicker startView="multi-year" />
+          @if (form.controls.dateNaissance.invalid) {
+            <mat-error i18n="@@member.birthDateInvalid">Date invalide ou dans le futur.</mat-error>
           }
         </mat-form-field>
         <label class="color">
@@ -76,9 +87,11 @@ export class MemberDialog {
   private readonly fb = inject(FormBuilder).nonNullable;
 
   protected readonly saving = signal(false);
+  protected readonly today = startOfDay(new Date());
   protected readonly form = this.fb.group({
     nom: [this.member?.nom ?? '', [Validators.required, Validators.maxLength(100)]],
     couleur: [this.member?.couleur ?? PALETTE[Math.floor(Math.random() * PALETTE.length)]],
+    dateNaissance: [this.member?.dateNaissance ? parseIsoDate(this.member.dateNaissance) : (null as Date | null)],
   });
 
   protected save(): void {
@@ -87,7 +100,8 @@ export class MemberDialog {
       return;
     }
     this.saving.set(true);
-    const request = { nom: this.form.controls.nom.value.trim(), couleur: this.form.controls.couleur.value };
+    const { nom, couleur, dateNaissance } = this.form.getRawValue();
+    const request = { nom: nom.trim(), couleur, dateNaissance: dateNaissance ? toIsoDate(dateNaissance) : null };
     const call = this.member ? this.api.updateMembre(this.member.id!, request) : this.api.createMembre(request);
     call.subscribe({
       next: () => {

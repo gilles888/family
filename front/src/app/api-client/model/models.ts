@@ -46,4 +46,6 @@ export * from './shopping-list-generate-request';
 export * from './star-balance-dto';
 export * from './star-penalty-dto';
 export * from './star-penalty-request';
+export * from './theme-settings-dto';
+export * from './theme-settings-request';
 export * from './year-summary-dto';

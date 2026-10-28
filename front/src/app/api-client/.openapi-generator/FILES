@@ -10,6 +10,7 @@ api/garde-manger.service.ts
 api/ingredients.service.ts
 api/membres.service.ts
 api/meteo.service.ts
+api/parametres.service.ts
 api/recettes.service.ts
 api/reminders.service.ts
 api/repas.service.ts
@@ -66,6 +67,8 @@ model/shopping-list-generate-request.ts
 model/star-balance-dto.ts
 model/star-penalty-dto.ts
 model/star-penalty-request.ts
+model/theme-settings-dto.ts
+model/theme-settings-request.ts
 model/year-summary-dto.ts
 param.ts
 provide-api.ts

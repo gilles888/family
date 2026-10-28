@@ -129,7 +129,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">44,45</context>
+          <context context-type="linenumber">55,56</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
@@ -180,7 +180,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">45,46</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
@@ -1967,28 +1967,28 @@
         <source>Modifier le membre</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">24,25</context>
+          <context context-type="linenumber">26,27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.createTitle" datatype="html">
         <source>Nouveau membre</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">26,28</context>
+          <context context-type="linenumber">28,30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.name" datatype="html">
         <source>Nom</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">32,33</context>
+          <context context-type="linenumber">34,35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="form.required" datatype="html">
         <source>Ce champ est obligatoire.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">35,37</context>
+          <context context-type="linenumber">37,39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
@@ -2003,18 +2003,32 @@
           <context context-type="linenumber">21,23</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="member.birthDate" datatype="html">
+        <source>Date de naissance</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.birthDateInvalid" datatype="html">
+        <source>Date invalide ou dans le futur.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">46,48</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="member.color" datatype="html">
         <source>Couleur</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">39,40</context>
+          <context context-type="linenumber">50,51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.saved" datatype="html">
         <source>Membre enregistré.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="game.stars.field" datatype="html">

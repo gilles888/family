@@ -20,5 +20,9 @@ export interface FamilyMemberDTO {
      * Personnage (avatar) : configuration libre du catalogue front, absente = avatar par défaut
      */
     avatarConfig?: { [key: string]: any | null; } | null;
+    /**
+     * Date de naissance (facultative)
+     */
+    dateNaissance?: string | null;
 }
 

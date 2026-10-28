@@ -57,8 +57,8 @@ class ChildRoleApiTest {
     @BeforeEach
     void setUp() throws Exception {
         today = LocalDate.now(clock);
-        leaId = memberService.create(new FamilyMemberRequest("Léa", "#FF9800")).id();
-        tomId = memberService.create(new FamilyMemberRequest("Tom", "#4CAF50")).id();
+        leaId = memberService.create(new FamilyMemberRequest("Léa", "#FF9800", null)).id();
+        tomId = memberService.create(new FamilyMemberRequest("Tom", "#4CAF50", null)).id();
         EnumSet<DayOfWeek> tousLesJours = EnumSet.allOf(DayOfWeek.class);
         routineLea = routineService.applyTemplate(leaId, "matin", "fr", tousLesJours, null, null);
         routineTom = routineService.applyTemplate(tomId, "matin", "fr", tousLesJours, null, null);
@@ -161,6 +161,17 @@ class ChildRoleApiTest {
     void enfantNePeutPasSeRetirerDesEtoiles() throws Exception {
         mvc.perform(post("/v1/membres/{id}/etoiles/retraits", leaId).session(lea).with(csrf())
                         .contentType(MediaType.APPLICATION_JSON).content("{ \"nombre\": 1, \"motif\": \"DISPUTE\" }"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("ACTION_NON_AUTORISEE"));
+    }
+
+    @Test
+    void litLeThemeDeLaFamilleMaisNeLeModifiePas() throws Exception {
+        mvc.perform(get("/v1/parametres/theme").session(lea))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.mode").value("AUTO"));
+        mvc.perform(put("/v1/parametres/theme").session(lea).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"mode\": \"OFF\", \"anniversairesActifs\": true, \"enfantsPeuventChoisir\": true }"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.code").value("ACTION_NON_AUTORISEE"));
     }
