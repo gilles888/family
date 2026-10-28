@@ -4,6 +4,10 @@
     <span i18n="@@app.title">Agenda familial</span>
   </a>
 
+  @if (pictoId(); as picto) {
+    <app-season-picto class="season-picto" [id]="picto" [size]="32" />
+  }
+
   @if (auth.isLoggedIn() && !auth.mustChangePassword()) {
     <nav>
       <a matButton routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -68,6 +72,8 @@
     </mat-menu>
   }
 </mat-toolbar>
+
+<app-season-decor />
 
 <main>
   <router-outlet />

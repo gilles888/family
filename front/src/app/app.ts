@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, LOCALE_ID, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, LOCALE_ID, computed, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { environment } from '../environments/environment';
 import { AuthService } from './auth/auth.service';
 import { ACCOUNT_ROLE_LABELS } from './accounts/account-labels';
+import { SeasonDecor } from './theme/season-decor';
+import { SeasonPicto } from './theme/season-picto';
+import { SeasonThemeService } from './theme/season-theme.service';
+import { SeasonId } from './theme/seasons';
 
 /** Langues proposées. Ajouter une langue : voir README ("Ajouter une nouvelle langue"). */
 const LANGUAGES = [
@@ -18,7 +22,7 @@ const LANGUAGES = [
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatButtonModule, MatButtonToggleModule, MatIconModule, MatMenuModule, MatToolbarModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatButtonModule, MatButtonToggleModule, MatIconModule, MatMenuModule, MatToolbarModule, SeasonDecor, SeasonPicto],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -28,6 +32,9 @@ export class App {
   protected readonly locale = inject(LOCALE_ID).substring(0, 2);
   protected readonly languages = LANGUAGES;
   protected readonly auth = inject(AuthService);
+  /** Thème du moment (pictogramme à côté du titre) ; le service pose aussi data-season sur <html>. */
+  private readonly theme = inject(SeasonThemeService).actif;
+  protected readonly pictoId = computed(() => (this.theme().id === 'neutre' ? null : (this.theme().id as SeasonId)));
   protected readonly parentLabel = ACCOUNT_ROLE_LABELS.PARENT;
   protected readonly childLabel = ACCOUNT_ROLE_LABELS.ENFANT;
 

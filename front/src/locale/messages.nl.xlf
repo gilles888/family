@@ -4863,6 +4863,126 @@
           <context context-type="linenumber">46,48</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="season.birthday.soon" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {Plus que 1 dodo avant l&apos;anniversaire de <x id="INTERPOLATION"/> !} other {Plus que <x id="INTERPOLATION_1"/> dodos avant l&apos;anniversaire de <x id="INTERPOLATION"/> !}}</source>
+        <target>{VAR_PLURAL, plural, =1 {Nog 1 nachtje slapen tot de verjaardag van <x id="INTERPOLATION"/> !} other {Nog <x id="INTERPOLATION_1"/> nachtjes slapen tot de verjaardag van <x id="INTERPOLATION"/> !}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
+          <context context-type="linenumber">24,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.birthday.me" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {Joyeux anniversaire <x id="INTERPOLATION"/> ! Tu as 1 an aujourd&apos;hui 🎉} other {Joyeux anniversaire <x id="INTERPOLATION"/> ! Tu as <x id="INTERPOLATION_1"/> ans aujourd&apos;hui 🎉}}</source>
+        <target>{VAR_PLURAL, plural, =1 {Gefeliciteerd <x id="INTERPOLATION"/> ! Je wordt vandaag 1 jaar 🎉} other {Gefeliciteerd <x id="INTERPOLATION"/> ! Je wordt vandaag <x id="INTERPOLATION_1"/> jaar 🎉}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
+          <context context-type="linenumber">28,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.birthday.one" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {C&apos;est l&apos;anniversaire de <x id="INTERPOLATION"/> aujourd&apos;hui : 1 an ! 🎂} other {C&apos;est l&apos;anniversaire de <x id="INTERPOLATION"/> aujourd&apos;hui : <x id="INTERPOLATION_1"/> ans ! 🎂}}</source>
+        <target>{VAR_PLURAL, plural, =1 {Het is vandaag de verjaardag van <x id="INTERPOLATION"/> : 1 jaar ! 🎂} other {Het is vandaag de verjaardag van <x id="INTERPOLATION"/> : <x id="INTERPOLATION_1"/> jaar ! 🎂}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
+          <context context-type="linenumber">32,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.birthday.many" datatype="html">
+        <source>Joyeux anniversaire <x id="INTERPOLATION" equiv-text="{{ noms() }}"/> ! 🎉</source>
+        <target>Gefeliciteerd <x id="INTERPOLATION" equiv-text="{{ noms() }}"/> ! 🎉</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.halloween" datatype="html">
+        <source>Joyeux Halloween !</source>
+        <target>Fijne Halloween!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.saintNicolas" datatype="html">
+        <source>Joyeuse Saint-Nicolas !</source>
+        <target>Fijne Sinterklaas!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.noel" datatype="html">
+        <source>Joyeux Noël !</source>
+        <target>Zalig Kerstmis!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.carnaval" datatype="html">
+        <source>Joyeux carnaval !</source>
+        <target>Fijn carnaval!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.paques" datatype="html">
+        <source>Joyeuses Pâques !</source>
+        <target>Zalig Pasen!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.ete" datatype="html">
+        <source>Bonnes vacances !</source>
+        <target>Fijne vakantie!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.rentree" datatype="html">
+        <source>Bonne rentrée !</source>
+        <target>Goed schooljaar!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.printemps" datatype="html">
+        <source>Bon printemps !</source>
+        <target>Fijne lente!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.automne" datatype="html">
+        <source>Bel automne !</source>
+        <target>Fijne herfst!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.hiver" datatype="html">
+        <source>Bon hiver !</source>
+        <target>Fijne winter!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.anniversaire" datatype="html">
+        <source>Joyeux anniversaire !</source>
+        <target>Gefeliciteerd!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>
