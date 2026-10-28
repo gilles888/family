@@ -227,3 +227,18 @@ export function seasonFor(date: Date, membres: FamilyMemberDTO[], calendrier: Sc
     ...(restants >= 0 ? { joursRestants: restants } : {}),
   };
 }
+
+/** Tous les thèmes saisonniers, dans l'ordre de l'année (écran de choix). */
+export const SEASON_IDS: readonly SeasonId[] = [
+  'printemps', 'carnaval', 'paques', 'ete', 'rentree', 'automne', 'halloween', 'saint-nicolas', 'noel', 'hiver', 'anniversaire',
+];
+
+/** HALLOWEEN, SAINT_NICOLAS… (API) → halloween, saint-nicolas… */
+export function toSeasonId(theme: string): SeasonId {
+  return theme.toLowerCase().replace(/_/g, '-') as SeasonId;
+}
+
+/** halloween, saint-nicolas… → HALLOWEEN, SAINT_NICOLAS… (API) */
+export function toApiTheme(id: SeasonId): string {
+  return id.toUpperCase().replace(/-/g, '_');
+}
