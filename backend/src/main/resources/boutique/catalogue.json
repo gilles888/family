@@ -1,0 +1,780 @@
+{
+  "_commentaire": "Source de vérité des prix de la boutique. Un article sans « prix » coûte le prix du barème de sa rareté ; prix 0 = gratuit, possédé d'office. Le front garde les dessins : voir avatar-catalogue.spec.ts.",
+  "bareme": {
+    "commun": 1,
+    "rare": 3,
+    "super": 5
+  },
+  "articles": [
+    {
+      "id": "eyes-round",
+      "emplacement": "eyes",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "eyes-happy",
+      "emplacement": "eyes",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "eyes-wink",
+      "emplacement": "eyes",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "eyes-surprised",
+      "emplacement": "eyes",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "eyes-sleepy",
+      "emplacement": "eyes",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "mouth-smile",
+      "emplacement": "mouth",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "mouth-grin",
+      "emplacement": "mouth",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "mouth-tongue",
+      "emplacement": "mouth",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "mouth-o",
+      "emplacement": "mouth",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "mouth-neutral",
+      "emplacement": "mouth",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-short",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-long",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-curly",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-pigtails",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-bun",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-mohawk",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-bald",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-afro",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-fringe",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-ponytail",
+      "emplacement": "hair",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hair-braids",
+      "emplacement": "hair",
+      "rarete": "commun"
+    },
+    {
+      "id": "hair-double-buns",
+      "emplacement": "hair",
+      "rarete": "commun"
+    },
+    {
+      "id": "hair-spikes",
+      "emplacement": "hair",
+      "rarete": "commun"
+    },
+    {
+      "id": "outfit-tshirt",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "outfit-sweater",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "outfit-hoodie",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "outfit-shirt",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "outfit-dress",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "outfit-overalls",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "outfit-jersey",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "outfit-hero",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "outfit-xmas-sweater",
+      "emplacement": "outfit",
+      "rarete": "rare",
+      "theme": "NOEL"
+    },
+    {
+      "id": "outfit-swimsuit",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "theme": "ETE"
+    },
+    {
+      "id": "outfit-hawaii",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "theme": "ETE"
+    },
+    {
+      "id": "outfit-raincoat",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "theme": "AUTOMNE"
+    },
+    {
+      "id": "outfit-puffer",
+      "emplacement": "outfit",
+      "rarete": "commun",
+      "theme": "HIVER"
+    },
+    {
+      "id": "hat-cap",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hat-beanie",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hat-pirate",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hat-crown",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hat-wizard",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hat-hardhat",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hat-bob",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hat-cowboy",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "hat-witch",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "hat-santa",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "NOEL"
+    },
+    {
+      "id": "hat-antlers",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "NOEL"
+    },
+    {
+      "id": "hat-bunny-ears",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "PAQUES"
+    },
+    {
+      "id": "hat-flower-crown",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "PAQUES"
+    },
+    {
+      "id": "hat-straw",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "ETE"
+    },
+    {
+      "id": "hat-beach",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "ETE"
+    },
+    {
+      "id": "hat-school-cap",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "RENTREE"
+    },
+    {
+      "id": "hat-pompom",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "HIVER"
+    },
+    {
+      "id": "hat-earmuffs",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "HIVER"
+    },
+    {
+      "id": "hat-party",
+      "emplacement": "hat",
+      "rarete": "commun",
+      "theme": "ANNIVERSAIRE"
+    },
+    {
+      "id": "hat-cake-crown",
+      "emplacement": "hat",
+      "rarete": "rare",
+      "theme": "ANNIVERSAIRE"
+    },
+    {
+      "id": "acc-glasses",
+      "emplacement": "accessory",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "acc-sunglasses",
+      "emplacement": "accessory",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "acc-bowtie",
+      "emplacement": "accessory",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "acc-scarf",
+      "emplacement": "accessory",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "acc-earrings",
+      "emplacement": "accessory",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "acc-diving-mask",
+      "emplacement": "accessory",
+      "rarete": "rare",
+      "theme": "ETE"
+    },
+    {
+      "id": "acc-long-scarf",
+      "emplacement": "accessory",
+      "rarete": "commun",
+      "theme": "HIVER"
+    },
+    {
+      "id": "costume-pyjama",
+      "emplacement": "costume",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "costume-witch",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "costume-ghost",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "costume-skeleton",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "costume-pumpkin",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "costume-vampire",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "costume-santa",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "NOEL"
+    },
+    {
+      "id": "costume-elf",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "NOEL"
+    },
+    {
+      "id": "costume-tree",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "NOEL"
+    },
+    {
+      "id": "costume-snowman",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "NOEL"
+    },
+    {
+      "id": "costume-clown",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "costume-pirate",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "costume-knight",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "costume-princess",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "costume-hero",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "costume-dino",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "costume-unicorn",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "costume-bunny",
+      "emplacement": "costume",
+      "rarete": "super",
+      "theme": "PAQUES"
+    },
+    {
+      "id": "costume-astronaut",
+      "emplacement": "costume",
+      "rarete": "super"
+    },
+    {
+      "id": "costume-firefighter",
+      "emplacement": "costume",
+      "rarete": "super"
+    },
+    {
+      "id": "costume-doctor",
+      "emplacement": "costume",
+      "rarete": "super"
+    },
+    {
+      "id": "costume-chef",
+      "emplacement": "costume",
+      "rarete": "super"
+    },
+    {
+      "id": "costume-football",
+      "emplacement": "costume",
+      "rarete": "super"
+    },
+    {
+      "id": "face-freckles",
+      "emplacement": "face",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "face-pumpkin",
+      "emplacement": "face",
+      "rarete": "rare",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "face-cat",
+      "emplacement": "face",
+      "rarete": "commun",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "face-reindeer",
+      "emplacement": "face",
+      "rarete": "commun",
+      "theme": "NOEL"
+    },
+    {
+      "id": "face-clown-nose",
+      "emplacement": "face",
+      "rarete": "commun",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "face-hero-mask",
+      "emplacement": "face",
+      "rarete": "rare",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "face-venetian",
+      "emplacement": "face",
+      "rarete": "rare",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "face-butterfly",
+      "emplacement": "face",
+      "rarete": "commun",
+      "theme": "PAQUES"
+    },
+    {
+      "id": "back-cape-plain",
+      "emplacement": "back",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "back-bat-wings",
+      "emplacement": "back",
+      "rarete": "rare",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "back-hero-cape",
+      "emplacement": "back",
+      "rarete": "rare",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "back-fairy-wings",
+      "emplacement": "back",
+      "rarete": "rare",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "back-butterfly-wings",
+      "emplacement": "back",
+      "rarete": "rare",
+      "theme": "PAQUES"
+    },
+    {
+      "id": "back-backpack",
+      "emplacement": "back",
+      "rarete": "commun",
+      "theme": "RENTREE"
+    },
+    {
+      "id": "held-flower",
+      "emplacement": "held",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "held-lantern",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "held-broom",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "held-candy-bucket",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "HALLOWEEN"
+    },
+    {
+      "id": "held-candycane",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "NOEL"
+    },
+    {
+      "id": "held-gift",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "NOEL"
+    },
+    {
+      "id": "held-speculoos",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "NOEL"
+    },
+    {
+      "id": "held-wand",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "held-foam-sword",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "held-streamers",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "CARNAVAL"
+    },
+    {
+      "id": "held-egg-basket",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "PAQUES"
+    },
+    {
+      "id": "held-watering-can",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "PAQUES"
+    },
+    {
+      "id": "held-icecream",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "ETE"
+    },
+    {
+      "id": "held-float",
+      "emplacement": "held",
+      "rarete": "rare",
+      "theme": "ETE"
+    },
+    {
+      "id": "held-bucket-spade",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "ETE"
+    },
+    {
+      "id": "held-big-pencil",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "RENTREE"
+    },
+    {
+      "id": "held-book",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "RENTREE"
+    },
+    {
+      "id": "held-umbrella",
+      "emplacement": "held",
+      "rarete": "rare",
+      "theme": "AUTOMNE"
+    },
+    {
+      "id": "held-maple-leaf",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "AUTOMNE"
+    },
+    {
+      "id": "held-hot-chocolate",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "HIVER"
+    },
+    {
+      "id": "held-balloon",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "ANNIVERSAIRE"
+    },
+    {
+      "id": "held-cake",
+      "emplacement": "held",
+      "rarete": "commun",
+      "theme": "ANNIVERSAIRE"
+    },
+    {
+      "id": "bg-sunset",
+      "emplacement": "background",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "bg-ocean",
+      "emplacement": "background",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "bg-meadow",
+      "emplacement": "background",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "bg-galaxy",
+      "emplacement": "background",
+      "rarete": "commun",
+      "prix": 0
+    },
+    {
+      "id": "bg-forest",
+      "emplacement": "background",
+      "rarete": "rare"
+    },
+    {
+      "id": "bg-snow",
+      "emplacement": "background",
+      "rarete": "rare",
+      "theme": "HIVER"
+    },
+    {
+      "id": "bg-beach",
+      "emplacement": "background",
+      "rarete": "rare",
+      "theme": "ETE"
+    },
+    {
+      "id": "bg-space",
+      "emplacement": "background",
+      "rarete": "rare"
+    }
+  ]
+}

@@ -45,12 +45,21 @@ const SMALL = 40;
             <stop offset="1" [attr.stop-color]="bg.gradient.to" />
           </linearGradient>
         </defs>
-        <rect data-layer="background" width="200" height="200" [attr.fill]="'url(#' + gradientId + ')'" />
+        <rect
+          data-layer="background"
+          width="200"
+          height="200"
+          [attr.fill]="'url(#' + gradientId + ')'"
+        />
       } @else {
         <rect data-layer="background" width="200" height="200" [attr.fill]="bg.color" />
       }
       @for (layer of drawing().layers; track layer.key) {
-        <g [attr.data-layer]="layer.key" [attr.data-part]="layer.part" [appShapes]="layer.shapes"></g>
+        <g
+          [attr.data-layer]="layer.key"
+          [attr.data-part]="layer.part"
+          [appShapes]="layer.shapes"
+        ></g>
       }
     </svg>
   `,
@@ -102,8 +111,12 @@ export class Avatar {
   protected readonly drawing = computed(() => {
     const member = this.member();
     const fallback = defaultAvatar(member?.id ?? 0, member?.couleur);
-    const drawing = drawAvatar(normalizeAvatar(this.config() ?? member?.avatarConfig, fallback));
+    const drawing = drawAvatar(normalizeAvatar(this.config() ?? member?.avatarConfig, fallback), {
+      memberColor: member?.couleur,
+    });
     const only = this.only();
-    return only ? { ...drawing, layers: drawing.layers.filter((l) => (only as string[]).includes(l.key)) } : drawing;
+    return only
+      ? { ...drawing, layers: drawing.layers.filter((l) => (only as string[]).includes(l.key)) }
+      : drawing;
   });
 }

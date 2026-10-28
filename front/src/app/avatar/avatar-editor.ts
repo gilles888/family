@@ -1,5 +1,19 @@
-import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
-import { CdkDrag, CdkDragDrop, CdkDragPlaceholder, CdkDragPreview, CdkDropList } from '@angular/cdk/drag-drop';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  computed,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDragPlaceholder,
+  CdkDragPreview,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +28,9 @@ export interface AvatarEditorData {
 }
 
 /** Ce qu'on glisse : une option de la garde-robe (vers le personnage) ou une pièce portée (vers la garde-robe). */
-type DragData = { kind: 'option'; option: WardrobeOption } | { kind: 'worn'; field: 'hat' | 'accessory'; zone: DropZone };
+type DragData =
+  | { kind: 'option'; option: WardrobeOption }
+  | { kind: 'worn'; field: 'hat' | 'accessory'; zone: DropZone };
 
 /** Souris : le glisser commence tout de suite. Doigt : après un court appui (un balayage rapide fait défiler). */
 const DRAG_DELAY = { touch: 180, mouse: 0 };
@@ -39,7 +55,16 @@ function reducedMotion(): boolean {
  */
 @Component({
   selector: 'app-avatar-editor',
-  imports: [CdkDrag, CdkDragPlaceholder, CdkDragPreview, CdkDropList, MatButtonModule, MatDialogModule, MatIconModule, Avatar],
+  imports: [
+    CdkDrag,
+    CdkDragPlaceholder,
+    CdkDragPreview,
+    CdkDropList,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    Avatar,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './avatar-editor.html',
   styleUrls: ['./avatar-editor.scss', './avatar-editor-drag.scss'],
@@ -54,7 +79,10 @@ export class AvatarEditor {
   protected readonly categories = WARDROBE;
   protected readonly category = signal<WardrobeCategory>(WARDROBE[0]);
   protected readonly config = signal<AvatarConfig>(
-    normalizeAvatar(this.member.avatarConfig, defaultAvatar(this.member.id ?? 0, this.member.couleur)),
+    normalizeAvatar(
+      this.member.avatarConfig,
+      defaultAvatar(this.member.id ?? 0, this.member.couleur),
+    ),
   );
   protected readonly saving = signal(false);
 
@@ -95,7 +123,9 @@ export class AvatarEditor {
   });
 
   /** Ids des listes de la garde-robe (onglet affiché), reliées au personnage. */
-  protected readonly groupListIds = computed(() => this.category().groups.map((g) => `wardrobe-${g.id}`));
+  protected readonly groupListIds = computed(() =>
+    this.category().groups.map((g) => `wardrobe-${g.id}`),
+  );
 
   protected readonly wornLabels: Record<'hat' | 'accessory', string> = {
     hat: HATS[0].label,
@@ -142,7 +172,11 @@ export class AvatarEditor {
   protected dropOnStage(event: CdkDragDrop<unknown, unknown, DragData>): void {
     const data = event.item.data;
     // isPointerOverContainer : le CDK garde la dernière liste survolée, même si on lâche ailleurs ensuite
-    if (data.kind === 'option' && event.previousContainer !== event.container && event.isPointerOverContainer) {
+    if (
+      data.kind === 'option' &&
+      event.previousContainer !== event.container &&
+      event.isPointerOverContainer
+    ) {
       this.config.update((c) => data.option.apply(c));
       this.pop();
     }
@@ -151,7 +185,11 @@ export class AvatarEditor {
   /** Pièce portée lâchée dans la garde-robe : retirée. Lâchée ailleurs : elle revient sur le personnage. */
   protected dropInWardrobe(event: CdkDragDrop<unknown, unknown, DragData>): void {
     const data = event.item.data;
-    if (data.kind === 'worn' && event.previousContainer !== event.container && event.isPointerOverContainer) {
+    if (
+      data.kind === 'worn' &&
+      event.previousContainer !== event.container &&
+      event.isPointerOverContainer
+    ) {
       this.config.update((c) => ({ ...c, [data.field]: NONE }));
       this.pop();
     }
@@ -159,7 +197,15 @@ export class AvatarEditor {
 
   protected surprise(): void {
     this.config.set(randomAvatar());
-    this.animate([{ transform: 'rotate(0) scale(1)' }, { transform: 'rotate(-8deg) scale(0.92)' }, { transform: 'rotate(6deg) scale(1.05)' }, { transform: 'rotate(0) scale(1)' }], 450);
+    this.animate(
+      [
+        { transform: 'rotate(0) scale(1)' },
+        { transform: 'rotate(-8deg) scale(0.92)' },
+        { transform: 'rotate(6deg) scale(1.05)' },
+        { transform: 'rotate(0) scale(1)' },
+      ],
+      450,
+    );
   }
 
   protected save(): void {
@@ -190,13 +236,19 @@ export class AvatarEditor {
 
   /** Retour visuel immédiat quand une pièce est posée. */
   protected pop(): void {
-    this.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.06)' }, { transform: 'scale(1)' }], 220);
+    this.animate(
+      [{ transform: 'scale(1)' }, { transform: 'scale(1.06)' }, { transform: 'scale(1)' }],
+      220,
+    );
   }
 
   private animate(keyframes: Keyframe[], duration: number): Animation | undefined {
     if (reducedMotion()) {
       return undefined;
     }
-    return this.preview().nativeElement.animate(keyframes, { duration, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' });
+    return this.preview().nativeElement.animate(keyframes, {
+      duration,
+      easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+    });
   }
 }

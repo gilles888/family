@@ -7,12 +7,20 @@
  * l'utilisaient retombent sur la pièce par défaut de l'emplacement (normalizeAvatar), sans erreur.
  */
 import { INK, Shape, circle, ellipse, line, path, rect, star } from '../shared/svg/shapes';
+import { AvatarPart, ColorOption, DropZone, GradientOption, NONE } from './avatar-part-types';
+import {
+  BACKS,
+  COSTUMES,
+  EXTRA_ACCESSORIES,
+  EXTRA_GRADIENTS,
+  EXTRA_HAIRS,
+  EXTRA_HATS,
+  EXTRA_OUTFITS,
+  FACES,
+  HELD,
+} from './avatar-parts-extra';
 
-/** Emplacements : une pièce posée va toujours au sien. */
-export type AvatarSlot = 'background' | 'body' | 'head' | 'eyes' | 'mouth' | 'hair' | 'hat' | 'accessory';
-
-/** Zone du personnage où une pièce s'aimante (surlignée pendant un glisser-déposer). */
-export type DropZone = 'hair' | 'hat' | 'face' | 'eyes' | 'mouth' | 'ears' | 'neck' | 'body' | 'background';
+export * from './avatar-part-types';
 
 /** Rectangle [x, y, largeur, hauteur] de chaque zone, dans le viewBox 0 0 200 200. */
 export const ZONES: Record<DropZone, readonly [number, number, number, number]> = {
@@ -26,35 +34,6 @@ export const ZONES: Record<DropZone, readonly [number, number, number, number]> 
   body: [30, 140, 140, 60],
   background: [0, 0, 200, 200],
 };
-
-export interface AvatarPart {
-  id: string;
-  label: string;
-  slot: AvatarSlot;
-  /** Calque principal. */
-  shapes: Shape[];
-  /** Cheveux : partie derrière la tête (cheveux longs, afro…). */
-  back?: Shape[];
-  /** Habits : partie devant le cou (col, capuche…), dessinée après la tête. */
-  front?: Shape[];
-  /** Accessoires : zone où il se pose (lunettes → yeux, nœud papillon → cou…). */
-  zone?: DropZone;
-}
-
-export interface ColorOption {
-  value: string;
-  label: string;
-}
-
-export interface GradientOption {
-  /** Enregistré tel quel dans l'avatar (champ background), à la place d'une couleur. */
-  id: string;
-  label: string;
-  from: string;
-  to: string;
-}
-
-export const NONE = 'none';
 
 // ---------- tête (commune) et teints
 
@@ -86,7 +65,11 @@ export const SKIN_TONES: SkinTone[] = [
 // ---------- yeux (y = 90, x = 84 et 116) ; $c = couleur des yeux (iris), la pupille reste noire
 
 /** Œil ouvert : iris de la couleur des yeux, pupille, reflet. */
-const openEye = (x: number): Shape[] => [circle(x, 90, 5.5, '$c'), circle(x, 90, 2.6, INK), circle(x + 2, 88, 1.8, '#ffffff')];
+const openEye = (x: number): Shape[] => [
+  circle(x, 90, 5.5, '$c'),
+  circle(x, 90, 2.6, INK),
+  circle(x + 2, 88, 1.8, '#ffffff'),
+];
 
 const PUPILS = [...openEye(84), ...openEye(116)];
 
@@ -100,7 +83,12 @@ export const EYE_COLORS: ColorOption[] = [
 ];
 
 export const EYES: AvatarPart[] = [
-  { id: 'eyes-round', slot: 'eyes', label: $localize`:@@avatar.eyes.round:Yeux ronds`, shapes: PUPILS },
+  {
+    id: 'eyes-round',
+    slot: 'eyes',
+    label: $localize`:@@avatar.eyes.round:Yeux ronds`,
+    shapes: PUPILS,
+  },
   {
     id: 'eyes-happy',
     slot: 'eyes',
@@ -111,7 +99,11 @@ export const EYES: AvatarPart[] = [
     id: 'eyes-wink',
     slot: 'eyes',
     label: $localize`:@@avatar.eyes.wink:Clin d'œil`,
-    shapes: [...openEye(84), line('M109 90 Q116 96 123 90'), line('M108 80 Q116 77 124 81', INK, 2.5)],
+    shapes: [
+      ...openEye(84),
+      line('M109 90 Q116 96 123 90'),
+      line('M108 80 Q116 77 124 81', INK, 2.5),
+    ],
   },
   {
     id: 'eyes-surprised',
@@ -154,7 +146,11 @@ export const MOUTHS: AvatarPart[] = [
     id: 'mouth-grin',
     slot: 'mouth',
     label: $localize`:@@avatar.mouth.grin:Grand sourire`,
-    shapes: [path('M84 105 L116 105 Q100 131 84 105 Z', '#7a2e3a'), path('M87 106 L113 106 L111 111 L89 111 Z', '#ffffff'), ellipse(100, 119, 7, 4, '#f28b9a')],
+    shapes: [
+      path('M84 105 L116 105 Q100 131 84 105 Z', '#7a2e3a'),
+      path('M87 106 L113 106 L111 111 L89 111 Z', '#ffffff'),
+      ellipse(100, 119, 7, 4, '#f28b9a'),
+    ],
   },
   {
     id: 'mouth-tongue',
@@ -166,14 +162,25 @@ export const MOUTHS: AvatarPart[] = [
       line('M88 108 Q100 118 112 108'),
     ],
   },
-  { id: 'mouth-o', slot: 'mouth', label: $localize`:@@avatar.mouth.o:Bouche en « o »`, shapes: [ellipse(100, 113, 6, 7.5, '#7a2e3a')] },
-  { id: 'mouth-neutral', slot: 'mouth', label: $localize`:@@avatar.mouth.neutral:Neutre`, shapes: [line('M90 111 L110 111')] },
+  {
+    id: 'mouth-o',
+    slot: 'mouth',
+    label: $localize`:@@avatar.mouth.o:Bouche en « o »`,
+    shapes: [ellipse(100, 113, 6, 7.5, '#7a2e3a')],
+  },
+  {
+    id: 'mouth-neutral',
+    slot: 'mouth',
+    label: $localize`:@@avatar.mouth.neutral:Neutre`,
+    shapes: [line('M90 111 L110 111')],
+  },
 ];
 
 // ---------- cheveux (couleur = couleur des cheveux)
 
 /** Dessus de tête commun à plusieurs coiffures. */
-const HAIR_CAP = 'M58 86 C56 56 76 42 100 42 C124 42 144 56 142 86 C134 72 120 62 100 62 C84 62 70 70 58 86 Z';
+const HAIR_CAP =
+  'M58 86 C56 56 76 42 100 42 C124 42 144 56 142 86 C134 72 120 62 100 62 C84 62 70 70 58 86 Z';
 
 export const HAIRS: AvatarPart[] = [
   {
@@ -186,8 +193,16 @@ export const HAIRS: AvatarPart[] = [
     id: 'hair-long',
     slot: 'hair',
     label: $localize`:@@avatar.hair.long:Long`,
-    back: [path('M56 90 C52 55 74 40 100 40 C126 40 148 55 144 90 L150 158 C142 168 124 166 118 156 L118 120 L82 120 L82 156 C76 166 58 168 50 158 Z')],
-    shapes: [path('M58 90 C56 56 76 42 100 42 C124 42 144 56 142 90 C136 74 124 64 110 60 C100 70 80 76 58 90 Z')],
+    back: [
+      path(
+        'M56 90 C52 55 74 40 100 40 C126 40 148 55 144 90 L150 158 C142 168 124 166 118 156 L118 120 L82 120 L82 156 C76 166 58 168 50 158 Z',
+      ),
+    ],
+    shapes: [
+      path(
+        'M58 90 C56 56 76 42 100 42 C124 42 144 56 142 90 C136 74 124 64 110 60 C100 70 80 76 58 90 Z',
+      ),
+    ],
   },
   {
     id: 'hair-curly',
@@ -215,7 +230,9 @@ export const HAIRS: AvatarPart[] = [
     label: $localize`:@@avatar.hair.pigtails:Couettes`,
     back: [ellipse(44, 104, 13, 21), ellipse(156, 104, 13, 21)],
     shapes: [
-      path('M58 86 C56 56 76 42 100 42 C124 42 144 56 142 86 C132 70 118 62 102 62 L100 50 L98 62 C82 62 68 70 58 86 Z'),
+      path(
+        'M58 86 C56 56 76 42 100 42 C124 42 144 56 142 86 C132 70 118 62 102 62 L100 50 L98 62 C82 62 68 70 58 86 Z',
+      ),
       circle(56, 86, 5.5, '#ec4899'),
       circle(144, 86, 5.5, '#ec4899'),
     ],
@@ -224,13 +241,21 @@ export const HAIRS: AvatarPart[] = [
     id: 'hair-bun',
     slot: 'hair',
     label: $localize`:@@avatar.hair.bun:Chignon`,
-    shapes: [circle(100, 36, 16), circle(96, 32, 6, '$l', { opacity: 0.3 }), path(HAIR_CAP), line('M84 50 Q100 44 116 50', '$d', 2.5)],
+    shapes: [
+      circle(100, 36, 16),
+      circle(96, 32, 6, '$l', { opacity: 0.3 }),
+      path(HAIR_CAP),
+      line('M84 50 Q100 44 116 50', '$d', 2.5),
+    ],
   },
   {
     id: 'hair-mohawk',
     slot: 'hair',
     label: $localize`:@@avatar.hair.mohawk:Crête`,
-    shapes: [path(HAIR_CAP, '$c', { opacity: 0.35 }), path('M88 62 L84 26 L94 38 L100 16 L106 38 L116 26 L112 62 C106 58 94 58 88 62 Z')],
+    shapes: [
+      path(HAIR_CAP, '$c', { opacity: 0.35 }),
+      path('M88 62 L84 26 L94 38 L100 16 L106 38 L116 26 L112 62 C106 58 94 58 88 62 Z'),
+    ],
   },
   {
     id: 'hair-bald',
@@ -243,20 +268,34 @@ export const HAIRS: AvatarPart[] = [
     slot: 'hair',
     label: $localize`:@@avatar.hair.afro:Afro`,
     back: [circle(100, 80, 60), circle(80, 44, 14, '$l', { opacity: 0.18 })],
-    shapes: [path('M62 82 C60 58 80 46 100 46 C120 46 140 58 138 82 C128 70 114 64 100 64 C86 64 72 70 62 82 Z')],
+    shapes: [
+      path(
+        'M62 82 C60 58 80 46 100 46 C120 46 140 58 138 82 C128 70 114 64 100 64 C86 64 72 70 62 82 Z',
+      ),
+    ],
   },
   {
     id: 'hair-fringe',
     slot: 'hair',
     label: $localize`:@@avatar.hair.fringe:Frange`,
-    back: [path('M54 88 C52 58 74 40 100 40 C126 40 148 58 146 88 L146 128 C136 134 126 132 122 124 L78 124 C74 132 64 134 54 128 Z')],
-    shapes: [path('M58 84 C56 54 76 42 100 42 C124 42 144 54 142 84 C140 76 136 72 132 72 L68 72 C64 72 60 76 58 84 Z')],
+    back: [
+      path(
+        'M54 88 C52 58 74 40 100 40 C126 40 148 58 146 88 L146 128 C136 134 126 132 122 124 L78 124 C74 132 64 134 54 128 Z',
+      ),
+    ],
+    shapes: [
+      path(
+        'M58 84 C56 54 76 42 100 42 C124 42 144 54 142 84 C140 76 136 72 132 72 L68 72 C64 72 60 76 58 84 Z',
+      ),
+    ],
   },
   {
     id: 'hair-ponytail',
     slot: 'hair',
     label: $localize`:@@avatar.hair.ponytail:Queue de cheval`,
-    back: [path('M124 58 C160 54 172 100 160 144 C154 156 138 152 142 138 C150 108 144 82 122 74 Z')],
+    back: [
+      path('M124 58 C160 54 172 100 160 144 C154 156 138 152 142 138 C150 108 144 82 122 74 Z'),
+    ],
     shapes: [path(HAIR_CAP), circle(130, 64, 5.5, '$dd')],
   },
 ];
@@ -291,14 +330,22 @@ export const OUTFITS: AvatarPart[] = [
     id: 'outfit-sweater',
     slot: 'body',
     label: $localize`:@@avatar.outfit.sweater:Pull`,
-    shapes: [path(TORSO), line('M42 180 H158', '$l', 5, { opacity: 0.55 }), line('M38 191 H162', '$l', 5, { opacity: 0.55 })],
+    shapes: [
+      path(TORSO),
+      line('M42 180 H158', '$l', 5, { opacity: 0.55 }),
+      line('M38 191 H162', '$l', 5, { opacity: 0.55 }),
+    ],
     front: [rect(84, 140, 32, 20, 9, '$d')],
   },
   {
     id: 'outfit-hoodie',
     slot: 'body',
     label: $localize`:@@avatar.outfit.hoodie:Sweat à capuche`,
-    shapes: [path('M60 162 C56 138 76 128 100 128 C124 128 144 138 140 162 Z', '$d'), path(TORSO), path('M72 186 H128 L122 200 H78 Z', '$d')],
+    shapes: [
+      path('M60 162 C56 138 76 128 100 128 C124 128 144 138 140 162 Z', '$d'),
+      path(TORSO),
+      path('M72 186 H128 L122 200 H78 Z', '$d'),
+    ],
     front: [
       path('M78 150 C84 162 116 162 122 150 C116 156 84 156 78 150 Z', '$d'),
       line('M92 158 L90 178', '#ffffff', 2.5),
@@ -309,8 +356,16 @@ export const OUTFITS: AvatarPart[] = [
     id: 'outfit-shirt',
     slot: 'body',
     label: $localize`:@@avatar.outfit.shirt:Chemise`,
-    shapes: [path(TORSO), line('M100 158 V200', '$d', 2), circle(100, 172, 2.4, '$dd'), circle(100, 186, 2.4, '$dd')],
-    front: [path('M100 158 L85 145 L80 163 Z', '#ffffff'), path('M100 158 L115 145 L120 163 Z', '#ffffff')],
+    shapes: [
+      path(TORSO),
+      line('M100 158 V200', '$d', 2),
+      circle(100, 172, 2.4, '$dd'),
+      circle(100, 186, 2.4, '$dd'),
+    ],
+    front: [
+      path('M100 158 L85 145 L80 163 Z', '#ffffff'),
+      path('M100 158 L115 145 L120 163 Z', '#ffffff'),
+    ],
   },
   {
     id: 'outfit-dress',
@@ -348,8 +403,16 @@ export const OUTFITS: AvatarPart[] = [
     id: 'outfit-jersey',
     slot: 'body',
     label: $localize`:@@avatar.outfit.jersey:Maillot de sport`,
-    shapes: [path(TORSO), line('M54 168 L45 196', '#ffffff', 5), line('M146 168 L155 196', '#ffffff', 5), line('M95 178 L102 173 V196', '#ffffff', 5)],
-    front: [path('M87 151 L100 167 L113 151 Z', '#ffffff'), line('M87 151 L100 167 L113 151', '$d', 2.5)],
+    shapes: [
+      path(TORSO),
+      line('M54 168 L45 196', '#ffffff', 5),
+      line('M146 168 L155 196', '#ffffff', 5),
+      line('M95 178 L102 173 V196', '#ffffff', 5),
+    ],
+    front: [
+      path('M87 151 L100 167 L113 151 Z', '#ffffff'),
+      line('M87 151 L100 167 L113 151', '$d', 2.5),
+    ],
   },
   {
     id: 'outfit-hero',
@@ -396,7 +459,11 @@ export const HATS: AvatarPart[] = [
     id: 'hat-beanie',
     slot: 'hat',
     label: $localize`:@@avatar.hat.beanie:Bonnet`,
-    shapes: [path('M56 78 C56 44 76 30 100 30 C124 30 144 44 144 78 Z', '#7e57c2'), rect(54, 66, 92, 16, 8, '#5e35b1'), circle(100, 26, 10, '#ede7f6')],
+    shapes: [
+      path('M56 78 C56 44 76 30 100 30 C124 30 144 44 144 78 Z', '#7e57c2'),
+      rect(54, 66, 92, 16, 8, '#5e35b1'),
+      circle(100, 26, 10, '#ede7f6'),
+    ],
   },
   {
     id: 'hat-pirate',
@@ -438,13 +505,20 @@ export const HATS: AvatarPart[] = [
     id: 'hat-hardhat',
     slot: 'hat',
     label: $localize`:@@avatar.hat.hardhat:Casque de chantier`,
-    shapes: [path('M60 72 C60 44 78 32 100 32 C122 32 140 44 140 72 Z', '#fdd835'), rect(52, 68, 96, 9, 4.5, '#f9a825'), rect(95, 32, 10, 38, 4, '#fbc02d')],
+    shapes: [
+      path('M60 72 C60 44 78 32 100 32 C122 32 140 44 140 72 Z', '#fdd835'),
+      rect(52, 68, 96, 9, 4.5, '#f9a825'),
+      rect(95, 32, 10, 38, 4, '#fbc02d'),
+    ],
   },
   {
     id: 'hat-bob',
     slot: 'hat',
     label: $localize`:@@avatar.hat.bob:Bob`,
-    shapes: [path('M64 68 C66 40 82 34 100 34 C118 34 134 40 136 68 Z', '#8bc34a'), path('M48 72 C58 62 142 62 152 72 C142 82 58 82 48 72 Z', '#689f38')],
+    shapes: [
+      path('M64 68 C66 40 82 34 100 34 C118 34 134 40 136 68 Z', '#8bc34a'),
+      path('M48 72 C58 62 142 62 152 72 C142 82 58 82 48 72 Z', '#689f38'),
+    ],
   },
   {
     id: 'hat-cowboy',
@@ -453,7 +527,10 @@ export const HATS: AvatarPart[] = [
     shapes: [
       path('M70 64 C68 36 84 30 92 38 C96 34 104 34 108 38 C116 30 132 36 130 64 Z', '#a1887f'),
       rect(70, 56, 60, 8, 2, '#5d4037'),
-      path('M34 58 C44 74 156 74 166 58 C170 54 170 50 164 52 C140 66 60 66 36 52 C30 50 30 54 34 58 Z', '#8d6e63'),
+      path(
+        'M34 58 C44 74 156 74 166 58 C170 54 170 50 164 52 C140 66 60 66 36 52 C30 50 30 54 34 58 Z',
+        '#8d6e63',
+      ),
     ],
   },
 ];
@@ -461,7 +538,12 @@ export const HATS: AvatarPart[] = [
 // ---------- accessoires (couleurs fixes)
 
 export const ACCESSORIES: AvatarPart[] = [
-  { id: NONE, slot: 'accessory', label: $localize`:@@avatar.accessory.none:Pas d'accessoire`, shapes: [] },
+  {
+    id: NONE,
+    slot: 'accessory',
+    label: $localize`:@@avatar.accessory.none:Pas d'accessoire`,
+    shapes: [],
+  },
   {
     id: 'acc-glasses',
     slot: 'accessory',
@@ -497,7 +579,11 @@ export const ACCESSORIES: AvatarPart[] = [
     slot: 'accessory',
     zone: 'neck',
     label: $localize`:@@avatar.accessory.bowtie:Nœud papillon`,
-    shapes: [path('M100 154 L82 145 L82 163 Z', '#d32f2f'), path('M100 154 L118 145 L118 163 Z', '#d32f2f'), circle(100, 154, 4.5, '#b71c1c')],
+    shapes: [
+      path('M100 154 L82 145 L82 163 Z', '#d32f2f'),
+      path('M100 154 L118 145 L118 163 Z', '#d32f2f'),
+      circle(100, 154, 4.5, '#b71c1c'),
+    ],
   },
   {
     id: 'acc-scarf',
@@ -517,7 +603,12 @@ export const ACCESSORIES: AvatarPart[] = [
     slot: 'accessory',
     zone: 'ears',
     label: $localize`:@@avatar.accessory.earrings:Boucles d'oreille`,
-    shapes: [circle(60, 106, 3, '#ffd54f'), circle(140, 106, 3, '#ffd54f'), circle(60, 113, 3.5, '#ffb300'), circle(140, 113, 3.5, '#ffb300')],
+    shapes: [
+      circle(60, 106, 3, '#ffd54f'),
+      circle(140, 106, 3, '#ffd54f'),
+      circle(60, 113, 3.5, '#ffb300'),
+      circle(140, 113, 3.5, '#ffb300'),
+    ],
   },
 ];
 
@@ -535,23 +626,76 @@ export const BACKGROUND_COLORS: ColorOption[] = [
 ];
 
 export const BACKGROUND_GRADIENTS: GradientOption[] = [
-  { id: 'bg-sunset', label: $localize`:@@avatar.bg.sunset:Coucher de soleil`, from: '#fde68a', to: '#f9a8d4' },
+  {
+    id: 'bg-sunset',
+    label: $localize`:@@avatar.bg.sunset:Coucher de soleil`,
+    from: '#fde68a',
+    to: '#f9a8d4',
+  },
   { id: 'bg-ocean', label: $localize`:@@avatar.bg.ocean:Océan`, from: '#a5f3fc', to: '#60a5fa' },
-  { id: 'bg-meadow', label: $localize`:@@avatar.bg.meadow:Prairie`, from: '#fef9c3', to: '#86efac' },
-  { id: 'bg-galaxy', label: $localize`:@@avatar.bg.galaxy:Galaxie`, from: '#312e81', to: '#a855f7' },
+  {
+    id: 'bg-meadow',
+    label: $localize`:@@avatar.bg.meadow:Prairie`,
+    from: '#fef9c3',
+    to: '#86efac',
+  },
+  {
+    id: 'bg-galaxy',
+    label: $localize`:@@avatar.bg.galaxy:Galaxie`,
+    from: '#312e81',
+    to: '#a855f7',
+  },
 ];
+
+// ---------- pièces de la version 2
+
+// Les pièces d'origine (version 1) sont gratuites et possédées d'office
+for (const part of [...EYES, ...MOUTHS, ...HAIRS, ...OUTFITS, ...HATS, ...ACCESSORIES]) {
+  part.free = true;
+  part.rarete ??= 'commun';
+}
+for (const gradient of BACKGROUND_GRADIENTS) {
+  gradient.free = true;
+  gradient.rarete ??= 'commun';
+}
+HAIRS.push(...EXTRA_HAIRS);
+OUTFITS.push(...EXTRA_OUTFITS);
+HATS.push(...EXTRA_HATS);
+ACCESSORIES.push(...EXTRA_ACCESSORIES);
+BACKGROUND_GRADIENTS.push(...EXTRA_GRADIENTS);
+
+export { COSTUMES, FACES, BACKS, HELD };
 
 // ---------- index
 
-export const PARTS_BY_SLOT: Record<'eyes' | 'mouth' | 'hair' | 'body' | 'hat' | 'accessory', AvatarPart[]> = {
+export const PARTS_BY_SLOT: Record<
+  'eyes' | 'mouth' | 'hair' | 'body' | 'hat' | 'accessory' | 'costume' | 'face' | 'back' | 'held',
+  AvatarPart[]
+> = {
   eyes: EYES,
   mouth: MOUTHS,
   hair: HAIRS,
   body: OUTFITS,
   hat: HATS,
   accessory: ACCESSORIES,
+  costume: [
+    {
+      id: NONE,
+      slot: 'costume',
+      free: true,
+      label: $localize`:@@avatar.costume.none:Pas de déguisement`,
+      shapes: [],
+    },
+    ...COSTUMES,
+  ],
+  face: FACES,
+  back: BACKS,
+  held: HELD,
 };
 
-export function findPart(slot: keyof typeof PARTS_BY_SLOT, id: string | undefined): AvatarPart | undefined {
+export function findPart(
+  slot: keyof typeof PARTS_BY_SLOT,
+  id: string | undefined,
+): AvatarPart | undefined {
   return PARTS_BY_SLOT[slot].find((p) => p.id === id);
 }

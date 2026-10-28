@@ -1,22 +1,26 @@
 import {
   ACCESSORIES,
+  BACKS,
   BACKGROUND_COLORS,
   BACKGROUND_GRADIENTS,
   EYES,
   EYE_COLORS,
+  FACES,
   HAIRS,
+  HELD,
   HAIR_COLORS,
   HATS,
   MOUTHS,
   NONE,
   OUTFITS,
+  PARTS_BY_SLOT,
   OUTFIT_COLORS,
   SKIN_TONES,
 } from './avatar-parts';
 import { isHexColor, lighten } from '../shared/svg/shapes';
 
 /** Version du catalogue : à incrémenter si le sens d'un champ change (les ids retirés, eux, sont tolérés). */
-export const AVATAR_VERSION = 1;
+export const AVATAR_VERSION = 2;
 
 /** Couleur des yeux des avatars qui n'en ont pas (anciens avatars, avatar par défaut) : noir. */
 export const DEFAULT_EYE_COLOR = EYE_COLORS[0].value;
@@ -35,6 +39,14 @@ export interface AvatarConfig {
   outfitColor: string;
   hat: string;
   accessory: string;
+  /** Version 2, facultatifs (absents = « none ») : déguisement complet, qui remplace la tenue. */
+  costume?: string;
+  /** Maquillage ou masque, sur le visage (sous les lunettes). */
+  face?: string;
+  /** Cape, ailes, sac : derrière le corps. */
+  back?: string;
+  /** Objet tenu, en bas devant le corps. */
+  held?: string;
   /** Couleur #RRGGBB ou id d'un dégradé (BACKGROUND_GRADIENTS). */
   background: string;
 }
@@ -48,7 +60,8 @@ export function normalizeAvatar(raw: unknown, fallback: AvatarConfig): AvatarCon
     return { ...fallback, eyeColor: fallback.eyeColor ?? DEFAULT_EYE_COLOR };
   }
   const r = raw as Record<string, unknown>;
-  const pick = (key: keyof AvatarConfig, valid: (v: unknown) => boolean) => (valid(r[key]) ? (r[key] as string) : fallback[key]);
+  const pick = (key: keyof AvatarConfig, valid: (v: unknown) => boolean) =>
+    valid(r[key]) ? (r[key] as string) : fallback[key];
   const among = (ids: string[]) => (v: unknown) => typeof v === 'string' && ids.includes(v);
   return {
     version: AVATAR_VERSION,
@@ -62,7 +75,16 @@ export function normalizeAvatar(raw: unknown, fallback: AvatarConfig): AvatarCon
     outfitColor: pick('outfitColor', isHexColor) as string,
     hat: pick('hat', among(HATS.map((p) => p.id))) as string,
     accessory: pick('accessory', among(ACCESSORIES.map((p) => p.id))) as string,
-    background: pick('background', (v) => isHexColor(v) || among(BACKGROUND_GRADIENTS.map((g) => g.id))(v)) as string,
+    costume: among(PARTS_BY_SLOT.costume.map((p) => p.id))(r['costume'])
+      ? (r['costume'] as string)
+      : NONE,
+    face: among(FACES.map((p) => p.id))(r['face']) ? (r['face'] as string) : NONE,
+    back: among(BACKS.map((p) => p.id))(r['back']) ? (r['back'] as string) : NONE,
+    held: among(HELD.map((p) => p.id))(r['held']) ? (r['held'] as string) : NONE,
+    background: pick(
+      'background',
+      (v) => isHexColor(v) || among(BACKGROUND_GRADIENTS.map((g) => g.id))(v),
+    ) as string,
   };
 }
 
@@ -81,22 +103,26 @@ export function defaultAvatar(seed: number, memberColor?: string): AvatarConfig 
   };
 }
 
-/** Avatar tiré au hasard (bouton « Surprise ! »), chapeau et accessoire compris. */
+/** Avatar tiré au hasard (bouton « Surprise ! »), chapeau et accessoire compris : seulement des pièces gratuites. */
 export function randomAvatar(random: () => number = Math.random): AvatarConfig {
   const any = <T>(list: T[]): T => list[Math.floor(random() * list.length)];
+  const free = <T extends { free?: boolean }>(list: T[]): T[] => list.filter((p) => p.free);
   return {
     version: AVATAR_VERSION,
     skin: any(SKIN_TONES).id,
-    eyes: any(EYES).id,
+    eyes: any(free(EYES)).id,
     eyeColor: any(EYE_COLORS).value,
-    mouth: any(MOUTHS).id,
-    hair: any(HAIRS).id,
+    mouth: any(free(MOUTHS)).id,
+    hair: any(free(HAIRS)).id,
     hairColor: any(HAIR_COLORS).value,
-    outfit: any(OUTFITS).id,
+    outfit: any(free(OUTFITS)).id,
     outfitColor: any(OUTFIT_COLORS).value,
-    hat: any(HATS).id,
-    accessory: any(ACCESSORIES).id,
-    background: any([...BACKGROUND_COLORS.map((c) => c.value), ...BACKGROUND_GRADIENTS.map((g) => g.id)]),
+    hat: any(free(HATS)).id,
+    accessory: any(free(ACCESSORIES)).id,
+    background: any([
+      ...BACKGROUND_COLORS.map((c) => c.value),
+      ...free(BACKGROUND_GRADIENTS).map((g) => g.id),
+    ]),
   };
 }
 
