@@ -48,6 +48,7 @@ model/pantry-item-dto.ts
 model/pantry-item-request.ts
 model/password-change-request.ts
 model/password-reset-request.ts
+model/porte-monnaie-dto.ts
 model/recipe-dto.ts
 model/recipe-ingredient-dto.ts
 model/recipe-ingredient-request.ts

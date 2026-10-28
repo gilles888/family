@@ -61,6 +61,10 @@
     </a>
   </div>
 
+  @if (member(); as m) {
+    <app-piggy-bank class="bank" [memberId]="m.id!" [version]="finishedToday()" />
+  }
+
   @if (routines.isLoading() && !routines.hasValue()) {
     <mat-progress-bar mode="indeterminate" />
   } @else if (routines.error()) {

@@ -25,6 +25,7 @@ export * from './pantry-item-dto';
 export * from './pantry-item-request';
 export * from './password-change-request';
 export * from './password-reset-request';
+export * from './porte-monnaie-dto';
 export * from './recipe-dto';
 export * from './recipe-ingredient-dto';
 export * from './recipe-ingredient-request';

@@ -35,6 +35,7 @@ public class ThemeSettingsController {
 
     @PutMapping
     @Operation(operationId = "updateThemeFamille", summary = "Modifier le thème de la famille (parent)")
+    @ApiResponse(responseCode = "200", description = "Thème enregistré")
     @ApiResponse(responseCode = "400", description = "Mode FORCE sans thème, ANNIVERSAIRE sans membre, fin dans le passé", content = @Content)
     public ThemeSettingsDTO update(@Valid @RequestBody ThemeSettingsRequest request, Authentication authentication) {
         Long accountId = authentication != null && authentication.getPrincipal() instanceof AccountPrincipal p ? p.id() : null;

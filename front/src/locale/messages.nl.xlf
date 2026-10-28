@@ -6015,6 +6015,538 @@
           <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="avatarEditor.ideas" datatype="html">
+        <source>Idées pour <x id="INTERPOLATION" equiv-text="{{ themeName() }}"/></source>
+        <target>Ideeën voor <x id="INTERPOLATION" equiv-text="{{ themeName() }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">63,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.themeOutfits" datatype="html">
+        <source>Mes tenues de thème</source>
+        <target>Mijn themakleding</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">88,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitTheme" datatype="html">
+        <source>Thème</source>
+        <target>Thema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">93,94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitTry" datatype="html">
+        <source>Essayer</source>
+        <target>Passen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">103,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitRemove" datatype="html">
+        <source>Supprimer</source>
+        <target>Verwijderen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">104,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitSave" datatype="html">
+        <source>Enregistrer ma tenue <x id="INTERPOLATION" equiv-text="{{ themeLabel() }}"/></source>
+        <target>Mijn <x id="INTERPOLATION" equiv-text="{{ themeLabel() }}"/>-outfit opslaan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">108,109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitMissing" datatype="html">
+        <source>Achète d&apos;abord les articles à essayer.</source>
+        <target>Koop eerst de artikelen die je past.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">111,113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitAuto" datatype="html">
+        <source> Porter automatiquement ma tenue de thème </source>
+        <target> Mijn themakleding automatisch dragen </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">114,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.label" datatype="html">
+        <source>Filtrer les articles</source>
+        <target>Artikelen filteren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">140,141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.empty" datatype="html">
+        <source>Rien ici pour le moment.</source>
+        <target>Hier is nu niets te vinden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">151,153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.special" datatype="html">
+        <source>Spécial <x id="INTERPOLATION" equiv-text="{{ themeName() }}"/></source>
+        <target>Speciaal <x id="INTERPOLATION" equiv-text="{{ themeName() }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">190,191</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.notOwned" datatype="html">
+        <source>À acheter : <x id="INTERPOLATION" equiv-text="{{ price(option) }}"/> 🪙</source>
+        <target>Te koop: <x id="INTERPOLATION" equiv-text="{{ price(option) }}"/> 🪙</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">196,197</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.giftAndSave" datatype="html">
+        <source>Offrir et enregistrer</source>
+        <target>Cadeau geven en opslaan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">233,234</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.buyFor" datatype="html">
+        <source>Acheter pour <x id="INTERPOLATION" equiv-text="{{ totalPrice() }}"/> 🪙</source>
+        <target>Kopen voor <x id="INTERPOLATION" equiv-text="{{ totalPrice() }}"/> 🪙</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">235,236</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.lacking" datatype="html">
+        <source>Il te manque <x id="INTERPOLATION" equiv-text="{{ lacking() }}"/> 🪙</source>
+        <target>Je mist nog <x id="INTERPOLATION" equiv-text="{{ lacking() }}"/> 🪙</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">237,238</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.all" datatype="html">
+        <source>Tout</source>
+        <target>Alles</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.mine" datatype="html">
+        <source>À moi</source>
+        <target>Van mij</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.ts</context>
+          <context context-type="linenumber">117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.shop" datatype="html">
+        <source>Boutique</source>
+        <target>Winkel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.theme" datatype="html">
+        <source>Spécial thème</source>
+        <target>Speciaal thema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="members.shop" datatype="html">
+        <source>Boutique</source>
+        <target>Winkel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.converted" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ stats().converties }}"/> échangées contre des pièces</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ stats().converties }}"/> omgeruild tegen munten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.title" datatype="html">
+        <source>On l&apos;achète ?</source>
+        <target>Kopen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.balance" datatype="html">
+        <source>Tu as 🪙 <x id="INTERPOLATION" equiv-text="{{ before }}"/> → il te restera 🪙 <x id="INTERPOLATION_1" equiv-text="{{ before - total }}"/></source>
+        <target>Je hebt 🪙 <x id="INTERPOLATION" equiv-text="{{ before }}"/> → je houdt 🪙 <x id="INTERPOLATION_1" equiv-text="{{ before - total }}"/> over</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.confirm" datatype="html">
+        <source>Acheter pour <x id="INTERPOLATION" equiv-text="{{ total }}"/> 🪙</source>
+        <target>Kopen voor <x id="INTERPOLATION" equiv-text="{{ total }}"/> 🪙</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.bravo" datatype="html">
+        <source>Bravo ! C&apos;est à toi !</source>
+        <target>Hoera! Het is van jou!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.close" datatype="html">
+        <source>Super !</source>
+        <target>Super!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.title" datatype="html">
+        <source>Échanger des étoiles</source>
+        <target>Sterren omruilen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.rate" datatype="html">
+        <source>1 🪙 = <x id="INTERPOLATION" equiv-text="{{ shop.rate() }}"/> ⭐</source>
+        <target>1 🪙 = <x id="INTERPOLATION" equiv-text="{{ shop.rate() }}"/> ⭐</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.less" datatype="html">
+        <source>Moins</source>
+        <target>Minder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.more" datatype="html">
+        <source>Plus</source>
+        <target>Meer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.cost" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ count() * shop.rate() }}"/> ⭐ → <x id="INTERPOLATION_1" equiv-text="{{ count() }}"/> 🪙</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ count() * shop.rate() }}"/> ⭐ → <x id="INTERPOLATION_1" equiv-text="{{ count() }}"/> 🪙</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.after" datatype="html">
+        <source>Il te restera <x id="INTERPOLATION" equiv-text="{{ shop.stars() - count() * shop.rate() }}"/> ⭐</source>
+        <target>Je houdt <x id="INTERPOLATION" equiv-text="{{ shop.stars() - count() * shop.rate() }}"/> ⭐ over</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.confirm" datatype="html">
+        <source>Échanger</source>
+        <target>Omruilen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.stars" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {étoile disponible} other {étoiles disponibles}}</source>
+        <target>{VAR_PLURAL, plural, =1 {beschikbare ster} other {beschikbare sterren}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.coins" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {pièce d&apos;or} other {pièces d&apos;or}}</source>
+        <target>{VAR_PLURAL, plural, =1 {gouden munt} other {gouden munten}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.exchange" datatype="html">
+        <source>Échanger <x id="INTERPOLATION" equiv-text="{{ shop().rate() }}"/> ⭐ → 1 🪙</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ shop().rate() }}"/> ⭐ → 1 🪙 omruilen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.remaining" datatype="html">
+        <source>Encore <x id="INTERPOLATION" equiv-text="{{ missing() }}"/> ⭐ pour gagner une pièce !</source>
+        <target>Nog <x id="INTERPOLATION" equiv-text="{{ missing() }}"/> ⭐ voor een munt!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.starsTitle" datatype="html">
+        <source>Étoiles disponibles : <x id="count" equiv-text="this.shop().stars()"/></source>
+        <target>Beschikbare sterren: <x id="count" equiv-text="this.shop().stars()"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.exchange" datatype="html">
+        <source>Échange d&apos;étoiles</source>
+        <target>Sterren omgeruild</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.purchase" datatype="html">
+        <source>Achat</source>
+        <target>Aankoop</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.gift" datatype="html">
+        <source>Cadeau</source>
+        <target>Cadeau</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.refund" datatype="html">
+        <source>Remboursement</source>
+        <target>Terugbetaling</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.adjustment" datatype="html">
+        <source>Ajustement</source>
+        <target>Aanpassing</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.title" datatype="html">
+        <source>Boutique de <x id="INTERPOLATION" equiv-text="{{ data.member.nom }}"/></source>
+        <target>Winkel van <x id="INTERPOLATION" equiv-text="{{ data.member.nom }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.converted" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ shop.wallet()?.etoilesConverties ?? 0 }}"/> ⭐ déjà échangées</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ shop.wallet()?.etoilesConverties ?? 0 }}"/> ⭐ al omgeruild</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">44,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.rate" datatype="html">
+        <source>Étoiles par pièce (pour toute la famille)</source>
+        <target>Sterren per munt (voor het hele gezin)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.rateLabel" datatype="html">
+        <source>Étoiles pour 1 pièce</source>
+        <target>Sterren voor 1 munt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.rateSave" datatype="html">
+        <source>Enregistrer le taux</source>
+        <target>Tarief opslaan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">54,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.gift" datatype="html">
+        <source>Offrir un article</source>
+        <target>Een artikel cadeau doen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.article" datatype="html">
+        <source>Article</source>
+        <target>Artikel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">62,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.giftButton" datatype="html">
+        <source>Offrir</source>
+        <target>Cadeau doen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">69,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjust" datatype="html">
+        <source>Ajuster les pièces</source>
+        <target>Munten aanpassen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjustPieces" datatype="html">
+        <source>Pièces (+ ou −)</source>
+        <target>Munten (+ of −)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjustReason" datatype="html">
+        <source>Motif (obligatoire)</source>
+        <target>Reden (verplicht)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">81,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjustButton" datatype="html">
+        <source>Ajuster</source>
+        <target>Aanpassen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">84,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.owned" datatype="html">
+        <source>Articles achetés ou offerts</source>
+        <target>Gekochte of gekregen artikelen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">89,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.noItems" datatype="html">
+        <source>Aucun pour le moment.</source>
+        <target>Nog geen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">91,93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.refund" datatype="html">
+        <source>Rembourser</source>
+        <target>Terugbetalen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">98,100</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">264</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.history" datatype="html">
+        <source>Historique</source>
+        <target>Geschiedenis</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">105,106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.noHistory" datatype="html">
+        <source>Aucun mouvement.</source>
+        <target>Geen bewegingen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">107,109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.rateSaved" datatype="html">
+        <source>Taux enregistré.</source>
+        <target>Tarief opgeslagen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">236</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.gifted" datatype="html">
+        <source>Article offert.</source>
+        <target>Artikel cadeau gedaan.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">243</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjusted" datatype="html">
+        <source>Pièces ajustées.</source>
+        <target>Munten aangepast.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">251</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.refundTitle" datatype="html">
+        <source>Rembourser cet article ?</source>
+        <target>Dit artikel terugbetalen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">262</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.refundMessage" datatype="html">
+        <source>« <x id="article" equiv-text="this.label(item.articleId!)"/> » est retiré, <x id="price" equiv-text="item.prixPaye"/> 🪙 sont rendues et le personnage ne le porte plus.</source>
+        <target>« <x id="article" equiv-text="this.label(item.articleId!)"/> » wordt weggehaald, <x id="price" equiv-text="item.prixPaye"/> 🪙 worden teruggegeven en het personage draagt het niet meer.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">263</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.refunded" datatype="html">
+        <source>Article remboursé.</source>
+        <target>Artikel terugbetaald.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">271</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

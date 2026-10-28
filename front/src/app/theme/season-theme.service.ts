@@ -11,6 +11,7 @@ import {
 } from '../api-client';
 import { AuthService } from '../auth/auth.service';
 import { SKIP_ERROR_NOTIFICATION } from '../shared/api-error.interceptor';
+import { ActiveTheme } from './active-theme';
 import { SCHOOL_CALENDAR } from './school-calendar';
 import {
   SEASON_IDS,
@@ -49,6 +50,7 @@ export class SeasonThemeService implements OnDestroy {
   private readonly parametres = inject(ParametresService);
   private readonly membresApi = inject(MembresService);
   private readonly document = inject(DOCUMENT);
+  private readonly activeTheme = inject(ActiveTheme);
 
   private readonly maintenant = signal(new Date());
   private readonly reglageSignal = signal<ThemeSettingsDTO | null>(null);
@@ -118,6 +120,7 @@ export class SeasonThemeService implements OnDestroy {
       const theme = this.actif();
       const racine = this.document.documentElement;
       racine.dataset['season'] = theme.id;
+      this.activeTheme.id.set(theme.id);
       if (theme.phase) {
         racine.dataset['seasonPhase'] = theme.phase;
       } else {
@@ -165,7 +168,7 @@ export class SeasonThemeService implements OnDestroy {
 
   /** Parent : change le thème de toute la famille. */
   enregistrerFamille(request: ThemeSettingsRequest): Observable<ThemeSettingsDTO> {
-    return (this.parametres.updateThemeFamille(request) as Observable<ThemeSettingsDTO>).pipe(
+    return this.parametres.updateThemeFamille(request).pipe(
       tap((reglage) => {
         this.reglageSignal.set(reglage);
         this.apercu.set(null);

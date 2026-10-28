@@ -53,6 +53,7 @@ public class ShopController {
     @PreAuthorize("@memberAccess.member(#memberId)")
     @GetMapping("/membres/{memberId}/porte-monnaie")
     @Operation(operationId = "getPorteMonnaie", summary = "Étoiles disponibles, pièces d'or et taux de change d'un membre")
+    @ApiResponse(responseCode = "200", description = "Porte-monnaie")
     @ApiResponse(responseCode = "404", description = "Membre introuvable", content = @Content)
     public PorteMonnaieDTO wallet(@PathVariable Long memberId) {
         return service.porteMonnaie(memberId);
@@ -62,6 +63,7 @@ public class ShopController {
     @PostMapping("/membres/{memberId}/porte-monnaie/echange")
     @Operation(operationId = "echangerEtoiles", summary = "Échanger des étoiles contre des pièces d'or",
             description = "Chaque pièce coûte « étoiles par pièce » étoiles disponibles.")
+    @ApiResponse(responseCode = "200", description = "Porte-monnaie après l'échange")
     @ApiResponse(responseCode = "400", description = "Pas assez d'étoiles", content = @Content)
     public PorteMonnaieDTO exchange(@PathVariable Long memberId, @Valid @RequestBody EchangeRequest request, Authentication authentication) {
         return service.exchange(memberId, request.pieces(), accountId(authentication));
@@ -69,6 +71,7 @@ public class ShopController {
 
     @PostMapping("/membres/{memberId}/porte-monnaie/ajustements")
     @Operation(operationId = "ajusterPieces", summary = "Ajouter ou retirer des pièces, avec un motif (parent)")
+    @ApiResponse(responseCode = "200", description = "Porte-monnaie après l'ajustement")
     @ApiResponse(responseCode = "400", description = "Ajustement nul, motif manquant ou solde de pièces qui deviendrait négatif", content = @Content)
     public PorteMonnaieDTO adjust(@PathVariable Long memberId, @Valid @RequestBody AjustementRequest request, Authentication authentication) {
         return service.adjust(memberId, request.pieces(), request.commentaire(), accountId(authentication));
@@ -91,6 +94,7 @@ public class ShopController {
     @PreAuthorize("@memberAccess.member(#memberId)")
     @PostMapping("/membres/{memberId}/boutique/achats")
     @Operation(operationId = "acheterArticle", summary = "Acheter un article avec des pièces d'or")
+    @ApiResponse(responseCode = "200", description = "Porte-monnaie après l'achat")
     @ApiResponse(responseCode = "400", description = "Pas assez de pièces, ou article gratuit", content = @Content)
     @ApiResponse(responseCode = "404", description = "Membre ou article introuvable", content = @Content)
     @ApiResponse(responseCode = "409", description = "Article déjà possédé", content = @Content)
@@ -100,6 +104,7 @@ public class ShopController {
 
     @PostMapping("/membres/{memberId}/boutique/cadeaux")
     @Operation(operationId = "offrirArticle", summary = "Offrir un article sans payer (parent)")
+    @ApiResponse(responseCode = "200", description = "Porte-monnaie après le cadeau")
     @ApiResponse(responseCode = "409", description = "Article déjà possédé", content = @Content)
     public PorteMonnaieDTO gift(@PathVariable Long memberId, @Valid @RequestBody AchatRequest request, Authentication authentication) {
         return service.gift(memberId, request.articleId(), accountId(authentication));
@@ -108,6 +113,7 @@ public class ShopController {
     @PostMapping("/membres/{memberId}/boutique/remboursements")
     @Operation(operationId = "rembourserArticle", summary = "Rembourser un article (parent)",
             description = "L'article est retiré et les pièces payées sont rendues. S'il était porté, le personnage revient à la pièce par défaut de l'emplacement.")
+    @ApiResponse(responseCode = "200", description = "Porte-monnaie après le remboursement")
     @ApiResponse(responseCode = "404", description = "Article non possédé", content = @Content)
     public PorteMonnaieDTO refund(@PathVariable Long memberId, @Valid @RequestBody RemboursementRequest request, Authentication authentication) {
         return service.refund(memberId, request.articleId(), request.commentaire(), accountId(authentication));

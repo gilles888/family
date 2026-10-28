@@ -11,6 +11,7 @@ import { Avatar } from '../avatar/avatar';
 import { AvatarEditor, AvatarEditorData } from '../avatar/avatar-editor';
 import { toIsoDate } from '../shared/date-utils';
 import { RewardData, RewardDialog } from './reward-dialog';
+import { PiggyBank } from '../shop/piggy-bank';
 import { RoutineBoard } from './routine-board';
 import { RoutineHistory } from './routine-history';
 import { SoundService } from '../shared/sound.service';
@@ -24,7 +25,7 @@ import { ParentOnly } from '../auth/parent-only.directive';
  */
 @Component({
   selector: 'app-routines-page',
-  imports: [RouterLink, ParentOnly, MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, RoutineBoard, RoutineHistory],
+  imports: [RouterLink, ParentOnly, MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, PiggyBank, RoutineBoard, RoutineHistory],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[class.night]': "selected()?.theme === 'NIGHT'" },
   templateUrl: './routines-page.html',

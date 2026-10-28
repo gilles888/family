@@ -15,13 +15,25 @@ import {
   CdkDropList,
 } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { FamilyMemberDTO, MembresService } from '../api-client';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FamilyMemberDTO, MembresService, TenuesService } from '../api-client';
+import { AuthService } from '../auth/auth.service';
+import { BuyDialog, BuyDialogData } from '../shop/buy-dialog';
+import { PiggyBank } from '../shop/piggy-bank';
+import { ShopService } from '../shop/shop.service';
+import { ActiveTheme } from '../theme/active-theme';
+import { seasonLabel } from '../theme/season-labels';
+import { SEASON_IDS, SeasonId, toApiTheme } from '../theme/seasons';
 import { AvatarConfig, defaultAvatar, normalizeAvatar, randomAvatar } from './avatar-config';
 import { ACCESSORIES, DropZone, HATS, NONE, ZONES } from './avatar-parts';
 import { WARDROBE, WardrobeCategory, WardrobeOption } from './avatar-wardrobe';
 import { Avatar } from './avatar';
+import { ARTICLE_FIELDS } from './article-info';
+import { OUTFIT_IDEAS, OutfitIdea, applyIdea, ideaArticles, ideaTitle } from './avatar-ideas';
 
 export interface AvatarEditorData {
   member: FamilyMemberDTO;
@@ -62,12 +74,16 @@ function reducedMotion(): boolean {
     CdkDropList,
     MatButtonModule,
     MatDialogModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     Avatar,
+    PiggyBank,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './avatar-editor.html',
-  styleUrls: ['./avatar-editor.scss', './avatar-editor-drag.scss'],
+  styleUrls: ['./avatar-editor.scss', './avatar-editor-drag.scss', './avatar-editor-shop.scss'],
 })
 export class AvatarEditor {
   private readonly api = inject(MembresService);
@@ -85,6 +101,105 @@ export class AvatarEditor {
     ),
   );
   protected readonly saving = signal(false);
+
+  // ---------- boutique : articles possédés, prix, filtres
+  private readonly auth = inject(AuthService);
+  private readonly dialog = inject(MatDialog);
+  private readonly tenuesApi = inject(TenuesService);
+  private readonly shopService = inject(ShopService);
+  protected readonly shop = this.shopService.of(this.member.id!);
+  protected readonly isParent = this.auth.isParent;
+  /** Thème du moment (les pièces de ce thème passent en tête). */
+  protected readonly activeTheme = inject(ActiveTheme).id;
+  protected readonly filter = signal<'all' | 'mine' | 'shop' | 'theme'>('all');
+  protected readonly filters = [
+    { id: 'all' as const, label: $localize`:@@shop.filter.all:Tout`, icon: 'apps' },
+    { id: 'mine' as const, label: $localize`:@@shop.filter.mine:À moi`, icon: 'check_circle' },
+    { id: 'shop' as const, label: $localize`:@@shop.filter.shop:Boutique`, icon: 'storefront' },
+    { id: 'theme' as const, label: $localize`:@@shop.filter.theme:Spécial thème`, icon: 'auto_awesome' },
+  ];
+
+  /** Nom du thème du moment, pour le badge « Spécial … » (rien en dehors d'un thème). */
+  protected readonly themeName = computed(() => (this.activeTheme() === 'neutre' ? '' : seasonLabel(this.activeTheme())));
+
+  /** Prix d'une option de la garde-robe (0 = gratuite, couleur ou « aucun »). */
+  protected price(option: WardrobeOption): number {
+    return option.articleId ? this.shopService.price(option.articleId) : 0;
+  }
+
+  protected owned(option: WardrobeOption): boolean {
+    return !option.articleId || this.shop.owns(option.articleId);
+  }
+
+  /** Garde-robe filtrée : les pièces du thème du moment d'abord, « aucun » toujours en tête. */
+  protected readonly groups = computed(() => {
+    const filter = this.filter();
+    const theme = this.activeTheme();
+    this.shop.wallet(); // recalcul après un achat
+    return this.category()
+      .groups.map((group) => {
+        const keep = group.options.filter((o) => {
+          if (o.none || filter === 'all') {
+            return true;
+          }
+          if (filter === 'mine') {
+            return this.owned(o);
+          }
+          if (filter === 'shop') {
+            return !!o.articleId && !this.owned(o);
+          }
+          return !!o.theme && o.theme === theme;
+        });
+        const rank = (o: WardrobeOption) => (o.none ? 0 : o.theme && o.theme === theme ? 1 : 2);
+        const options = keep
+          .map((o, i) => ({ o, i }))
+          .sort((a, b) => rank(a.o) - rank(b.o) || a.i - b.i)
+          .map((x) => x.o);
+        return { ...group, options };
+      })
+      .filter((group) => filter === 'all' || group.options.some((o) => !o.none));
+  });
+
+  /** Articles payants portés qu'on ne possède pas encore (essayés dans la cabine d'essayage). */
+  protected readonly missing = computed(() => {
+    this.shop.wallet();
+    const config = this.config() as unknown as Record<string, string | undefined>;
+    const ids = ARTICLE_FIELDS.map((f) => config[f]).filter(
+      (id): id is string => !!id && id !== NONE && this.shopService.price(id) > 0 && !this.shop.owns(id),
+    );
+    return [...new Set(ids)];
+  });
+  protected readonly totalPrice = computed(() => this.missing().reduce((sum, id) => sum + this.shopService.price(id), 0));
+  protected readonly saveIcon = computed(() =>
+    this.missing().length === 0 ? 'check' : this.isParent() ? 'card_giftcard' : this.lacking() === 0 ? 'shopping_cart' : 'lock',
+  );
+  protected readonly lacking = computed(() => Math.max(0, this.totalPrice() - this.shop.pieces()));
+
+  // ---------- idées de tenues du thème du moment
+  protected readonly ideasOpen = signal(false);
+  protected readonly ideas = computed(() => {
+    const theme = this.activeTheme();
+    this.shop.wallet();
+    const config = this.config();
+    return (theme === 'neutre' ? [] : (OUTFIT_IDEAS[theme] ?? [])).map((idea) => {
+      const missing = ideaArticles(idea).filter((id) => this.shopService.price(id) > 0 && !this.shop.owns(id));
+      return { idea, title: ideaTitle(idea), config: applyIdea(config, idea), price: missing.reduce((s, id) => s + this.shopService.price(id), 0) };
+    });
+  });
+
+  // ---------- tenues de thème enregistrées
+  protected readonly outfitsOpen = signal(false);
+  protected readonly themes = SEASON_IDS.map((id) => ({ id, label: seasonLabel(id) }));
+  protected readonly outfitTheme = signal<SeasonId>(this.activeTheme() === 'neutre' ? 'halloween' : (this.activeTheme() as SeasonId));
+  protected readonly outfits = signal<Record<string, Record<string, unknown>>>(this.member.tenues ?? {});
+  protected readonly outfitAuto = signal(this.member.tenueAuto !== false);
+  protected readonly savedOutfit = computed(() => this.outfits()[toApiTheme(this.outfitTheme())] ?? null);
+  protected readonly savedConfig = computed(() => {
+    const saved = this.savedOutfit();
+    return saved ? normalizeAvatar(saved, this.config()) : null;
+  });
+  protected readonly themeLabel = computed(() => seasonLabel(this.outfitTheme()));
+  private outfitsChanged = false;
 
   // ---------- glisser-déposer
   protected readonly dragDelay = DRAG_DELAY;
@@ -208,10 +323,80 @@ export class AvatarEditor {
     );
   }
 
+  protected applyIdea(idea: OutfitIdea): void {
+    this.config.update((c) => applyIdea(c, idea));
+    this.pop();
+  }
+
+  protected saveOutfit(): void {
+    const theme = toApiTheme(this.outfitTheme()) as Parameters<TenuesService['updateTenue']>[1];
+    this.tenuesApi.updateTenue(this.member.id!, theme, { ...this.config() }).subscribe((outfits) => {
+      this.outfits.set(outfits);
+      this.outfitsChanged = true;
+    });
+  }
+
+  protected removeOutfit(): void {
+    const theme = toApiTheme(this.outfitTheme()) as Parameters<TenuesService['deleteTenue']>[1];
+    this.tenuesApi.deleteTenue(this.member.id!, theme).subscribe((outfits) => {
+      this.outfits.set(outfits);
+      this.outfitsChanged = true;
+    });
+  }
+
+  protected tryOutfit(): void {
+    const saved = this.savedOutfit();
+    if (saved) {
+      this.config.set(normalizeAvatar(saved, this.config()));
+      this.pop();
+    }
+  }
+
+  protected setOutfitAuto(actif: boolean): void {
+    this.outfitAuto.set(actif);
+    this.tenuesApi.updateTenueAuto(this.member.id!, { actif }).subscribe({
+      next: () => (this.outfitsChanged = true),
+      error: () => this.outfitAuto.set(!actif),
+    });
+  }
+
+  /** Fermer sans enregistrer le personnage : si les tenues de thème ont changé, la page doit quand même se rafraîchir. */
+  protected cancel(): void {
+    this.dialogRef.close(this.outfitsChanged ? { ...this.member, tenues: this.outfits(), tenueAuto: this.outfitAuto() } : undefined);
+  }
+
+  /** Enregistrer : directement si tout est possédé ; sinon un enfant achète (confirmation), un parent offre. */
+  protected saveOrBuy(): void {
+    const missing = this.missing();
+    if (missing.length === 0) {
+      this.save();
+    } else if (this.isParent()) {
+      this.saving.set(true);
+      const gift = (index: number): void => {
+        if (index >= missing.length) {
+          this.save();
+          return;
+        }
+        this.shop.gift(missing[index]).subscribe({ next: () => gift(index + 1), error: () => this.saving.set(false) });
+      };
+      gift(0);
+    } else if (this.lacking() === 0) {
+      this.dialog
+        .open<BuyDialog, BuyDialogData, boolean>(BuyDialog, {
+          data: { member: this.member, config: this.config(), articleIds: missing },
+          width: '420px',
+          maxWidth: '95vw',
+        })
+        .afterClosed()
+        .subscribe((bought) => bought && this.save());
+    }
+  }
+
   protected save(): void {
     this.saving.set(true);
     this.api.updateAvatarMembre(this.member.id!, { ...this.config() }).subscribe({
-      next: (member) => {
+      next: (saved) => {
+        const member = { ...saved, tenues: this.outfits(), tenueAuto: this.outfitAuto() };
         // Petit rebond de joie, puis fermeture
         const done = () => this.dialogRef.close(member);
         const animation = this.animate(

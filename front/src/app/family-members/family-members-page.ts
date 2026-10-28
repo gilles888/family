@@ -9,6 +9,7 @@ import { ConfirmDialog } from '../shared/confirm-dialog';
 import { NotificationService } from '../shared/notification.service';
 import { Avatar } from '../avatar/avatar';
 import { AvatarEditor, AvatarEditorData } from '../avatar/avatar-editor';
+import { ShopAdminData, ShopAdminDialog } from '../shop/shop-admin-dialog';
 import { MemberRoutinesData, MemberRoutinesDialog } from '../routines/member-routines-dialog';
 import { MemberDialog, MemberDialogData } from './member-dialog';
 
@@ -48,6 +49,11 @@ export class FamilyMembersPage {
       })
       .afterClosed()
       .subscribe((saved) => saved && this.members.reload());
+  }
+
+  /** Mode parent : boutique du membre (solde, cadeau, remboursement, ajustement, taux). */
+  protected openShop(member: FamilyMemberDTO): void {
+    this.dialog.open<ShopAdminDialog, ShopAdminData>(ShopAdminDialog, { data: { member }, width: '720px', maxWidth: '100vw', maxHeight: '100dvh' });
   }
 
   /** Mode parent : routines du membre. */

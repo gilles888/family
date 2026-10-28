@@ -51,6 +51,9 @@ interface Day {
           </div>
         }
         <p class="detail" i18n="@@routineHistory.detail">{{ stats().gagnees }} gagnées depuis le début</p>
+        @if (stats().converties > 0) {
+          <p class="detail" i18n="@@routineHistory.converted">{{ stats().converties }} échangées contre des pièces</p>
+        }
       </section>
     }
     <h3 class="heading" i18n="@@routineHistory.title">Mes 14 derniers jours</h3>
@@ -238,7 +241,7 @@ export class RoutineHistory {
 
   protected readonly stats = computed(() => {
     const b = this.balance.hasValue() ? this.balance.value() : undefined;
-    return { solde: b?.solde ?? 0, retirees: b?.retirees ?? 0, gagnees: b?.gagnees ?? 0 };
+    return { solde: b?.solde ?? 0, retirees: b?.retirees ?? 0, gagnees: b?.gagnees ?? 0, converties: b?.converties ?? 0 };
   });
 
   private readonly entries = computed(() => (this.history.hasValue() ? this.history.value() : []));

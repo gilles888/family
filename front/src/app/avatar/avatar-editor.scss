@@ -58,7 +58,7 @@
 
 .tabs {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
   gap: 4px;
   padding: 6px;
   flex: none;

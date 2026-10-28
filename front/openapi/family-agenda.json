@@ -606,6 +606,16 @@
                     "required": true
                 },
                 "responses": {
+                    "200": {
+                        "description": "Th\u00e8me enregistr\u00e9",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThemeSettingsDTO"
+                                }
+                            }
+                        }
+                    },
                     "400": {
                         "description": "Mode FORCE sans th\u00e8me, ANNIVERSAIRE sans membre, fin dans le pass\u00e9"
                     }
@@ -715,6 +725,20 @@
                     "required": true
                 },
                 "responses": {
+                    "200": {
+                        "description": "Tenues du membre apr\u00e8s enregistrement",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object",
+                                        "additionalProperties": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "400": {
                         "description": "Config invalide, trop longue, ou article non poss\u00e9d\u00e9"
                     }
@@ -1643,6 +1667,16 @@
                     "required": true
                 },
                 "responses": {
+                    "200": {
+                        "description": "Porte-monnaie apr\u00e8s l'\u00e9change",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PorteMonnaieDTO"
+                                }
+                            }
+                        }
+                    },
                     "400": {
                         "description": "Pas assez d'\u00e9toiles"
                     }
@@ -1678,6 +1712,16 @@
                     "required": true
                 },
                 "responses": {
+                    "200": {
+                        "description": "Porte-monnaie apr\u00e8s l'ajustement",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PorteMonnaieDTO"
+                                }
+                            }
+                        }
+                    },
                     "400": {
                         "description": "Ajustement nul, motif manquant ou solde de pi\u00e8ces qui deviendrait n\u00e9gatif"
                     }
@@ -1799,6 +1843,16 @@
                     "required": true
                 },
                 "responses": {
+                    "200": {
+                        "description": "Porte-monnaie apr\u00e8s le remboursement",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PorteMonnaieDTO"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Article non poss\u00e9d\u00e9"
                     }
@@ -1834,6 +1888,16 @@
                     "required": true
                 },
                 "responses": {
+                    "200": {
+                        "description": "Porte-monnaie apr\u00e8s le cadeau",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PorteMonnaieDTO"
+                                }
+                            }
+                        }
+                    },
                     "409": {
                         "description": "Article d\u00e9j\u00e0 poss\u00e9d\u00e9"
                     }
@@ -1869,6 +1933,16 @@
                     "required": true
                 },
                 "responses": {
+                    "200": {
+                        "description": "Porte-monnaie apr\u00e8s l'achat",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PorteMonnaieDTO"
+                                }
+                            }
+                        }
+                    },
                     "400": {
                         "description": "Pas assez de pi\u00e8ces, ou article gratuit"
                     },
@@ -2606,6 +2680,16 @@
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Porte-monnaie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PorteMonnaieDTO"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Membre introuvable"
                     }
@@ -4182,6 +4266,67 @@
                     "mode"
                 ]
             },
+            "ThemeSettingsDTO": {
+                "type": "object",
+                "description": "Th\u00e8me de l'application pour la famille",
+                "properties": {
+                    "mode": {
+                        "type": "string",
+                        "description": "AUTO : selon la date ; FORCE : th\u00e8me choisi ; OFF : th\u00e8me neutre",
+                        "enum": [
+                            "AUTO",
+                            "FORCE",
+                            "OFF"
+                        ]
+                    },
+                    "theme": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Th\u00e8me forc\u00e9 (mode FORCE)",
+                        "enum": [
+                            "HALLOWEEN",
+                            "SAINT_NICOLAS",
+                            "NOEL",
+                            "CARNAVAL",
+                            "PAQUES",
+                            "ETE",
+                            "RENTREE",
+                            "PRINTEMPS",
+                            "AUTOMNE",
+                            "HIVER",
+                            "ANNIVERSAIRE"
+                        ]
+                    },
+                    "membreId": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "format": "int64",
+                        "description": "Membre f\u00eat\u00e9 (th\u00e8me ANNIVERSAIRE forc\u00e9)",
+                        "example": 1
+                    },
+                    "jusqua": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date",
+                        "description": "Dernier jour du th\u00e8me forc\u00e9, absent = sans limite",
+                        "example": "2026-12-31"
+                    },
+                    "anniversairesActifs": {
+                        "type": "boolean",
+                        "description": "F\u00eater automatiquement les anniversaires"
+                    },
+                    "enfantsPeuventChoisir": {
+                        "type": "boolean",
+                        "description": "Les enfants peuvent choisir leur th\u00e8me sur leur appareil"
+                    }
+                }
+            },
             "BoutiqueSettingsDTO": {
                 "type": "object",
                 "description": "R\u00e9glages de la boutique",
@@ -4535,6 +4680,36 @@
                         "example": 2,
                         "maximum": 1000,
                         "minimum": 1
+                    }
+                }
+            },
+            "PorteMonnaieDTO": {
+                "type": "object",
+                "description": "\u00c9toiles disponibles et pi\u00e8ces d'or d'un membre",
+                "properties": {
+                    "etoilesDisponibles": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "\u00c9toiles disponibles : gagn\u00e9es \u2212 retir\u00e9es \u2212 \u00e9chang\u00e9es, jamais n\u00e9gatif",
+                        "example": 23
+                    },
+                    "pieces": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Pi\u00e8ces d'or",
+                        "example": 2
+                    },
+                    "etoilesParPiece": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Taux de change : \u00e9toiles pour une pi\u00e8ce",
+                        "example": 10
+                    },
+                    "etoilesConverties": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "\u00c9toiles d\u00e9j\u00e0 \u00e9chang\u00e9es contre des pi\u00e8ces",
+                        "example": 20
                     }
                 }
             },
@@ -5158,67 +5333,6 @@
                         "items": {
                             "$ref": "#/components/schemas/RecipeIngredientDTO"
                         }
-                    }
-                }
-            },
-            "ThemeSettingsDTO": {
-                "type": "object",
-                "description": "Th\u00e8me de l'application pour la famille",
-                "properties": {
-                    "mode": {
-                        "type": "string",
-                        "description": "AUTO : selon la date ; FORCE : th\u00e8me choisi ; OFF : th\u00e8me neutre",
-                        "enum": [
-                            "AUTO",
-                            "FORCE",
-                            "OFF"
-                        ]
-                    },
-                    "theme": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "description": "Th\u00e8me forc\u00e9 (mode FORCE)",
-                        "enum": [
-                            "HALLOWEEN",
-                            "SAINT_NICOLAS",
-                            "NOEL",
-                            "CARNAVAL",
-                            "PAQUES",
-                            "ETE",
-                            "RENTREE",
-                            "PRINTEMPS",
-                            "AUTOMNE",
-                            "HIVER",
-                            "ANNIVERSAIRE"
-                        ]
-                    },
-                    "membreId": {
-                        "type": [
-                            "integer",
-                            "null"
-                        ],
-                        "format": "int64",
-                        "description": "Membre f\u00eat\u00e9 (th\u00e8me ANNIVERSAIRE forc\u00e9)",
-                        "example": 1
-                    },
-                    "jusqua": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "format": "date",
-                        "description": "Dernier jour du th\u00e8me forc\u00e9, absent = sans limite",
-                        "example": "2026-12-31"
-                    },
-                    "anniversairesActifs": {
-                        "type": "boolean",
-                        "description": "F\u00eater automatiquement les anniversaires"
-                    },
-                    "enfantsPeuventChoisir": {
-                        "type": "boolean",
-                        "description": "Les enfants peuvent choisir leur th\u00e8me sur leur appareil"
                     }
                 }
             },

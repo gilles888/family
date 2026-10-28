@@ -98,10 +98,10 @@ export class ParametresService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public updateThemeFamille(themeSettingsRequest: ThemeSettingsRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public updateThemeFamille(themeSettingsRequest: ThemeSettingsRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public updateThemeFamille(themeSettingsRequest: ThemeSettingsRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public updateThemeFamille(themeSettingsRequest: ThemeSettingsRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public updateThemeFamille(themeSettingsRequest: ThemeSettingsRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ThemeSettingsDTO>;
+    public updateThemeFamille(themeSettingsRequest: ThemeSettingsRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ThemeSettingsDTO>>;
+    public updateThemeFamille(themeSettingsRequest: ThemeSettingsRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ThemeSettingsDTO>>;
+    public updateThemeFamille(themeSettingsRequest: ThemeSettingsRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (themeSettingsRequest === null || themeSettingsRequest === undefined) {
             throw new Error('Required parameter themeSettingsRequest was null or undefined when calling updateThemeFamille.');
         }
@@ -109,6 +109,7 @@ export class ParametresService extends BaseService {
         let localVarHeaders = this.defaultHeaders;
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -141,7 +142,7 @@ export class ParametresService extends BaseService {
 
         let localVarPath = `/v1/parametres/theme`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('put', `${basePath}${localVarPath}`,
+        return this.httpClient.request<ThemeSettingsDTO>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: themeSettingsRequest,

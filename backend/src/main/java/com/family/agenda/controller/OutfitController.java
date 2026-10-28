@@ -41,6 +41,7 @@ public class OutfitController {
     @PutMapping("/{theme}")
     @Operation(operationId = "updateTenue", summary = "Enregistrer la tenue d'un thème",
             description = "Corps : config du personnage (objet JSON). Refusée (400) si elle contient un article payant non possédé.")
+    @ApiResponse(responseCode = "200", description = "Tenues du membre après enregistrement")
     @ApiResponse(responseCode = "400", description = "Config invalide, trop longue, ou article non possédé", content = @Content)
     public Map<String, Map<String, Object>> save(@PathVariable Long memberId, @PathVariable Saison theme, @RequestBody Map<String, Object> config) {
         return service.save(memberId, theme, config);

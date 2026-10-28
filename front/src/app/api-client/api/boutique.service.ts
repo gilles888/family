@@ -31,6 +31,8 @@ import { EchangeRequest } from '../model/echange-request';
 // @ts-ignore
 import { MemberItemDTO } from '../model/member-item-dto';
 // @ts-ignore
+import { PorteMonnaieDTO } from '../model/porte-monnaie-dto';
+// @ts-ignore
 import { RemboursementRequest } from '../model/remboursement-request';
 
 // @ts-ignore
@@ -58,10 +60,10 @@ export class BoutiqueService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public acheterArticle(memberId: number, achatRequest: AchatRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public acheterArticle(memberId: number, achatRequest: AchatRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public acheterArticle(memberId: number, achatRequest: AchatRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public acheterArticle(memberId: number, achatRequest: AchatRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public acheterArticle(memberId: number, achatRequest: AchatRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PorteMonnaieDTO>;
+    public acheterArticle(memberId: number, achatRequest: AchatRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PorteMonnaieDTO>>;
+    public acheterArticle(memberId: number, achatRequest: AchatRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PorteMonnaieDTO>>;
+    public acheterArticle(memberId: number, achatRequest: AchatRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (memberId === null || memberId === undefined) {
             throw new Error('Required parameter memberId was null or undefined when calling acheterArticle.');
         }
@@ -72,6 +74,7 @@ export class BoutiqueService extends BaseService {
         let localVarHeaders = this.defaultHeaders;
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -104,7 +107,7 @@ export class BoutiqueService extends BaseService {
 
         let localVarPath = `/v1/membres/${this.configuration.encodeParam({name: "memberId", value: memberId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/boutique/achats`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PorteMonnaieDTO>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: achatRequest,
@@ -127,10 +130,10 @@ export class BoutiqueService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public ajusterPieces(memberId: number, ajustementRequest: AjustementRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public ajusterPieces(memberId: number, ajustementRequest: AjustementRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public ajusterPieces(memberId: number, ajustementRequest: AjustementRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public ajusterPieces(memberId: number, ajustementRequest: AjustementRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public ajusterPieces(memberId: number, ajustementRequest: AjustementRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PorteMonnaieDTO>;
+    public ajusterPieces(memberId: number, ajustementRequest: AjustementRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PorteMonnaieDTO>>;
+    public ajusterPieces(memberId: number, ajustementRequest: AjustementRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PorteMonnaieDTO>>;
+    public ajusterPieces(memberId: number, ajustementRequest: AjustementRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (memberId === null || memberId === undefined) {
             throw new Error('Required parameter memberId was null or undefined when calling ajusterPieces.');
         }
@@ -141,6 +144,7 @@ export class BoutiqueService extends BaseService {
         let localVarHeaders = this.defaultHeaders;
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -173,7 +177,7 @@ export class BoutiqueService extends BaseService {
 
         let localVarPath = `/v1/membres/${this.configuration.encodeParam({name: "memberId", value: memberId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/porte-monnaie/ajustements`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PorteMonnaieDTO>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: ajustementRequest,
@@ -197,10 +201,10 @@ export class BoutiqueService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public echangerEtoiles(memberId: number, echangeRequest: EchangeRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public echangerEtoiles(memberId: number, echangeRequest: EchangeRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public echangerEtoiles(memberId: number, echangeRequest: EchangeRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public echangerEtoiles(memberId: number, echangeRequest: EchangeRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public echangerEtoiles(memberId: number, echangeRequest: EchangeRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PorteMonnaieDTO>;
+    public echangerEtoiles(memberId: number, echangeRequest: EchangeRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PorteMonnaieDTO>>;
+    public echangerEtoiles(memberId: number, echangeRequest: EchangeRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PorteMonnaieDTO>>;
+    public echangerEtoiles(memberId: number, echangeRequest: EchangeRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (memberId === null || memberId === undefined) {
             throw new Error('Required parameter memberId was null or undefined when calling echangerEtoiles.');
         }
@@ -211,6 +215,7 @@ export class BoutiqueService extends BaseService {
         let localVarHeaders = this.defaultHeaders;
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -243,7 +248,7 @@ export class BoutiqueService extends BaseService {
 
         let localVarPath = `/v1/membres/${this.configuration.encodeParam({name: "memberId", value: memberId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/porte-monnaie/echange`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PorteMonnaieDTO>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: echangeRequest,
@@ -317,10 +322,10 @@ export class BoutiqueService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getPorteMonnaie(memberId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public getPorteMonnaie(memberId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public getPorteMonnaie(memberId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public getPorteMonnaie(memberId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getPorteMonnaie(memberId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PorteMonnaieDTO>;
+    public getPorteMonnaie(memberId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PorteMonnaieDTO>>;
+    public getPorteMonnaie(memberId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PorteMonnaieDTO>>;
+    public getPorteMonnaie(memberId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (memberId === null || memberId === undefined) {
             throw new Error('Required parameter memberId was null or undefined when calling getPorteMonnaie.');
         }
@@ -328,6 +333,7 @@ export class BoutiqueService extends BaseService {
         let localVarHeaders = this.defaultHeaders;
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -351,7 +357,7 @@ export class BoutiqueService extends BaseService {
 
         let localVarPath = `/v1/membres/${this.configuration.encodeParam({name: "memberId", value: memberId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/porte-monnaie`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PorteMonnaieDTO>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -537,10 +543,10 @@ export class BoutiqueService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public offrirArticle(memberId: number, achatRequest: AchatRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public offrirArticle(memberId: number, achatRequest: AchatRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public offrirArticle(memberId: number, achatRequest: AchatRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public offrirArticle(memberId: number, achatRequest: AchatRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public offrirArticle(memberId: number, achatRequest: AchatRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PorteMonnaieDTO>;
+    public offrirArticle(memberId: number, achatRequest: AchatRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PorteMonnaieDTO>>;
+    public offrirArticle(memberId: number, achatRequest: AchatRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PorteMonnaieDTO>>;
+    public offrirArticle(memberId: number, achatRequest: AchatRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (memberId === null || memberId === undefined) {
             throw new Error('Required parameter memberId was null or undefined when calling offrirArticle.');
         }
@@ -551,6 +557,7 @@ export class BoutiqueService extends BaseService {
         let localVarHeaders = this.defaultHeaders;
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -583,7 +590,7 @@ export class BoutiqueService extends BaseService {
 
         let localVarPath = `/v1/membres/${this.configuration.encodeParam({name: "memberId", value: memberId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/boutique/cadeaux`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PorteMonnaieDTO>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: achatRequest,
@@ -607,10 +614,10 @@ export class BoutiqueService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public rembourserArticle(memberId: number, remboursementRequest: RemboursementRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public rembourserArticle(memberId: number, remboursementRequest: RemboursementRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public rembourserArticle(memberId: number, remboursementRequest: RemboursementRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public rembourserArticle(memberId: number, remboursementRequest: RemboursementRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public rembourserArticle(memberId: number, remboursementRequest: RemboursementRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PorteMonnaieDTO>;
+    public rembourserArticle(memberId: number, remboursementRequest: RemboursementRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PorteMonnaieDTO>>;
+    public rembourserArticle(memberId: number, remboursementRequest: RemboursementRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PorteMonnaieDTO>>;
+    public rembourserArticle(memberId: number, remboursementRequest: RemboursementRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (memberId === null || memberId === undefined) {
             throw new Error('Required parameter memberId was null or undefined when calling rembourserArticle.');
         }
@@ -621,6 +628,7 @@ export class BoutiqueService extends BaseService {
         let localVarHeaders = this.defaultHeaders;
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
@@ -653,7 +661,7 @@ export class BoutiqueService extends BaseService {
 
         let localVarPath = `/v1/membres/${this.configuration.encodeParam({name: "memberId", value: memberId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/boutique/remboursements`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PorteMonnaieDTO>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: remboursementRequest,

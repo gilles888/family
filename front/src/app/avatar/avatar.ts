@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { FamilyMemberDTO } from '../api-client';
+import { ActiveTheme } from '../theme/active-theme';
+import { SeasonId, toApiTheme } from '../theme/seasons';
 import { SvgShapes } from '../shared/svg/svg-shapes';
 import { AvatarConfig, defaultAvatar, normalizeAvatar } from './avatar-config';
 import { LayerKey, drawAvatar } from './avatar-layers';
@@ -104,6 +106,8 @@ export class Avatar {
   /** Ne dessiner que ces calques, sans fond (aperçu d'une pièce seule). */
   readonly only = input<(LayerKey | 'hat' | 'accessory')[] | null>(null);
 
+  private readonly activeTheme = inject(ActiveTheme).id;
+
   protected readonly gradientId = `avatar-gradient-${nextId++}`;
 
   protected readonly label = computed(() => this.ariaLabel() ?? '');
@@ -111,12 +115,19 @@ export class Avatar {
   protected readonly drawing = computed(() => {
     const member = this.member();
     const fallback = defaultAvatar(member?.id ?? 0, member?.couleur);
-    const drawing = drawAvatar(normalizeAvatar(this.config() ?? member?.avatarConfig, fallback), {
-      memberColor: member?.couleur,
-    });
+    const raw = this.config() ?? themeOutfit(member, this.activeTheme()) ?? member?.avatarConfig;
+    const drawing = drawAvatar(normalizeAvatar(raw, fallback), { memberColor: member?.couleur });
     const only = this.only();
     return only
       ? { ...drawing, layers: drawing.layers.filter((l) => (only as string[]).includes(l.key)) }
       : drawing;
   });
+}
+
+/** Tenue enregistrée par le membre pour le thème du moment (si « porter automatiquement » est actif). */
+function themeOutfit(member: FamilyMemberDTO | null | undefined, theme: string): Record<string, unknown> | undefined {
+  if (!member || member.tenueAuto === false || theme === 'neutre') {
+    return undefined;
+  }
+  return member.tenues?.[toApiTheme(theme as SeasonId)];
 }
