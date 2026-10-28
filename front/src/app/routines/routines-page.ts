@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FamilyMemberDTO, MembresService, RoutineDTO, RoutineRunDTO, RoutinesService } from '../api-client';
 import { Avatar } from '../avatar/avatar';
-import { AvatarEditor, AvatarEditorData } from '../avatar/avatar-editor';
 import { toIsoDate } from '../shared/date-utils';
 import { RewardData, RewardDialog } from './reward-dialog';
 import { PiggyBank } from '../shop/piggy-bank';
@@ -109,20 +108,9 @@ export class RoutinesPage {
     });
   }
 
-  /** Éditeur de personnage : plein écran sur téléphone, grand dialogue ailleurs. */
+  /** « Ma chambre » : l'habillage du personnage en pièce interactive. */
   protected editAvatar(member: FamilyMemberDTO): void {
-    this.dialog
-      .open<AvatarEditor, AvatarEditorData, FamilyMemberDTO>(AvatarEditor, {
-        data: { member },
-        width: '960px',
-        maxWidth: '100vw',
-        height: '720px',
-        maxHeight: '100dvh',
-        panelClass: 'avatar-editor-panel',
-        autoFocus: 'dialog',
-      })
-      .afterClosed()
-      .subscribe((saved) => saved && this.members.reload());
+    void this.router.navigate(['/chambre', member.id]);
   }
 
   /** Mini-jeu de récompense (plein écran) ; au retour, la routine sait que la partie du jour est jouée. */

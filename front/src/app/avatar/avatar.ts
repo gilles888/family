@@ -38,8 +38,8 @@ const SMALL = 40;
       [attr.aria-hidden]="label() ? null : 'true'"
     >
       @let bg = drawing().background;
-      @if (only()) {
-        <!-- pièce seule : pas de fond -->
+      @if (only() || bare()) {
+        <!-- pièce seule, ou personnage dans un décor : pas de fond -->
       } @else if ('gradient' in bg) {
         <defs>
           <linearGradient [attr.id]="gradientId" x1="0" y1="0" x2="0" y2="1">
@@ -102,6 +102,9 @@ export class Avatar {
   readonly round = input(true);
   /** Libellé accessible ; par défaut le nom du membre. Vide = décoratif (le nom est déjà écrit à côté). */
   readonly ariaLabel = input<string | undefined>(undefined, { alias: 'label' });
+
+  /** Sans fond : le personnage se tient dans un décor (la chambre). */
+  readonly bare = input(false);
 
   /** Ne dessiner que ces calques, sans fond (aperçu d'une pièce seule). */
   readonly only = input<(LayerKey | 'hat' | 'accessory')[] | null>(null);

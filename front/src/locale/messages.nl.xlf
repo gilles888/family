@@ -6547,6 +6547,118 @@
           <context context-type="linenumber">271</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="room.armoire" datatype="html">
+        <source>Armoire : tenues et déguisements</source>
+        <target>Kleerkast: kleren en verkleedpakken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.commode" datatype="html">
+        <source>Commode : accessoires, maquillage et dos</source>
+        <target>Commode: accessoires, schmink en rug</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.chapeaux" datatype="html">
+        <source>Étagère : chapeaux</source>
+        <target>Plank: hoeden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.coiffeuse" datatype="html">
+        <source>Coiffeuse : coiffure, visage et yeux</source>
+        <target>Kaptafel: kapsel, gezicht en ogen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.coffre" datatype="html">
+        <source>Coffre à jouets : objets</source>
+        <target>Speelgoedkist: voorwerpen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.fenetre" datatype="html">
+        <source>Fenêtre : le paysage du fond</source>
+        <target>Raam: het landschap op de achtergrond</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.tirelire" datatype="html">
+        <source>Tirelire : étoiles et pièces</source>
+        <target>Spaarvarken: sterren en munten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.boutique" datatype="html">
+        <source>Boutique : articles à acheter</source>
+        <target>Winkel: artikelen om te kopen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.de" datatype="html">
+        <source>Surprise !</source>
+        <target>Verrassing!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.livre" datatype="html">
+        <source>Idées de thème</source>
+        <target>Ideeën voor het thema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.back" datatype="html">
+        <source>Retour</source>
+        <target>Terug</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.title" datatype="html">
+        <source>La chambre de <x id="INTERPOLATION" equiv-text="{{ member.nom }}"/></source>
+        <target>De kamer van <x id="INTERPOLATION" equiv-text="{{ member.nom }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.simpleMode" datatype="html">
+        <source>Mode simple</source>
+        <target>Eenvoudige modus</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">42,43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.saved" datatype="html">
+        <source>Personnage enregistré.</source>
+        <target>Personage opgeslagen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

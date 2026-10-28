@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { roomMemberResolver } from './room/room-member.resolver';
 import { authGuard, guestGuard, parentGuard, signedInGuard } from './auth/auth.guards';
 
 export const routes: Routes = [
@@ -23,6 +24,11 @@ export const routes: Routes = [
         path: 'routines/gerer',
         canActivate: [parentGuard],
         loadComponent: () => import('./routines/routines-manage-page').then((m) => m.RoutinesManagePage),
+      },
+      {
+        path: 'chambre/:memberId',
+        resolve: { member: roomMemberResolver },
+        loadComponent: () => import('./room/room-view').then((m) => m.RoomView),
       },
       { path: 'routines', loadComponent: () => import('./routines/routines-page').then((m) => m.RoutinesPage) },
       {

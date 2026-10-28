@@ -104,8 +104,8 @@ export class AvatarDressingStore {
   }
 
   /** Groupes d'une catégorie, filtrés : les pièces du thème du moment d'abord, « aucun » toujours en tête. */
-  groupsOf(category: WardrobeCategory): WardrobeGroup[] {
-    const filter = this.filter();
+  groupsOf(category: WardrobeCategory, filterOverride?: ShopFilter): WardrobeGroup[] {
+    const filter = filterOverride ?? this.filter();
     const theme = this.activeTheme();
     this.shop.wallet(); // recalcul après un achat
     return category.groups
@@ -206,6 +206,13 @@ export class AvatarDressingStore {
       next: () => (this.outfitsChanged = true),
       error: () => this.outfitAuto.set(!actif),
     });
+  }
+
+  /** Reprend un membre enregistré ailleurs (ex. par le mode simple) : personnage, tenues et port automatique. */
+  adopt(member: FamilyMemberDTO): void {
+    this.config.set(normalizeAvatar(member.avatarConfig, this.config()));
+    this.outfits.set(member.tenues ?? {});
+    this.outfitAuto.set(member.tenueAuto !== false);
   }
 
   /** Membre à renvoyer à l'écran qui a ouvert l'habillage si on le quitte sans enregistrer le personnage (sinon undefined). */

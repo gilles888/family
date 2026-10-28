@@ -4,11 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { Router } from '@angular/router';
 import { FamilyMemberDTO, MembresService } from '../api-client';
 import { ConfirmDialog } from '../shared/confirm-dialog';
 import { NotificationService } from '../shared/notification.service';
 import { Avatar } from '../avatar/avatar';
-import { AvatarEditor, AvatarEditorData } from '../avatar/avatar-editor';
 import { ShopAdminData, ShopAdminDialog } from '../shop/shop-admin-dialog';
 import { MemberRoutinesData, MemberRoutinesDialog } from '../routines/member-routines-dialog';
 import { MemberDialog, MemberDialogData } from './member-dialog';
@@ -24,6 +24,7 @@ import { MemberDialog, MemberDialogData } from './member-dialog';
 export class FamilyMembersPage {
   private readonly api = inject(MembresService);
   private readonly dialog = inject(MatDialog);
+  private readonly router = inject(Router);
   private readonly notifications = inject(NotificationService);
 
   protected readonly members = rxResource<FamilyMemberDTO[], void>({ stream: () => this.api.listMembres() });
@@ -35,20 +36,9 @@ export class FamilyMembersPage {
       .subscribe((saved) => saved && this.members.reload());
   }
 
-  /** Éditeur de personnage : plein écran sur téléphone, grand dialogue ailleurs. */
+  /** « Ma chambre » : l'habillage du personnage en pièce interactive. */
   protected editAvatar(member: FamilyMemberDTO): void {
-    this.dialog
-      .open<AvatarEditor, AvatarEditorData, FamilyMemberDTO>(AvatarEditor, {
-        data: { member },
-        width: '960px',
-        maxWidth: '100vw',
-        height: '720px',
-        maxHeight: '100dvh',
-        panelClass: 'avatar-editor-panel',
-        autoFocus: 'dialog',
-      })
-      .afterClosed()
-      .subscribe((saved) => saved && this.members.reload());
+    void this.router.navigate(['/chambre', member.id]);
   }
 
   /** Mode parent : boutique du membre (solde, cadeau, remboursement, ajustement, taux). */

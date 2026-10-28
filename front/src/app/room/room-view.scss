@@ -1,0 +1,49 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 12px 12px;
+  box-sizing: border-box;
+  min-height: calc(100dvh - 64px);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 8px 12px;
+  flex-wrap: wrap;
+}
+
+.back {
+  min-height: 48px;
+}
+
+.title {
+  flex: 1 1 200px;
+  margin: 0;
+  font: var(--mat-sys-title-large);
+}
+
+.wallet {
+  display: inline-flex;
+  gap: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: var(--mat-sys-surface-container-high);
+  font: 700 18px / 1 Roboto;
+}
+
+.simple {
+  opacity: 0.8;
+}
+
+.bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.save {
+  min-height: 52px;
+  padding-inline: 28px;
+  font: var(--mat-sys-title-medium);
+}
