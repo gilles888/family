@@ -14,7 +14,7 @@ interface DayGroup {
   entries: AgendaEntryDTO[];
 }
 
-/** Liste des tâches de la période affichée, de la plus récente à la plus ancienne, filtrable par personnes. */
+/** Liste des tâches de la période affichée, dans l'ordre chronologique (de la plus proche à la plus lointaine), filtrable par personnes. */
 @Component({
   selector: 'app-entry-list',
   imports: [DatePipe, MatChipsModule, MatIconModule, EnumLabelPipe, Avatar],
@@ -35,7 +35,7 @@ export class EntryList {
     const visible = this.entries()
       .filter((e) => ids.length === 0 || (e.membres ?? []).some((m) => ids.includes(m.id!)))
       .map((entry) => ({ entry, date: parseIsoDateTime(entry.dateHeure!) }))
-      .sort((a, b) => b.date.getTime() - a.date.getTime());
+      .sort((a, b) => a.date.getTime() - b.date.getTime());
 
     const groups: DayGroup[] = [];
     for (const { entry, date } of visible) {
