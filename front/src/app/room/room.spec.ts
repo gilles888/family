@@ -107,3 +107,121 @@ describe('chambre : accès', () => {
     expect(await resolve('PARENT', 'abc')).toBeInstanceOf(RedirectCommand);
   });
 });
+
+describe('chambre : meubles ouverts', () => {
+  async function render(role: MeDTO.RoleEnum = 'ENFANT', pieces = 6) {
+    const { RoomView } = await import('./room-view');
+    const { HttpTestingController } = await import('@angular/common/http/testing');
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideApi(''),
+        provideRouter([]),
+        provideFakeAuth(role, { membreId: 4 }),
+        { provide: (await import('@angular/router')).ActivatedRoute, useValue: { snapshot: { data: { member: MEMBER } } } },
+      ],
+    });
+    const fixture = TestBed.createComponent(RoomView);
+    const backend = TestBed.inject(HttpTestingController);
+    fixture.detectChanges();
+    backend.expectOne('/v1/membres/4/porte-monnaie').flush({ etoilesDisponibles: 0, pieces, etoilesParPiece: 10, etoilesConverties: 0 });
+    backend.expectOne('/v1/membres/4/articles').flush([]);
+    backend.expectOne('/v1/boutique/catalogue').flush([{ id: 'costume-witch', emplacement: 'costume', prix: 5, rarete: 'super', theme: 'HALLOWEEN' }]);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    return fixture;
+  }
+  const el = (f: { nativeElement: HTMLElement }) => f.nativeElement;
+  const spot = (f: { nativeElement: HTMLElement }, label: string) => el(f).querySelector<HTMLButtonElement>(`button.spot[aria-label^="${label}"]`)!;
+
+  it('un appui ouvre le meuble et montre ses affaires ; un seul meuble à la fois', async () => {
+    const fixture = await render();
+    spot(fixture, 'Armoire').click();
+    fixture.detectChanges();
+    expect(el(fixture).querySelectorAll('app-furniture-panel')).toHaveLength(1);
+    expect(el(fixture).querySelector('app-furniture-panel')?.getAttribute('aria-label')).toContain('Armoire');
+    expect(el(fixture).querySelectorAll('app-furniture-panel app-room-item').length).toBeGreaterThan(10);
+    expect(el(fixture).querySelector('.door-left')?.classList.contains('open')).toBe(true);
+
+    spot(fixture, 'Coffre').click();
+    fixture.detectChanges();
+    expect(el(fixture).querySelectorAll('app-furniture-panel')).toHaveLength(1);
+    expect(el(fixture).querySelector('app-furniture-panel')?.getAttribute('aria-label')).toContain('Coffre');
+    expect(el(fixture).querySelector('.door-left')?.classList.contains('open')).toBe(false);
+  });
+
+  it('Échap et ✕ referment le meuble', async () => {
+    const fixture = await render();
+    spot(fixture, 'Commode').click();
+    fixture.detectChanges();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    fixture.detectChanges();
+    expect(el(fixture).querySelector('app-furniture-panel')).toBeNull();
+
+    spot(fixture, 'Armoire').click();
+    fixture.detectChanges();
+    el(fixture).querySelector<HTMLButtonElement>('app-furniture-panel .close')!.click();
+    fixture.detectChanges();
+    expect(el(fixture).querySelector('app-furniture-panel')).toBeNull();
+  });
+
+  it('enfiler une affaire : le personnage la porte ; un article payant porte son prix et un cadenas', async () => {
+    const fixture = await render();
+    spot(fixture, 'Étagère').click();
+    fixture.detectChanges();
+    el(fixture).querySelector<HTMLButtonElement>('app-furniture-panel button.item[aria-label="Couronne"]')!.click();
+    fixture.detectChanges();
+    expect(el(fixture).querySelector('app-room-scene [data-layer="hat"]')?.getAttribute('data-part')).toBe('hat-crown');
+
+    spot(fixture, 'Étagère').click();
+    spot(fixture, 'Armoire').click();
+    fixture.detectChanges();
+    const sorciere = el(fixture).querySelector('app-furniture-panel button.item[aria-label="Sorcière"]')!;
+    expect(sorciere.textContent).toContain('🪙 5');
+    expect(sorciere.querySelector('.lock')).not.toBeNull();
+    sorciere.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+    expect(el(fixture).querySelector('button.save')?.textContent).toContain('Acheter pour 5 🪙');
+  });
+
+  it('le dé signale « Surprise ! » : le personnage change', async () => {
+    const fixture = await render();
+    const avant = el(fixture).querySelector('app-room-scene app-avatar')!.innerHTML;
+    spot(fixture, 'Surprise').click();
+    fixture.detectChanges();
+    expect(el(fixture).querySelector('app-room-scene app-avatar')!.innerHTML).not.toBe(avant);
+  });
+
+  it('boutique : seulement ce qui s’achète, sans « aucun »', async () => {
+    const fixture = await render();
+    spot(fixture, 'Boutique').click();
+    fixture.detectChanges();
+    const items = [...el(fixture).querySelectorAll('app-furniture-panel button.item')];
+    expect(items.length).toBeGreaterThan(0);
+    expect(items.every((i) => i.querySelector('.lock'))).toBe(true);
+    expect(el(fixture).querySelector('app-furniture-panel .no')).toBeNull();
+  });
+
+  it('une pièce portée se retire avec « Enlever… »', async () => {
+    const fixture = await render();
+    spot(fixture, 'Étagère').click();
+    fixture.detectChanges();
+    el(fixture).querySelector<HTMLButtonElement>('app-furniture-panel button.item[aria-label="Couronne"]')!.click();
+    fixture.detectChanges();
+    el(fixture).querySelector<HTMLButtonElement>('.worn-button')!.click();
+    fixture.detectChanges();
+    el(fixture).querySelector<HTMLButtonElement>('.worn-menu button')!.click();
+    fixture.detectChanges();
+    expect(el(fixture).querySelector('app-room-scene [data-layer="hat"]')).toBeNull();
+  });
+
+  it('parent : « Offrir et enregistrer » à la place de l’achat', async () => {
+    const fixture = await render('PARENT', 0);
+    spot(fixture, 'Armoire').click();
+    fixture.detectChanges();
+    el(fixture).querySelector<HTMLButtonElement>('app-furniture-panel button.item[aria-label="Sorcière"]')!.click();
+    fixture.detectChanges();
+    expect(el(fixture).querySelector('button.save')?.textContent).toContain('Offrir et enregistrer');
+  });
+});

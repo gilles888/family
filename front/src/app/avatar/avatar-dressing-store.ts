@@ -41,6 +41,11 @@ export class AvatarDressingStore {
   private readonly shopService = inject(ShopService);
 
   readonly shop = this.shopService.of(this.member.id!);
+
+  constructor() {
+    // porte-monnaie, articles possédés et catalogue (prix) : nécessaires à tout l'habillage
+    this.shop.load().subscribe({ error: () => undefined });
+  }
   readonly isParent = this.auth.isParent;
   /** Thème du moment (les pièces de ce thème passent en tête). */
   readonly activeTheme = inject(ActiveTheme).id;

@@ -212,7 +212,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-view.ts</context>
-          <context context-type="linenumber">58,59</context>
+          <context context-type="linenumber">99,100</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
@@ -1103,28 +1103,28 @@
         <source>Tout</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-dressing-store.ts</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.filter.mine" datatype="html">
         <source>À moi</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-dressing-store.ts</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.filter.shop" datatype="html">
         <source>Boutique</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-dressing-store.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.filter.theme" datatype="html">
         <source>Spécial thème</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-dressing-store.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.title" datatype="html">
@@ -1224,6 +1224,10 @@
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
           <context context-type="linenumber">228,230</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/furniture-panel.ts</context>
+          <context context-type="linenumber">77,80</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="shop.special" datatype="html">
         <source>Spécial <x id="INTERPOLATION" equiv-text="{{ themeName() }}"/></source>
@@ -1231,12 +1235,20 @@
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
           <context context-type="linenumber">273,274</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-item.ts</context>
+          <context context-type="linenumber">35,37</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="shop.notOwned" datatype="html">
         <source>À acheter : <x id="INTERPOLATION" equiv-text="{{ price(option) }}"/> 🪙</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
           <context context-type="linenumber">280,281</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-item.ts</context>
+          <context context-type="linenumber">41,43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.giftAndSave" datatype="html">
@@ -1247,7 +1259,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-view.ts</context>
-          <context context-type="linenumber">60,61</context>
+          <context context-type="linenumber">101,102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.buyFor" datatype="html">
@@ -1258,7 +1270,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-view.ts</context>
-          <context context-type="linenumber">62,63</context>
+          <context context-type="linenumber">103,104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shop.lacking" datatype="html">
@@ -1269,7 +1281,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-view.ts</context>
-          <context context-type="linenumber">64,65</context>
+          <context context-type="linenumber">105,106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.costume.pyjama" datatype="html">
@@ -3700,102 +3712,123 @@
           <context context-type="linenumber">206</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="room.close" datatype="html">
+        <source>Fermer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/furniture-panel.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="room.armoire" datatype="html">
         <source>Armoire : tenues et déguisements</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.commode" datatype="html">
         <source>Commode : accessoires, maquillage et dos</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.chapeaux" datatype="html">
         <source>Étagère : chapeaux</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.coiffeuse" datatype="html">
         <source>Coiffeuse : coiffure, visage et yeux</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.coffre" datatype="html">
         <source>Coffre à jouets : objets</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.fenetre" datatype="html">
         <source>Fenêtre : le paysage du fond</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.tirelire" datatype="html">
         <source>Tirelire : étoiles et pièces</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.boutique" datatype="html">
         <source>Boutique : articles à acheter</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.de" datatype="html">
         <source>Surprise !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.livre" datatype="html">
         <source>Idées de thème</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-scene.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.back" datatype="html">
         <source>Retour</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-view.ts</context>
-          <context context-type="linenumber">33,34</context>
+          <context context-type="linenumber">38,39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.title" datatype="html">
         <source>La chambre de <x id="INTERPOLATION" equiv-text="{{ member.nom }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-view.ts</context>
-          <context context-type="linenumber">35,36</context>
+          <context context-type="linenumber">40,41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.simpleMode" datatype="html">
         <source>Mode simple</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-view.ts</context>
-          <context context-type="linenumber">42,43</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.remove" datatype="html">
+        <source>Enlever…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.removeOne" datatype="html">
+        <source>Enlever : <x id="INTERPOLATION" equiv-text="{{ wornLabel(w.field) }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">74,75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="room.saved" datatype="html">
         <source>Personnage enregistré.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/room/room-view.ts</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="memberRoutines.title" datatype="html">

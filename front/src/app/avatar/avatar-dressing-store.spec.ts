@@ -33,7 +33,6 @@ describe('AvatarDressingStore', () => {
     });
     backend = TestBed.inject(HttpTestingController);
     const store = TestBed.inject(AvatarDressingStore);
-    store.shop.load().subscribe();
     backend.expectOne('/v1/membres/3/porte-monnaie').flush(wallet(pieces));
     backend.expectOne('/v1/membres/3/articles').flush([]);
     backend.expectOne('/v1/boutique/catalogue').flush(CATALOGUE);

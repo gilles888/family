@@ -24,7 +24,7 @@ export function furnitureGroups(store: AvatarDressingStore, id: FurnitureId): Wa
   }
   if (id === 'boutique') {
     // tout ce qui s'achète et n'est pas encore possédé, rangé par catégorie
-    return WARDROBE.flatMap((c) => store.groupsOf(c, 'shop'));
+    return WARDROBE.flatMap((c) => store.groupsOf(c, 'shop')).map((g) => ({ ...g, options: g.options.filter((o) => !o.none) })).filter((g) => g.options.length > 0);
   }
   return CONTENT[id].flatMap(({ category: cat, groups }) =>
     store.groupsOf(category(cat)).filter((g) => !groups || groups.includes(g.id)),

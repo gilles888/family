@@ -11,7 +11,11 @@ import { AvatarEditor, AvatarEditorData } from '../avatar/avatar-editor';
 import { BuyDialog, BuyDialogData } from '../shop/buy-dialog';
 import { NotificationService } from '../shared/notification.service';
 import { furnitureCount } from './room-content';
-import { FurnitureId } from './room-art';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { findArticle } from '../avatar/article-info';
+import { WardrobeOption } from '../avatar/avatar-wardrobe';
+import { FURNITURE_RECT, FurnitureId } from './room-art';
+import { FurniturePanel } from './furniture-panel';
 import { RoomScene, RoomSpot } from './room-scene';
 
 /** Meubles qui s'ouvrent (le dé et le livre sont des objets). */
@@ -23,9 +27,10 @@ const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse',
  */
 @Component({
   selector: 'app-room-view',
-  imports: [MatButtonModule, MatIconModule, RoomScene],
+  imports: [MatButtonModule, MatIconModule, FurniturePanel, RoomScene],
   providers: [{ provide: DRESSING_MEMBER, useFactory: () => inject(ActivatedRoute).snapshot.data['member'] }, AvatarDressingStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '(document:keydown.escape)': 'onEscape()' },
   template: `
     <header class="top">
       <button type="button" matButton="tonal" class="back" (click)="back()">
@@ -43,13 +48,49 @@ const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse',
       </button>
     </header>
 
-    <app-room-scene
-      [config]="store.config()"
-      [member]="member"
-      [open]="open()"
-      [emptyFurniture]="emptyFurniture()"
-      (pick)="pick($event)"
-    />
+    <div class="stage" [class.has-panel]="!!open()">
+      <app-room-scene
+        [config]="store.config()"
+        [member]="member"
+        [open]="open()"
+        [emptyFurniture]="emptyFurniture()"
+        [dragging]="dragging()"
+        (pick)="pick($event)"
+        (dropped)="dropped($event)"
+      />
+
+      @if (store.worn().length) {
+        <div class="worn">
+          <button type="button" class="worn-button" (click)="wornOpen.set(!wornOpen())" [attr.aria-expanded]="wornOpen()">
+            <mat-icon>checkroom</mat-icon>
+            <ng-container i18n="@@room.remove">Enlever…</ng-container>
+          </button>
+          @if (wornOpen()) {
+            <ul class="worn-menu">
+              @for (w of store.worn(); track w.field) {
+                <li>
+                  <button type="button" (click)="removeWorn(w.field)">
+                    <mat-icon>close</mat-icon>
+                    <ng-container i18n="@@room.removeOne">Enlever : {{ wornLabel(w.field) }}</ng-container>
+                  </button>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      }
+
+      @if (open(); as furniture) {
+        <app-furniture-panel
+          class="side"
+          [class.left]="onLeft(furniture)"
+          [furniture]="furniture"
+          (wear)="wear($event)"
+          (close)="open.set(null)"
+          (dragState)="dragging.set($event)"
+        />
+      }
+    </div>
 
     <footer class="bottom">
       <button type="button" matButton="filled" class="save" (click)="saveOrBuy()" [disabled]="store.saving() || (!store.isParent() && store.lacking() > 0)">
@@ -88,6 +129,47 @@ export class RoomView {
     empty.livre = this.store.ideas().length === 0;
     return empty;
   });
+
+  /** Une affaire est en train d'être glissée. */
+  protected readonly dragging = signal(false);
+  protected readonly wornOpen = signal(false);
+
+  /** Le panneau s'ouvre du côté du meuble : à gauche pour ceux de gauche, sinon à droite (le personnage reste visible). */
+  protected onLeft(id: FurnitureId): boolean {
+    const [x, , w] = FURNITURE_RECT[id];
+    // la fenêtre est au milieu : le panneau passe à gauche pour qu'on voie le paysage changer
+    return id === 'fenetre' || x + w / 2 < 400;
+  }
+
+  protected wear(option: WardrobeOption): void {
+    this.store.wear(option);
+  }
+
+  /** Affaire lâchée sur le personnage : elle s'enfile. */
+  protected dropped(event: CdkDragDrop<unknown, unknown, unknown>): void {
+    const option = event.item.data as WardrobeOption | undefined;
+    if (option && event.previousContainer !== event.container && event.isPointerOverContainer) {
+      this.store.wear(option);
+    }
+  }
+
+  protected removeWorn(field: 'hat' | 'accessory'): void {
+    this.store.remove(field);
+    this.wornOpen.set(false);
+  }
+
+  protected wornLabel(field: 'hat' | 'accessory'): string {
+    return findArticle(this.store.config()[field])?.label ?? '';
+  }
+
+  /** Échap ferme le meuble ouvert (et le menu « Enlever »). */
+  protected onEscape(): void {
+    if (this.wornOpen()) {
+      this.wornOpen.set(false);
+    } else if (this.open()) {
+      this.open.set(null);
+    }
+  }
 
   protected pick(spot: RoomSpot): void {
     if (spot === 'de') {

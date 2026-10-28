@@ -6659,6 +6659,30 @@
           <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="room.close" datatype="html">
+        <source>Fermer</source>
+        <target>Sluiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/furniture-panel.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.remove" datatype="html">
+        <source>Enlever…</source>
+        <target>Uitdoen…</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.removeOne" datatype="html">
+        <source>Enlever : <x id="INTERPOLATION" equiv-text="{{ wornLabel(w.field) }}"/></source>
+        <target>Uitdoen: <x id="INTERPOLATION" equiv-text="{{ wornLabel(w.field) }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

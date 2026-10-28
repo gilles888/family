@@ -1,3 +1,4 @@
+import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { FamilyMemberDTO } from '../api-client';
 import { Avatar } from '../avatar/avatar';
@@ -36,7 +37,7 @@ const SPOTS = Object.keys(FURNITURE_RECT) as RoomSpot[];
  */
 @Component({
   selector: 'app-room-scene',
-  imports: [Avatar, SvgShapes],
+  imports: [Avatar, CdkDropList, SvgShapes],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="room" [style.--room-ratio]="ratio">
@@ -103,6 +104,19 @@ const SPOTS = Object.keys(FURNITURE_RECT) as RoomSpot[];
         [style.width.%]="characterBox.width"
       />
 
+      <!-- Zone de dépôt : une affaire glissée depuis un meuble s'enfile sur le personnage -->
+      <div
+        class="drop"
+        id="room-character"
+        cdkDropList
+        cdkDropListSortingDisabled
+        [class.targeted]="dragging()"
+        [style.left.%]="characterBox.left"
+        [style.top.%]="characterBox.top"
+        [style.width.%]="characterBox.width"
+        (cdkDropListDropped)="dropped.emit($event)"
+      ></div>
+
       @for (spot of spots; track spot) {
         <button
           type="button"
@@ -132,7 +146,11 @@ export class RoomScene {
   readonly open = input<FurnitureId | null>(null);
   /** Meubles vides : fermés et grisés. */
   readonly emptyFurniture = input<Partial<Record<RoomSpot, boolean>>>({});
+  /** Une affaire est en train d'être glissée (la zone du personnage s'allume). */
+  readonly dragging = input(false);
   readonly pick = output<RoomSpot>();
+  /** Une affaire a été lâchée sur le personnage. */
+  readonly dropped = output<CdkDragDrop<unknown, unknown, unknown>>();
 
   protected readonly viewBox = ROOM_VIEWBOX;
   protected readonly ratio = ROOM_W / ROOM_H;
