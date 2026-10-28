@@ -97,6 +97,6 @@
     }
   }
   @if (member(); as m) {
-    <app-routine-history class="history" [memberId]="m.id!" [version]="finishedToday()" />
+    <app-routine-history class="history" [memberId]="m.id!" [memberName]="m.nom!" [version]="finishedToday()" />
   }
 }

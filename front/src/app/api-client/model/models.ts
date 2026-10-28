@@ -43,4 +43,6 @@ export * from './shopping-item-source-dto';
 export * from './shopping-item-status-request';
 export * from './shopping-list-dto';
 export * from './shopping-list-generate-request';
+export * from './star-penalty-dto';
+export * from './star-penalty-request';
 export * from './year-summary-dto';

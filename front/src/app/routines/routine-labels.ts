@@ -1,4 +1,4 @@
-import { RoutineDTO, RoutineRequest, RoutineStepRequest } from '../api-client';
+import { RoutineDTO, RoutineRequest, RoutineStepRequest, StarPenaltyDTO } from '../api-client';
 
 export type RoutineType = RoutineDTO.TypeEnum;
 export type RoutineTheme = RoutineDTO.ThemeEnum;
@@ -45,3 +45,14 @@ export function copyRequest(routine: RoutineDTO, membreId: number, nom: string):
   const request = toRoutineRequest(routine, { membreId, nom });
   return { ...request, etapes: request.etapes?.map((s) => ({ ...s, id: undefined })) };
 }
+
+export type PenaltyReason = StarPenaltyDTO.MotifEnum;
+
+/** Motifs d'un retrait d'étoiles (mêmes valeurs que le backend). */
+export const PENALTY_REASON_LABELS: Record<PenaltyReason, string> = {
+  TACHE_NON_FAITE: $localize`:@@penalty.reason.task:Tâche non faite`,
+  MAUVAIS_COMPORTEMENT: $localize`:@@penalty.reason.behaviour:Mauvais comportement`,
+  DISPUTE: $localize`:@@penalty.reason.quarrel:Dispute`,
+  IMPOLITESSE: $localize`:@@penalty.reason.rudeness:Impolitesse`,
+  AUTRE: $localize`:@@penalty.reason.other:Autre`,
+};

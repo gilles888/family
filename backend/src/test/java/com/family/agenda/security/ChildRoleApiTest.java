@@ -111,6 +111,8 @@ class ChildRoleApiTest {
         expectForbidden(HttpMethod.PUT, "/v1/routines/" + routineLea.id());
         expectForbidden(HttpMethod.DELETE, "/v1/routines/" + routineLea.id());
         expectForbidden(HttpMethod.POST, "/v1/membres/" + leaId + "/routines/modele");
+        expectForbidden(HttpMethod.POST, "/v1/membres/" + leaId + "/etoiles/retraits");
+        expectForbidden(HttpMethod.DELETE, "/v1/membres/" + leaId + "/etoiles/retraits/1");
     }
 
     @Test
@@ -144,6 +146,20 @@ class ChildRoleApiTest {
         expectForbidden(HttpMethod.GET, "/v1/routines/" + routineTom.id());
         expectForbidden(HttpMethod.POST, "/v1/routines/%d/runs/%s/etapes/%d/toggle".formatted(routineTom.id(), today, step));
         expectForbidden(HttpMethod.POST, "/v1/routines/%d/runs/%s/recompense".formatted(routineTom.id(), today));
+    }
+
+    @Test
+    void litSesRetraitsDEtoilesMaisPasCeuxDesAutres() throws Exception {
+        mvc.perform(get("/v1/membres/{id}/etoiles/retraits", leaId).session(lea)).andExpect(status().isOk());
+        expectForbidden(HttpMethod.GET, "/v1/membres/" + tomId + "/etoiles/retraits");
+    }
+
+    @Test
+    void enfantNePeutPasSeRetirerDesEtoiles() throws Exception {
+        mvc.perform(post("/v1/membres/{id}/etoiles/retraits", leaId).session(lea).with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON).content("{ \"nombre\": 1, \"motif\": \"DISPUTE\" }"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("ACTION_NON_AUTORISEE"));
     }
 
     @Test

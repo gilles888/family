@@ -21,16 +21,32 @@
             "description": "Liste de courses : g\u00e9n\u00e9r\u00e9e depuis les repas planifi\u00e9s, compl\u00e9t\u00e9e \u00e0 la main"
         },
         {
+            "name": "Agenda",
+            "description": "Consultation de l'agenda : les AgendaEntry sont persist\u00e9es, pas calcul\u00e9es \u00e0 la vol\u00e9e"
+        },
+        {
+            "name": "Etoiles",
+            "description": "\u00c9toiles retir\u00e9es aux membres"
+        },
+        {
+            "name": "Recettes",
+            "description": "Recettes types, partag\u00e9es par la famille et r\u00e9utilisables pour planifier les repas"
+        },
+        {
+            "name": "Meteo",
+            "description": "M\u00e9t\u00e9o des prochains jours et tenue conseill\u00e9e pour les enfants"
+        },
+        {
+            "name": "Ingredients",
+            "description": "Ingr\u00e9dients r\u00e9utilisables (cr\u00e9\u00e9s \u00e0 la vol\u00e9e par les recettes)"
+        },
+        {
             "name": "Reminders",
             "description": "Cr\u00e9ation/modification des reminders (g\u00e9n\u00e8re les AgendaEntry)"
         },
         {
             "name": "Repas",
             "description": "Repas planifi\u00e9s : une recette type ou un libell\u00e9 libre, un repas par date et cr\u00e9neau"
-        },
-        {
-            "name": "Agenda",
-            "description": "Consultation de l'agenda : les AgendaEntry sont persist\u00e9es, pas calcul\u00e9es \u00e0 la vol\u00e9e"
         },
         {
             "name": "Comptes",
@@ -47,18 +63,6 @@
         {
             "name": "Routines",
             "description": "Routines des membres (tableaux du matin, du soir\u2026) : gestion et suivi du jour"
-        },
-        {
-            "name": "Recettes",
-            "description": "Recettes types, partag\u00e9es par la famille et r\u00e9utilisables pour planifier les repas"
-        },
-        {
-            "name": "Meteo",
-            "description": "M\u00e9t\u00e9o des prochains jours et tenue conseill\u00e9e pour les enfants"
-        },
-        {
-            "name": "Ingredients",
-            "description": "Ingr\u00e9dients r\u00e9utilisables (cr\u00e9\u00e9s \u00e0 la vol\u00e9e par les recettes)"
         }
     ],
     "paths": {
@@ -693,6 +697,9 @@
                     },
                     "400": {
                         "description": "Corps qui n'est pas un objet JSON, ou trop long"
+                    },
+                    "403": {
+                        "description": "Un enfant ne peut modifier que son propre personnage"
                     },
                     "404": {
                         "description": "Membre introuvable"
@@ -1344,6 +1351,91 @@
                     },
                     "400": {
                         "description": "Mod\u00e8le ou langue inconnus"
+                    },
+                    "404": {
+                        "description": "Membre introuvable"
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/etoiles/retraits": {
+            "get": {
+                "tags": [
+                    "Etoiles"
+                ],
+                "summary": "\u00c9toiles retir\u00e9es \u00e0 un membre (les plus r\u00e9centes d'abord)",
+                "operationId": "listRetraitsEtoiles",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retraits",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StarPenaltyDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Membre introuvable"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Etoiles"
+                ],
+                "summary": "Retirer des \u00e9toiles \u00e0 un membre, avec un motif (parent)",
+                "description": "Le commentaire est obligatoire pour le motif AUTRE.",
+                "operationId": "retirerEtoiles",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StarPenaltyRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Retrait enregistr\u00e9",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StarPenaltyDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Nombre ou motif invalide, commentaire manquant, jour \u00e0 venir"
                     },
                     "404": {
                         "description": "Membre introuvable"
@@ -2316,6 +2408,43 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/v1/membres/{memberId}/etoiles/retraits/{penaltyId}": {
+            "delete": {
+                "tags": [
+                    "Etoiles"
+                ],
+                "summary": "Annuler un retrait d'\u00e9toiles (parent) : les \u00e9toiles sont rendues",
+                "operationId": "annulerRetraitEtoiles",
+                "parameters": [
+                    {
+                        "name": "memberId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "penaltyId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Membre ou retrait introuvable"
+                    },
+                    "204": {
+                        "description": "No Content"
                     }
                 }
             }
@@ -3612,6 +3741,83 @@
                     "modele"
                 ]
             },
+            "StarPenaltyRequest": {
+                "type": "object",
+                "description": "Retrait d'\u00e9toiles",
+                "properties": {
+                    "nombre": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Nombre d'\u00e9toiles retir\u00e9es",
+                        "example": 2,
+                        "maximum": 50,
+                        "minimum": 1
+                    },
+                    "motif": {
+                        "type": "string",
+                        "enum": [
+                            "TACHE_NON_FAITE",
+                            "MAUVAIS_COMPORTEMENT",
+                            "DISPUTE",
+                            "IMPOLITESSE",
+                            "AUTRE"
+                        ]
+                    },
+                    "commentaire": {
+                        "type": "string",
+                        "description": "Obligatoire si le motif est AUTRE",
+                        "example": "A claqu\u00e9 la porte",
+                        "maxLength": 255,
+                        "minLength": 0
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "Jour du retrait (aujourd'hui par d\u00e9faut ; pas dans le futur)",
+                        "example": "2026-09-24"
+                    }
+                },
+                "required": [
+                    "motif",
+                    "nombre"
+                ]
+            },
+            "StarPenaltyDTO": {
+                "type": "object",
+                "description": "\u00c9toiles retir\u00e9es \u00e0 un membre",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-09-24"
+                    },
+                    "nombre": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 2
+                    },
+                    "motif": {
+                        "type": "string",
+                        "enum": [
+                            "TACHE_NON_FAITE",
+                            "MAUVAIS_COMPORTEMENT",
+                            "DISPUTE",
+                            "IMPOLITESSE",
+                            "AUTRE"
+                        ]
+                    },
+                    "commentaire": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    }
+                }
+            },
             "PantryItemRequest": {
                 "type": "object",
                 "description": "Ajout au garde-manger",
@@ -4209,7 +4415,7 @@
             },
             "RoutineHistoryDTO": {
                 "type": "object",
-                "description": "Routines termin\u00e9es d'un jour (historique)",
+                "description": "\u00c9toiles d'un jour (historique) : routines termin\u00e9es et \u00e9toiles retir\u00e9es",
                 "properties": {
                     "date": {
                         "type": "string",
@@ -4218,10 +4424,17 @@
                     },
                     "routinesTerminees": {
                         "type": "array",
-                        "description": "Ids des routines termin\u00e9es ce jour-l\u00e0",
+                        "description": "Ids des routines termin\u00e9es ce jour-l\u00e0 (une \u00e9toile chacune)",
                         "items": {
                             "type": "integer",
                             "format": "int64"
+                        }
+                    },
+                    "retraits": {
+                        "type": "array",
+                        "description": "\u00c9toiles retir\u00e9es ce jour-l\u00e0",
+                        "items": {
+                            "$ref": "#/components/schemas/StarPenaltyDTO"
                         }
                     }
                 }

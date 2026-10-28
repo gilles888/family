@@ -5,6 +5,7 @@ api/api.ts
 api/comptes.service.ts
 api/connexion.service.ts
 api/courses.service.ts
+api/etoiles.service.ts
 api/garde-manger.service.ts
 api/ingredients.service.ts
 api/membres.service.ts
@@ -62,6 +63,8 @@ model/shopping-item-source-dto.ts
 model/shopping-item-status-request.ts
 model/shopping-list-dto.ts
 model/shopping-list-generate-request.ts
+model/star-penalty-dto.ts
+model/star-penalty-request.ts
 model/year-summary-dto.ts
 param.ts
 provide-api.ts

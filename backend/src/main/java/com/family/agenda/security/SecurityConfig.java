@@ -79,6 +79,8 @@ public class SecurityConfig {
                                     "/v1/routines/*").authenticated()
                             .requestMatchers(HttpMethod.POST, "/v1/routines/*/runs/*/etapes/*/toggle",
                                     "/v1/routines/*/runs/*/recompense").authenticated()
+                            // … ses étoiles retirées (lecture ; le retrait lui-même reste aux parents)
+                            .requestMatchers(HttpMethod.GET, "/v1/membres/*/etoiles/retraits").authenticated()
                             // … et son personnage : @PreAuthorize vérifie le membre lié
                             .requestMatchers(HttpMethod.PUT, "/v1/membres/*/avatar").authenticated()
                             // Tout le reste de l'API (dont /v2… : version inconnue, 400 pour un parent) : parents

@@ -4619,6 +4619,178 @@
           <context context-type="linenumber">45,47</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routineHistory.removed" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 étoile retirée} other {<x id="INTERPOLATION"/> étoiles retirées}}</source>
+        <target>{VAR_PLURAL, plural, =1 {1 ster afgenomen} other {<x id="INTERPOLATION"/> sterren afgenomen}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.take" datatype="html">
+        <source>Retirer des étoiles</source>
+        <target>Sterren afnemen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">70,72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelPenalty" datatype="html">
+        <source>Annuler ce retrait</source>
+        <target>Deze aftrek ongedaan maken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelTitle" datatype="html">
+        <source>Annuler ce retrait ?</source>
+        <target>Deze aftrek ongedaan maken?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">240</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelMessage" datatype="html">
+        <source>Les étoiles retirées sont rendues.</source>
+        <target>De afgenomen sterren worden teruggegeven.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">241</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelConfirm" datatype="html">
+        <source>Annuler le retrait</source>
+        <target>Aftrek ongedaan maken</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">242</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelled" datatype="html">
+        <source>Retrait annulé.</source>
+        <target>Aftrek ongedaan gemaakt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">249</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason.task" datatype="html">
+        <source>Tâche non faite</source>
+        <target>Taak niet gedaan</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason.behaviour" datatype="html">
+        <source>Mauvais comportement</source>
+        <target>Slecht gedrag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason.quarrel" datatype="html">
+        <source>Dispute</source>
+        <target>Ruzie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason.rudeness" datatype="html">
+        <source>Impolitesse</source>
+        <target>Onbeleefdheid</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason.other" datatype="html">
+        <source>Autre</source>
+        <target>Anders</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.title" datatype="html">
+        <source>Retirer des étoiles à <x id="INTERPOLATION" equiv-text="{{ data.memberName }}"/></source>
+        <target>Sterren afnemen van <x id="INTERPOLATION"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.count" datatype="html">
+        <source>Nombre d&apos;étoiles</source>
+        <target>Aantal sterren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.countInvalid" datatype="html">
+        <source>Entre 1 et 50.</source>
+        <target>Tussen 1 en 50.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">31,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason" datatype="html">
+        <source>Motif</source>
+        <target>Reden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.comment" datatype="html">
+        <source>Commentaire</source>
+        <target>Opmerking</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.commentRequired" datatype="html">
+        <source>Obligatoire pour le motif « Autre ».</source>
+        <target>Verplicht bij de reden « Anders ».</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">48,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.commentMissing" datatype="html">
+        <source>Explique pourquoi.</source>
+        <target>Leg uit waarom.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">51,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.submit" datatype="html">
+        <source>Retirer</source>
+        <target>Afnemen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.done" datatype="html">
+        <source>Étoiles retirées.</source>
+        <target>Sterren afgenomen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>
