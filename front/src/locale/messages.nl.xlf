@@ -4791,6 +4791,54 @@
           <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="entry.deleteOccurrenceTitle" datatype="html">
+        <source>Supprimer cette occurrence ?</source>
+        <target>Deze afspraak verwijderen?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">308</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.deleteOccurrenceMessage" datatype="html">
+        <source>Seule cette occurrence de « <x id="title" equiv-text="entry.titre"/> » sera supprimée. Les autres occurrences restent dans l&apos;agenda.</source>
+        <target>Alleen deze keer van ‘<x id="title" equiv-text="entry.titre"/>’ wordt verwijderd. De andere keren blijven in de agenda.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">309</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.occurrenceDeleted" datatype="html">
+        <source>Occurrence supprimée.</source>
+        <target>Afspraak verwijderd.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">317</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.deleteOccurrence" datatype="html">
+        <source>Supprimer cette occurrence</source>
+        <target>Deze afspraak verwijderen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">62,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.deleteSeries" datatype="html">
+        <source>Supprimer toute la série</source>
+        <target>De hele reeks verwijderen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">66,68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.supprime" datatype="html">
+        <source>Supprimé</source>
+        <target>Verwijderd</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

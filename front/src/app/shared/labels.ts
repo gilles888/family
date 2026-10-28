@@ -16,7 +16,8 @@ export type MealSlot = MealRequest.CreneauEnum;
 export type Aisle = IngredientDTO.RayonEnum;
 
 export const REMINDER_TYPES: ReminderType[] = Object.values(ReminderRequest.TypeEnum);
-export const ENTRY_STATUSES: EntryStatus[] = Object.values(AgendaEntryDTO.StatutEnum);
+/** Statuts proposables : SUPPRIME n'en est pas un (occurrence supprimée, jamais renvoyée par l'agenda ; voir DELETE /agenda/entries/{id}). */
+export const ENTRY_STATUSES: EntryStatus[] = Object.values(AgendaEntryDTO.StatutEnum).filter((s) => s !== 'SUPPRIME');
 export const FREQUENCIES: Frequency[] = Object.values(RecurrenceRuleRequest.FrequenceEnum);
 /** Lundi -> dimanche ; les noms des jours s'affichent via DatePipe (voir WEEKDAY_REFERENCE_DATES). */
 export const WEEK_DAYS: WeekDay[] = Object.values(RecurrenceRuleRequest.JoursSemaineEnum);
@@ -44,6 +45,7 @@ export const STATUS_LABELS: Record<EntryStatus, string> = {
   COMPLETE: $localize`:@@status.complete:Terminé`,
   ANNULE: $localize`:@@status.annule:Annulé`,
   DEPLACE: $localize`:@@status.deplace:Déplacé`,
+  SUPPRIME: $localize`:@@status.supprime:Supprimé`,
 };
 
 export const FREQUENCY_LABELS: Record<Frequency, string> = {
@@ -58,6 +60,7 @@ export const STATUS_ICONS: Record<EntryStatus, string> = {
   COMPLETE: 'check_circle',
   ANNULE: 'cancel',
   DEPLACE: 'event_repeat',
+  SUPPRIME: 'delete',
 };
 
 /** Unités courtes, affichées après une quantité (« 400 g », « 2 c. à soupe »). */

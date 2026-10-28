@@ -12,6 +12,9 @@ import java.util.Optional;
 
 public interface AgendaEntryRepository extends JpaRepository<AgendaEntry, Long> {
 
+    // Les occurrences SUPPRIME restent en base (voir EntryStatus) mais sont exclues de toute lecture : jour, semaine,
+    // mois, année, résumés et compteurs. Seule la réconciliation (findByReminderId…) les voit.
+
     // ---------- gestion / génération
 
     List<AgendaEntry> findByReminderIdAndDateHeureGreaterThanEqual(Long reminderId, LocalDateTime from);
@@ -21,7 +24,7 @@ public interface AgendaEntryRepository extends JpaRepository<AgendaEntry, Long> 
     int deleteFutureByReminderId(@Param("reminderId") Long reminderId, @Param("from") LocalDateTime from);
 
     @Query("select new com.family.agenda.repository.EntryRange(count(e), min(e.dateHeure), max(e.dateHeure)) "
-            + "from AgendaEntry e where e.reminder.id = :reminderId")
+            + "from AgendaEntry e where e.reminder.id = :reminderId and e.statut <> com.family.agenda.entity.EntryStatus.SUPPRIME")
     EntryRange summarize(@Param("reminderId") Long reminderId);
 
     @Query("select e from AgendaEntry e join fetch e.reminder r left join fetch r.membres where e.id = :id")
@@ -31,14 +34,14 @@ public interface AgendaEntryRepository extends JpaRepository<AgendaEntry, Long> 
 
     @Query("""
             select distinct e from AgendaEntry e join fetch e.reminder r left join fetch r.membres
-            where e.dateHeure >= :debut and e.dateHeure < :fin
+            where e.dateHeure >= :debut and e.dateHeure < :fin and e.statut <> com.family.agenda.entity.EntryStatus.SUPPRIME
             order by e.dateHeure, e.id
             """)
     List<AgendaEntry> findInRange(@Param("debut") LocalDateTime debut, @Param("fin") LocalDateTime fin);
 
     @Query("""
             select distinct e from AgendaEntry e join fetch e.reminder r left join fetch r.membres
-            where e.dateHeure >= :debut and e.dateHeure < :fin
+            where e.dateHeure >= :debut and e.dateHeure < :fin and e.statut <> com.family.agenda.entity.EntryStatus.SUPPRIME
               and exists (select 1 from r.membres m where m.id = :membreId)
             order by e.dateHeure, e.id
             """)
@@ -50,7 +53,7 @@ public interface AgendaEntryRepository extends JpaRepository<AgendaEntry, Long> 
     @Query("""
             select new com.family.agenda.repository.MonthTypeCount(month(e.dateHeure), r.type, count(e))
             from AgendaEntry e join e.reminder r
-            where e.dateHeure >= :debut and e.dateHeure < :fin
+            where e.dateHeure >= :debut and e.dateHeure < :fin and e.statut <> com.family.agenda.entity.EntryStatus.SUPPRIME
             group by month(e.dateHeure), r.type
             """)
     List<MonthTypeCount> countByMonthAndType(@Param("debut") LocalDateTime debut, @Param("fin") LocalDateTime fin);
@@ -58,7 +61,7 @@ public interface AgendaEntryRepository extends JpaRepository<AgendaEntry, Long> 
     @Query("""
             select new com.family.agenda.repository.MonthTypeCount(month(e.dateHeure), r.type, count(e))
             from AgendaEntry e join e.reminder r
-            where e.dateHeure >= :debut and e.dateHeure < :fin
+            where e.dateHeure >= :debut and e.dateHeure < :fin and e.statut <> com.family.agenda.entity.EntryStatus.SUPPRIME
               and exists (select 1 from r.membres m where m.id = :membreId)
             group by month(e.dateHeure), r.type
             """)

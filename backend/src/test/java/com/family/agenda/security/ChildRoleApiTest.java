@@ -92,6 +92,7 @@ class ChildRoleApiTest {
         expectForbidden(HttpMethod.PUT, "/v1/reminders/1");
         expectForbidden(HttpMethod.DELETE, "/v1/reminders/1");
         expectForbidden(HttpMethod.PATCH, "/v1/agenda/entries/1");
+        expectForbidden(HttpMethod.DELETE, "/v1/agenda/entries/1");
         expectForbidden(HttpMethod.POST, "/v1/repas");
         expectForbidden(HttpMethod.DELETE, "/v1/repas/1");
         expectForbidden(HttpMethod.POST, "/v1/recettes");

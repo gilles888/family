@@ -1765,6 +1765,35 @@
             }
         },
         "/v1/agenda/entries/{id}": {
+            "delete": {
+                "tags": [
+                    "Agenda"
+                ],
+                "summary": "Supprimer UNE occurrence",
+                "description": "Retire cette occurrence de l'agenda, sans toucher aux autres occurrences du reminder, qui ne la recr\u00e9ent pas. Pour supprimer tout le rappel : DELETE /reminders/{id}.",
+                "operationId": "deleteEntry",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifiant de l'AgendaEntry",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Entr\u00e9e introuvable (ou d\u00e9j\u00e0 supprim\u00e9e)"
+                    },
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            },
             "patch": {
                 "tags": [
                     "Agenda"
@@ -1796,6 +1825,16 @@
                     "required": true
                 },
                 "responses": {
+                    "400": {
+                        "description": "Statut SUPPRIME : utiliser DELETE",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AgendaEntryDTO"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Entr\u00e9e introuvable",
                         "content": {
@@ -4092,7 +4131,8 @@
                             "PREVU",
                             "COMPLETE",
                             "ANNULE",
-                            "DEPLACE"
+                            "DEPLACE",
+                            "SUPPRIME"
                         ],
                         "example": "ANNULE"
                     }
@@ -4151,7 +4191,8 @@
                             "PREVU",
                             "COMPLETE",
                             "ANNULE",
-                            "DEPLACE"
+                            "DEPLACE",
+                            "SUPPRIME"
                         ],
                         "example": "PREVU"
                     },

@@ -5,6 +5,7 @@ import com.family.agenda.dto.AgendaGenerationSummaryDTO;
 import com.family.agenda.entity.AgendaEntry;
 import com.family.agenda.entity.EntryStatus;
 import com.family.agenda.entity.Reminder;
+import com.family.agenda.exception.BusinessRuleException;
 import com.family.agenda.exception.ResourceNotFoundException;
 import com.family.agenda.repository.AgendaEntryRepository;
 import com.family.agenda.repository.EntryRange;
@@ -27,7 +28,8 @@ import java.util.Set;
  * <p>
  * Règle commune à toutes les opérations après création : seules les occurrences <b>à partir de maintenant</b>
  * sont créées ou supprimées ; les entrées passées ne sont jamais modifiées. La génération est idempotente :
- * on compare les occurrences attendues aux dates déjà en base, on n'ajoute que ce qui manque.
+ * on compare les occurrences attendues aux dates déjà en base, on n'ajoute que ce qui manque. Une occurrence
+ * supprimée à la main (statut SUPPRIME) reste en base : elle compte comme présente et n'est donc pas recréée.
  */
 @Service
 @RequiredArgsConstructor
@@ -79,13 +81,31 @@ public class AgendaService {
         return entryRepository.deleteFutureByReminderId(reminderId, now());
     }
 
-    /** Change le statut d'UNE occurrence, sans toucher aux autres. */
+    /** Change le statut d'UNE occurrence, sans toucher aux autres (pour la supprimer : {@link #deleteOccurrence}). */
     @Transactional
     public AgendaEntry updateStatus(Long entryId, EntryStatus statut) {
-        AgendaEntry entry = entryRepository.findDetailedById(entryId)
-                .orElseThrow(() -> new ResourceNotFoundException("AgendaEntry", entryId));
+        if (statut == EntryStatus.SUPPRIME) {
+            throw new BusinessRuleException("Pour supprimer une occurrence, utiliser DELETE /agenda/entries/{id}");
+        }
+        AgendaEntry entry = load(entryId);
         entry.setStatut(statut);
         return entry;
+    }
+
+    /**
+     * Supprime UNE occurrence. La ligne est gardée avec le statut SUPPRIME : un vrai DELETE ferait recréer
+     * l'occurrence manquante par {@link #reconcile}. Les autres occurrences du reminder ne bougent pas.
+     */
+    @Transactional
+    public void deleteOccurrence(Long entryId) {
+        load(entryId).setStatut(EntryStatus.SUPPRIME);
+    }
+
+    /** Une occurrence déjà supprimée est introuvable. */
+    private AgendaEntry load(Long entryId) {
+        return entryRepository.findDetailedById(entryId)
+                .filter(e -> e.getStatut() != EntryStatus.SUPPRIME)
+                .orElseThrow(() -> new ResourceNotFoundException("AgendaEntry", entryId));
     }
 
     @Transactional(readOnly = true)

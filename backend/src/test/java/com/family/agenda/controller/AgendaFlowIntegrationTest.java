@@ -219,6 +219,55 @@ class AgendaFlowIntegrationTest {
     }
 
     @Test
+    void deletingOneOccurrenceKeepsTheSeriesAndIsNeverRecreated() throws Exception {
+        long tom = createMember("Tom");
+        // mercredis dès le 23/09 : 26 occurrences jusqu'au 17/03/2027
+        long id = reminderId(createReminder(weeklySport(tom, "2026-09-23T18:00:00", "{\"frequence\":\"WEEKLY\"}"))
+                .andExpect(jsonPath("$.agenda.nombre").value(26)));
+        long second = entryRepository.findAll().stream()
+                .filter(e -> e.getDateHeure().toString().startsWith("2026-09-30")).findFirst().orElseThrow().getId();
+
+        mvc.perform(delete("/v1/agenda/entries/{id}", second)).andExpect(status().isNoContent());
+
+        // la ligne est gardée (statut SUPPRIME) mais n'est lue nulle part
+        assertThat(entryRepository.count()).isEqualTo(26);
+        assertThat(entryRepository.findById(second)).get().extracting(e -> e.getStatut().name()).isEqualTo("SUPPRIME");
+        agenda("2026-09-21", "2026-10-11").andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].dateHeure").value("2026-09-23T18:00:00"))
+                .andExpect(jsonPath("$[1].dateHeure").value("2026-10-07T18:00:00"));
+        mvc.perform(get("/v1/agenda/jour/2026-09-30")).andExpect(jsonPath("$", hasSize(0)));
+        mvc.perform(get("/v1/agenda/semaine/2026-09-30")).andExpect(jsonPath("$", hasSize(0)));
+        mvc.perform(get("/v1/agenda/mois/2026/9")).andExpect(jsonPath("$['2026-09-30']").doesNotExist())
+                .andExpect(jsonPath("$['2026-09-23']", hasSize(1)));
+        mvc.perform(get("/v1/agenda/annee/2026")).andExpect(jsonPath("$.mois[8].total").value(1));
+
+        // l'horizon glisse (job nocturne) : l'occurrence supprimée ne revient pas, les autres sont ajoutées
+        clock.instant = Instant.parse("2026-11-21T08:00:00Z");
+        assertThat(scheduler.run()).isEqualTo(9);
+        assertThat(entryRepository.count()).isEqualTo(35);
+        agenda("2026-09-28", "2026-10-02").andExpect(jsonPath("$", hasSize(0)));
+
+        // modifier le rappel sans changer ses dates ne la fait pas réapparaître non plus (mais le titre suit)
+        clock.instant = Instant.parse("2026-09-21T08:00:00Z");
+        mvc.perform(put("/v1/reminders/{id}", id).contentType(MediaType.APPLICATION_JSON)
+                        .content(weeklySport(tom, "2026-09-23T18:00:00", "{\"frequence\":\"WEEKLY\"}").replace("Foot", "Football")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.agenda.nombre").value(25)); // la supprimée n'est pas comptée
+        agenda("2026-09-28", "2026-10-02").andExpect(jsonPath("$", hasSize(0)));
+        agenda("2026-09-21", "2026-10-11").andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].titre").value("Football"));
+
+        // une occurrence déjà supprimée est introuvable ; on ne peut pas la rétablir ni la supprimer via le statut
+        mvc.perform(delete("/v1/agenda/entries/{id}", second)).andExpect(status().isNotFound());
+        mvc.perform(patch("/v1/agenda/entries/{id}", second).contentType(MediaType.APPLICATION_JSON)
+                .content("{\"statut\":\"PREVU\"}")).andExpect(status().isNotFound());
+        long first = entryRepository.findAll().stream()
+                .filter(e -> e.getDateHeure().toString().startsWith("2026-09-23")).findFirst().orElseThrow().getId();
+        mvc.perform(patch("/v1/agenda/entries/{id}", first).contentType(MediaType.APPLICATION_JSON)
+                .content("{\"statut\":\"SUPPRIME\"}")).andExpect(status().isBadRequest());
+    }
+
+    @Test
     void nightlyJobIgnoresFinishedAndDeletedRecurrences() throws Exception {
         long tom = createMember("Tom");
         createReminder(weeklySport(tom, "2026-09-23T18:00:00", "{\"frequence\":\"WEEKLY\",\"nombreOccurrences\":3}"));

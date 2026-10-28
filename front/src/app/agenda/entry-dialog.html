@@ -56,10 +56,21 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   @if (auth.isParent()) {
-    <button matButton (click)="close('delete-reminder')" class="danger">
-      <mat-icon>delete</mat-icon>
-      <ng-container i18n="@@entry.deleteReminder">Supprimer le rappel</ng-container>
-    </button>
+    @if (entry.recurring) {
+      <button matButton (click)="close('delete-entry')" class="danger">
+        <mat-icon>event_busy</mat-icon>
+        <ng-container i18n="@@entry.deleteOccurrence">Supprimer cette occurrence</ng-container>
+      </button>
+      <button matButton (click)="close('delete-reminder')" class="danger">
+        <mat-icon>delete_sweep</mat-icon>
+        <ng-container i18n="@@entry.deleteSeries">Supprimer toute la série</ng-container>
+      </button>
+    } @else {
+      <button matButton (click)="close('delete-reminder')" class="danger">
+        <mat-icon>delete</mat-icon>
+        <ng-container i18n="@@entry.deleteReminder">Supprimer le rappel</ng-container>
+      </button>
+    }
     <button matButton (click)="close('edit-reminder')">
       <mat-icon>edit</mat-icon>
       <ng-container i18n="@@entry.editReminder">Modifier le rappel</ng-container>
