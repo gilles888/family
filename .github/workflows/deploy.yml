@@ -78,7 +78,16 @@ jobs:
           DEPLOY_ENV: ${{ secrets.DEPLOY_ENV }}
         run: |
           umask 077
-          printf '%s\n' "$DEPLOY_ENV" > deploy/.env
+          printf '%s\n' "$DEPLOY_ENV" | tr -d '\r' > deploy/.env
+          # Contrôle sans rien afficher des valeurs (journaux publics) : seuls les noms et numéros de ligne sortent.
+          [[ -s deploy/.env ]] || { echo "::error::secret DEPLOY_ENV vide"; exit 1; }
+          awk '!/^[[:space:]]*(#|$)/ && !/^[A-Za-z_][A-Za-z0-9_]*=/ { print "::error::DEPLOY_ENV ligne " NR " : pas de la forme NOM=valeur"; bad=1 } END { exit bad }' deploy/.env
+          if ! bash -n deploy/.env 2>/dev/null; then
+            ligne=$(bash -n deploy/.env 2>&1 | grep -oE 'line [0-9]+|ligne [0-9]+' | head -1)
+            echo "::error::DEPLOY_ENV : syntaxe invalide (${ligne:-ligne inconnue}) — guillemet non fermé ?"; exit 1
+          fi
+          (set -u; source deploy/.env >/dev/null 2>&1) || { echo "::error::DEPLOY_ENV : lecture impossible"; exit 1; }
+          echo "Variables : $(grep -oE '^[A-Za-z_][A-Za-z0-9_]*=' deploy/.env | tr -d '=' | tr '\n' ' ')"
 
       - name: npm ci
         working-directory: front
