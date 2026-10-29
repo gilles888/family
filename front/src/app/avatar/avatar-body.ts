@@ -59,11 +59,11 @@ export const ANCHORS = {
   neck: [100, 106] as Point,
   shoulderL: [63, 123] as Point,
   shoulderR: [137, 123] as Point,
-  elbowL: [52, 155] as Point,
-  elbowR: [148, 155] as Point,
+  elbowL: [48, 155] as Point,
+  elbowR: [152, 155] as Point,
   /** Centre de la paume : les objets tenus s'y posent. */
-  handL: [47, 193] as Point,
-  handR: [153, 193] as Point,
+  handL: [51, 193] as Point,
+  handR: [149, 193] as Point,
   waist: [100, 174] as Point,
   hipL: [67, 194] as Point,
   hipR: [133, 194] as Point,
@@ -165,7 +165,8 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
     const toe = cx + side * 21 + relax;
     return [
       path(d, bottom === 'pants' ? pants : skin),
-      shade(d),
+      // jambe nue : un léger volume par un filet plus foncé côté intérieur, sans dégradé (la peau garde la couleur du visage)
+      ...(bottom === 'pants' ? [shade(d)] : [path(`M ${inner - side * 1.5} ${hipY + 2} Q ${inner - side * 2.5 + relax} ${kneeY} ${ankleI + relax - side * 1.5} ${ankleY - 2}`, 'none', { stroke: darken(skin, 0.14), sw: 3, opacity: 0.5 })]),
       ...(bottom === 'shorts'
         ? [
             path(`M ${outer} ${hipY - 4} L ${inner} ${hipY - 4} L ${inner} ${kneeY - 14} L ${outer - side * 1.5} ${kneeY - 14} Z`, pants),
@@ -187,26 +188,28 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
     const bend = side === 1 ? 2 : 0;
     const sx = cx + side * (shoulderW - 6);
     const ay = sy + 11;
-    const ex = cx + side * (shoulderW + 12 + bend);
+    const ex = cx + side * (shoulderW + 15 + bend);
     const ey = ay + armLen * 0.5;
-    const wx = cx + side * (shoulderW + 15);
+    const wx = cx + side * (shoulderW + 12);
     const wy = ay + armLen;
     const stroke = (d: string, col: string, w: number): Shape => path(d, 'none', { stroke: col, sw: w });
-    const upper = `M ${sx} ${ay} Q ${ex} ${ey - 8} ${ex} ${ey}`;
+    // courbe naturelle : le haut du bras s'écarte, l'avant-bras revient vers la hanche (coude plié)
+    const upper = `M ${sx} ${ay} C ${sx + side * 6} ${ay + 8} ${ex} ${ey - 12} ${ex} ${ey}`;
     const out: Shape[] = [
       stroke(upper, skin, armW - 2),
-      stroke(`M ${ex} ${ey} Q ${ex - side * 2} ${ey + 10} ${wx} ${wy}`, skin, armW - 3),
+      stroke(`M ${ex} ${ey} C ${ex + side * 1} ${ey + 8} ${wx + side * 3} ${wy - 10} ${wx} ${wy}`, skin, armW - 3),
       // main : moufle arrondie, pouce suggéré vers le corps
       ellipse(wx, wy + 7, armW * 0.68, armW * 0.88, skin),
       path(`M ${wx - side * 4} ${wy + 3} Q ${wx - side * 12} ${wy + 5} ${wx - side * 9} ${wy + 13} Q ${wx - side * 6} ${wy + 14} ${wx - side * 4} ${wy + 10} Z`, skin),
-      ellipse(wx, wy + 7, armW * 0.68, armW * 0.88, `url(#${ids.shade})`, { opacity: 0.5 }),
+      // volume léger : filet plus foncé du côté du corps, sans dégradé
+      path(`M ${sx} ${ay} C ${sx + side * 3} ${ay + 8} ${ex - side * 3} ${ey - 12} ${ex - side * 3} ${ey} C ${ex - side * 2} ${ey + 8} ${wx + side * 0} ${wy - 10} ${wx - side * 3} ${wy}`, 'none', { stroke: darken(skin, 0.14), sw: 2.2, opacity: 0.3 }),
     ];
     if (garment.sleeve !== 'none') {
       const long = garment.sleeve === 'long';
       const sw = armW + 4;
       const tipX = long ? wx : sx + (ex - sx) * 0.9;
       const tipY = long ? wy - 5 : ay + (ey - ay) * 0.8;
-      const d = long ? `M ${sx} ${ay} Q ${ex + side * 2} ${ey - 4} ${ex} ${ey} Q ${ex - side * 2} ${ey + 10} ${tipX} ${tipY}` : `M ${sx} ${ay} Q ${ex} ${ey - 10} ${tipX} ${tipY}`;
+      const d = long ? `M ${sx} ${ay} C ${sx + side * 6} ${ay + 8} ${ex} ${ey - 12} ${ex} ${ey} C ${ex + side} ${ey + 8} ${wx + side * 3} ${wy - 12} ${tipX} ${tipY}` : `M ${sx} ${ay} C ${sx + side * 6} ${ay + 8} ${ex} ${ey - 14} ${tipX} ${tipY}`;
       out.push(circle(sx, ay, sw / 2, top), stroke(d, top, sw), stroke(d, `url(#${ids.shade})`, sw));
     }
     return out;

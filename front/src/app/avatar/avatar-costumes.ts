@@ -57,8 +57,8 @@ export const COSTUME_BODIES: Record<string, Body> = {
       line('M74 168 Q100 160 126 168', '#f5f5f5', 4),
       line('M88 200 V272', '#f5f5f5', 4),
       line('M112 200 V272', '#f5f5f5', 4),
-      circle(48, 193, 6, '#f5f5f5'),
-      circle(152, 193, 6, '#f5f5f5'),
+      circle(51, 193, 6, '#f5f5f5'),
+      circle(149, 193, 6, '#f5f5f5'),
     ],
     front: [],
     headFront: [
@@ -148,7 +148,7 @@ export const COSTUME_BODIES: Record<string, Body> = {
       ...dots([[80, 142], [120, 152], [96, 168], [76, 178], [122, 186]], 5.5, '#e53935'),
       ...dots([[88, 150], [112, 140], [100, 184]], 5, '#1e88e5'),
       ...dots([[80, 214], [120, 220], [100, 236]], 5, '#fdd835'),
-      ...dots([[48, 184], [152, 184]], 7, '#fafafa'),
+      ...dots([[51, 184], [149, 184]], 7, '#fafafa'),
     ],
     front: [
       ...[78, 89, 100, 111, 122].map((x, i) => circle(x, 114 + (i % 2) * 2, 8, i % 2 ? '#fafafa' : '#e53935')),
@@ -205,7 +205,7 @@ export const COSTUME_BODIES: Record<string, Body> = {
   'costume-dino': {
     garment: { sleeve: 'long', top: '#43a047', pants: '#43a047' },
     under: [path('M118 214 Q168 222 178 262 Q150 250 124 244 Z', '#43a047')],
-    shapes: [ellipse(100, 160, 26, 24, '#c5e1a5'), ...dots([[44, 192], [156, 192]], 4, '#ff8f00'), ...cuffs('#2e7d32')],
+    shapes: [ellipse(100, 160, 26, 24, '#c5e1a5'), ...dots([[47, 192], [153, 192]], 4, '#ff8f00'), ...cuffs('#2e7d32')],
     front: [ribCollar('#2e7d32')],
   },
   'costume-unicorn': {
