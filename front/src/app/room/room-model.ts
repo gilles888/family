@@ -304,7 +304,7 @@ export function buildRoom(opts: RoomOptions): RoomModel {
 
   // ---------- dispositions : le personnage se tient au milieu, entre la fenêtre et la commode ; les panneaux (200 px de
   // chaque côté) laissent voir le meuble qui s'ouvre
-  const figAnchor: V3 = [345, 0, 215];
+  const figAnchor: V3 = [356, 0, 215];
   armoire(14, 1);
   commode(400, 3);
   const hatShelf = shelf(400, 112, 168, 2, [

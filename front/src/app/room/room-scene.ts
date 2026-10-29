@@ -144,7 +144,7 @@ export class RoomScene {
 
   /** Parallaxe : inclinaison (-1…1) donnée par la souris, ou par le téléphone quand l'orientation est disponible sans demande. */
   protected readonly tilt = signal({ x: 0, y: 0 });
-  private readonly reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  private readonly reduced = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
   constructor() {
     // iOS demande une autorisation (requestPermission) : sans elle on ne l'utilise pas ; ailleurs l'événement est libre
