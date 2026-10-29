@@ -270,7 +270,8 @@
                     />
                   }
                   @if (option.theme && option.theme === activeTheme()) {
-                    <span class="special" i18n="@@shop.special">Spécial {{ themeName() }}</span>
+                    <span class="special" aria-hidden="true" [title]="'✨ ' + themeName()">✨</span>
+                    <span class="sr" i18n="@@shop.special">Spécial {{ themeName() }}</span>
                   }
                   @if (!owned(option)) {
                     <span class="veil" aria-hidden="true"></span>

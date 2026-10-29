@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 8px 12px 12px;
+  padding: 8px 12px 0;
   box-sizing: border-box;
-  min-height: calc(100dvh - 64px);
+  // l'écran entier moins la barre du haut : ni la pièce ni le bouton ne font défiler la page
+  height: calc(100dvh - 64px);
 }
 
 .top {
@@ -38,8 +39,12 @@
 }
 
 .bottom {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
   display: flex;
   justify-content: center;
+  padding: 6px 0 calc(10px + env(safe-area-inset-bottom));
 }
 
 .save {
@@ -48,11 +53,20 @@
   font: var(--mat-sys-title-medium);
 }
 
-// La pièce garde ses proportions et tient dans la hauteur de l'écran ; le meuble ouvert se déplie sur un côté
+// La pièce garde ses proportions et tient dans la place restante ; le meuble ouvert se déplie sur un côté
 .stage {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  container-type: size;
+}
+
+.frame {
   position: relative;
-  width: min(100%, calc((100dvh - 150px) * 5 / 3));
-  margin: 0 auto;
+  flex: none;
+  width: min(100cqw, 100cqh * 1000 / 414);
 }
 
 .side {
@@ -107,4 +121,34 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+// Téléphone en portrait : la pièce est plus large que l'écran et défile sur le côté ; le meuble ouvert est un tiroir
+// qui monte du bas de l'écran, au-dessus du bouton Enregistrer
+@media (max-width: 599.98px) {
+  :host {
+    height: calc(100dvh - 56px);
+  }
+
+  .stage {
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-top: 6px;
+    scrollbar-width: none;
+  }
+
+  .frame {
+    width: 200cqw;
+  }
+
+  .side,
+  .side.left {
+    position: fixed;
+    inset: auto 8px calc(78px + env(safe-area-inset-bottom)) 8px;
+    width: auto;
+    height: 46dvh;
+    z-index: 4;
+  }
 }

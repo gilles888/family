@@ -176,15 +176,15 @@
   position: absolute;
   top: 3px;
   left: 3px;
-  right: 3px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 0 6px;
-  border-radius: 8px;
-  background: var(--mat-sys-tertiary);
-  color: var(--mat-sys-on-tertiary);
-  font: 700 10px / 16px Roboto;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--mat-sys-tertiary-container);
+  font-size: 13px;
+  line-height: 1;
+  box-shadow: var(--mat-sys-level1);
 }
 
 .sr {

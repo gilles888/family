@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +18,8 @@ import { ParticlesScope } from '../theme/season-particles';
 import { FurnitureId } from './room-model';
 import { FurniturePanel } from './furniture-panel';
 import { RoomScene, RoomSpot } from './room-scene';
+
+const reducedMotion = () => globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
 /** Meubles qui s'ouvrent (le dé et le livre sont des objets). */
 const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse', 'coffre', 'fenetre', 'tirelire', 'boutique'];
@@ -49,7 +51,8 @@ const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse',
       </button>
     </header>
 
-    <div class="stage" [class.has-panel]="!!open()">
+    <div class="stage" #stage [class.has-panel]="!!open()">
+      <div class="frame">
       <app-room-scene
         [config]="store.config()"
         [member]="member"
@@ -91,6 +94,7 @@ const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse',
           (dragState)="dragging.set($event)"
         />
       }
+      </div>
     </div>
 
     <footer class="bottom">
@@ -110,7 +114,10 @@ const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse',
   `,
   styleUrl: './room-view.scss',
 })
-export class RoomView {
+export class RoomView implements AfterViewInit {
+  private readonly stage = viewChild.required<ElementRef<HTMLElement>>('stage');
+  private readonly scene = viewChild.required(RoomScene);
+
   protected readonly store = inject(AvatarDressingStore);
   // les particules du thème restent dans la scène, pas dans les marges de la page
   private readonly releaseParticles = inject(ParticlesScope).hostParticles();
@@ -123,6 +130,24 @@ export class RoomView {
 
   /** Meuble ouvert (un seul à la fois). */
   protected readonly open = signal<FurnitureId | null>(null);
+
+  constructor() {
+    // téléphone : la pièce défile ; le meuble ouvert vient se placer au milieu
+    effect(() => {
+      const id = this.open();
+      const stage = this.stage().nativeElement;
+      if (id && stage.scrollWidth > stage.clientWidth) {
+        stage.scrollTo({ left: this.scene().centerOf(id) * stage.scrollWidth - stage.clientWidth / 2, behavior: reducedMotion() ? 'auto' : 'smooth' });
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    // au début, le personnage est au milieu de l'écran
+    const stage = this.stage().nativeElement;
+    stage.scrollLeft = (stage.scrollWidth - stage.clientWidth) / 2;
+  }
+
 
   /** Meubles sans rien dedans : grisés et fermés. */
   protected readonly emptyFurniture = computed(() => {

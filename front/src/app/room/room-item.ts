@@ -29,10 +29,14 @@ import { WardrobeOption } from '../avatar/avatar-wardrobe';
       } @else if (option().none) {
         <mat-icon class="no">block</mat-icon>
       } @else {
-        <app-avatar [config]="config()" [member]="member()" [size]="null" [round]="false" [viewBox]="viewBox()" label="" />
+        <app-avatar [config]="config()" [member]="member()" [size]="null" [round]="false" [bare]="true" [viewBox]="viewBox()" label="" />
       }
       @if (special()) {
-        <span class="special" i18n="@@shop.special">Spécial {{ themeName() }}</span>
+        <span class="special" aria-hidden="true" [title]="'✨ ' + themeName()">✨</span>
+        <span class="sr" i18n="@@shop.special">Spécial {{ themeName() }}</span>
+      }
+      @if (selected()) {
+        <span class="tick" aria-hidden="true"><mat-icon>check</mat-icon></span>
       }
       @if (!owned()) {
         <span class="veil" aria-hidden="true"></span>

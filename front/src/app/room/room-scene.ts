@@ -160,6 +160,12 @@ export class RoomScene {
     }
   }
 
+  /** Milieu d'un meuble, en fraction de la largeur de la pièce (pour le faire défiler au centre). */
+  centerOf(spot: RoomSpot): number {
+    const [x, , w] = this.model().spots[spot];
+    return (x + w / 2) / ROOM_W;
+  }
+
   protected onPointer(event: PointerEvent): void {
     if (this.reduced || event.pointerType !== 'mouse') {
       return;

@@ -5,7 +5,7 @@ import { SeasonId } from './seasons';
 
 type Animation = 'flocons' | 'feuilles' | 'confettis' | 'bulles';
 
-/** Animation de fond de chaque thème, en phase « jour J » (15 éléments au plus). */
+/** Animation de fond de chaque thème, en phase « jour J » (8 éléments, assez grands pour être reconnus). */
 const ANIMATIONS: Record<SeasonId, Animation> = {
   halloween: 'feuilles',
   'saint-nicolas': 'flocons',
@@ -20,7 +20,7 @@ const ANIMATIONS: Record<SeasonId, Animation> = {
   ete: 'bulles',
 };
 
-const NB_ELEMENTS = 15;
+const NB_ELEMENTS = 8;
 export const CONFETTIS = ['#ef5350', '#ffca28', '#66bb6a', '#42a5f5', '#ab47bc', '#ff7043'];
 export const PAR_DEFAUT = '#e91e63';
 
@@ -46,7 +46,7 @@ function elements(couleurs: string[] | null): Element[] {
     gauche: (i * 37 + 5) % 100,
     delai: -((i * 1.7) % 11),
     duree: 9 + ((i * 5) % 7),
-    taille: 8 + ((i * 3) % 9),
+    taille: 18 + ((i * 5) % 13),
     derive: ((i % 5) - 2) * 18,
     couleur: couleurs ? couleurs[i % couleurs.length] : null,
   }));
@@ -106,20 +106,32 @@ export class ParticlesScope {
     .element {
       position: absolute;
       top: 0;
-      opacity: 0.55;
+      opacity: 0.8;
       animation: chute linear infinite;
       will-change: transform;
     }
-    .flocons .element {
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--mat-sys-primary) 35%, white);
-    }
+    // flocons et feuilles : de vrais pictogrammes (la taille vient de la largeur de l'élément)
+    .flocons .element,
     .feuilles .element {
-      border-radius: 0 100% 0 100%;
-      background: color-mix(in srgb, var(--mat-sys-primary) 55%, transparent);
+      display: grid;
+      place-items: center;
+      font-size: 0;
+      container-type: size;
+      &::before {
+        font-size: 80cqh;
+        line-height: 1;
+      }
     }
-    .feuilles .element:nth-child(even) {
-      background: color-mix(in srgb, var(--mat-sys-tertiary) 55%, transparent);
+    .flocons .element::before {
+      content: '❄';
+      color: color-mix(in srgb, var(--mat-sys-primary) 30%, white);
+      text-shadow: 0 0 3px rgb(80 110 160 / 0.6);
+    }
+    .feuilles .element::before {
+      content: '🍂';
+    }
+    .feuilles .element:nth-child(even)::before {
+      content: '🍁';
     }
     .confettis .element {
       height: 0.9em;

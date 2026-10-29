@@ -86,6 +86,9 @@
 :host(.armoire) {
   background: #a9794a;
   color: #fff8e1;
+  // vignettes : fond de bois sombre veiné
+  --item-bg: #c99a63;
+  --item-grain: repeating-linear-gradient(90deg, rgb(120 70 30 / 0.12) 0 2px, transparent 2px 9px);
 
   .head {
     background: #8d6038;
@@ -120,6 +123,9 @@
 
 // ---------- commode : petites cases dans le tiroir
 :host(.commode) {
+  --item-bg: #f6e0b8;
+  --item-grain: repeating-linear-gradient(0deg, rgb(150 100 40 / 0.1) 0 2px, transparent 2px 8px);
+
   .shelf {
     padding: 8px;
     border-radius: 12px;
@@ -130,6 +136,9 @@
 
 // ---------- étagère à chapeaux : chapeaux accrochés à des patères
 :host(.chapeaux) {
+  --item-bg: #ead3b6;
+  --item-grain: repeating-linear-gradient(90deg, rgb(120 80 40 / 0.1) 0 2px, transparent 2px 10px);
+
   .shelf.pegs {
     padding-top: 16px;
     background: linear-gradient(#8d6e63, #8d6e63) 0 8px / 100% 8px no-repeat;
@@ -138,6 +147,9 @@
 
 // ---------- coiffeuse : miroir en gros plan, puis le plateau
 :host(.coiffeuse) {
+  --item-bg: #fbeee4;
+  --item-grain: repeating-linear-gradient(45deg, rgb(200 120 140 / 0.1) 0 3px, transparent 3px 10px);
+
   .mirror {
     width: min(100%, 170px);
     aspect-ratio: 0.8;
@@ -157,6 +169,9 @@
 
 // ---------- coffre à jouets : l'intérieur du coffre
 :host(.coffre) {
+  // tissu rayé du coffre
+  --item-bg: #f3c9c0;
+  --item-grain: repeating-linear-gradient(0deg, rgb(190 90 90 / 0.14) 0 3px, transparent 3px 7px), repeating-linear-gradient(90deg, rgb(190 90 90 / 0.1) 0 3px, transparent 3px 7px);
   border-color: #e57373;
   background: #d99a8a;
 
@@ -174,6 +189,7 @@
 
 // ---------- fenêtre : les paysages sur le rebord
 :host(.fenetre) {
+  --item-bg: #f7fbff;
   border-color: #fff;
   background: #bde3ff;
 
@@ -184,6 +200,7 @@
 
 // ---------- boutique : la pièce derrière la porte
 :host(.boutique) {
+  --item-bg: #ffffff;
   border-color: #80cbc4;
   background: #e0f2f1;
 
@@ -193,6 +210,7 @@
 }
 
 :host(.tirelire) {
+  --item-bg: #fff;
   background: #fce4ec;
   border-color: #f48fb1;
 
