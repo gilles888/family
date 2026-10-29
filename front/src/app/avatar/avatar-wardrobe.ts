@@ -46,6 +46,18 @@ export interface WardrobeOption {
   free?: boolean;
 }
 
+/** Champs qu'un déguisement remplace ou cache : sa vignette ne doit pas être recouverte par le déguisement en cours. */
+const HIDDEN_BY_COSTUME = new Set(['outfit', 'hair', 'hat']);
+
+/**
+ * Config de la vignette d'une option : le personnage actuel avec cette option. Pour un habit, une coiffure ou un chapeau,
+ * le déguisement en cours est retiré (sinon il recouvre l'article et toutes les vignettes deviennent identiques).
+ */
+export function previewOption(option: WardrobeOption, config: AvatarConfig): AvatarConfig {
+  const base = HIDDEN_BY_COSTUME.has(option.key.split(':')[0]) && config.costume && config.costume !== NONE ? { ...config, costume: NONE } : config;
+  return option.apply(base);
+}
+
 export interface WardrobeGroup {
   id: string;
   title: string;
