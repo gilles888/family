@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -32,4 +34,12 @@ public class FamilyMember {
      */
     @Column(name = "avatar_config", length = 4000)
     private String avatarConfig;
+
+    /** Facultative : sert à fêter l'anniversaire dans le thème de l'application. */
+    @Column(name = "date_naissance")
+    private LocalDate dateNaissance;
+
+    /** Porter automatiquement la tenue enregistrée pour le thème du moment (voir MemberOutfit). */
+    @Column(name = "tenue_auto", nullable = false)
+    private boolean tenueAuto = true;
 }

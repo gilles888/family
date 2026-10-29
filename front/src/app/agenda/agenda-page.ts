@@ -284,6 +284,8 @@ export class AgendaPage implements AgendaCardsContext {
           this.reloadAll();
         } else if (result === 'edit-reminder') {
           this.editReminder(entry.reminderId!);
+        } else if (result === 'delete-entry') {
+          this.deleteOccurrence(entry);
         } else if (result === 'delete-reminder') {
           this.deleteReminder(entry);
         }
@@ -296,6 +298,29 @@ export class AgendaPage implements AgendaCardsContext {
         this.openReminderDialog({ members: this.members.value() ?? [], reminder }),
       error: () => this.reloadAll(), // message déjà affiché par l'intercepteur ; le rappel a peut-être disparu
     });
+  }
+
+  /** Une seule occurrence : les autres occurrences du rappel restent (et ne la recréent pas). */
+  private deleteOccurrence(entry: AgendaEntryDTO): void {
+    this.dialog
+      .open(ConfirmDialog, {
+        data: {
+          title: $localize`:@@entry.deleteOccurrenceTitle:Supprimer cette occurrence ?`,
+          message: $localize`:@@entry.deleteOccurrenceMessage:Seule cette occurrence de « ${entry.titre}:title: » sera supprimée. Les autres occurrences restent dans l'agenda.`,
+          confirmLabel: $localize`:@@common.delete:Supprimer`,
+        },
+      })
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.agendaApi.deleteEntry(entry.id!).subscribe({
+            next: () => this.notifications.success($localize`:@@entry.occurrenceDeleted:Occurrence supprimée.`),
+            // Succès ou échec (ex. déjà supprimée ailleurs) : on rafraîchit l'agenda. L'erreur est affichée par l'intercepteur.
+            error: () => this.reloadAll(),
+            complete: () => this.reloadAll(),
+          });
+        }
+      });
   }
 
   private deleteReminder(entry: AgendaEntryDTO): void {

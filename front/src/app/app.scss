@@ -31,8 +31,14 @@ nav a.active {
 // Mobile : seule l'icône de l'application reste, les liens se resserrent (sinon la barre élargit la page)
 @media (max-width: 600px) {
   .header {
-    gap: 4px;
-    padding: 0 8px;
+    gap: 2px;
+    padding: 0 4px;
+  }
+
+  // Le pictogramme du thème se glisse dans la barre sans pousser les autres boutons
+  .season-picto {
+    width: 24px !important;
+    height: 24px !important;
   }
 
   .brand span {
@@ -70,8 +76,8 @@ nav a.active {
   }
 
   nav a {
-    min-width: 44px;
-    padding: 0 10px;
+    min-width: 42px;
+    padding: 0 9px;
   }
 }
 

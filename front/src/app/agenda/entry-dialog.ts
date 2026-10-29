@@ -18,9 +18,9 @@ export interface EntryDialogData {
 }
 
 /** Ce que la boîte de dialogue demande à la page de faire une fois fermée. */
-export type EntryDialogResult = 'saved' | 'edit-reminder' | 'delete-reminder';
+export type EntryDialogResult = 'saved' | 'edit-reminder' | 'delete-entry' | 'delete-reminder';
 
-/** Détail d'une occurrence + changement de son statut (PATCH /v1/agenda/entries/{id}). */
+/** Détail d'une occurrence : changement de son statut (PATCH /v1/agenda/entries/{id}), suppression de cette occurrence ou de toute la série. */
 @Component({
   selector: 'app-entry-dialog',
   imports: [DatePipe, FormsModule, MatDialogModule, MatButtonModule, MatButtonToggleModule, MatIconModule, EnumLabelPipe, Avatar],

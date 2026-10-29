@@ -16,28 +16,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoutineAccess {
 
     private final RoutineRepository routineRepository;
+    private final MemberAccess memberAccess;
 
     /** Routines du membre {@code memberId}. */
     public boolean member(Long memberId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (isParent(auth)) {
-            return true;
-        }
-        return auth != null && auth.getPrincipal() instanceof AccountPrincipal p && p.memberId() != null
-                && p.memberId().equals(memberId);
+        return memberAccess.member(memberId);
     }
 
     /** Routine {@code routineId} (inconnue = refusée pour un enfant). */
     @Transactional(readOnly = true)
     public boolean routine(Long routineId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (isParent(auth)) {
+        if (MemberAccess.isParent(auth)) {
             return true;
         }
         return routineRepository.findById(routineId).map(r -> member(r.getMember().getId())).orElse(false);
-    }
-
-    private static boolean isParent(Authentication auth) {
-        return auth != null && auth.getAuthorities().stream().anyMatch(a -> "ROLE_PARENT".equals(a.getAuthority()));
     }
 }

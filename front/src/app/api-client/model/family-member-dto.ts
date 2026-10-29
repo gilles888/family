@@ -20,5 +20,17 @@ export interface FamilyMemberDTO {
      * Personnage (avatar) : configuration libre du catalogue front, absente = avatar par défaut
      */
     avatarConfig?: { [key: string]: any | null; } | null;
+    /**
+     * Date de naissance (facultative)
+     */
+    dateNaissance?: string | null;
+    /**
+     * Porter automatiquement la tenue enregistrée pour le thème du moment
+     */
+    tenueAuto?: boolean;
+    /**
+     * Tenues de thème : config du personnage par thème (HALLOWEEN, NOEL…), absent = aucune
+     */
+    tenues?: { [key: string]: { [key: string]: any | null; }; };
 }
 

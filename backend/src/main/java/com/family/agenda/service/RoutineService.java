@@ -7,16 +7,19 @@ import com.family.agenda.dto.RoutineRunDTO;
 import com.family.agenda.dto.RoutineStepDTO;
 import com.family.agenda.dto.RoutineStepRequest;
 import com.family.agenda.dto.RoutineTemplateDTO;
+import com.family.agenda.dto.StarPenaltyDTO;
 import com.family.agenda.entity.FamilyMember;
 import com.family.agenda.entity.Routine;
 import com.family.agenda.entity.RoutineRun;
 import com.family.agenda.entity.RoutineStep;
+import com.family.agenda.entity.StarPenalty;
 import com.family.agenda.exception.BusinessRuleException;
 import com.family.agenda.exception.ConflictException;
 import com.family.agenda.exception.ResourceNotFoundException;
 import com.family.agenda.repository.FamilyMemberRepository;
 import com.family.agenda.repository.RoutineRepository;
 import com.family.agenda.repository.RoutineRunRepository;
+import com.family.agenda.repository.StarPenaltyRepository;
 import com.family.agenda.service.RoutineTemplates.Template;
 import com.family.agenda.service.RoutineTemplates.Text;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +60,7 @@ public class RoutineService {
     private final RoutineRepository repository;
     private final RoutineRunRepository runRepository;
     private final FamilyMemberRepository memberRepository;
+    private final StarPenaltyRepository penaltyRepository;
     private final Clock clock;
 
     // ---------- lecture
@@ -77,7 +81,10 @@ public class RoutineService {
         return toDto(routine, date, runRepository.findByRoutineIdAndDate(id, date).orElse(null));
     }
 
-    /** Routines terminées par jour, sur les {@code jours} derniers jours (aujourd'hui compris), du plus ancien au plus récent. */
+    /**
+     * Étoiles par jour, sur les {@code jours} derniers jours (aujourd'hui compris), du plus ancien au plus récent :
+     * une par routine terminée, moins celles retirées par un parent (gardées dans {@code retraits}).
+     */
     @Transactional(readOnly = true)
     public List<RoutineHistoryDTO> history(Long memberId, int jours) {
         loadMember(memberId);
@@ -88,7 +95,12 @@ public class RoutineService {
         debut.datesUntil(fin.plusDays(1)).forEach(d -> parJour.put(d, new ArrayList<>()));
         runRepository.findByRoutineIdInAndDateBetweenAndCompletedAtNotNull(ids, debut, fin)
                 .forEach(run -> parJour.get(run.getDate()).add(run.getRoutine().getId()));
-        return parJour.entrySet().stream().map(e -> new RoutineHistoryDTO(e.getKey(), e.getValue())).toList();
+        Map<LocalDate, List<StarPenaltyDTO>> retraits = penaltyRepository
+                .findByMemberIdAndDateBetweenOrderByDateAscIdAsc(memberId, debut, fin).stream()
+                .collect(Collectors.groupingBy(StarPenalty::getDate, Collectors.mapping(StarPenaltyService::toDto, Collectors.toList())));
+        return parJour.entrySet().stream()
+                .map(e -> new RoutineHistoryDTO(e.getKey(), e.getValue(), retraits.getOrDefault(e.getKey(), List.of())))
+                .toList();
     }
 
     // ---------- gestion (mode parent)

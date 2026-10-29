@@ -48,6 +48,7 @@
   </header>
 
   <div #body class="body">
+    <app-season-message />
     @if (rendered()) {
       @for (card of cards(); track card.id) {
         <section class="card" [id]="cardElementId(card.id)" [attr.aria-label]="card.title">

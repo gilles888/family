@@ -121,15 +121,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
-          <context context-type="linenumber">68,69</context>
+          <context context-type="linenumber">79,80</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">143,144</context>
+          <context context-type="linenumber">313,315</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">44,45</context>
+          <context context-type="linenumber">55,56</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
@@ -148,12 +148,32 @@
           <context context-type="linenumber">132,133</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">56,57</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/confirm-dialog.ts</context>
           <context context-type="linenumber">19,20</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
           <context context-type="linenumber">58,59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">129,131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="common.save" datatype="html">
@@ -168,15 +188,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
-          <context context-type="linenumber">69,71</context>
+          <context context-type="linenumber">80,82</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">146,147</context>
+          <context context-type="linenumber">323,324</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">45,46</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
@@ -191,12 +211,24 @@
           <context context-type="linenumber">162,163</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">104,105</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routine-editor-dialog.html</context>
           <context context-type="linenumber">133,134</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-item-dialog.ts</context>
           <context context-type="linenumber">59,60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
+          <context context-type="linenumber">37,39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">137,139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="accounts.saved" datatype="html">
@@ -284,7 +316,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">63,65</context>
+          <context context-type="linenumber">73,75</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-page.html</context>
@@ -367,7 +399,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
-          <context context-type="linenumber">39,40</context>
+          <context context-type="linenumber">42,43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/recipes/recipes-page.html</context>
@@ -565,33 +597,37 @@
           <context context-type="linenumber">114,115</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="reminder.deleteTitle" datatype="html">
-        <source>Supprimer le rappel ?</source>
+      <trans-unit id="entry.deleteOccurrenceTitle" datatype="html">
+        <source>Supprimer cette occurrence ?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">305</context>
+          <context context-type="linenumber">308</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="reminder.deleteMessage" datatype="html">
-        <source>« <x id="title" equiv-text="entry.titre"/> » sera supprimé ainsi que toutes ses occurrences à venir. Les occurrences passées restent dans l&apos;agenda.</source>
+      <trans-unit id="entry.deleteOccurrenceMessage" datatype="html">
+        <source>Seule cette occurrence de « <x id="title" equiv-text="entry.titre"/> » sera supprimée. Les autres occurrences restent dans l&apos;agenda.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">306</context>
+          <context context-type="linenumber">309</context>
         </context-group>
       </trans-unit>
       <trans-unit id="common.delete" datatype="html">
         <source>Supprimer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">307</context>
+          <context context-type="linenumber">310</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">332</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
-          <context context-type="linenumber">42,43</context>
+          <context context-type="linenumber">45,46</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">65</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
@@ -626,11 +662,32 @@
           <context context-type="linenumber">211,213</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="entry.occurrenceDeleted" datatype="html">
+        <source>Occurrence supprimée.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">317</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.deleteTitle" datatype="html">
+        <source>Supprimer le rappel ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">330</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="reminder.deleteMessage" datatype="html">
+        <source>« <x id="title" equiv-text="entry.titre"/> » sera supprimé ainsi que toutes ses occurrences à venir. Les occurrences passées restent dans l&apos;agenda.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
+          <context context-type="linenumber">331</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="reminder.deleted" datatype="html">
         <source>Rappel supprimé.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/agenda-page.ts</context>
-          <context context-type="linenumber">314</context>
+          <context context-type="linenumber">339</context>
         </context-group>
       </trans-unit>
       <trans-unit id="day.empty" datatype="html">
@@ -679,25 +736,39 @@
           <context context-type="linenumber">51,54</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="entry.deleteOccurrence" datatype="html">
+        <source>Supprimer cette occurrence</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">62,64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="entry.deleteSeries" datatype="html">
+        <source>Supprimer toute la série</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
+          <context context-type="linenumber">66,68</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="entry.deleteReminder" datatype="html">
         <source>Supprimer le rappel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
-          <context context-type="linenumber">61,63</context>
+          <context context-type="linenumber">71,73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="entry.editReminder" datatype="html">
         <source>Modifier le rappel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
-          <context context-type="linenumber">65,67</context>
+          <context context-type="linenumber">76,78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="common.close" datatype="html">
         <source>Fermer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/agenda/entry-dialog.html</context>
-          <context context-type="linenumber">72,74</context>
+          <context context-type="linenumber">83,85</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/recipes/recipe-sheet-dialog.html</context>
@@ -718,6 +789,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/notification.service.ts</context>
           <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">121,122</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/pantry-dialog.ts</context>
@@ -771,77 +846,91 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.agenda" datatype="html">
         <source>Agenda</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">10,12</context>
+          <context context-type="linenumber">14,16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.routines" datatype="html">
         <source>Routines</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">13,15</context>
+          <context context-type="linenumber">17,19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.recipes" datatype="html">
         <source>Recettes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">16,18</context>
+          <context context-type="linenumber">20,22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.shopping" datatype="html">
         <source>Courses</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">20,22</context>
+          <context context-type="linenumber">24,26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="nav.members" datatype="html">
         <source>Membres</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">23,25</context>
+          <context context-type="linenumber">27,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="app.language" datatype="html">
         <source>Langue</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">38,39</context>
+          <context context-type="linenumber">42,43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="menu.account" datatype="html">
         <source>Mon compte</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">45,46</context>
+          <context context-type="linenumber">49,50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="menu.changePassword" datatype="html">
         <source>Changer mon mot de passe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">56,58</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menu.familyTheme" datatype="html">
+        <source>Thème de la famille</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">65,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="menu.myTheme" datatype="html">
+        <source>Mon thème</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.html</context>
+          <context context-type="linenumber">71,73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="menu.accounts" datatype="html">
         <source>Comptes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">61,63</context>
+          <context context-type="linenumber">77,79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="menu.logout" datatype="html">
         <source>Se déconnecter</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.html</context>
-          <context context-type="linenumber">66,68</context>
+          <context context-type="linenumber">82,84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/auth/password-page.html</context>
@@ -1010,6 +1099,34 @@
           <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="shop.filter.all" datatype="html">
+        <source>Tout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-dressing-store.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.mine" datatype="html">
+        <source>À moi</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-dressing-store.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.shop" datatype="html">
+        <source>Boutique</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-dressing-store.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.theme" datatype="html">
+        <source>Spécial thème</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-dressing-store.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="avatarEditor.title" datatype="html">
         <source>Le personnage de <x id="INTERPOLATION" equiv-text="{{ member.nom }}"/></source>
         <context-group purpose="location">
@@ -1021,731 +1138,1532 @@
         <source>Surprise !</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">53,55</context>
+          <context context-type="linenumber">72,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.ideas" datatype="html">
+        <source>Idées pour <x id="INTERPOLATION" equiv-text="{{ themeName() }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">83,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.themeOutfits" datatype="html">
+        <source>Mes tenues de thème</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">94,96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitTheme" datatype="html">
+        <source>Thème</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">126,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitTry" datatype="html">
+        <source> Essayer </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">143,145</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitRemove" datatype="html">
+        <source> Supprimer </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">151,153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitSave" datatype="html">
+        <source>Enregistrer ma tenue <x id="INTERPOLATION" equiv-text="{{ themeLabel() }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">162,163</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitMissing" datatype="html">
+        <source> Achète d&apos;abord les articles à essayer. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">167,170</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatarEditor.outfitAuto" datatype="html">
+        <source> Porter automatiquement ma tenue de thème </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">175,177</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.dropToRemove" datatype="html">
         <source>Lâche ici pour l&apos;enlever</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">59,61</context>
+          <context context-type="linenumber">183,187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatarEditor.wardrobe" datatype="html">
         <source>Garde-robe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
-          <context context-type="linenumber">61,62</context>
+          <context context-type="linenumber">189,191</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.label" datatype="html">
+        <source>Filtrer les articles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">210,212</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.filter.empty" datatype="html">
+        <source>Rien ici pour le moment.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">228,230</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/furniture-panel.ts</context>
+          <context context-type="linenumber">77,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.special" datatype="html">
+        <source>Spécial <x id="INTERPOLATION" equiv-text="{{ themeName() }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">274,275</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-item.ts</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.notOwned" datatype="html">
+        <source>À acheter : <x id="INTERPOLATION" equiv-text="{{ price(option) }}"/> 🪙</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">281,282</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-item.ts</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.giftAndSave" datatype="html">
+        <source>Offrir et enregistrer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">325,326</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.buyFor" datatype="html">
+        <source>Acheter pour <x id="INTERPOLATION" equiv-text="{{ totalPrice() }}"/> 🪙</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">327,328</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">108,109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shop.lacking" datatype="html">
+        <source>Il te manque <x id="INTERPOLATION" equiv-text="{{ lacking() }}"/> 🪙</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-editor.html</context>
+          <context context-type="linenumber">329,330</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">110,111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.tshirt" datatype="html">
+        <source>T-shirt</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.sweater" datatype="html">
+        <source>Pull</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.hoodie" datatype="html">
+        <source>Sweat à capuche</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.shirt" datatype="html">
+        <source>Chemise</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.dress" datatype="html">
+        <source>Robe</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.overalls" datatype="html">
+        <source>Salopette</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.jersey" datatype="html">
+        <source>Maillot de sport</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.hero" datatype="html">
+        <source>Costume de super-héros</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.xmasSweater" datatype="html">
+        <source>Pull de Noël</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.swimsuit" datatype="html">
+        <source>Maillot de bain</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">168</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.hawaii" datatype="html">
+        <source>Chemise hawaïenne</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">179</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.raincoat" datatype="html">
+        <source>Imperméable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">197</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.outfit.puffer" datatype="html">
+        <source>Doudoune</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-outfits.ts</context>
+          <context context-type="linenumber">214</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.pyjama" datatype="html">
+        <source>Pyjama étoilé</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.witch" datatype="html">
+        <source>Sorcière</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.ghost" datatype="html">
+        <source>Fantôme</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.skeleton" datatype="html">
+        <source>Squelette</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.pumpkin" datatype="html">
+        <source>Citrouille</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.vampire" datatype="html">
+        <source>Vampire</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.santa" datatype="html">
+        <source>Père Noël</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.elf" datatype="html">
+        <source>Lutin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.tree" datatype="html">
+        <source>Sapin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.snowman" datatype="html">
+        <source>Bonhomme de neige</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">160</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.clown" datatype="html">
+        <source>Clown</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">176</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.pirate" datatype="html">
+        <source>Pirate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">194</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.knight" datatype="html">
+        <source>Chevalier</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">211</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.princess" datatype="html">
+        <source>Princesse</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">225</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.hero" datatype="html">
+        <source>Super-héros</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">239</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.dino" datatype="html">
+        <source>Dinosaure</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">257</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.unicorn" datatype="html">
+        <source>Licorne</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">274</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.bunny" datatype="html">
+        <source>Lapin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">295</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.astronaut" datatype="html">
+        <source>Astronaute</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">310</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.firefighter" datatype="html">
+        <source>Pompier</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">324</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.doctor" datatype="html">
+        <source>Docteur</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">338</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.chef" datatype="html">
+        <source>Cuisinier</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">352</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.football" datatype="html">
+        <source>Footballeur</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">366</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.face.none" datatype="html">
+        <source>Pas de maquillage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">383</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.face.freckles" datatype="html">
+        <source>Taches de rousseur</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">390</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.face.pumpkin" datatype="html">
+        <source>Maquillage citrouille</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">409</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.face.cat" datatype="html">
+        <source>Moustaches de chat</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">425</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.face.reindeer" datatype="html">
+        <source>Nez rouge de renne</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">439</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.face.clownNose" datatype="html">
+        <source>Nez de clown</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">447</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.face.heroMask" datatype="html">
+        <source>Masque de super-héros</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">460</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.face.venetian" datatype="html">
+        <source>Loup vénitien</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">474</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.face.butterfly" datatype="html">
+        <source>Maquillage papillon</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">491</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.back.none" datatype="html">
+        <source>Rien dans le dos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">512</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.back.capePlain" datatype="html">
+        <source>Cape bleue</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">519</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.back.batWings" datatype="html">
+        <source>Ailes de chauve-souris</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">527</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.back.heroCape" datatype="html">
+        <source>Cape de héros</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">535</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.back.fairyWings" datatype="html">
+        <source>Ailes de fée</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">543</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.back.butterflyWings" datatype="html">
+        <source>Ailes de papillon</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">551</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.back.backpack" datatype="html">
+        <source>Sac à dos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">559</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.none" datatype="html">
+        <source>Rien dans la main</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">575</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.flower" datatype="html">
+        <source>Fleur</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">582</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.lantern" datatype="html">
+        <source>Citrouille-lanterne</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">602</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.broom" datatype="html">
+        <source>Balai de sorcière</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">618</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.candyBucket" datatype="html">
+        <source>Seau de bonbons</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">630</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.candycane" datatype="html">
+        <source>Sucre d&apos;orge</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">645</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.gift" datatype="html">
+        <source>Cadeau</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">663</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.speculoos" datatype="html">
+        <source>Spéculoos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">676</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.wand" datatype="html">
+        <source>Baguette magique</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">690</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.foamSword" datatype="html">
+        <source>Épée en mousse</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">703</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.streamers" datatype="html">
+        <source>Serpentins</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">715</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.eggBasket" datatype="html">
+        <source>Panier d&apos;œufs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">733</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.wateringCan" datatype="html">
+        <source>Arrosoir</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">748</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.icecream" datatype="html">
+        <source>Glace</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">761</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.float" datatype="html">
+        <source>Bouée</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">774</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.bucketSpade" datatype="html">
+        <source>Pelle et seau</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">791</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.bigPencil" datatype="html">
+        <source>Crayon géant</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">805</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.book" datatype="html">
+        <source>Livre</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">819</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.umbrella" datatype="html">
+        <source>Parapluie</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">832</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.mapleLeaf" datatype="html">
+        <source>Feuille d&apos;érable</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">850</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.hotChocolate" datatype="html">
+        <source>Tasse de chocolat chaud</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">865</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.balloon" datatype="html">
+        <source>Ballon</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">882</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.held.cake" datatype="html">
+        <source>Part de gâteau</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">895</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.witch" datatype="html">
+        <source>Chapeau de sorcière</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">921</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.santa" datatype="html">
+        <source>Bonnet de Noël</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">934</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.antlers" datatype="html">
+        <source>Serre-tête de renne</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">949</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.bunnyEars" datatype="html">
+        <source>Oreilles de lapin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">961</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.flowerCrown" datatype="html">
+        <source>Couronne de fleurs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">975</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.straw" datatype="html">
+        <source>Chapeau de paille</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">993</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.beach" datatype="html">
+        <source>Bob de plage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1005</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.schoolCap" datatype="html">
+        <source>Casquette d&apos;écolier</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1017</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.pompom" datatype="html">
+        <source>Bonnet à pompon</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1030</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.earmuffs" datatype="html">
+        <source>Cache-oreilles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1043</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.party" datatype="html">
+        <source>Chapeau pointu de fête</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1057</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hat.cakeCrown" datatype="html">
+        <source>Couronne gâteau</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1075</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.accessory.divingMask" datatype="html">
+        <source>Masque de plongée</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1095</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.accessory.longScarf" datatype="html">
+        <source>Écharpe longue</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.braids" datatype="html">
+        <source>Tresses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1135</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.doubleBuns" datatype="html">
+        <source>Double chignon</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1152</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.hair.spikes" datatype="html">
+        <source>Cheveux en pics</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1165</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.forest" datatype="html">
+        <source>Forêt</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1177</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.snow" datatype="html">
+        <source>Neige</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1184</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.beach" datatype="html">
+        <source>Plage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1192</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.bg.space" datatype="html">
+        <source>Espace</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts-extra.ts</context>
+          <context context-type="linenumber">1200</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.skin.1" datatype="html">
         <source>Teint très clair</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.skin.2" datatype="html">
         <source>Teint clair</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.skin.3" datatype="html">
         <source>Teint doré</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.skin.4" datatype="html">
         <source>Teint mat</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.skin.5" datatype="html">
         <source>Teint foncé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.skin.6" datatype="html">
         <source>Teint très foncé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyeColor.black" datatype="html">
         <source>Yeux noirs</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyeColor.brown" datatype="html">
         <source>Yeux bruns</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyeColor.hazel" datatype="html">
         <source>Yeux noisette</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyeColor.green" datatype="html">
         <source>Yeux verts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyeColor.blue" datatype="html">
         <source>Yeux bleus</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyeColor.grey" datatype="html">
         <source>Yeux gris</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyes.round" datatype="html">
         <source>Yeux ronds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyes.happy" datatype="html">
         <source>Yeux rieurs</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyes.wink" datatype="html">
         <source>Clin d&apos;œil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyes.surprised" datatype="html">
         <source>Yeux étonnés</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.eyes.sleepy" datatype="html">
         <source>Yeux endormis</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.mouth.smile" datatype="html">
         <source>Sourire</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.mouth.grin" datatype="html">
         <source>Grand sourire</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.mouth.tongue" datatype="html">
         <source>Langue tirée</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">162</context>
+          <context context-type="linenumber">148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.mouth.o" datatype="html">
         <source>Bouche en « o »</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">158</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.mouth.neutral" datatype="html">
         <source>Neutre</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.short" datatype="html">
         <source>Court</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">182</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.long" datatype="html">
         <source>Long</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">185</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.curly" datatype="html">
         <source>Bouclés</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.pigtails" datatype="html">
         <source>Couettes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">215</context>
+          <context context-type="linenumber">220</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.bun" datatype="html">
         <source>Chignon</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">226</context>
+          <context context-type="linenumber">233</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.mohawk" datatype="html">
         <source>Crête</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">232</context>
+          <context context-type="linenumber">244</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.bald" datatype="html">
         <source>Chauve</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">238</context>
+          <context context-type="linenumber">253</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.afro" datatype="html">
         <source>Afro</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">244</context>
+          <context context-type="linenumber">259</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.fringe" datatype="html">
         <source>Frange</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">251</context>
+          <context context-type="linenumber">270</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hair.ponytail" datatype="html">
         <source>Queue de cheval</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">258</context>
+          <context context-type="linenumber">285</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.black" datatype="html">
         <source>Noir</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">265</context>
+          <context context-type="linenumber">294</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.brown" datatype="html">
         <source>Brun</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">266</context>
+          <context context-type="linenumber">295</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.chestnut" datatype="html">
         <source>Châtain</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">267</context>
+          <context context-type="linenumber">296</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.blond" datatype="html">
         <source>Blond</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">268</context>
+          <context context-type="linenumber">297</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.ginger" datatype="html">
         <source>Roux</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">269</context>
+          <context context-type="linenumber">298</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.grey" datatype="html">
         <source>Gris</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">270</context>
+          <context context-type="linenumber">299</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">377</context>
+          <context context-type="linenumber">322</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.blue" datatype="html">
         <source>Bleu</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">271</context>
+          <context context-type="linenumber">300</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">369</context>
+          <context context-type="linenumber">314</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.pink" datatype="html">
         <source>Rose</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">272</context>
+          <context context-type="linenumber">301</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">374</context>
+          <context context-type="linenumber">319</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.green" datatype="html">
         <source>Vert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">273</context>
+          <context context-type="linenumber">302</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">371</context>
+          <context context-type="linenumber">316</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.purple" datatype="html">
         <source>Violet</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">274</context>
+          <context context-type="linenumber">303</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">373</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="avatar.outfit.tshirt" datatype="html">
-        <source>T-shirt</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">286</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="avatar.outfit.sweater" datatype="html">
-        <source>Pull</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">293</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="avatar.outfit.hoodie" datatype="html">
-        <source>Sweat à capuche</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">300</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="avatar.outfit.shirt" datatype="html">
-        <source>Chemise</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">311</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="avatar.outfit.dress" datatype="html">
-        <source>Robe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
           <context context-type="linenumber">318</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="avatar.outfit.overalls" datatype="html">
-        <source>Salopette</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">336</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="avatar.outfit.jersey" datatype="html">
-        <source>Maillot de sport</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">350</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="avatar.outfit.hero" datatype="html">
-        <source>Costume de super-héros</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">357</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.red" datatype="html">
         <source>Rouge</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">370</context>
+          <context context-type="linenumber">315</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.yellow" datatype="html">
         <source>Jaune</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">372</context>
+          <context context-type="linenumber">317</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.orange" datatype="html">
         <source>Orange</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">375</context>
+          <context context-type="linenumber">320</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.turquoise" datatype="html">
         <source>Turquoise</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">376</context>
+          <context context-type="linenumber">321</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.color.navy" datatype="html">
         <source>Bleu marine</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">378</context>
+          <context context-type="linenumber">323</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hat.none" datatype="html">
         <source>Pas de chapeau</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">384</context>
+          <context context-type="linenumber">329</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hat.cap" datatype="html">
         <source>Casquette</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">388</context>
+          <context context-type="linenumber">333</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hat.beanie" datatype="html">
         <source>Bonnet</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">398</context>
+          <context context-type="linenumber">343</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hat.pirate" datatype="html">
         <source>Chapeau de pirate</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">404</context>
+          <context context-type="linenumber">353</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hat.crown" datatype="html">
         <source>Couronne</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">416</context>
+          <context context-type="linenumber">365</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hat.wizard" datatype="html">
         <source>Chapeau de sorcier</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">428</context>
+          <context context-type="linenumber">377</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hat.hardhat" datatype="html">
         <source>Casque de chantier</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">440</context>
+          <context context-type="linenumber">389</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hat.bob" datatype="html">
         <source>Bob</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">446</context>
+          <context context-type="linenumber">399</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.hat.cowboy" datatype="html">
         <source>Chapeau de cow-boy</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">452</context>
+          <context context-type="linenumber">408</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.accessory.none" datatype="html">
         <source>Pas d&apos;accessoire</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">464</context>
+          <context context-type="linenumber">426</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.accessory.glasses" datatype="html">
         <source>Lunettes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">469</context>
+          <context context-type="linenumber">433</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.accessory.sunglasses" datatype="html">
         <source>Lunettes de soleil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">484</context>
+          <context context-type="linenumber">448</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.accessory.bowtie" datatype="html">
         <source>Nœud papillon</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">499</context>
+          <context context-type="linenumber">463</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.accessory.scarf" datatype="html">
         <source>Écharpe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">506</context>
+          <context context-type="linenumber">474</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.accessory.earrings" datatype="html">
         <source>Boucles d&apos;oreille</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">519</context>
+          <context context-type="linenumber">487</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.lemon" datatype="html">
         <source>Citron</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">527</context>
+          <context context-type="linenumber">500</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.sky" datatype="html">
         <source>Ciel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">528</context>
+          <context context-type="linenumber">501</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.mint" datatype="html">
         <source>Menthe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">529</context>
+          <context context-type="linenumber">502</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.candy" datatype="html">
         <source>Bonbon</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">530</context>
+          <context context-type="linenumber">503</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.lavender" datatype="html">
         <source>Lavande</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">531</context>
+          <context context-type="linenumber">504</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.apricot" datatype="html">
         <source>Abricot</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">532</context>
+          <context context-type="linenumber">505</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.pearl" datatype="html">
         <source>Perle</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">533</context>
+          <context context-type="linenumber">506</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.lagoon" datatype="html">
         <source>Lagon</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">534</context>
+          <context context-type="linenumber">507</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.sunset" datatype="html">
         <source>Coucher de soleil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">538</context>
+          <context context-type="linenumber">513</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.ocean" datatype="html">
         <source>Océan</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">539</context>
+          <context context-type="linenumber">517</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.meadow" datatype="html">
         <source>Prairie</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">540</context>
+          <context context-type="linenumber">520</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.bg.galaxy" datatype="html">
         <source>Galaxie</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
-          <context context-type="linenumber">541</context>
+          <context context-type="linenumber">526</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.costume.none" datatype="html">
+        <source>Pas de déguisement</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-parts.ts</context>
+          <context context-type="linenumber">568</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.cat.face" datatype="html">
         <source>Visage</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.skin" datatype="html">
         <source>Teint</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.eyes" datatype="html">
         <source>Yeux</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.eyeColor" datatype="html">
         <source>Couleur des yeux</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.mouth" datatype="html">
         <source>Bouche</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.group.makeup" datatype="html">
+        <source>Maquillage et masques</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
+          <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.cat.hair" datatype="html">
         <source>Cheveux</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.hairStyle" datatype="html">
         <source>Coiffure</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.color" datatype="html">
         <source>Couleur</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">158</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.cat.outfit" datatype="html">
         <source>Habits</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">166</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.outfit" datatype="html">
         <source>Habit</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">171</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.cat.costume" datatype="html">
+        <source>Déguisements</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
+          <context context-type="linenumber">186</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.group.costume" datatype="html">
+        <source>Déguisement</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
+          <context context-type="linenumber">191</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.cat.hat" datatype="html">
         <source>Chapeau</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.hat" datatype="html">
         <source>Chapeau</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">205</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.cat.accessory" datatype="html">
         <source>Accessoires</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">214</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.accessory" datatype="html">
         <source>Accessoire</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">219</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.cat.back" datatype="html">
+        <source>Dos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
+          <context context-type="linenumber">228</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.group.back" datatype="html">
+        <source>Cape, ailes, sac</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
+          <context context-type="linenumber">233</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.cat.held" datatype="html">
+        <source>Objets</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
+          <context context-type="linenumber">242</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="avatar.group.held" datatype="html">
+        <source>Objet tenu</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
+          <context context-type="linenumber">247</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.cat.background" datatype="html">
         <source>Fond</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">256</context>
         </context-group>
       </trans-unit>
       <trans-unit id="avatar.group.background" datatype="html">
         <source>Fond</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/avatar/avatar-wardrobe.ts</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">261</context>
         </context-group>
       </trans-unit>
       <trans-unit id="shoppingCard.title" datatype="html">
@@ -1840,14 +2758,14 @@
         <source>Ouvrir le tableau de bord</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dashboard/mobile-page.ts</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="mobile.close" datatype="html">
         <source>Fermer le tableau de bord</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dashboard/mobile-page.ts</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="members.title" datatype="html">
@@ -1892,60 +2810,67 @@
           <context context-type="linenumber">33,34</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="members.shop" datatype="html">
+        <source>Boutique</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="members.routines" datatype="html">
         <source>Routines</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.html</context>
-          <context context-type="linenumber">36,37</context>
+          <context context-type="linenumber">39,40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.deleteTitle" datatype="html">
         <source>Supprimer ce membre ?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.deleteMessage" datatype="html">
         <source>« <x id="name" equiv-text="member.nom"/> » sera retiré de tous ses rappels. Les rappels et leurs occurrences sont conservés.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.deleted" datatype="html">
         <source>Membre supprimé.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/family-members-page.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.editTitle" datatype="html">
         <source>Modifier le membre</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">24,25</context>
+          <context context-type="linenumber">26,27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.createTitle" datatype="html">
         <source>Nouveau membre</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">26,28</context>
+          <context context-type="linenumber">28,30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.name" datatype="html">
         <source>Nom</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">32,33</context>
+          <context context-type="linenumber">34,35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="form.required" datatype="html">
         <source>Ce champ est obligatoire.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">35,37</context>
+          <context context-type="linenumber">37,39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/meals/meal-dialog.html</context>
@@ -1960,18 +2885,32 @@
           <context context-type="linenumber">21,23</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="member.birthDate" datatype="html">
+        <source>Date de naissance</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="member.birthDateInvalid" datatype="html">
+        <source>Date invalide ou dans le futur.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
+          <context context-type="linenumber">46,48</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="member.color" datatype="html">
         <source>Couleur</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">39,40</context>
+          <context context-type="linenumber">50,51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="member.saved" datatype="html">
         <source>Membre enregistré.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/family-members/member-dialog.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="game.stars.field" datatype="html">
@@ -2773,6 +3712,125 @@
           <context context-type="linenumber">206</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="room.close" datatype="html">
+        <source>Fermer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/furniture-panel.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.armoire" datatype="html">
+        <source>Armoire : tenues et déguisements</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.commode" datatype="html">
+        <source>Commode : accessoires, maquillage et dos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.chapeaux" datatype="html">
+        <source>Étagère : chapeaux</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.coiffeuse" datatype="html">
+        <source>Coiffeuse : coiffure, visage et yeux</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.coffre" datatype="html">
+        <source>Coffre à jouets : objets</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.fenetre" datatype="html">
+        <source>Fenêtre : le paysage du fond</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.tirelire" datatype="html">
+        <source>Tirelire : étoiles et pièces</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.boutique" datatype="html">
+        <source>Boutique : articles à acheter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.de" datatype="html">
+        <source>Surprise !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.livre" datatype="html">
+        <source>Idées de thème</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-scene.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.back" datatype="html">
+        <source>Retour</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.title" datatype="html">
+        <source>La chambre de <x id="INTERPOLATION" equiv-text="{{ member.nom }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.simpleMode" datatype="html">
+        <source>Mode simple</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.remove" datatype="html">
+        <source>Enlever…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.removeOne" datatype="html">
+        <source>Enlever : <x id="INTERPOLATION" equiv-text="{{ wornLabel(w.field) }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="room.saved" datatype="html">
+        <source>Personnage enregistré.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/room/room-view.ts</context>
+          <context context-type="linenumber">243</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="memberRoutines.title" datatype="html">
         <source>Routines de <x id="INTERPOLATION" equiv-text="{{ member.nom }}"/></source>
         <context-group purpose="location">
@@ -3057,18 +4115,85 @@
           <context context-type="linenumber">127,129</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routineHistory.mine" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {étoile} other {étoiles}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.lostLabel" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {étoile retirée} other {étoiles retirées}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">50,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.detail" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ stats().gagnees }}"/> gagnées depuis le début</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.converted" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ stats().converties }}"/> échangées contre des pièces</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routineHistory.title" datatype="html">
         <source>Mes 14 derniers jours</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
-          <context context-type="linenumber">23,25</context>
+          <context context-type="linenumber">59,61</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="routineHistory.total" datatype="html">
-        <source>{VAR_PLURAL, plural, =0 {Pas encore d&apos;étoile : à toi de jouer !} =1 {1 étoile gagnée} other {<x id="INTERPOLATION"/> étoiles gagnées}}</source>
+      <trans-unit id="routineHistory.take" datatype="html">
+        <source>Retirer des étoiles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
-          <context context-type="linenumber">42,47</context>
+          <context context-type="linenumber">84,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelPenalty" datatype="html">
+        <source>Annuler ce retrait</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">92,93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelTitle" datatype="html">
+        <source>Annuler ce retrait ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">291</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelMessage" datatype="html">
+        <source>Les étoiles retirées sont rendues.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">292</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelConfirm" datatype="html">
+        <source>Annuler le retrait</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">293</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="routineHistory.cancelled" datatype="html">
+        <source>Retrait annulé.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-history.ts</context>
+          <context context-type="linenumber">300</context>
         </context-group>
       </trans-unit>
       <trans-unit id="routineIcon.wakeUp" datatype="html">
@@ -3288,6 +4413,41 @@
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="penalty.reason.task" datatype="html">
+        <source>Tâche non faite</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason.behaviour" datatype="html">
+        <source>Mauvais comportement</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason.quarrel" datatype="html">
+        <source>Dispute</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason.rudeness" datatype="html">
+        <source>Impolitesse</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason.other" datatype="html">
+        <source>Autre</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routine-labels.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="memberRoutines.create" datatype="html">
         <source>Nouvelle routine</source>
         <context-group purpose="location">
@@ -3338,7 +4498,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">62,63</context>
+          <context context-type="linenumber">72,73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="memberRoutines.added" datatype="html">
@@ -3426,11 +4586,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">50,51</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">52,54</context>
+          <context context-type="linenumber">58,60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="routines.changePerson" datatype="html">
@@ -3440,11 +4600,81 @@
           <context context-type="linenumber">25,27</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="routines.myCharacter" datatype="html">
+        <source>Mon personnage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/routines-page.html</context>
+          <context context-type="linenumber">45,47</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="routines.none" datatype="html">
         <source>Pas de routine aujourd&apos;hui. Profite bien ! 🎈</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routines/routines-page.html</context>
-          <context context-type="linenumber">66,68</context>
+          <context context-type="linenumber">76,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.title" datatype="html">
+        <source>Retirer des étoiles à <x id="INTERPOLATION" equiv-text="{{ data.memberName }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.count" datatype="html">
+        <source>Nombre d&apos;étoiles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.countInvalid" datatype="html">
+        <source>Entre 1 et 50.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">31,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.reason" datatype="html">
+        <source>Motif</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.comment" datatype="html">
+        <source>Commentaire</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.commentRequired" datatype="html">
+        <source>Obligatoire pour le motif « Autre ».</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">48,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.commentMissing" datatype="html">
+        <source>Explique pourquoi.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">51,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.submit" datatype="html">
+        <source>Retirer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="penalty.done" datatype="html">
+        <source>Étoiles retirées.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routines/star-penalty-dialog.ts</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="error.forbidden" datatype="html">
@@ -3493,252 +4723,578 @@
         <source>Sport</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="type.testMedical" datatype="html">
         <source>Test médical</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="type.rendezVous" datatype="html">
         <source>Rendez-vous</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="type.autre" datatype="html">
         <source>Autre</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.prevu" datatype="html">
         <source>Prévu</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.complete" datatype="html">
         <source>Terminé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.annule" datatype="html">
         <source>Annulé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="status.deplace" datatype="html">
         <source>Déplacé</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="status.supprime" datatype="html">
+        <source>Supprimé</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/labels.ts</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.daily" datatype="html">
         <source>Tous les jours</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.weekly" datatype="html">
         <source>Toutes les semaines</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.monthly" datatype="html">
         <source>Tous les mois</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="frequency.yearly" datatype="html">
         <source>Tous les ans</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.g" datatype="html">
         <source>g</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.kg" datatype="html">
         <source>kg</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.ml" datatype="html">
         <source>ml</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.l" datatype="html">
         <source>l</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.piece" datatype="html">
         <source>pièce(s)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.cuillereSoupe" datatype="html">
         <source>c. à soupe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.cuillereCafe" datatype="html">
         <source>c. à café</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.boite" datatype="html">
         <source>boîte(s)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.sachet" datatype="html">
         <source>sachet(s)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="unit.pincee" datatype="html">
         <source>pincée(s)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.petitDejeuner" datatype="html">
         <source>Petit-déjeuner</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.midi" datatype="html">
         <source>Midi</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.souper" datatype="html">
         <source>Souper</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.short.petitDejeuner" datatype="html">
         <source>Matin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.short.midi" datatype="html">
         <source>Midi</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slot.short.souper" datatype="html">
         <source>Soir</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aisle.fruitsLegumes" datatype="html">
         <source>Fruits et légumes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aisle.boucheriePoissonnerie" datatype="html">
         <source>Boucherie, poissonnerie</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aisle.cremerie" datatype="html">
         <source>Crèmerie</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aisle.epicerie" datatype="html">
         <source>Épicerie</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aisle.surgeles" datatype="html">
         <source>Surgelés</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aisle.boulangerie" datatype="html">
         <source>Boulangerie</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aisle.boissons" datatype="html">
         <source>Boissons</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aisle.autre" datatype="html">
         <source>Autres rayons</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/labels.ts</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.title" datatype="html">
+        <source>On l&apos;achète ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">27,28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.balance" datatype="html">
+        <source>Tu as 🪙 <x id="INTERPOLATION" equiv-text="{{ before }}"/> → il te restera 🪙 <x id="INTERPOLATION_1" equiv-text="{{ before - total }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.confirm" datatype="html">
+        <source>Acheter pour <x id="INTERPOLATION" equiv-text="{{ total }}"/> 🪙</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.bravo" datatype="html">
+        <source>Bravo ! C&apos;est à toi !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buy.close" datatype="html">
+        <source>Super !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/buy-dialog.ts</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.title" datatype="html">
+        <source>Échanger des étoiles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.rate" datatype="html">
+        <source>1 🪙 = <x id="INTERPOLATION" equiv-text="{{ shop.rate() }}"/> ⭐</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.less" datatype="html">
+        <source>Moins</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.more" datatype="html">
+        <source>Plus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.cost" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ count() * shop.rate() }}"/> ⭐ → <x id="INTERPOLATION_1" equiv-text="{{ count() }}"/> 🪙</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.after" datatype="html">
+        <source>Il te restera <x id="INTERPOLATION" equiv-text="{{ shop.stars() - count() * shop.rate() }}"/> ⭐</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="exchange.confirm" datatype="html">
+        <source>Échanger</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/exchange-dialog.ts</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.stars" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {étoile disponible} other {étoiles disponibles}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.coins" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {pièce d&apos;or} other {pièces d&apos;or}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.exchange" datatype="html">
+        <source>Échanger <x id="INTERPOLATION" equiv-text="{{ shop().rate() }}"/> ⭐ → 1 🪙</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.remaining" datatype="html">
+        <source>Encore <x id="INTERPOLATION" equiv-text="{{ missing() }}"/> ⭐ pour gagner une pièce !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="piggy.starsTitle" datatype="html">
+        <source>Étoiles disponibles : <x id="count" equiv-text="this.shop().stars()"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/piggy-bank.ts</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.exchange" datatype="html">
+        <source>Échange d&apos;étoiles</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.purchase" datatype="html">
+        <source>Achat</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.gift" datatype="html">
+        <source>Cadeau</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.refund" datatype="html">
+        <source>Remboursement</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.type.adjustment" datatype="html">
+        <source>Ajustement</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.title" datatype="html">
+        <source>Boutique de <x id="INTERPOLATION" equiv-text="{{ data.member.nom }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.converted" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ shop.wallet()?.etoilesConverties ?? 0 }}"/> ⭐ déjà échangées</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">44,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.rate" datatype="html">
+        <source>Étoiles par pièce (pour toute la famille)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">48,49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.rateLabel" datatype="html">
+        <source>Étoiles pour 1 pièce</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.rateSave" datatype="html">
+        <source>Enregistrer le taux</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">54,56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.gift" datatype="html">
+        <source>Offrir un article</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.article" datatype="html">
+        <source>Article</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">62,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.giftButton" datatype="html">
+        <source>Offrir</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">69,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjust" datatype="html">
+        <source>Ajuster les pièces</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjustPieces" datatype="html">
+        <source>Pièces (+ ou −)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjustReason" datatype="html">
+        <source>Motif (obligatoire)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">81,82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjustButton" datatype="html">
+        <source>Ajuster</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">84,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.owned" datatype="html">
+        <source>Articles achetés ou offerts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">89,90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.noItems" datatype="html">
+        <source>Aucun pour le moment.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">91,93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.refund" datatype="html">
+        <source>Rembourser</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">98,100</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">264</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.history" datatype="html">
+        <source>Historique</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">105,106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.noHistory" datatype="html">
+        <source>Aucun mouvement.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">107,109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.rateSaved" datatype="html">
+        <source>Taux enregistré.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">236</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.gifted" datatype="html">
+        <source>Article offert.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">243</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.adjusted" datatype="html">
+        <source>Pièces ajustées.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">251</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.refundTitle" datatype="html">
+        <source>Rembourser cet article ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">262</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.refundMessage" datatype="html">
+        <source>« <x id="article" equiv-text="this.label(item.articleId!)"/> » est retiré, <x id="price" equiv-text="item.prixPaye"/> 🪙 sont rendues et le personnage ne le porte plus.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">263</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shopAdmin.refunded" datatype="html">
+        <source>Article remboursé.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shop/shop-admin-dialog.ts</context>
+          <context context-type="linenumber">271</context>
         </context-group>
       </trans-unit>
       <trans-unit id="pantry.title" datatype="html">
@@ -4050,6 +5606,329 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shopping/shopping-sources.ts</context>
           <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.birthday.soon" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {Plus que 1 dodo avant l&apos;anniversaire de <x id="INTERPOLATION"/> !} other {Plus que <x id="INTERPOLATION_1"/> dodos avant l&apos;anniversaire de <x id="INTERPOLATION"/> !}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
+          <context context-type="linenumber">31,34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.birthday.me" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {Joyeux anniversaire <x id="INTERPOLATION"/> ! Tu as 1 an aujourd&apos;hui 🎉} other {Joyeux anniversaire <x id="INTERPOLATION"/> ! Tu as <x id="INTERPOLATION_1"/> ans aujourd&apos;hui 🎉}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
+          <context context-type="linenumber">36,40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.birthday.one" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {C&apos;est l&apos;anniversaire de <x id="INTERPOLATION"/> aujourd&apos;hui : 1 an ! 🎂} other {C&apos;est l&apos;anniversaire de <x id="INTERPOLATION"/> aujourd&apos;hui : <x id="INTERPOLATION_1"/> ans ! 🎂}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
+          <context context-type="linenumber">41,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.birthday.many" datatype="html">
+        <source>Joyeux anniversaire <x id="INTERPOLATION" equiv-text="{{ noms() }}"/> ! 🎉</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/birthday-message.ts</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.device.title" datatype="html">
+        <source>Mon thème</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
+          <context context-type="linenumber">22,24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.device.hint" datatype="html">
+        <source>Ce choix ne vaut que pour cet appareil.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/device-theme-dialog.ts</context>
+          <context context-type="linenumber">24,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.title" datatype="html">
+        <source>Thème de la famille</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.now" datatype="html">
+        <source>Thème du moment en automatique : <x id="INTERPOLATION" equiv-text="{{ moment() }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.next" datatype="html">
+        <source>{VAR_PLURAL, plural, =0 {prochain anniversaire : <x id="INTERPOLATION"/> aujourd&apos;hui} =1 {prochain anniversaire : <x id="INTERPOLATION"/> demain} other {prochain anniversaire : <x id="INTERPOLATION"/> dans <x id="INTERPOLATION_1"/> jours}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">55,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.mode" datatype="html">
+        <source>Mode</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.auto" datatype="html">
+        <source>Automatique</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">70,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.force" datatype="html">
+        <source>Thème choisi</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">71,72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.off" datatype="html">
+        <source>Désactivé</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">72,73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.member" datatype="html">
+        <source>Membre fêté</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">87,88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.until" datatype="html">
+        <source>Jusqu&apos;au (facultatif)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">97,99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.untilHint" datatype="html">
+        <source>Ensuite, retour automatique au thème de la date.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">108,110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.birthdays" datatype="html">
+        <source> Fêter les anniversaires automatiquement </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">118,120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.children" datatype="html">
+        <source> Les enfants peuvent choisir leur thème sur leur appareil </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">125,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.family.saved" datatype="html">
+        <source>Thème enregistré.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/family-theme-dialog.ts</context>
+          <context context-type="linenumber">249</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.halloween" datatype="html">
+        <source>Halloween</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.saintNicolas" datatype="html">
+        <source>Saint-Nicolas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.noel" datatype="html">
+        <source>Noël</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.carnaval" datatype="html">
+        <source>Carnaval</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.paques" datatype="html">
+        <source>Pâques</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.ete" datatype="html">
+        <source>Été</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.rentree" datatype="html">
+        <source>Rentrée</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.printemps" datatype="html">
+        <source>Printemps</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.automne" datatype="html">
+        <source>Automne</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.hiver" datatype="html">
+        <source>Hiver</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.anniversaire" datatype="html">
+        <source>Anniversaire</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.name.neutre" datatype="html">
+        <source>Sans thème</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.phase.approche" datatype="html">
+        <source>approche</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.phase.jourJ" datatype="html">
+        <source>en cours</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.halloween" datatype="html">
+        <source>Joyeux Halloween !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.saintNicolas" datatype="html">
+        <source>Joyeuse Saint-Nicolas !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.noel" datatype="html">
+        <source>Joyeux Noël !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.carnaval" datatype="html">
+        <source>Joyeux carnaval !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.paques" datatype="html">
+        <source>Joyeuses Pâques !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.ete" datatype="html">
+        <source>Bonnes vacances !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.rentree" datatype="html">
+        <source>Bonne rentrée !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.printemps" datatype="html">
+        <source>Bon printemps !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.automne" datatype="html">
+        <source>Bel automne !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.hiver" datatype="html">
+        <source>Bon hiver !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="season.greeting.anniversaire" datatype="html">
+        <source>Joyeux anniversaire !</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/season-labels.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="theme.auto" datatype="html">
+        <source>Automatique</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/theme/theme-grid.ts</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="weather.title" datatype="html">

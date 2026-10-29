@@ -1,0 +1,250 @@
+// ---------- boutique
+.bank-row {
+  flex: none;
+  padding: 0 24px 8px;
+}
+
+.stage-button {
+  min-height: 44px;
+  gap: 6px;
+  max-width: 100%;
+}
+
+.ideas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.idea {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px;
+  border-radius: 16px;
+  background: var(--mat-sys-surface-container-highest);
+  font: var(--mat-sys-label-medium);
+  text-align: center;
+  cursor: pointer;
+
+  app-avatar {
+    border-radius: 12px;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--mat-sys-primary);
+  }
+}
+
+.idea-title {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.idea-price {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    color: var(--mat-sys-primary);
+  }
+}
+
+.outfits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 16px;
+  background: var(--mat-sys-surface-container-low);
+
+  .hint {
+    margin: 0;
+    font: var(--mat-sys-label-medium);
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.filters {
+  display: flex;
+  gap: 6px;
+  padding: 0 12px 4px;
+  overflow-x: auto;
+  flex: none;
+}
+
+.filter {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 20px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  font: var(--mat-sys-label-large);
+  white-space: nowrap;
+  cursor: pointer;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+
+  &.active {
+    background: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+    border-color: transparent;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--mat-sys-primary);
+  }
+}
+
+.empty {
+  margin: 12px 0;
+  text-align: center;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+// Article de la boutique pas encore à moi : voile, cadenas, prix
+.thumb {
+  position: relative;
+  overflow: hidden;
+}
+
+.veil {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.45);
+  pointer-events: none;
+}
+
+.lock {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  box-shadow: var(--mat-sys-level1);
+
+  mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+}
+
+.price-badge {
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+  padding: 1px 7px;
+  border-radius: 12px;
+  background: #ffd54f;
+  color: #3e2723;
+  font: 800 13px / 18px Roboto;
+  white-space: nowrap;
+}
+
+.special {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--mat-sys-tertiary-container);
+  font-size: 13px;
+  line-height: 1;
+  box-shadow: var(--mat-sys-level1);
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+// Boutons du personnage regroupés ; les panneaux (idées, tenues) s'ouvrent dessous
+.stage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.stage-actions .surprise,
+.stage-actions .stage-button {
+  min-height: 44px;
+  font: var(--mat-sys-label-large);
+}
+
+.stage {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+// Onglets défilants (neuf catégories) plutôt que sur plusieurs lignes
+.tabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: none;
+  grid-auto-columns: minmax(60px, 1fr);
+  overflow-x: auto;
+}
+
+// Téléphone en portrait : tout défile, le personnage est plus petit, la garde-robe garde de la place
+@media (max-width: 599.98px), (max-width: 899.98px) and (orientation: portrait) {
+  .content {
+    display: block;
+    overflow-y: auto;
+  }
+
+  .stage {
+    overflow: visible;
+    margin-bottom: 12px;
+  }
+
+  .preview {
+    width: min(100%, 26dvh, 260px);
+  }
+
+  .wardrobe {
+    height: 64dvh;
+  }
+
+  .bank-row {
+    padding: 0 16px 6px;
+  }
+}

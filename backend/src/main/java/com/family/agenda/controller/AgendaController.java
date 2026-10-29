@@ -18,11 +18,14 @@ import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -102,9 +105,20 @@ public class AgendaController {
         return queryService.summarizeYear(annee, membreId);
     }
 
+    @DeleteMapping("/entries/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(operationId = "deleteEntry", summary = "Supprimer UNE occurrence",
+            description = "Retire cette occurrence de l'agenda, sans toucher aux autres occurrences du reminder, qui ne la recréent pas. "
+                    + "Pour supprimer tout le rappel : DELETE /reminders/{id}.")
+    @ApiResponse(responseCode = "404", description = "Entrée introuvable (ou déjà supprimée)")
+    public void deleteEntry(@Parameter(description = "Identifiant de l'AgendaEntry", example = "1") @PathVariable Long id) {
+        agendaService.deleteOccurrence(id);
+    }
+
     @PatchMapping("/entries/{id}")
     @Operation(operationId = "updateEntryStatus", summary = "Changer le statut d'une occurrence",
             description = "Marque UNE entrée comme complétée, annulée ou déplacée, sans toucher aux autres occurrences du reminder.")
+    @ApiResponse(responseCode = "400", description = "Statut SUPPRIME : utiliser DELETE")
     @ApiResponse(responseCode = "404", description = "Entrée introuvable")
     public AgendaEntryDTO updateStatus(@Parameter(description = "Identifiant de l'AgendaEntry", example = "1") @PathVariable Long id,
                                        @Valid @RequestBody AgendaEntryStatusRequest request) {

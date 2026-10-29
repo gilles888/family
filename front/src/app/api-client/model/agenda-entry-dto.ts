@@ -53,6 +53,7 @@ export namespace AgendaEntryDTO {
         Complete: 'COMPLETE',
         Annule: 'ANNULE',
         Deplace: 'DEPLACE',
+        Supprime: 'SUPPRIME',
     } as const;
     export type StatutEnum = typeof StatutEnum[keyof typeof StatutEnum];
 }

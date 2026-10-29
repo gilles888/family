@@ -31,7 +31,8 @@ import java.util.UUID;
  *       passe et à la désactivation ;</li>
  *   <li>CSRF : cookie XSRF-TOKEN lisible par Angular, renvoyé dans l'en-tête X-XSRF-TOKEN ;</li>
  *   <li>tout /v1 exige d'être connecté, sauf POST /v1/auth/login ; un ENFANT ne fait que lire l'agenda, la météo
- *       et les repas, et utiliser ses routines (contrôle fin par {@code @PreAuthorize}, voir {@link RoutineAccess}) ;</li>
+ *       et les repas, le thème, la boutique, utiliser ses routines et modifier son personnage (contrôle fin par {@code @PreAuthorize}, voir
+ *       {@link RoutineAccess} et {@link MemberAccess}) ;</li>
  *   <li>réponses JSON 401 / 403, jamais de redirection.</li>
  * </ul>
  */
@@ -78,6 +79,19 @@ public class SecurityConfig {
                                     "/v1/routines/*").authenticated()
                             .requestMatchers(HttpMethod.POST, "/v1/routines/*/runs/*/etapes/*/toggle",
                                     "/v1/routines/*/runs/*/recompense").authenticated()
+                            // … ses étoiles retirées (lecture ; le retrait lui-même reste aux parents)
+                            .requestMatchers(HttpMethod.GET, "/v1/membres/*/etoiles", "/v1/membres/*/etoiles/retraits").authenticated()
+                            // … et son personnage : @PreAuthorize vérifie le membre lié
+                            .requestMatchers(HttpMethod.PUT, "/v1/membres/*/avatar").authenticated()
+                            // … et le thème de l'application (lecture ; la modification reste aux parents)
+                            .requestMatchers(HttpMethod.GET, "/v1/parametres/theme").authenticated()
+                            // … sa boutique : étoiles, pièces, achats et tenues de thème (membre lié) ; cadeau, remboursement,
+                            // ajustement et taux de change restent aux parents
+                            .requestMatchers(HttpMethod.GET, "/v1/boutique/catalogue", "/v1/membres/*/porte-monnaie",
+                                    "/v1/membres/*/articles", "/v1/membres/*/transactions", "/v1/membres/*/tenues").authenticated()
+                            .requestMatchers(HttpMethod.POST, "/v1/membres/*/porte-monnaie/echange", "/v1/membres/*/boutique/achats").authenticated()
+                            .requestMatchers(HttpMethod.PUT, "/v1/membres/*/tenues/*").authenticated()
+                            .requestMatchers(HttpMethod.DELETE, "/v1/membres/*/tenues/*").authenticated()
                             // Tout le reste de l'API (dont /v2… : version inconnue, 400 pour un parent) : parents
                             .requestMatchers("/v*/**").hasRole(PARENT)
                             .anyRequest().denyAll();

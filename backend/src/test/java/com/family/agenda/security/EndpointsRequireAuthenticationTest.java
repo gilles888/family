@@ -77,7 +77,9 @@ class EndpointsRequireAuthenticationTest {
     void tousLesEndpointsExigentUneConnexion() throws Exception {
         List<Endpoint> endpoints = apiEndpoints();
         assertThat(endpoints).hasSizeGreaterThan(50)
-                .extracting(Endpoint::key).contains("GET /{version}/comptes", "POST /{version}/auth/logout");
+                .extracting(Endpoint::key).contains("GET /{version}/comptes", "POST /{version}/auth/logout", "GET /{version}/parametres/theme",
+                        "GET /{version}/boutique/catalogue", "POST /{version}/membres/{memberId}/boutique/achats",
+                        "POST /{version}/membres/{memberId}/porte-monnaie/echange", "PUT /{version}/membres/{memberId}/tenues/{theme}");
 
         List<String> ouverts = new ArrayList<>();
         for (Endpoint endpoint : endpoints) {

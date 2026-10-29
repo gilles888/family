@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { enabledDashboardCards } from './dashboard-cards';
 import { MobilePanelService } from './mobile-panel.service';
 import { AuthService } from '../auth/auth.service';
+import { SeasonMessage } from '../theme/season-message';
 
 /** Espace laissé au-dessus d'une carte quand on défile jusqu'à elle (px). */
 const CARD_SCROLL_MARGIN = 12;
@@ -55,7 +56,7 @@ interface Gesture {
  */
 @Component({
   selector: 'app-mobile-page',
-  imports: [NgComponentOutlet, A11yModule, MatButtonModule, MatIconModule],
+  imports: [NgComponentOutlet, A11yModule, MatButtonModule, MatIconModule, SeasonMessage],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './mobile-page.html',
   styleUrl: './mobile-page.scss',

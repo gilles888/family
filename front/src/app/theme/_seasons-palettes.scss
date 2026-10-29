@@ -1,0 +1,48 @@
+// Palettes des thèmes saisonniers : un bloc `html[data-season='…']` par thème, posé par SeasonThemeService.
+// Le thème neutre (azure / blue) reste celui de `html` dans styles.scss. Seules les couleurs changent
+// (typographie et densité viennent de `html`). Les palettes Material sont conçues pour respecter le contraste AA
+// (texte sur primary, sur surface-container…) ; le mode reste `light`.
+@use 'sass:list';
+@use '@angular/material' as mat;
+
+$seasons: (
+  'halloween': (mat.$orange-palette, mat.$violet-palette),
+  'saint-nicolas': (mat.$red-palette, mat.$orange-palette),
+  'noel': (mat.$green-palette, mat.$red-palette),
+  'carnaval': (mat.$magenta-palette, mat.$cyan-palette),
+  'paques': (mat.$rose-palette, mat.$chartreuse-palette),
+  'ete': (mat.$cyan-palette, mat.$orange-palette),
+  'rentree': (mat.$violet-palette, mat.$chartreuse-palette),
+  'printemps': (mat.$chartreuse-palette, mat.$cyan-palette),
+  'automne': (mat.$orange-palette, mat.$red-palette),
+  'hiver': (mat.$blue-palette, mat.$cyan-palette),
+  // Festif et fixe ; la couleur du membre fêté n'est utilisée que dans les décors (fill SVG)
+  'anniversaire': (mat.$magenta-palette, mat.$yellow-palette),
+);
+
+@each $id, $palettes in $seasons {
+  // [data-season-preview] : mêmes couleurs sur une vignette de l'écran de réglage
+  html[data-season='#{$id}'],
+  [data-season-preview='#{$id}'] {
+    @include mat.theme(
+      (
+        color: (
+          primary: list.nth($palettes, 1),
+          tertiary: list.nth($palettes, 2),
+        ),
+      )
+    );
+  }
+}
+
+// Thème neutre (azure / blue, comme `html` dans styles.scss), pour sa vignette
+[data-season-preview='neutre'] {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+    )
+  );
+}

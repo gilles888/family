@@ -1,0 +1,274 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 8px solid #c08d52;
+  background: #f6e3c8;
+  box-shadow: var(--mat-sys-level3);
+  color: #4e342e;
+  animation: open 360ms cubic-bezier(0.3, 0.8, 0.3, 1) both;
+}
+
+@keyframes open {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 4px 14px;
+  background: #e8c490;
+
+  h2 {
+    flex: 1;
+    margin: 0;
+    font: 700 16px / 1.2 Roboto;
+  }
+}
+
+.close {
+  all: unset;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: rgb(255 255 255 / 0.55);
+  }
+  &:focus-visible {
+    outline: 3px solid var(--mat-sys-primary);
+  }
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 12px 14px;
+}
+
+.group h3 {
+  margin: 8px 0 6px;
+  font: 700 13px / 1.2 Roboto;
+  opacity: 0.8;
+}
+
+.shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 10px;
+}
+
+.colors .shelf {
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+}
+
+.empty {
+  text-align: center;
+  opacity: 0.8;
+}
+
+.piggy {
+  padding-top: 8px;
+}
+
+// ---------- armoire : vêtements sur des cintres, accrochés à la barre
+:host(.armoire) {
+  background: #a9794a;
+  color: #fff8e1;
+  // vignettes : fond de bois sombre veiné
+  --item-bg: #c99a63;
+  --item-grain: repeating-linear-gradient(90deg, rgb(120 70 30 / 0.12) 0 2px, transparent 2px 9px);
+
+  .head {
+    background: #8d6038;
+  }
+
+  .shelf.hanging {
+    position: relative;
+    padding-top: 26px;
+    row-gap: 32px;
+    // la barre de penderie
+    background: linear-gradient(#6d4c41, #6d4c41) 0 10px / 100% 8px no-repeat;
+  }
+
+  .shelf.hanging .slot {
+    position: relative;
+  }
+
+  // le cintre : un crochet et une tige entre la barre et le vêtement
+  .shelf.hanging .slot::before {
+    content: '';
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    width: 4px;
+    height: 20px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    background: #cfd8dc;
+    pointer-events: none;
+  }
+}
+
+// ---------- commode : petites cases dans le tiroir
+:host(.commode) {
+  --item-bg: #f6e0b8;
+  --item-grain: repeating-linear-gradient(0deg, rgb(150 100 40 / 0.1) 0 2px, transparent 2px 8px);
+
+  .shelf {
+    padding: 8px;
+    border-radius: 12px;
+    background: #e8c490;
+    box-shadow: inset 0 3px 8px rgb(0 0 0 / 0.25);
+  }
+}
+
+// ---------- étagère à chapeaux : chapeaux accrochés à des patères
+:host(.chapeaux) {
+  --item-bg: #ead3b6;
+  --item-grain: repeating-linear-gradient(90deg, rgb(120 80 40 / 0.1) 0 2px, transparent 2px 10px);
+
+  .shelf.pegs {
+    padding-top: 16px;
+    background: linear-gradient(#8d6e63, #8d6e63) 0 8px / 100% 8px no-repeat;
+  }
+}
+
+// ---------- coiffeuse : miroir en gros plan, puis le plateau
+:host(.coiffeuse) {
+  --item-bg: #fbeee4;
+  --item-grain: repeating-linear-gradient(45deg, rgb(200 120 140 / 0.1) 0 3px, transparent 3px 10px);
+
+  .mirror {
+    width: min(100%, 170px);
+    aspect-ratio: 0.8;
+    margin: 0 auto 6px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 8px solid #c08d52;
+    background: #d6f1fc;
+  }
+
+  .shelf {
+    padding: 8px;
+    border-radius: 12px;
+    background: #e8c490;
+  }
+}
+
+// ---------- coffre à jouets : l'intérieur du coffre
+:host(.coffre) {
+  // tissu rayé du coffre
+  --item-bg: #f3c9c0;
+  --item-grain: repeating-linear-gradient(0deg, rgb(190 90 90 / 0.14) 0 3px, transparent 3px 7px), repeating-linear-gradient(90deg, rgb(190 90 90 / 0.1) 0 3px, transparent 3px 7px);
+  border-color: #e57373;
+  background: #d99a8a;
+
+  .head {
+    background: #ef9a9a;
+  }
+
+  .shelf {
+    padding: 8px;
+    border-radius: 12px;
+    background: #bf7767;
+    box-shadow: inset 0 4px 10px rgb(0 0 0 / 0.3);
+  }
+}
+
+// ---------- fenêtre : les paysages sur le rebord
+:host(.fenetre) {
+  --item-bg: #f7fbff;
+  border-color: #fff;
+  background: #bde3ff;
+
+  .head {
+    background: #e3f2fd;
+  }
+}
+
+// ---------- boutique : la pièce derrière la porte
+:host(.boutique) {
+  --item-bg: #ffffff;
+  border-color: #80cbc4;
+  background: #e0f2f1;
+
+  .head {
+    background: #b2dfdb;
+  }
+}
+
+:host(.tirelire) {
+  --item-bg: #fff;
+  background: #fce4ec;
+  border-color: #f48fb1;
+
+  .head {
+    background: #f8bbd0;
+  }
+}
+
+// ---------- livre : idées de tenues du thème
+:host(.livre) {
+  background: #ede7f6;
+  border-color: #7e57c2;
+
+  .head {
+    background: #d1c4e9;
+  }
+}
+
+.ideas {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.idea {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  padding: 6px 12px;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 0.85);
+  box-shadow: 0 2px 5px rgb(60 30 100 / 0.2);
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 3px solid var(--mat-sys-primary);
+  }
+}
+
+.idea-title {
+  flex: 1;
+  font: 700 14px / 1.2 Roboto;
+}
+
+.idea-price {
+  display: inline-flex;
+  align-items: center;
+  font: 800 14px / 1 Roboto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+  }
+}

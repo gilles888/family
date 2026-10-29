@@ -197,10 +197,10 @@ export class PuzzleGame {
   protected readonly shaking = signal<number | null>(null);
   protected readonly complete = computed(() => this.placed().size === PIECES);
 
-  /** Morceau (colonne, ligne) de l'avatar, dans son viewBox 200 × 200. */
+  /** Morceau (colonne, ligne) du buste de l'avatar (BUST_FRAME : carré de 160 à partir de (20, 0)). */
   protected box(piece: number): string {
-    const size = 200 / SIDE;
-    return `${(piece % SIDE) * size} ${Math.floor(piece / SIDE) * size} ${size} ${size}`;
+    const size = 160 / SIDE;
+    return `${20 + (piece % SIDE) * size} ${Math.floor(piece / SIDE) * size} ${size} ${size}`;
   }
 
   /** Une case n'accepte que sa propre pièce : ailleurs, la pièce revient au bac (animation du CDK). */

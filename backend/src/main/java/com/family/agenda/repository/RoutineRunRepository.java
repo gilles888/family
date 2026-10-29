@@ -20,4 +20,7 @@ public interface RoutineRunRepository extends JpaRepository<RoutineRun, Long> {
     /** Historique : routines finies d'une plage de jours. */
     List<RoutineRun> findByRoutineIdInAndDateBetweenAndCompletedAtNotNull(Collection<Long> routineIds, LocalDate debut,
                                                                          LocalDate fin);
+
+    /** Étoiles gagnées depuis le début : une par routine terminée. */
+    long countByRoutineMemberIdAndCompletedAtNotNull(Long memberId);
 }

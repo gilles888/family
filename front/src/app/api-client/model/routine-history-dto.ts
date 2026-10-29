@@ -7,16 +7,21 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { StarPenaltyDTO } from './star-penalty-dto';
 
 
 /**
- * Routines terminées d\'un jour (historique)
+ * Étoiles d\'un jour (historique) : routines terminées et étoiles retirées
  */
 export interface RoutineHistoryDTO { 
     date?: string;
     /**
-     * Ids des routines terminées ce jour-là
+     * Ids des routines terminées ce jour-là (une étoile chacune)
      */
     routinesTerminees?: Array<number>;
+    /**
+     * Étoiles retirées ce jour-là
+     */
+    retraits?: Array<StarPenaltyDTO>;
 }
 

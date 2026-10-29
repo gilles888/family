@@ -46,7 +46,7 @@ class RoutineServiceTest {
     @BeforeEach
     void setUp() {
         today = LocalDate.now(clock);
-        tom = memberService.create(new FamilyMemberRequest("Tom", "#4CAF50")).id();
+        tom = memberService.create(new FamilyMemberRequest("Tom", "#4CAF50", null)).id();
         routine = service.create(new RoutineRequest(tom, "Mijn ochtendroutine", "Een goede start van de dag!",
                 RoutineType.MORNING, RoutineTheme.DAY, EnumSet.allOf(DayOfWeek.class), LocalTime.of(6, 30), LocalTime.of(8, 30),
                 true, List.of(step("Ik sta op.", "wake-up"), step("Ik poets mijn tanden.", "toothbrush"),

@@ -10,6 +10,7 @@ import { FamilyMemberDTO, MembresService, RoutineDTO, RoutineRunDTO, RoutinesSer
 import { Avatar } from '../avatar/avatar';
 import { toIsoDate } from '../shared/date-utils';
 import { RewardData, RewardDialog } from './reward-dialog';
+import { PiggyBank } from '../shop/piggy-bank';
 import { RoutineBoard } from './routine-board';
 import { RoutineHistory } from './routine-history';
 import { SoundService } from '../shared/sound.service';
@@ -23,7 +24,7 @@ import { ParentOnly } from '../auth/parent-only.directive';
  */
 @Component({
   selector: 'app-routines-page',
-  imports: [RouterLink, ParentOnly, MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, RoutineBoard, RoutineHistory],
+  imports: [RouterLink, ParentOnly, MatButtonModule, MatIconModule, MatProgressBarModule, Avatar, PiggyBank, RoutineBoard, RoutineHistory],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[class.night]': "selected()?.theme === 'NIGHT'" },
   templateUrl: './routines-page.html',
@@ -55,6 +56,9 @@ export class RoutinesPage {
     params: () => this.params().membre ?? undefined,
     stream: ({ params: id }) => this.api.listRoutinesMembre(id, this.todayIso),
   });
+
+  /** « Mon personnage » : l'enfant sur son propre membre (le parent passe par la page Membres). */
+  protected readonly canEditAvatar = computed(() => this.auth.isChild() && this.auth.user()?.membreId === this.params().membre);
 
   /** Routines proposées aujourd'hui (actives, jour de la semaine). */
   protected readonly ofDay = computed(() => (this.routines.hasValue() ? routinesOfDay(this.routines.value(), this.today) : []));
@@ -102,6 +106,11 @@ export class RoutinesPage {
       next: (etat) => latest() && this.patch(routine.id!, (r) => ({ ...r, etat })),
       error: () => latest() && this.routines.reload(),
     });
+  }
+
+  /** « Ma chambre » : l'habillage du personnage en pièce interactive. */
+  protected editAvatar(member: FamilyMemberDTO): void {
+    void this.router.navigate(['/chambre', member.id]);
   }
 
   /** Mini-jeu de récompense (plein écran) ; au retour, la routine sait que la partie du jour est jouée. */
