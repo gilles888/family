@@ -1,50 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { isHexColor, darken, lighten } from '../shared/svg/shapes';
 import { BirthdayMessage } from './birthday-message';
 import { SeasonThemeService } from './season-theme.service';
-import { SeasonId } from './seasons';
-
-type Animation = 'flocons' | 'feuilles' | 'confettis' | 'bulles';
-
-/** Animation de fond de chaque thème, en phase « jour J » (15 éléments au plus). */
-const ANIMATIONS: Record<SeasonId, Animation> = {
-  halloween: 'feuilles',
-  'saint-nicolas': 'flocons',
-  noel: 'flocons',
-  hiver: 'flocons',
-  automne: 'feuilles',
-  printemps: 'feuilles',
-  carnaval: 'confettis',
-  rentree: 'confettis',
-  anniversaire: 'confettis',
-  paques: 'bulles',
-  ete: 'bulles',
-};
-
-const NB_ELEMENTS = 15;
-const CONFETTIS = ['#ef5350', '#ffca28', '#66bb6a', '#42a5f5', '#ab47bc', '#ff7043'];
-const PAR_DEFAUT = '#e91e63';
-
-interface Element {
-  gauche: number;
-  delai: number;
-  duree: number;
-  taille: number;
-  derive: number;
-  couleur: string | null;
-}
-
-/** Valeurs réparties de façon déterministe (pas d'aléatoire : même rendu à chaque affichage). */
-function elements(couleurs: string[] | null): Element[] {
-  return Array.from({ length: NB_ELEMENTS }, (_, i) => ({
-    gauche: (i * 37 + 5) % 100,
-    delai: -((i * 1.7) % 11),
-    duree: 9 + ((i * 5) % 7),
-    taille: 8 + ((i * 3) % 9),
-    derive: ((i % 5) - 2) * 18,
-    couleur: couleurs ? couleurs[i % couleurs.length] : null,
-  }));
-}
+import { ParticlesScope, SeasonParticles, celebrationColors } from './season-particles';
 
 /**
  * Décors de fond : animation légère du thème (phase « jour J »), et pour un anniversaire, bandeau du membre fêté, plus,
@@ -53,28 +10,15 @@ function elements(couleurs: string[] | null): Element[] {
  */
 @Component({
   selector: 'app-season-decor',
-  imports: [BirthdayMessage],
+  imports: [BirthdayMessage, SeasonParticles],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (animation(); as type) {
-      <div class="fond" [class]="type" aria-hidden="true">
-        @for (e of fond(); track $index) {
-          <span
-            class="element"
-            [style.left.%]="e.gauche"
-            [style.width.px]="e.taille"
-            [style.height.px]="e.taille"
-            [style.animation-delay.s]="e.delai"
-            [style.animation-duration.s]="e.duree"
-            [style.--derive.px]="e.derive"
-            [style.--couleur]="e.couleur"
-          ></span>
-        }
-      </div>
+    @if (!scope.contained()) {
+      <app-season-particles />
     }
 
     @if (fete(); as t) {
-      @if (t.phase === 'jourJ') {
+      @if (t.phase === 'jourJ' && !scope.contained()) {
         @for (cote of cotes; track cote) {
           <svg class="ballons" [class]="'ballons ' + cote" viewBox="0 0 120 200" aria-hidden="true">
             @for (b of ballonsDessin; track $index) {
@@ -145,69 +89,11 @@ function elements(couleurs: string[] | null): Element[] {
     }
 
     // Derrière le contenu, au-dessus du fond de page
-    .fond,
+    app-season-particles,
     .ballons {
       position: fixed;
       pointer-events: none;
       z-index: -1;
-    }
-    .fond {
-      inset: 0;
-      overflow: hidden;
-    }
-    .element {
-      position: absolute;
-      top: 0;
-      opacity: 0.55;
-      animation: chute linear infinite;
-      will-change: transform;
-    }
-    .flocons .element {
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--mat-sys-primary) 35%, white);
-    }
-    .feuilles .element {
-      border-radius: 0 100% 0 100%;
-      background: color-mix(in srgb, var(--mat-sys-primary) 55%, transparent);
-    }
-    .feuilles .element:nth-child(even) {
-      background: color-mix(in srgb, var(--mat-sys-tertiary) 55%, transparent);
-    }
-    .confettis .element {
-      height: 0.9em;
-      border-radius: 2px;
-      background: var(--couleur, var(--mat-sys-primary));
-      animation-name: chute-tourne;
-    }
-    .bulles .element {
-      border-radius: 50%;
-      border: 2px solid color-mix(in srgb, var(--mat-sys-primary) 45%, transparent);
-      background: color-mix(in srgb, var(--mat-sys-primary) 8%, transparent);
-      animation-name: montee;
-    }
-    @keyframes chute {
-      from {
-        transform: translate3d(0, -12vh, 0) rotate(0);
-      }
-      to {
-        transform: translate3d(var(--derive), 112vh, 0) rotate(240deg);
-      }
-    }
-    @keyframes chute-tourne {
-      from {
-        transform: translate3d(0, -12vh, 0) rotateX(0) rotate(0);
-      }
-      to {
-        transform: translate3d(var(--derive), 112vh, 0) rotateX(540deg) rotate(120deg);
-      }
-    }
-    @keyframes montee {
-      from {
-        transform: translate3d(0, 108vh, 0);
-      }
-      to {
-        transform: translate3d(var(--derive), -12vh, 0);
-      }
     }
 
     // Sous le bandeau, derrière le contenu (le bandeau ne crée pas de contexte d'empilement)
@@ -249,16 +135,13 @@ function elements(couleurs: string[] | null): Element[] {
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .fond {
-        display: none;
-      }
       .ballons {
         animation: none;
       }
     }
     // Téléphone : pas de décor animé, le pictogramme et le bandeau suffisent
     @media (max-width: 599.98px) {
-      .fond,
+      app-season-particles,
       .guirlande,
       .ballons {
         display: none;
@@ -275,29 +158,10 @@ export class SeasonDecor {
     return t.id === 'anniversaire' && t.membres?.length ? t : null;
   });
 
-  protected readonly animation = computed<Animation | null>(() => {
-    const t = this.theme();
-    return t.phase === 'jourJ' && t.id !== 'neutre' ? ANIMATIONS[t.id] : null;
-  });
+  protected readonly scope = inject(ParticlesScope);
 
-  /** Couleurs des membres fêtés (ballons, guirlande, confettis), avec leurs variantes claires et foncées. */
-  protected readonly couleurs = computed(() => {
-    const bases = (this.theme().membres ?? []).map((m) =>
-      isHexColor(m.couleur) ? m.couleur : PAR_DEFAUT,
-    );
-    const base = bases.length ? bases : [PAR_DEFAUT];
-    return [...base, ...base.map((c) => lighten(c, 0.35)), ...base.map((c) => darken(c, 0.2))];
-  });
-
-  protected readonly fond = computed(() =>
-    elements(
-      this.theme().id === 'anniversaire'
-        ? [...this.couleurs(), ...CONFETTIS]
-        : this.theme().id === 'carnaval' || this.theme().id === 'rentree'
-          ? CONFETTIS
-          : null,
-    ),
-  );
+  /** Couleurs des membres fêtés (ballons, guirlande), avec leurs variantes claires et foncées. */
+  protected readonly couleurs = computed(() => celebrationColors(this.theme()));
 
   /** Fanions de la guirlande, répartis le long de la courbe (triangles pointe en bas). */
   protected readonly fanions = Array.from({ length: 13 }, (_, i) => {

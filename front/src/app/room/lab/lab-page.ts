@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { AvatarConfig, normalizeAvatar, defaultAvatar } from '../../avatar/avatar-config';
 import { SvgShapes } from '../../shared/svg/svg-shapes';
 import { LabDefs } from './lab-defs';
-import { LabFigure, Proportion } from './lab-body';
-import { Direction, RoomModel, buildRoom } from './lab-rooms';
+import { ParticlesScope, SeasonParticles } from '../../theme/season-particles';
+import { LabFigure } from './lab-body';
+import { RoomModel, buildRoom } from './lab-rooms';
 
 const DEMO: AvatarConfig = normalizeAvatar(
   { version: 2, skin: 'skin-3', eyes: 'eyes-happy', eyeColor: '#5d4037', mouth: 'mouth-grin', hair: 'hair-ponytail', hairColor: '#6b3e26', outfit: 'outfit-tshirt', outfitColor: '#ec4899', hat: 'none', accessory: 'none', background: '#fde68a' },
@@ -16,66 +17,58 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
 ];
 
 /**
- * Labo de la chambre (parents, développement seulement) : trois directions de style côte à côte, chacune fermée avec les
- * deux proportions de corps, puis l'armoire ouverte ; et les deux corps en grand. Rien ici ne touche la vraie chambre.
+ * Labo de la chambre (parents, développement seulement) : la direction A (2,5D douce, vue de face) fermée puis armoire
+ * ouverte, et le corps « enfant » en grand. Rien ici ne touche la vraie chambre.
  */
 @Component({
   selector: 'app-lab-page',
-  imports: [SvgShapes, LabDefs, LabFigure],
+  imports: [SvgShapes, LabDefs, LabFigure, SeasonParticles],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1>Labo : la chambre</h1>
     <p class="intro">
-      Trois directions de style pour la même chambre et le même personnage, deux proportions de corps. Rien n'est appliqué à la vraie chambre.
+      Direction A (2,5D douce, vue de face) et corps « enfant ». Rien n'est appliqué à la vraie chambre.
     </p>
 
-    @for (d of directions; track d.id) {
-      <section class="direction" [id]="'dir-' + d.id">
-        <h2>{{ d.title }}</h2>
-        <p>{{ d.text }}</p>
-        <div class="scenes">
-          @for (s of scenes; track s.label) {
-            <figure>
-              <svg class="room" viewBox="0 0 1000 600" role="img" [attr.aria-label]="d.title + ' : ' + s.label">
+    <section class="direction" id="dir-A">
+      <h2>Chambre</h2>
+      <div class="scenes">
+        @for (s of scenes; track s.label) {
+          <figure>
+            <div class="frame">
+              <svg class="room" viewBox="0 0 1000 430" role="img" [attr.aria-label]="s.label">
                 <defs labDefs></defs>
-                @for (layer of model(d.id, s.open).layers; track $index) {
+                @for (layer of model(s.open).layers; track $index) {
                   @if (layer.figure) {
-                    <g labFigure [config]="demo" [proportion]="s.body" [attr.transform]="layer.transform"></g>
+                    <g labFigure [config]="demo" [attr.transform]="layer.transform"></g>
                   } @else {
                     <g [attr.filter]="layer.filter ? 'url(#' + layer.filter + ')' : null" [attr.transform]="layer.transform ?? null" [attr.clip-path]="layer.clip ? 'url(#' + layer.clip + ')' : null" [appShapes]="layer.shapes"></g>
                   }
                 }
               </svg>
-              <figcaption>{{ s.label }}</figcaption>
-            </figure>
-          }
-        </div>
-      </section>
-    }
+              <app-season-particles />
+            </div>
+            <figcaption>{{ s.label }}</figcaption>
+          </figure>
+        }
+      </div>
+    </section>
 
     <section class="direction" id="corps">
-      <h2>Le corps du personnage</h2>
+      <h2>Le corps « enfant »</h2>
       <p>
-        Même corps pour tout le monde, un seul dessin : le buste affiché ailleurs sera un recadrage du personnage entier. Têtes à ~40 %
-        (chibi) et ~30 % (enfant) de la hauteur.
+        Même corps pour tout le monde, un seul dessin : le buste affiché ailleurs sera un recadrage du personnage entier.
       </p>
-      <div class="bodies">
-        @for (p of proportions; track p.id) {
-          <div class="body-group">
-            <h3>{{ p.label }}</h3>
-            <div class="body-row">
-              @for (v of variants; track v.label) {
-                <figure>
-                  <svg viewBox="0 0 200 300" class="figure" role="img" [attr.aria-label]="p.label + ' : ' + v.label">
-                    <defs labDefs></defs>
-                    <rect width="200" height="300" rx="14" fill="#fde8d8" />
-                    <g labFigure [config]="v.config" [proportion]="p.id"></g>
-                  </svg>
-                  <figcaption>{{ v.label }}</figcaption>
-                </figure>
-              }
-            </div>
-          </div>
+      <div class="body-row">
+        @for (v of variants; track v.label) {
+          <figure>
+            <svg viewBox="0 0 200 300" class="figure" role="img" [attr.aria-label]="v.label">
+              <defs labDefs></defs>
+              <rect width="200" height="300" rx="14" fill="#fde8d8" />
+              <g labFigure [config]="v.config"></g>
+            </svg>
+            <figcaption>{{ v.label }}</figcaption>
+          </figure>
         }
       </div>
     </section>
@@ -104,8 +97,11 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }
-    .scenes figure:first-child {
-      grid-column: 1 / -1;
+    .frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: var(--mat-sys-level2);
     }
     figure {
       margin: 0;
@@ -120,14 +116,11 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
       display: block;
       width: 100%;
       height: auto;
-      border-radius: 18px;
-      box-shadow: var(--mat-sys-level2);
       background: #fde4d2;
     }
-    .bodies {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+    .figure {
+      border-radius: 18px;
+      box-shadow: var(--mat-sys-level2);
     }
     .body-row {
       display: grid;
@@ -135,8 +128,7 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
       gap: 10px;
     }
     @media (max-width: 900px) {
-      .scenes,
-      .bodies {
+      .scenes {
         grid-template-columns: 1fr;
       }
     }
@@ -145,28 +137,22 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
 export class LabPage {
   protected readonly demo = DEMO;
   protected readonly variants = VARIANTS;
-  protected readonly directions: { id: Direction; title: string; text: string }[] = [
-    { id: 'A', title: 'A · 2,5D douce, vue de face', text: 'La chambre comme aujourd’hui, avec du volume : côtés et dessus des meubles, ombres douces au sol, ombres de coin, sol en perspective, lumière de la fenêtre.' },
-    { id: 'B', title: 'B · Vue en coin (mur du fond + mur de gauche)', text: 'La pièce vue depuis un angle : un point de fuite, sol qui converge, meubles le long des deux murs.' },
-    { id: 'C', title: 'C · Isométrique', text: 'Façon jeu (Animal Crossing, Habbo) : murs à 30°, meubles en volumes isométriques.' },
-  ];
-  protected readonly proportions: { id: Proportion; label: string }[] = [
-    { id: 'chibi', label: 'Chibi (tête ≈ 40 %)' },
-    { id: 'enfant', label: 'Enfant (tête ≈ 30 %)' },
-  ];
-  protected readonly scenes: { label: string; open: boolean; body: Proportion }[] = [
-    { label: 'Chambre fermée · corps « enfant »', open: false, body: 'enfant' },
-    { label: 'Chambre fermée · corps « chibi »', open: false, body: 'chibi' },
-    { label: 'Armoire ouverte · corps « enfant »', open: true, body: 'enfant' },
+  protected readonly scenes: { label: string; open: boolean }[] = [
+    { label: 'Chambre fermée', open: false },
+    { label: 'Armoire ouverte', open: true },
   ];
 
-  private readonly cache = new Map<string, RoomModel>();
-  protected model(dir: Direction, open: boolean): RoomModel {
-    const key = dir + open;
-    let m = this.cache.get(key);
+  constructor() {
+    // les particules du thème restent dans les scènes, pas dans les marges de la page
+    inject(DestroyRef).onDestroy(inject(ParticlesScope).hostParticles());
+  }
+
+  private readonly cache = new Map<boolean, RoomModel>();
+  protected model(open: boolean): RoomModel {
+    let m = this.cache.get(open);
     if (!m) {
-      m = buildRoom(dir, { armoireOpen: open });
-      this.cache.set(key, m);
+      m = buildRoom({ armoireOpen: open });
+      this.cache.set(open, m);
     }
     return m;
   }

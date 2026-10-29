@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { defaultAvatar } from '../../avatar/avatar-config';
-import { box, isometric, perspective } from './lab-3d';
+import { box, perspective } from './lab-3d';
 import { ANCHORS, LabFigure } from './lab-body';
 import { buildRoom } from './lab-rooms';
 
@@ -13,15 +13,9 @@ describe('labo de la chambre', () => {
     expect(faces(520)).toBeGreaterThanOrEqual(4);
   });
 
-  it('isométrique : dessus et deux côtés visibles', () => {
-    const pr = isometric({ cx: 500, cy: 200, k: 1 });
-    // 3 faces × (couleur + relief) + arête du dessus
-    expect(box(pr, { x0: 0, x1: 50, y0: 0, y1: 50, z0: 0, z1: 50 }, '#c08d52')).toHaveLength(7);
-  });
-
-  it.each(['A', 'B', 'C'] as const)('direction %s : une pièce complète avec un personnage, fermée ou armoire ouverte', (dir) => {
-    const closed = buildRoom(dir, { armoireOpen: false });
-    const open = buildRoom(dir, { armoireOpen: true });
+  it('une pièce complète avec un personnage, fermée ou armoire ouverte', () => {
+    const closed = buildRoom({ armoireOpen: false });
+    const open = buildRoom({ armoireOpen: true });
     for (const room of [closed, open]) {
       expect(room.layers.filter((l) => l.figure)).toHaveLength(1);
       expect(room.layers.length).toBeGreaterThan(20);
@@ -34,12 +28,12 @@ describe('labo de la chambre', () => {
     expect(names(closed).at(-2)).toBe('personnage');
   });
 
-  it('les deux proportions : la tête fait ~40 % (chibi) et ~30 % (enfant) de la hauteur', () => {
-    const head = (p: 'chibi' | 'enfant') => (ANCHORS[p].chin - (ANCHORS[p].chin - 91 * ANCHORS[p].headScale)) / 290;
-    expect(head('chibi')).toBeGreaterThan(0.36);
-    expect(head('chibi')).toBeLessThan(0.44);
-    expect(head('enfant')).toBeGreaterThan(0.27);
-    expect(head('enfant')).toBeLessThan(0.33);
+  it('corps enfant : la tête fait ~30 % de la hauteur', () => {
+    // le haut des cheveux est ~98 unités au-dessus du menton dans le dessin de la tête
+    const headH = 98 * ANCHORS.headScale;
+    const head = headH / (ANCHORS.footY - (ANCHORS.chin - headH));
+    expect(head).toBeGreaterThan(0.27);
+    expect(head).toBeLessThan(0.34);
   });
 
   it('le personnage entier est dessiné : corps, bras, mains, chaussures, tête', () => {

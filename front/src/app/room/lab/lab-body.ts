@@ -5,9 +5,6 @@ import { SKIN_TONES } from '../../avatar/avatar-parts';
 import { Shape, circle, darken, ellipse, lighten, path, rect } from '../../shared/svg/shapes';
 import { SvgShapes } from '../../shared/svg/svg-shapes';
 
-/** Deux proportions maquettées : la tête fait ~40 % (chibi) ou ~30 % (enfant) de la hauteur totale. */
-export type Proportion = 'chibi' | 'enfant';
-
 /** Repères du corps (espace 200 × 300, pieds en y = 290) : tête, cou, épaules, taille, hanches, genoux, chevilles. */
 interface Anchors {
   /** Échelle de la tête (les calques de tête sont dessinés dans 200 × 200, menton en y = 133). */
@@ -26,10 +23,8 @@ interface Anchors {
   armW: number;
 }
 
-export const ANCHORS: Record<Proportion, Anchors> = {
-  chibi: { headScale: 1.23, chin: 120, shoulderY: 130, waistY: 184, hipY: 202, kneeY: 242, ankleY: 274, footY: 290, shoulderW: 38, waistW: 31, hipW: 34, armLen: 60, armW: 13 },
-  enfant: { headScale: 0.97, chin: 96, shoulderY: 107, waistY: 170, hipY: 190, kneeY: 238, ankleY: 273, footY: 290, shoulderW: 37, waistW: 29, hipW: 33, armLen: 66, armW: 12 },
-};
+/** Corps « enfant » : la tête fait ~30 % de la hauteur totale ; jambes un peu courtes et épaisses. */
+export const ANCHORS: Anchors = { headScale: 0.94, chin: 98, shoulderY: 111, waistY: 174, hipY: 194, kneeY: 239, ankleY: 273, footY: 290, shoulderW: 37, waistW: 29, hipW: 33, armLen: 64, armW: 12 };
 
 export const FIGURE_W = 200;
 export const FIGURE_H = 300;
@@ -71,8 +66,8 @@ export function bodyShapes(a: Anchors, look: Look): { back: Shape[]; front: Shap
   const leg = (side: -1 | 1): Shape[] => {
     const outer = cx + side * a.hipW;
     const inner = cx + side * 2.5;
-    const ankleO = cx + side * 19;
-    const ankleI = cx + side * 7;
+    const ankleO = cx + side * 21;
+    const ankleI = cx + side * 5;
     const d = `M ${outer} ${a.hipY - 4} L ${inner} ${a.hipY - 4} Q ${inner + side * -1} ${a.kneeY} ${ankleI} ${a.ankleY} L ${ankleO} ${a.ankleY} Q ${outer - side * 1} ${a.kneeY} ${outer} ${a.hipY - 4} Z`;
     const shoeX = cx + side * 14;
     const toe = cx + side * 21;
@@ -92,16 +87,18 @@ export function bodyShapes(a: Anchors, look: Look): { back: Shape[]; front: Shap
   const arm = (side: -1 | 1): Shape[] => {
     const sx = cx + side * (a.shoulderW - 5);
     const sy = a.shoulderY + 12;
-    const ex = cx + side * (a.shoulderW + 4);
-    const ey = sy + a.armLen * 0.52;
-    const wx = cx + side * (a.shoulderW + 8);
+    const ex = cx + side * (a.shoulderW + 9);
+    const ey = sy + a.armLen * 0.5;
+    const wx = cx + side * (a.shoulderW + 11);
     const wy = sy + a.armLen;
     const stroke = (d: string, col: string, w: number): Shape => path(d, 'none', { stroke: col, sw: w });
     const out: Shape[] = [];
-    out.push(stroke(`M ${sx} ${sy} Q ${ex + side * 1} ${ey - 4} ${ex} ${ey}`, skin, a.armW - 1));
-    out.push(stroke(`M ${ex} ${ey} Q ${wx} ${ey + 8} ${wx} ${wy}`, skin, a.armW - 2));
-    out.push(circle(wx + side * 0.5, wy + 5, a.armW * 0.62, skin));
-    out.push(ellipse(wx - side * 4.5, wy + 2, 3.6, 5.8, skin));
+    out.push(stroke(`M ${sx} ${sy} Q ${ex} ${ey - 6} ${ex} ${ey}`, skin, a.armW - 1));
+    out.push(stroke(`M ${ex} ${ey} Q ${ex + side * 1} ${ey + 9} ${wx} ${wy}`, skin, a.armW - 2));
+    // main en moufle : paume arrondie, pouce vers le corps
+    out.push(ellipse(wx, wy + 6, a.armW * 0.62, a.armW * 0.8, skin));
+    out.push(path(`M ${wx - side * 3} ${wy + 3} Q ${wx - side * 10} ${wy + 5} ${wx - side * 7.5} ${wy + 11.5} Q ${wx - side * 5} ${wy + 12} ${wx - side * 3} ${wy + 9} Z`, skin));
+    out.push(ellipse(wx, wy + 6, a.armW * 0.62, a.armW * 0.8, 'url(#fig-shade)', { opacity: 0.5 }));
     if (look.sleeve !== 'none') {
       const reach = look.sleeve === 'long' ? 0.92 : 0.5;
       const mx = sx + (wx - sx) * reach * 0.7 + (ex - sx) * (look.sleeve === 'long' ? 0.5 : 0.35);
@@ -131,7 +128,8 @@ export function bodyShapes(a: Anchors, look: Look): { back: Shape[]; front: Shap
   const front: Shape[] = [
     path(`M ${cx - 17} ${sy - 4} Q ${cx} ${sy + 15} ${cx + 17} ${sy - 4} L ${cx + 22} ${sy + 8} L ${cx - 22} ${sy + 8} Z`, top),
     path(`M ${cx - 17} ${sy - 4} Q ${cx} ${sy + 15} ${cx + 17} ${sy - 4}`, 'none', { stroke: darken(top, 0.2), sw: 2.2 }),
-    ellipse(cx, a.chin + 6 * a.headScale, 19 * a.headScale, 7 * a.headScale, '#4a2a1a', { opacity: 0.2 }),
+    // ombre douce du menton sur le cou : petite, transparente
+    ellipse(cx, a.chin + 4 * a.headScale, 13 * a.headScale, 3.6 * a.headScale, darken(skin, 0.25), { opacity: 0.32 }),
   ];
   return { back, front };
 }
@@ -162,9 +160,8 @@ function headLayers(config: AvatarConfig): AvatarLayer[] {
 })
 export class LabFigure {
   readonly config = input.required<AvatarConfig>();
-  readonly proportion = input<Proportion>('enfant');
 
-  protected readonly anchors = computed(() => ANCHORS[this.proportion()]);
+  protected readonly anchors = computed(() => ANCHORS);
   protected readonly body = computed(() => bodyShapes(this.anchors(), lookOf(this.config())));
   protected readonly head = computed(() => {
     const layers = headLayers(this.config());

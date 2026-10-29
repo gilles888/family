@@ -3,9 +3,7 @@ import {
   CHEST_FRONT, CURTAINS, DIE_FRONT, HAT_BEANIE, HAT_CAP, HAT_CROWN, MIRROR, PIG_SPRITE, POSTER, SHOP_DOOR, SIGN, WINDOW_FRAME, WOOD,
   WOOD_DARK, WOOD_LIGHT, drawers, wardrobeDoors, wardrobeInside, windowView,
 } from './lab-art';
-import { Box, Layer, Projection, V3, box, decal, floorEllipse, isometric, perspective, poly, polyline, quad, shadowOf, sprite } from './lab-3d';
-
-export type Direction = 'A' | 'B' | 'C';
+import { Box, Layer, Projection, V3, box, decal, floorEllipse, perspective, poly, polyline, quad, shadowOf, sprite } from './lab-3d';
 
 export interface RoomModel {
   layers: Layer[];
@@ -48,15 +46,10 @@ function onWall(pr: Projection, f: Frame, a0: number, n: number, yTop: number, w
 
 const sorted = <T extends { key: number }>(items: T[]) => items.sort((x, y) => x.key - y.key);
 
-/** Pièce complète pour une direction de style : A (face, 2,5D), B (en coin, perspective), C (isométrique). */
-export function buildRoom(dir: Direction, opts: { armoireOpen: boolean; night?: boolean }): RoomModel {
-  const dims: Dims = dir === 'C' ? { W: 420, Dp: 420, H: 250 } : dir === 'A' ? { W: 640, Dp: 580, H: 280 } : { W: 640, Dp: 540, H: 280 };
-  const pr =
-    dir === 'A'
-      ? perspective({ vx: 500, vy: 250, k0: 1.4, camX: 320, camY: 105, camZ: 1000 })
-      : dir === 'B'
-        ? perspective({ vx: 660, vy: 250, k0: 1.0, camX: 330, camY: 105, camZ: 800 })
-        : isometric({ cx: 500, cy: 228, k: 0.9 });
+/** Pièce complète en direction A : vue de face, 2,5D douce. */
+export function buildRoom(opts: { armoireOpen: boolean; night?: boolean }): RoomModel {
+  const dims: Dims = { W: 760, Dp: 360, H: 280 };
+  const pr = perspective({ vx: 500, vy: 270, k0: 1.28, camX: 380, camY: 70, camZ: 1000 });
   const { W, Dp, H } = dims;
   const L: Layer[] = [];
   const push = (...layers: Layer[]) => L.push(...layers);
@@ -67,28 +60,23 @@ export function buildRoom(dir: Direction, opts: { armoireOpen: boolean; night?: 
   // ---------- murs, plafond, sol
   const wallBase = '#fde4d2';
   const floorBase = '#e9c9a0';
-  const showRight = dir === 'A';
-  const showLeft = dir !== 'A' || true;
   push({
     name: 'murs',
     shapes: [
-      ...(showLeft ? [quad(pr, [[0, 0, Dp], [0, 0, 0], [0, H, 0], [0, H, Dp]], darken(wallBase, 0.07)), quad(pr, [[0, 0, Dp], [0, 0, 0], [0, H, 0], [0, H, Dp]], 'url(#lab-wall)')] : []),
-      ...(showRight ? [quad(pr, [[W, 0, 0], [W, 0, Dp], [W, H, Dp], [W, H, 0]], darken(wallBase, 0.12)), quad(pr, [[W, 0, 0], [W, 0, Dp], [W, H, Dp], [W, H, 0]], 'url(#lab-wall)')] : []),
+      quad(pr, [[0, 0, Dp], [0, 0, 0], [0, H, 0], [0, H, Dp]], darken(wallBase, 0.07)),
+      quad(pr, [[0, 0, Dp], [0, 0, 0], [0, H, 0], [0, H, Dp]], 'url(#lab-wall)'),
+      quad(pr, [[W, 0, 0], [W, 0, Dp], [W, H, Dp], [W, H, 0]], darken(wallBase, 0.12)),
+      quad(pr, [[W, 0, 0], [W, 0, Dp], [W, H, Dp], [W, H, 0]], 'url(#lab-wall)'),
       quad(pr, [[0, 0, 0], [W, 0, 0], [W, H, 0], [0, H, 0]], wallBase),
       quad(pr, [[0, 0, 0], [W, 0, 0], [W, H, 0], [0, H, 0]], 'url(#lab-wall)'),
-      ...(dir !== 'C' ? [quad(pr, [[0, H, 0], [W, H, 0], [W, H, Dp], [0, H, Dp]], lighten(wallBase, 0.35))] : []),
+      quad(pr, [[0, H, 0], [W, H, 0], [W, H, Dp], [0, H, Dp]], lighten(wallBase, 0.35)),
     ],
   });
   // papier peint rayé (dos), lambris et plinthes
   const stripes: Shape[] = [];
-  const stripeStep = dir === 'C' ? 36 : 44;
+  const stripeStep = 44;
   for (let x = 12; x < W - 10; x += stripeStep) {
     stripes.push(quad(pr, [[x, 70, 0], [x + 14, 70, 0], [x + 14, H, 0], [x, H, 0]], darken(wallBase, 0.035)));
-  }
-  if (dir === 'C') {
-    for (let z = 12; z < Dp - 10; z += stripeStep) {
-      stripes.push(quad(pr, [[0, 70, z], [0, 70, z + 14], [0, H, z + 14], [0, H, z]], darken(wallBase, 0.08)));
-    }
   }
   push({ name: 'papier-peint', shapes: stripes });
   const wainscot = (corners: (h: number) => V3[], color: string): Shape[] => [
@@ -101,12 +89,12 @@ export function buildRoom(dir: Direction, opts: { armoireOpen: boolean; night?: 
     name: 'lambris',
     shapes: [
       ...wainscot((h) => [[0, 0, 0], [W, 0, 0], [W, h, 0], [0, h, 0]], '#f2c9ab'),
-      ...(showLeft ? wainscot((h) => [[0, 0, Dp], [0, 0, 0], [0, h, 0], [0, h, Dp]], '#e7bb9a') : []),
+      ...wainscot((h) => [[0, 0, Dp], [0, 0, 0], [0, h, 0], [0, h, Dp]], '#e7bb9a'),
     ],
   });
   // sol : lames qui convergent, joints décalés
   const floor: Shape[] = [quad(pr, [[0, 0, 0], [W, 0, 0], [W, 0, Dp], [0, 0, Dp]], floorBase), quad(pr, [[0, 0, 0], [W, 0, 0], [W, 0, Dp], [0, 0, Dp]], 'url(#lab-top)')];
-  const board = dir === 'C' ? 44 : 64;
+  const board = 64;
   for (let x = board, i = 1; x < W; x += board, i++) {
     floor.push(polyline([pr.p([x, 0, 0]), pr.p([x, 0, Dp])], '#c9a06e', 1.2, { opacity: 0.7 }));
     for (let z = (i % 2) * 90; z < Dp; z += 180) {
@@ -122,12 +110,12 @@ export function buildRoom(dir: Direction, opts: { armoireOpen: boolean; night?: 
       polyline([pr.p([0, 0, 0]), pr.p([W, 0, 0])], '#3b1d0a', 16, { opacity: 0.32 }),
       polyline([pr.p([0, 0, 0]), pr.p([0, 0, Dp])], '#3b1d0a', 16, { opacity: 0.3 }),
       polyline([pr.p([0, 0, 0]), pr.p([0, H, 0])], '#3b1d0a', 14, { opacity: 0.22 }),
-      ...(showRight ? [polyline([pr.p([W, 0, 0]), pr.p([W, H, 0])], '#3b1d0a', 14, { opacity: 0.2 })] : []),
+      polyline([pr.p([W, 0, 0]), pr.p([W, H, 0])], '#3b1d0a', 14, { opacity: 0.2 }),
     ],
   });
 
   // ---------- fenêtre (vue sur dehors, rideaux, rebord) et lumière
-  const winA = dir === 'C' ? 190 : dir === 'A' ? 300 : 270; // position le long du mur du fond
+  const winA = 160; // position le long du mur du fond
   const winY = 105;
   const winW = 120;
   const winH = 100;
@@ -262,44 +250,23 @@ export function buildRoom(dir: Direction, opts: { armoireOpen: boolean; night?: 
     );
   };
 
-  // ---------- dispositions
-  const figAnchor: V3 = dir === 'A' ? [330, 0, 270] : dir === 'B' ? [330, 0, 340] : [230, 0, 240];
-  if (dir === 'A' || dir === 'B') {
-    const bx = dir === 'A' ? 0 : 118;
-    if (dir === 'A') {
-      armoire(back, 14, 1);
-    } else {
-      armoire(left, 40, 1);
-      chest(left, 230, 0, 6);
-      add(2, onWall(pr, left, 190, 0, 170, 60, 44, POSTER, 'tableau'));
-    }
-    commode(back, dir === 'A' ? 165 : bx, 3);
-    shelf(back, dir === 'A' ? 165 : bx, 112, 168, 2, [
-      { a: 20, shapes: HAT_CAP },
-      { a: 54, shapes: HAT_BEANIE },
-      { a: 88, shapes: HAT_CROWN },
-    ]);
-    const vx = dir === 'A' ? 450 : 420;
-    vanity(back, vx, 4);
-    shelf(back, vx - 6, 124, 188, 2.5, [{ a: 62, shapes: PIG_SPRITE, s: 1.1 }]);
-    shopDoor(back, dir === 'A' ? 566 : 556, 3.5);
-    if (dir === 'A') chest(back, 16, 150, 8);
-  } else {
-    armoire(left, 18, 1);
-    chest(left, 250, 0, 4);
-    shelf(left, 260, 100, 150, 2, [{ a: 50, shapes: PIG_SPRITE, s: 1.05 }]);
-    add(2.2, onWall(pr, left, 150, 0, 190, 60, 44, POSTER, 'tableau'));
-    commode(back, 36, 3);
-    shelf(back, 36, 112, 168, 2.5, [
-      { a: 20, shapes: HAT_CAP },
-      { a: 54, shapes: HAT_BEANIE },
-      { a: 88, shapes: HAT_CROWN },
-    ]);
-    shopDoor(back, 342, 3.5);
-  }
+  // ---------- dispositions : le personnage se tient devant la partie vide du mur (poster), la fenêtre reste dégagée
+  const figAnchor: V3 = [480, 0, 215];
+  armoire(back, 14, 1);
+  commode(back, 310, 3);
+  shelf(back, 310, 112, 168, 2, [
+    { a: 20, shapes: HAT_CAP },
+    { a: 54, shapes: HAT_BEANIE },
+    { a: 88, shapes: HAT_CROWN },
+  ]);
+  add(2.2, onWall(pr, back, 440, 0, 190, 70, 50, POSTER, 'tableau'));
+  vanity(back, 570, 4);
+  shelf(back, 564, 124, 188, 2.5, [{ a: 62, shapes: PIG_SPRITE, s: 1.1 }]);
+  shopDoor(back, 700, 3.5);
+  chest(back, 70, 110, 8);
 
   // tapis sous le personnage, puis meubles du fond vers l'avant
-  push({ name: 'tapis', shapes: [floorEllipse(pr, figAnchor[0], figAnchor[2], dir === 'C' ? 120 : 150, dir === 'C' ? 90 : 100, '#f6a8c4'), floorEllipse(pr, figAnchor[0], figAnchor[2], dir === 'C' ? 100 : 126, dir === 'C' ? 74 : 82, '#ef86ad', { opacity: 0.6 }), floorEllipse(pr, figAnchor[0], figAnchor[2], dir === 'C' ? 84 : 106, dir === 'C' ? 60 : 66, 'none', { stroke: '#ffffff', sw: 2.5, opacity: 0.85 })] });
+  push({ name: 'tapis', shapes: [floorEllipse(pr, figAnchor[0], figAnchor[2], 140, 80, '#f6a8c4'), floorEllipse(pr, figAnchor[0], figAnchor[2], 118, 64, '#ef86ad', { opacity: 0.6 }), floorEllipse(pr, figAnchor[0], figAnchor[2], 98, 52, 'none', { stroke: '#ffffff', sw: 2.5, opacity: 0.85 })] });
   for (const it of sorted(items)) push(...it.layers);
 
   // personnage : debout sur le tapis, ombre au sol
