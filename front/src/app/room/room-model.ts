@@ -307,12 +307,13 @@ export function buildRoom(opts: RoomOptions): RoomModel {
   const figAnchor: V3 = [356, 0, 215];
   armoire(14, 1);
   commode(400, 3);
-  const hatShelf = shelf(400, 112, 168, 2, [
-    { a: 20, shapes: HAT_CAP, cls: 'rack', opens: 'chapeaux' },
-    { a: 54, shapes: HAT_BEANIE, cls: 'rack', opens: 'chapeaux' },
-    { a: 88, shapes: HAT_CROWN, cls: 'rack', opens: 'chapeaux' },
+  // trois chapeaux à plat sur la planche, régulièrement espacés (largeurs ≈ 43, 28 et 30)
+  const hatShelf = shelf(400, 124, 168, 2, [
+    { a: 16, shapes: HAT_CAP, cls: 'rack', opens: 'chapeaux' },
+    { a: 66, shapes: HAT_BEANIE, cls: 'rack', opens: 'chapeaux' },
+    { a: 104, shapes: HAT_CROWN, cls: 'rack', opens: 'chapeaux' },
   ]);
-  spots.chapeaux = bounds(pr, [lbox(back, 400, 512, 0, 24, 168, 198), hatShelf], 6);
+  spots.chapeaux = bounds(pr, [lbox(back, 400, 524, 0, 24, 168, 198), hatShelf], 6);
   vanity(540, 4);
   shelf(534, 124, 188, 2.5, [
     { a: 18, shapes: BOOKS, s: 1.1, cls: 'pig', opens: 'livre' },
@@ -321,7 +322,8 @@ export function buildRoom(opts: RoomOptions): RoomModel {
   spots.tirelire = bounds(pr, [lbox(back, 534 + 56, 534 + 116, 0, 24, 188, 226)], 6);
   spots.livre = bounds(pr, [lbox(back, 534 + 16, 534 + 52, 0, 24, 188, 218)], 6);
   shopDoor(690, 3.5);
-  chest(70, 110, 8);
+  // le coffre contre le mur sous la fenêtre : il ne cache plus le bas de l'armoire ni ses portes ouvertes
+  chest(158, 8, 8);
 
   // tapis sous le personnage, puis meubles du fond vers l'avant
   push({

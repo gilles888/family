@@ -47,6 +47,7 @@ const isNight = (d = new Date()) => d.getHours() >= 20 || d.getHours() < 7;
       class="room"
       [style.--room-ratio]="ratio"
       [style.--px]="tilt().x"
+      [style.--shift]="shift()"
       [style.--py]="tilt().y"
       (pointermove)="onPointer($event)"
       (pointerleave)="tilt.set({ x: 0, y: 0 })"
@@ -132,6 +133,8 @@ export class RoomScene {
   readonly emptyFurniture = input<Partial<Record<RoomSpot, boolean>>>({});
   /** Une affaire est en train d'être glissée (la zone du personnage s'allume). */
   readonly dragging = input(false);
+  /** Décalage du personnage (fraction de sa largeur, < 0 vers la gauche) : il se pousse quand un panneau s'ouvre. */
+  readonly shift = input(0);
   readonly pick = output<RoomSpot>();
   /** Une affaire a été lâchée sur le personnage. */
   readonly dropped = output<CdkDragDrop<unknown, unknown, unknown>>();

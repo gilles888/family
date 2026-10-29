@@ -7,6 +7,7 @@ import { map } from 'rxjs';
 import { FamilyMemberDTO } from '../api-client';
 import { AuthService } from '../auth/auth.service';
 import { AvatarDressingStore, DRESSING_MEMBER } from '../avatar/avatar-dressing-store';
+import { Avatar } from '../avatar/avatar';
 import { AvatarEditor, AvatarEditorData } from '../avatar/avatar-editor';
 import { BuyDialog, BuyDialogData } from '../shop/buy-dialog';
 import { NotificationService } from '../shared/notification.service';
@@ -30,7 +31,7 @@ const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse',
  */
 @Component({
   selector: 'app-room-view',
-  imports: [MatButtonModule, MatIconModule, FurniturePanel, RoomScene],
+  imports: [MatButtonModule, MatIconModule, Avatar, FurniturePanel, RoomScene],
   providers: [{ provide: DRESSING_MEMBER, useFactory: () => inject(ActivatedRoute).snapshot.data['member'] }, AvatarDressingStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(document:keydown.escape)': 'onEscape()' },
@@ -59,6 +60,7 @@ const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse',
         [open]="open()"
         [emptyFurniture]="emptyFurniture()"
         [dragging]="dragging()"
+        [shift]="shift()"
         (pick)="pick($event)"
         (dropped)="dropped($event)"
       />
@@ -82,6 +84,10 @@ const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse',
             </ul>
           }
         </div>
+      }
+
+      @if (open()) {
+        <app-avatar class="peek" [config]="store.config()" [member]="member" [bare]="true" [full]="true" [size]="64" [round]="false" label="" />
       }
 
       @if (open(); as furniture) {
@@ -162,6 +168,12 @@ export class RoomView implements AfterViewInit {
   /** Une affaire est en train d'être glissée. */
   protected readonly dragging = signal(false);
   protected readonly wornOpen = signal(false);
+
+  /** Le personnage se pousse du côté opposé au panneau pour rester visible pendant l'essayage. */
+  protected readonly shift = computed(() => {
+    const furniture = this.open();
+    return furniture ? (this.onLeft(furniture) ? 0.25 : -0.3) : 0;
+  });
 
   /** Le panneau s'ouvre à gauche pour les meubles de droite et du milieu, à droite pour ceux de gauche. */
   protected onLeft(id: FurnitureId): boolean {

@@ -147,7 +147,8 @@ export function wardrobeInside(w: number, h: number): Shape[] {
   const garments: Shape[] = [];
   const n = 7;
   for (let i = 0; i < n; i++) {
-    const x = 8 + (i * (w - 16)) / (n - 1);
+    // les cintres restent dans la penderie (les vêtements dépassaient sur le côté de l'armoire)
+    const x = 16 + (i * (w - 40)) / (n - 1);
     const c = colors[i % colors.length];
     const long = i % 3 === 1;
     garments.push(

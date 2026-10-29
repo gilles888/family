@@ -89,43 +89,32 @@
   color: var(--mat-sys-outline);
 }
 
-.veil {
-  position: absolute;
-  inset: 0;
-  background: rgb(255 255 255 / 0.45);
-  pointer-events: none;
-}
-
-.lock {
+.chip {
   position: absolute;
   right: 3px;
   bottom: 3px;
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  max-width: 40%;
+  padding: 1px 5px 1px 2px;
+  border-radius: 10px;
+  background: #ffd54f;
+  color: #3e2723;
   box-shadow: var(--mat-sys-level1);
+  font: 800 11px / 16px Roboto;
+  white-space: nowrap;
 
-  mat-icon {
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
+  .lock {
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
   }
 }
 
-.price {
-  position: absolute;
-  left: 3px;
-  bottom: 3px;
-  padding: 1px 7px;
-  border-radius: 12px;
-  background: #ffd54f;
-  color: #3e2723;
-  font: 800 13px / 18px Roboto;
-  white-space: nowrap;
+// article pas encore possédé : un peu estompé, mais jamais voilé
+:host .item.locked app-avatar {
+  opacity: 0.82;
 }
 
 .special {

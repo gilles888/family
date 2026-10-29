@@ -39,9 +39,8 @@ import { WardrobeOption } from '../avatar/avatar-wardrobe';
         <span class="tick" aria-hidden="true"><mat-icon>check</mat-icon></span>
       }
       @if (!owned()) {
-        <span class="veil" aria-hidden="true"></span>
-        <span class="lock" aria-hidden="true"><mat-icon>lock</mat-icon></span>
-        <span class="price" aria-hidden="true">🪙 {{ price() }}</span>
+        <!-- cadenas et prix dans un seul petit badge, dans le coin : l'article reste entièrement visible -->
+        <span class="chip" aria-hidden="true"><mat-icon class="lock">lock</mat-icon>{{ price() }}</span>
         <span class="sr" i18n="@@shop.notOwned">À acheter : {{ price() }} 🪙</span>
       }
     </button>

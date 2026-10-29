@@ -88,13 +88,13 @@
 .door-left {
   transform-origin: 0% 50%;
   &.open {
-    transform: perspective(560px) rotateY(-104deg);
+    transform: perspective(520px) rotateY(-78deg);
   }
 }
 .door-right {
   transform-origin: 100% 50%;
   &.open {
-    transform: perspective(560px) rotateY(104deg);
+    transform: perspective(520px) rotateY(78deg);
   }
 }
 
@@ -168,7 +168,8 @@
 }
 .character,
 .drop {
-  translate: calc(var(--px, 0) * 4px) calc(var(--py, 0) * 2px);
+  // parallaxe + décalage quand un panneau est ouvert (--shift : fraction de la largeur du personnage)
+  translate: calc(var(--px, 0) * 4px + var(--shift, 0) * 100%) calc(var(--py, 0) * 2px);
   transition: translate 200ms ease-out;
 }
 

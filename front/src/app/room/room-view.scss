@@ -74,13 +74,18 @@
   top: 2%;
   bottom: 2%;
   right: 2%;
-  width: 38%;
+  width: 32%;
   z-index: 2;
 
   &.left {
     right: auto;
     left: 2%;
   }
+}
+
+.peek {
+  display: none;
+  filter: drop-shadow(0 3px 6px rgb(0 0 0 / 0.3));
 }
 
 .worn {
@@ -141,6 +146,15 @@
 
   .frame {
     width: 200cqw;
+  }
+
+  // l'aperçu du personnage reste visible juste au-dessus du tiroir
+  .peek {
+    display: block;
+    position: fixed;
+    right: 16px;
+    bottom: calc(78px + 46dvh + 6px);
+    z-index: 4;
   }
 
   .side,

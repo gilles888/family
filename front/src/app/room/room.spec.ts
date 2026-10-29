@@ -203,7 +203,7 @@ describe('chambre : meubles ouverts', () => {
     spot(fixture, 'Armoire').click();
     fixture.detectChanges();
     const sorciere = el(fixture).querySelector('app-furniture-panel button.item[aria-label="Sorcière"]')!;
-    expect(sorciere.textContent).toContain('🪙 5');
+    expect(sorciere.textContent).toContain('5 🪙');
     expect(sorciere.querySelector('.lock')).not.toBeNull();
     sorciere.dispatchEvent(new Event('click'));
     fixture.detectChanges();
