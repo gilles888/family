@@ -4,7 +4,7 @@
  * dans leur espace d'origine (200 × 200, menton en y = 133) et sont posées sur le corps par HEAD_TRANSFORM.
  * Le buste affiché ailleurs (avatars ronds) est un recadrage (BUST_FRAME, HEAD_FRAME) de ce même corps entier.
  */
-import { Shape, darken, ellipse, lighten, path, rect } from '../shared/svg/shapes';
+import { Shape, circle, darken, ellipse, lighten, path, rect } from '../shared/svg/shapes';
 import { DropZone } from './avatar-part-types';
 
 export const BODY_W = 200;
@@ -26,7 +26,9 @@ export const HEAD_SCALE_VALUE = HEAD_SCALE;
 const CHIN_Y = 98;
 
 /** Transformation qui pose un dessin de tête (espace 200 × 200) sur le corps. */
-export const HEAD_TRANSFORM = `translate(${100 - 100 * HEAD_SCALE} ${CHIN_Y - HEAD_CHIN * HEAD_SCALE}) scale(${HEAD_SCALE})`;
+/** Pose de repos : la tête est un peu inclinée (rotation autour du menton). */
+const HEAD_TILT = -3;
+export const HEAD_TRANSFORM = `translate(${100 - 100 * HEAD_SCALE} ${CHIN_Y - HEAD_CHIN * HEAD_SCALE}) scale(${HEAD_SCALE}) rotate(${HEAD_TILT} 100 ${HEAD_CHIN})`;
 
 /** Point de l'espace de tête → espace du corps. */
 export function headPoint(x: number, y: number): [number, number] {
@@ -57,11 +59,11 @@ export const ANCHORS = {
   neck: [100, 106] as Point,
   shoulderL: [63, 123] as Point,
   shoulderR: [137, 123] as Point,
-  elbowL: [55, 155] as Point,
-  elbowR: [145, 155] as Point,
+  elbowL: [52, 155] as Point,
+  elbowR: [148, 155] as Point,
   /** Centre de la paume : les objets tenus s'y posent. */
-  handL: [51, 193] as Point,
-  handR: [149, 193] as Point,
+  handL: [47, 193] as Point,
+  handR: [153, 193] as Point,
   waist: [100, 174] as Point,
   hipL: [67, 194] as Point,
   hipR: [133, 194] as Point,
@@ -156,9 +158,11 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
     const inner = cx + side * 2.5;
     const ankleO = cx + side * 21;
     const ankleI = cx + side * 5;
-    const d = `M ${outer} ${hipY - 4} L ${inner} ${hipY - 4} Q ${inner - side} ${kneeY} ${ankleI} ${ankleY} L ${ankleO} ${ankleY} Q ${outer - side} ${kneeY} ${outer} ${hipY - 4} Z`;
-    const shoeX = cx + side * 14;
-    const toe = cx + side * 21;
+    // pose de repos : le poids sur la jambe gauche, la droite un peu relâchée vers l'extérieur
+    const relax = side === 1 ? 3 : 0;
+    const d = `M ${outer} ${hipY - 4} L ${inner} ${hipY - 4} Q ${inner - side + relax} ${kneeY} ${ankleI + relax} ${ankleY} L ${ankleO + relax} ${ankleY} Q ${outer - side + relax} ${kneeY} ${outer} ${hipY - 4} Z`;
+    const shoeX = cx + side * 14 + relax;
+    const toe = cx + side * 21 + relax;
     return [
       path(d, bottom === 'pants' ? pants : skin),
       shade(d),
@@ -177,27 +181,33 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
   };
   back.push(...leg(-1), ...leg(1));
 
-  // bras écartés, coude légèrement plié, main en moufle avec un pouce
+  // bras écartés de quelques degrés, coude un peu plié (le droit un peu plus : pose de repos), main en moufle avec un pouce.
+  // Le bras part de l'intérieur de la manche : épaule arrondie de la couleur du haut, manche plus large que le bras.
   const arm = (side: -1 | 1): Shape[] => {
-    const sx = cx + side * (shoulderW - 5);
-    const ay = sy + 12;
-    const ex = cx + side * (shoulderW + 9);
+    const bend = side === 1 ? 2 : 0;
+    const sx = cx + side * (shoulderW - 6);
+    const ay = sy + 11;
+    const ex = cx + side * (shoulderW + 12 + bend);
     const ey = ay + armLen * 0.5;
-    const wx = cx + side * (shoulderW + 11);
+    const wx = cx + side * (shoulderW + 15);
     const wy = ay + armLen;
     const stroke = (d: string, col: string, w: number): Shape => path(d, 'none', { stroke: col, sw: w });
+    const upper = `M ${sx} ${ay} Q ${ex} ${ey - 8} ${ex} ${ey}`;
     const out: Shape[] = [
-      stroke(`M ${sx} ${ay} Q ${ex} ${ey - 6} ${ex} ${ey}`, skin, armW - 1),
-      stroke(`M ${ex} ${ey} Q ${ex + side} ${ey + 9} ${wx} ${wy}`, skin, armW - 2),
-      ellipse(wx, wy + 6, armW * 0.62, armW * 0.8, skin),
-      path(`M ${wx - side * 3} ${wy + 3} Q ${wx - side * 10} ${wy + 5} ${wx - side * 7.5} ${wy + 11.5} Q ${wx - side * 5} ${wy + 12} ${wx - side * 3} ${wy + 9} Z`, skin),
-      ellipse(wx, wy + 6, armW * 0.62, armW * 0.8, `url(#${ids.shade})`, { opacity: 0.5 }),
+      stroke(upper, skin, armW - 2),
+      stroke(`M ${ex} ${ey} Q ${ex - side * 2} ${ey + 10} ${wx} ${wy}`, skin, armW - 3),
+      // main : moufle arrondie, pouce suggéré vers le corps
+      ellipse(wx, wy + 7, armW * 0.68, armW * 0.88, skin),
+      path(`M ${wx - side * 4} ${wy + 3} Q ${wx - side * 12} ${wy + 5} ${wx - side * 9} ${wy + 13} Q ${wx - side * 6} ${wy + 14} ${wx - side * 4} ${wy + 10} Z`, skin),
+      ellipse(wx, wy + 7, armW * 0.68, armW * 0.88, `url(#${ids.shade})`, { opacity: 0.5 }),
     ];
     if (garment.sleeve !== 'none') {
       const long = garment.sleeve === 'long';
-      const tip = long ? `${wx} ${wy - 4}` : `${sx + (wx - sx) * 0.38 + (ex - sx) * 0.35} ${ay + (wy - ay) * 0.46}`;
-      const d = `M ${sx} ${ay} Q ${ex + side * 2} ${ey - 2} ${tip}`;
-      out.push(stroke(d, top, armW + 2.5), stroke(d, `url(#${ids.shade})`, armW + 2.5));
+      const sw = armW + 4;
+      const tipX = long ? wx : sx + (ex - sx) * 0.9;
+      const tipY = long ? wy - 5 : ay + (ey - ay) * 0.8;
+      const d = long ? `M ${sx} ${ay} Q ${ex + side * 2} ${ey - 4} ${ex} ${ey} Q ${ex - side * 2} ${ey + 10} ${tipX} ${tipY}` : `M ${sx} ${ay} Q ${ex} ${ey - 10} ${tipX} ${tipY}`;
+      out.push(circle(sx, ay, sw / 2, top), stroke(d, top, sw), stroke(d, `url(#${ids.shade})`, sw));
     }
     return out;
   };
@@ -213,11 +223,10 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
     back.push(rect(cx - hipW - 1, hipY - 6, hipW * 2 + 2, 6, 3, darken(top, 0.18)));
   }
 
-  // devant : encolure ronde qui cache le bas du cou, petite ombre du menton
+  // devant : encolure ronde qui cache le bas du cou
   const front: Shape[] = [
     path(`M ${cx - 17} ${sy - 4} Q ${cx} ${sy + 15} ${cx + 17} ${sy - 4} L ${cx + 22} ${sy + 8} L ${cx - 22} ${sy + 8} Z`, top),
     path(`M ${cx - 17} ${sy - 4} Q ${cx} ${sy + 15} ${cx + 17} ${sy - 4}`, 'none', { stroke: darken(top, 0.2), sw: 2.2 }),
-    ellipse(cx, CHIN_Y + 4 * HEAD_SCALE, 13 * HEAD_SCALE, 3.6 * HEAD_SCALE, darken(skin, 0.25), { opacity: 0.32 }),
   ];
   return { back, front };
 }

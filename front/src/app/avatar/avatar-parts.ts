@@ -33,8 +33,10 @@ export const HEAD_SHAPES: Shape[] = [
   circle(140, 94, 9, '$c'),
   circle(60, 94, 4.5, '$d'),
   circle(140, 94, 4.5, '$d'),
-  rect(86, 118, 28, 38, 10, '$d'),
+  // cou court et fin, de la couleur du teint ; l'ombre du menton est une petite ellipse douce sous le visage
+  rect(91, 120, 18, 26, 8, '$c'),
   ellipse(100, 90, 40, 43, '$c'),
+  path('M92 133 Q100 142 108 133 Z', '$d', { opacity: 0.4 }),
   circle(76, 106, 7, '#f48fb1', { opacity: 0.35 }),
   circle(124, 106, 7, '#f48fb1', { opacity: 0.35 }),
 ];

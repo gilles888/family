@@ -13,8 +13,8 @@ export const dots = (pts: number[][], r: number, fill: string, opacity = 1) =>
   pts.map(([x, y]) => circle(x, y, r, fill, { opacity }));
 /** Poignets (revers) : un trait en travers de chaque manche longue. */
 export const cuffs = (color: string) => [
-  line('M45 182 L59 183', color, 5),
-  line('M141 183 L155 182', color, 5),
+  line('M41 182 L55 183', color, 5),
+  line('M145 183 L159 182', color, 5),
 ];
 /** Encolure ronde en côte, par-dessus l'encolure du corps. */
 export const ribCollar = (color: string) =>

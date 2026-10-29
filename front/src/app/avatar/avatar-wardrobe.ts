@@ -170,7 +170,7 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'outfit',
         title: $localize`:@@avatar.group.outfit:Habit`,
         kind: 'thumbs',
-        viewBox: '20 90 160 120',
+        viewBox: '20 40 160 160',
         options: parts('outfit', OUTFITS, 'body'),
       },
       {
@@ -190,7 +190,7 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'costume',
         title: $localize`:@@avatar.group.costume:Déguisement`,
         kind: 'thumbs',
-        viewBox: '0 0 200 200',
+        viewBox: '0 -6 200 240',
         options: parts('costume', PARTS_BY_SLOT.costume, 'body'),
       },
     ],
