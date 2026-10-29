@@ -9,6 +9,8 @@ import {
   randomAvatar,
 } from './avatar-config';
 import { PARTS_BY_SLOT } from './avatar-parts';
+import { ANCHORS, BODY_FRAME, BODY_H, BODY_W, BUST_FRAME, HEAD_FRAME, HEAD_TRANSFORM } from './avatar-body';
+import { ZONES } from './avatar-parts';
 import { LAYER_ORDER } from './avatar-layers';
 import { Avatar } from './avatar';
 
@@ -160,9 +162,7 @@ describe('Avatar', () => {
     expect(el.querySelector('g[data-layer="hair-front"] path')?.getAttribute('fill')).toBe(
       '#6b3e26',
     );
-    expect(el.querySelector('g[data-layer="body"] path:nth-of-type(2)')?.getAttribute('fill')).toBe(
-      '#3b82f6',
-    );
+    expect(el.querySelector('g[data-layer="body"] [fill="#3b82f6"]')).not.toBeNull();
     expect(el.querySelector('g[data-layer="head"] ellipse')?.getAttribute('fill')).toBe('#e0ac69');
   });
 
@@ -175,10 +175,12 @@ describe('Avatar', () => {
 
   it('membre sans avatar : avatar par défaut, toujours le même pour un même id', () => {
     render({ member: { id: 7, nom: 'Léa', couleur: '#E91E63' }, label: 'Léa' });
-    const first = el.innerHTML;
+    // les ids des dégradés d'ombrage sont propres à chaque SVG
+    const html = () => el.innerHTML.replace(/avatar-[a-z-]+-\d+/g, 'avatar-x');
+    const first = html();
     render({ member: { id: 7, nom: 'Léa', couleur: '#E91E63' }, label: 'Léa' });
 
-    expect(el.innerHTML).toBe(first);
+    expect(html()).toBe(first);
     expect(el.querySelector('svg')?.getAttribute('aria-label')).toBe('Léa');
     expect(layers()).not.toContain('hat');
   });
@@ -229,6 +231,42 @@ describe('Avatar', () => {
       render({ config: normalizeAvatar({ ...CONFIG, eyes: 'eyes-round' }, defaultAvatar(1)) });
 
       expect(iris()).toBe(DEFAULT_EYE_COLOR);
+    });
+  });
+
+  describe('le corps unique', () => {
+    it('buste et tête sont des recadrages du même corps entier', () => {
+      render({ config: CONFIG, size: 100 });
+      expect(el.querySelector('svg')?.getAttribute('viewBox')).toBe(BUST_FRAME);
+      render({ config: CONFIG, size: 30 });
+      expect(el.querySelector('svg')?.getAttribute('viewBox')).toBe(HEAD_FRAME);
+      render({ config: CONFIG, size: 100, full: true });
+      expect(el.querySelector('svg')?.getAttribute('viewBox')).toBe(BODY_FRAME);
+      // le dessin est le même : mêmes calques dans les trois cas
+      expect(layers()).toContain('body');
+    });
+
+    it('les calques de tête sont posés sur le corps, le corps est dessiné tel quel', () => {
+      render({ config: CONFIG });
+      expect(el.querySelector('g[data-layer="head"]')?.getAttribute('transform')).toBe(HEAD_TRANSFORM);
+      expect(el.querySelector('g[data-layer="body"]')?.getAttribute('transform')).toBeNull();
+    });
+
+    it('les zones sont dans l\'espace du corps (200 × 300) et la tête est au-dessus du torse', () => {
+      for (const [x, y, w, h] of Object.values(ZONES)) {
+        expect(x).toBeGreaterThanOrEqual(0);
+        expect(y).toBeGreaterThanOrEqual(0);
+        expect(x + w).toBeLessThanOrEqual(BODY_W);
+        expect(y + h).toBeLessThanOrEqual(BODY_H);
+      }
+      expect(ZONES.hat[1]).toBeLessThan(ZONES.face[1]);
+      expect(ZONES.face[1] + ZONES.face[3]).toBeLessThanOrEqual(ZONES.body[1] + 8);
+    });
+
+    it('les repères se suivent de haut en bas', () => {
+      const ys = [ANCHORS.chin, ANCHORS.neck, ANCHORS.shoulderL, ANCHORS.elbowL, ANCHORS.handL, ANCHORS.hipL, ANCHORS.kneeL, ANCHORS.footL].map((p) => p[1]);
+      expect(ys).toEqual([...ys].sort((a, b) => a - b));
+      expect(ANCHORS.footL[1]).toBe(290);
     });
   });
 });

@@ -1,5 +1,6 @@
 import { SeasonId } from '../theme/seasons';
 import { Shape } from '../shared/svg/shapes';
+import type { Garment } from './avatar-body';
 
 /** Emplacements : une pièce posée va toujours au sien. */
 export type AvatarSlot =
@@ -38,6 +39,10 @@ export interface AvatarPart extends PartMeta {
   slot: AvatarSlot;
   /** Calque principal. */
   shapes: Shape[];
+  /** Espace de dessin : « body » = corps entier 200 × 300 (repères ANCHORS) ; sinon espace de tête 200 × 200. */
+  space?: 'body';
+  /** Habits : manches et bas (sinon déduits de l'id par garmentOf). */
+  garment?: Garment;
   /** Cheveux : partie derrière la tête (cheveux longs, afro…). */
   back?: Shape[];
   /** Habits et déguisements : partie devant le cou (col, capuche…), dessinée après la tête. */

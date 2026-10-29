@@ -34,7 +34,7 @@
         dragged()?.kind === 'option' ? zoneStyle($any(dragged()).option.zone)['height'] : null
       "
     >
-      <app-avatar [config]="shown()" [size]="null" [round]="false" [label]="member.nom ?? ''" />
+      <app-avatar [config]="shown()" [size]="null" [full]="true" [round]="false" [label]="member.nom ?? ''" />
       @if (dragged(); as d) {
         @if (d.kind === 'option') {
           <div class="zone" [class.over]="overStage()" aria-hidden="true"></div>

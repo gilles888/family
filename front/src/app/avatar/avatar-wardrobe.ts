@@ -1,3 +1,4 @@
+import { headViewBox } from './avatar-body';
 import { AvatarConfig } from './avatar-config';
 import { SeasonId } from '../theme/seasons';
 import {
@@ -115,7 +116,7 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'eyes',
         title: $localize`:@@avatar.group.eyes:Yeux`,
         kind: 'thumbs',
-        viewBox: '55 55 90 90',
+        viewBox: headViewBox('55 55 90 90'),
         options: parts('eyes', EYES, 'eyes'),
       },
       {
@@ -128,14 +129,14 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'mouth',
         title: $localize`:@@avatar.group.mouth:Bouche`,
         kind: 'thumbs',
-        viewBox: '55 55 90 90',
+        viewBox: headViewBox('55 55 90 90'),
         options: parts('mouth', MOUTHS, 'mouth'),
       },
       {
         id: 'makeup',
         title: $localize`:@@avatar.group.makeup:Maquillage et masques`,
         kind: 'thumbs',
-        viewBox: '40 40 120 110',
+        viewBox: headViewBox('40 40 120 110'),
         options: parts('face', FACES, 'face'),
       },
     ],
@@ -149,7 +150,7 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'hair',
         title: $localize`:@@avatar.group.hairStyle:Coiffure`,
         kind: 'thumbs',
-        viewBox: '20 10 160 160',
+        viewBox: headViewBox('20 10 160 160'),
         options: parts('hair', HAIRS, 'hair'),
       },
       {
@@ -169,7 +170,7 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'outfit',
         title: $localize`:@@avatar.group.outfit:Habit`,
         kind: 'thumbs',
-        viewBox: '20 80 160 120',
+        viewBox: '20 90 160 120',
         options: parts('outfit', OUTFITS, 'body'),
       },
       {
@@ -203,7 +204,7 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'hat',
         title: $localize`:@@avatar.group.hat:Chapeau`,
         kind: 'thumbs',
-        viewBox: '20 0 160 160',
+        viewBox: headViewBox('20 0 160 160'),
         options: parts('hat', HATS, 'hat'),
       },
     ],
@@ -217,7 +218,7 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'accessory',
         title: $localize`:@@avatar.group.accessory:Accessoire`,
         kind: 'thumbs',
-        viewBox: '30 40 140 140',
+        viewBox: headViewBox('30 40 140 140'),
         options: parts('accessory', ACCESSORIES, 'face'),
       },
     ],
@@ -231,7 +232,7 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'back',
         title: $localize`:@@avatar.group.back:Cape, ailes, sac`,
         kind: 'thumbs',
-        viewBox: '0 60 200 140',
+        viewBox: '0 60 200 150',
         options: parts('back', BACKS, 'body'),
       },
     ],
@@ -245,7 +246,7 @@ export const WARDROBE: WardrobeCategory[] = [
         id: 'held',
         title: $localize`:@@avatar.group.held:Objet tenu`,
         kind: 'thumbs',
-        viewBox: '100 90 100 110',
+        viewBox: '50 120 110 110',
         options: parts('held', HELD, 'body'),
       },
     ],

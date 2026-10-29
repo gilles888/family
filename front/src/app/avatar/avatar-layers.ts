@@ -7,6 +7,7 @@ import {
   SKIN_TONES,
   findPart,
 } from './avatar-parts';
+import { BodyIds, DEFAULT_BODY_IDS, bodyShapes, garmentOf } from './avatar-body';
 import { PaintContext, Shape, isHexColor, resolvePaint } from '../shared/svg/shapes';
 
 /**
@@ -35,6 +36,8 @@ export type ResolvedShape = Shape;
 
 export interface AvatarLayer {
   key: LayerKey;
+  /** Espace de dessin : « head » (200 × 200, posé sur le corps par HEAD_TRANSFORM) ou « body » (200 × 300). */
+  space: 'head' | 'body';
   /** Pièce dessinée (id du catalogue), pour les tests et le débogage. */
   part: string;
   shapes: ResolvedShape[];
@@ -49,6 +52,8 @@ export interface AvatarDrawing {
 /** Options de rendu : la couleur du membre sert à certains objets (le ballon). */
 export interface DrawOptions {
   memberColor?: string;
+  /** Ids des dégradés d'ombrage du corps (uniques par SVG). */
+  ids?: BodyIds;
 }
 
 /**
@@ -65,6 +70,12 @@ export function drawAvatar(config: AvatarConfig, options: DrawOptions = {}): Ava
   const hat = costume?.includesHat || costume?.hidesHat ? undefined : findPart('hat', config.hat);
   const gradient = BACKGROUND_GRADIENTS.find((g) => g.id === config.background);
   const outfitColor = ctx(config.outfitColor);
+  const body = bodyShapes(
+    { skin, top: config.outfitColor, garment: outfit?.garment ?? garmentOf(outfit?.id ?? config.outfit) },
+    options.ids ?? DEFAULT_BODY_IDS,
+  );
+  // pièce déjà redessinée pour le corps : ses formes viennent par-dessus le corps de base
+  const own = outfit?.space === 'body';
   const memberColor = isHexColor(options.memberColor) ? options.memberColor : config.outfitColor;
 
   const layers: AvatarLayer[] = [
@@ -74,10 +85,10 @@ export function drawAvatar(config: AvatarConfig, options: DrawOptions = {}): Ava
       findPart('back', config.back)?.shapes,
       ctx(config.outfitColor),
     ),
-    layer('body', costume ? costume.id : config.outfit, outfit?.shapes, outfitColor),
+    layer('body', costume ? costume.id : config.outfit, [...body.back, ...(own ? (outfit?.shapes ?? []) : [])], outfitColor, 'body'),
     layer('hair-back', config.hair, hair?.back, ctx(config.hairColor)),
     layer('head', config.skin, HEAD_SHAPES, ctx(skin)),
-    layer('body-front', costume ? costume.id : config.outfit, outfit?.front, outfitColor),
+    layer('body-front', costume ? costume.id : config.outfit, [...body.front, ...(own ? (outfit?.front ?? []) : [])], outfitColor, 'body'),
     layer('face', config.face ?? NONE, findPart('face', config.face)?.shapes, ctx(skin)),
     layer(
       'eyes',
@@ -110,9 +121,11 @@ function layer(
   part: string,
   shapes: Shape[] | undefined,
   ctx: PaintContext,
+  space: 'head' | 'body' = 'head',
 ): AvatarLayer {
   return {
     key,
+    space,
     part,
     shapes: (shapes ?? []).map((s) => ({
       ...s,

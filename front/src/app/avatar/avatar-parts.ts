@@ -1,6 +1,7 @@
 /*
  * Catalogue des pièces d'avatar : dessins originaux, style cartoon plat et arrondi, viewBox commun 0 0 200 200.
- * Tête centrée en (100, 90), yeux à y = 90, bouche vers y = 110, épaules à partir de y = 150.
+ * Pièces de tête : espace 200 × 200, tête centrée en (100, 90), yeux à y = 90, bouche vers y = 110, menton y = 133 ;
+ * elles sont posées sur le corps (voir avatar-body.ts). Pièces de corps (`space: 'body'`) : espace 200 × 300, repères ANCHORS.
  *
  * Ajouter une pièce : une entrée dans la liste de son emplacement (id stable, jamais réutilisé : il est enregistré
  * dans les avatars des membres), libellé traduit ($localize + messages.nl.xlf). Retirer une pièce : les avatars qui
@@ -22,18 +23,7 @@ import {
 
 export * from './avatar-part-types';
 
-/** Rectangle [x, y, largeur, hauteur] de chaque zone, dans le viewBox 0 0 200 200. */
-export const ZONES: Record<DropZone, readonly [number, number, number, number]> = {
-  hair: [42, 26, 116, 112],
-  hat: [36, 0, 128, 82],
-  face: [56, 46, 88, 90],
-  eyes: [62, 74, 76, 32],
-  mouth: [78, 98, 44, 30],
-  ears: [44, 82, 112, 34],
-  neck: [64, 134, 72, 58],
-  body: [30, 140, 140, 60],
-  background: [0, 0, 200, 200],
-};
+export { ZONES } from './avatar-body';
 
 // ---------- tête (commune) et teints
 

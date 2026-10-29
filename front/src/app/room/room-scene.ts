@@ -96,6 +96,7 @@ const SPOTS = Object.keys(FURNITURE_RECT) as RoomSpot[];
         [config]="config()"
         [member]="member()"
         [bare]="true"
+        [full]="true"
         [round]="false"
         [size]="null"
         [label]="member().nom ?? ''"

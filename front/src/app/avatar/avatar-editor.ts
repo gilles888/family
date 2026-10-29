@@ -45,7 +45,7 @@ const DRAG_DELAY = { touch: 180, mouse: 0 };
 /** Position CSS (en %) d'une zone du personnage. */
 function zoneStyle(zone: DropZone): Record<string, string> {
   const [x, y, w, h] = ZONES[zone];
-  return { left: `${x / 2}%`, top: `${y / 2}%`, width: `${w / 2}%`, height: `${h / 2}%` };
+  return { left: `${x / 2}%`, top: `${y / 3}%`, width: `${w / 2}%`, height: `${h / 3}%` };
 }
 
 /** Réduction des animations demandée par le système. */

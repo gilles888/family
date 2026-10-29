@@ -3,14 +3,12 @@ import { FamilyMemberDTO } from '../api-client';
 import { ActiveTheme } from '../theme/active-theme';
 import { SeasonId, toApiTheme } from '../theme/seasons';
 import { SvgShapes } from '../shared/svg/svg-shapes';
+import { BODY_FRAME, BUST_FRAME, HEAD_FRAME, HEAD_TRANSFORM } from './avatar-body';
 import { AvatarConfig, defaultAvatar, normalizeAvatar } from './avatar-config';
 import { LayerKey, drawAvatar } from './avatar-layers';
 
 let nextId = 0;
 
-const FULL_FRAME = '0 0 200 200';
-/** Tête et haut des épaules. */
-const HEAD_FRAME = '36 22 128 128';
 /** En dessous (px), cadrage sur la tête. */
 const SMALL = 40;
 
@@ -25,7 +23,8 @@ const SMALL = 40;
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[style.width]': 'size() === null ? "100%" : size() + "px"',
-    '[style.height]': 'size() === null ? "auto" : size() + "px"',
+    '[style.height]': 'size() === null ? "auto" : (full() ? size()! * 1.5 : size()) + "px"',
+    '[class.full]': 'full()',
     '[class.round]': 'round()',
   },
   template: `
@@ -38,27 +37,42 @@ const SMALL = 40;
       [attr.aria-hidden]="label() ? null : 'true'"
     >
       @let bg = drawing().background;
-      @if (only() || bare()) {
-        <!-- pièce seule, ou personnage dans un décor : pas de fond -->
-      } @else if ('gradient' in bg) {
-        <defs>
+      <defs>
+        <!-- ombrage du corps : ids propres à ce SVG -->
+        <linearGradient [attr.id]="ids.shade" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#fff" stop-opacity="0.18" />
+          <stop offset="0.45" stop-color="#000" stop-opacity="0" />
+          <stop offset="1" stop-color="#1a0b2e" stop-opacity="0.3" />
+        </linearGradient>
+        <linearGradient [attr.id]="ids.shadeV" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1a0b2e" stop-opacity="0.22" />
+          <stop offset="0.25" stop-color="#1a0b2e" stop-opacity="0" />
+        </linearGradient>
+        @if (!only() && !bare() && 'gradient' in bg) {
           <linearGradient [attr.id]="gradientId" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" [attr.stop-color]="bg.gradient.from" />
             <stop offset="1" [attr.stop-color]="bg.gradient.to" />
           </linearGradient>
-        </defs>
+        }
+      </defs>
+      @if (only() || bare()) {
+        <!-- pièce seule, ou personnage dans un décor : pas de fond -->
+      } @else if ('gradient' in bg) {
         <rect
           data-layer="background"
-          width="200"
-          height="200"
+          x="-100"
+          y="-100"
+          width="400"
+          height="500"
           [attr.fill]="'url(#' + gradientId + ')'"
         />
       } @else {
-        <rect data-layer="background" width="200" height="200" [attr.fill]="bg.color" />
+        <rect data-layer="background" x="-100" y="-100" width="400" height="500" [attr.fill]="bg.color" />
       }
       @for (layer of drawing().layers; track layer.key) {
         <g
           [attr.data-layer]="layer.key"
+          [attr.transform]="layer.space === 'head' ? headTransform : null"
           [attr.data-part]="layer.part"
           [appShapes]="layer.shapes"
         ></g>
@@ -73,6 +87,10 @@ const SMALL = 40;
       border-radius: 16%;
       line-height: 0;
       aspect-ratio: 1;
+    }
+    :host(.full) {
+      aspect-ratio: 2 / 3;
+      border-radius: 16%;
     }
     :host(.round) {
       border-radius: 50%;
@@ -97,8 +115,10 @@ export class Avatar {
 
   protected readonly frame = computed(() => {
     const size = this.size();
-    return this.viewBox() ?? (size !== null && size < SMALL ? HEAD_FRAME : FULL_FRAME);
+    return this.viewBox() ?? (this.full() ? BODY_FRAME : size !== null && size < SMALL ? HEAD_FRAME : BUST_FRAME);
   });
+  /** Personnage entier (200 × 300) au lieu du buste ; `size` est alors la largeur. */
+  readonly full = input(false);
   readonly round = input(true);
   /** Libellé accessible ; par défaut le nom du membre. Vide = décoratif (le nom est déjà écrit à côté). */
   readonly ariaLabel = input<string | undefined>(undefined, { alias: 'label' });
@@ -111,7 +131,10 @@ export class Avatar {
 
   private readonly activeTheme = inject(ActiveTheme).id;
 
-  protected readonly gradientId = `avatar-gradient-${nextId++}`;
+  private readonly uid = nextId++;
+  protected readonly gradientId = `avatar-gradient-${this.uid}`;
+  protected readonly ids = { shade: `avatar-shade-${this.uid}`, shadeV: `avatar-shade-v-${this.uid}` };
+  protected readonly headTransform = HEAD_TRANSFORM;
 
   protected readonly label = computed(() => this.ariaLabel() ?? '');
 
@@ -119,7 +142,7 @@ export class Avatar {
     const member = this.member();
     const fallback = defaultAvatar(member?.id ?? 0, member?.couleur);
     const raw = this.config() ?? themeOutfit(member, this.activeTheme()) ?? member?.avatarConfig;
-    const drawing = drawAvatar(normalizeAvatar(raw, fallback), { memberColor: member?.couleur });
+    const drawing = drawAvatar(normalizeAvatar(raw, fallback), { memberColor: member?.couleur, ids: this.ids });
     const only = this.only();
     return only
       ? { ...drawing, layers: drawing.layers.filter((l) => (only as string[]).includes(l.key)) }
