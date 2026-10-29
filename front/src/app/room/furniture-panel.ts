@@ -5,7 +5,7 @@ import { Avatar } from '../avatar/avatar';
 import { AvatarDressingStore } from '../avatar/avatar-dressing-store';
 import { WardrobeOption } from '../avatar/avatar-wardrobe';
 import { PiggyBank } from '../shop/piggy-bank';
-import { FurnitureId } from './room-art';
+import { FurnitureId } from './room-model';
 import { furnitureGroups } from './room-content';
 import { RoomItem } from './room-item';
 import { SPOT_LABELS } from './room-scene';

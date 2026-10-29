@@ -1,4 +1,4 @@
-import { Shape, circle, ellipse, line, path, rect, star } from '../../shared/svg/shapes';
+import { Shape, circle, darken, ellipse, line, path, rect, star } from '../shared/svg/shapes';
 
 /** Dessins 2D des maquettes (décors collés sur les murs, accessoires posés), en unités du monde. */
 
@@ -6,31 +6,34 @@ export const WOOD = '#dcae74';
 export const WOOD_DARK = '#b98550';
 export const WOOD_LIGHT = '#f0cf9f';
 
-/** Vue par la fenêtre : ciel dégradé, soleil, nuages, colline, arbre (120 × 100). */
-export function windowView(night = false): Shape[] {
-  return night
-    ? [
-        rect(0, 0, 120, 100, 0, '#1d2b64'),
-        circle(88, 24, 11, '#fff9c4'),
-        circle(92, 21, 10, '#1d2b64'),
-        ...[[20, 18], [44, 30], [70, 12], [30, 50], [100, 54]].map(([x, y]) => star(x, y, 3.2, 1.4, '#fff59d')),
-        ellipse(40, 104, 70, 24, '#1b4332'),
-      ]
-    : [
-        rect(0, 0, 120, 100, 0, 'url(#lab-sky)'),
-        circle(92, 24, 13, '#fff3b0'),
-        circle(92, 24, 20, '#fff3b0', { opacity: 0.35 }),
-        ellipse(32, 26, 20, 8, '#ffffff', { opacity: 0.95 }),
-        ellipse(46, 22, 14, 7, '#ffffff', { opacity: 0.95 }),
-        ellipse(74, 48, 16, 6, '#ffffff', { opacity: 0.85 }),
-        ellipse(30, 104, 74, 30, '#7cc576'),
-        ellipse(100, 108, 60, 26, '#5fae62'),
-        // arbre : tronc, feuillage en trois boules
-        rect(27, 58, 7, 32, 2, '#8d6e63'),
-        circle(30, 50, 15, '#43a047'),
-        circle(21, 58, 11, '#4caf50'),
-        circle(40, 57, 11, '#388e3c'),
-      ];
+export type WindowSeason = 'ete' | 'automne' | 'hiver' | 'printemps';
+
+/**
+ * Vue par la fenêtre (120 × 100) : le ciel est le fond choisi dans la garde-robe (`sky`), puis soleil ou lune et étoiles,
+ * nuages, colline et arbre qui suivent la saison (feuilles vertes, orangées, roses ou neige).
+ */
+export function windowView(opts: { sky: string; night?: boolean; season?: WindowSeason }): Shape[] {
+  const { sky, night = false, season = 'ete' } = opts;
+  const ground = season === 'hiver' ? ['#f4f8fb', '#e3edf5'] : season === 'automne' ? ['#c9a85a', '#b08d45'] : ['#7cc576', '#5fae62'];
+  const crown = season === 'hiver' ? ['#fafcff', '#e3edf5', '#dbe7f1'] : season === 'automne' ? ['#e65100', '#fb8c00', '#ef6c00'] : season === 'printemps' ? ['#f48fb1', '#f8bbd0', '#f06292'] : ['#43a047', '#4caf50', '#388e3c'];
+  const trunk = '#8d6e63';
+  const sunMoon = night
+    ? [circle(88, 24, 11, '#fff9c4'), circle(92, 21, 10, '#2a3a78', { opacity: 0.9 }), ...[[20, 18], [44, 30], [70, 12], [30, 50], [100, 54]].map(([x, y]) => star(x, y, 3.2, 1.4, '#fff59d'))]
+    : [circle(92, 24, 20, '#fff3b0', { opacity: 0.35 }), circle(92, 24, 13, '#fff3b0'), ellipse(32, 26, 20, 8, '#ffffff', { opacity: 0.95 }), ellipse(46, 22, 14, 7, '#ffffff', { opacity: 0.95 }), ellipse(74, 48, 16, 6, '#ffffff', { opacity: 0.85 })];
+  return [
+    rect(0, 0, 120, 100, 0, sky),
+    ...(night ? [rect(0, 0, 120, 100, 0, '#12204f', { opacity: 0.55 })] : []),
+    ...sunMoon,
+    ellipse(30, 104, 74, 30, night ? darken(ground[0], 0.45) : ground[0]),
+    ellipse(100, 108, 60, 26, night ? darken(ground[1], 0.45) : ground[1]),
+    // arbre : tronc, feuillage en trois boules
+    rect(27, 58, 7, 32, 2, trunk),
+    circle(30, 50, 15, night ? darken(crown[0], 0.4) : crown[0]),
+    circle(21, 58, 11, night ? darken(crown[1], 0.4) : crown[1]),
+    circle(40, 57, 11, night ? darken(crown[2], 0.4) : crown[2]),
+    ...(season === 'automne' ? [circle(60, 80, 2.6, '#e65100'), circle(72, 70, 2.2, '#fb8c00')] : []),
+    ...(season === 'hiver' ? [0, 1, 2, 3, 4, 5].map((i) => circle(14 + i * 19, 12 + ((i * 29) % 70), 1.8, '#ffffff', { opacity: 0.9 })) : []),
+  ];
 }
 
 /** Cadre blanc de la fenêtre, croisillons et reflet sur la vitre (120 × 100). */
@@ -38,24 +41,25 @@ export const WINDOW_FRAME: Shape[] = [
   rect(-5, -5, 130, 110, 6, 'none', { stroke: '#fffdf8', sw: 10 }),
   line('M60 0 V100', '#fffdf8', 5),
   line('M0 50 H120', '#fffdf8', 5),
-  path('M8 8 L52 8 L8 56 Z', 'url(#lab-glass)'),
-  path('M68 56 L112 56 L112 92 Z', 'url(#lab-glass)', { opacity: 0.6 }),
+  path('M8 8 L52 8 L8 56 Z', 'url(#room-glass)'),
+  path('M68 56 L112 56 L112 92 Z', 'url(#room-glass)', { opacity: 0.6 }),
 ];
 
-/** Rideaux roses relevés sur les côtés (120 × 100). */
-export const CURTAINS: Shape[] = [
+/** Rideaux roses relevés sur les côtés (120 × 100), un pan de chaque côté. */
+export const CURTAIN_LEFT: Shape[] = [
   path('M-8 -10 H22 Q14 40 20 104 H-8 Z', '#f6a9c6'),
-  path('M128 -10 H98 Q106 40 100 104 H128 Z', '#f6a9c6'),
   path('M8 -8 Q4 40 10 102', 'none', { stroke: '#e98bb0', sw: 3, opacity: 0.8 }),
-  path('M112 -8 Q116 40 110 102', 'none', { stroke: '#e98bb0', sw: 3, opacity: 0.8 }),
-  rect(-12, -12, 144, 6, 3, '#8d6e63'),
 ];
-
+export const CURTAIN_RIGHT: Shape[] = [
+  path('M128 -10 H98 Q106 40 100 104 H128 Z', '#f6a9c6'),
+  path('M112 -8 Q116 40 110 102', 'none', { stroke: '#e98bb0', sw: 3, opacity: 0.8 }),
+];
+export const CURTAIN_ROD: Shape[] = [rect(-12, -12, 144, 6, 3, '#8d6e63')];
 /** Miroir ovale de la coiffeuse (60 × 90). */
 export const MIRROR: Shape[] = [
   ellipse(30, 45, 30, 45, WOOD_DARK),
   ellipse(30, 45, 25, 40, '#e3f6ff'),
-  ellipse(30, 45, 25, 40, 'url(#lab-glass)'),
+  ellipse(30, 45, 25, 40, 'url(#room-glass)'),
   path('M14 30 Q20 16 34 12', 'none', { stroke: '#ffffff', sw: 4, opacity: 0.9 }),
 ];
 
@@ -85,6 +89,14 @@ export const POSTER: Shape[] = [
   ellipse(20, 44, 30, 14, '#7cc576'),
   circle(44, 14, 6, '#ffe082'),
   path('M30 40 L38 22 L48 40 Z', '#8d9db6'),
+];
+
+/** Trois livres debout sur l'étagère (origine = base, à gauche ; ≈ 36 de large). */
+export const BOOKS: Shape[] = [
+  rect(0, -26, 9, 26, 2, '#7e57c2'),
+  star(4.5, -13, 3, 1.3, '#ffd54f'),
+  rect(10, -22, 8, 22, 2, '#26a69a'),
+  path('M19 0 L22 -24 L30 -22 L27 0 Z', '#ef5350'),
 ];
 
 /** Tirelire cochon posée (largeur ≈ 46) ; la pièce entre dans la fente sur le dos : elle est dessinée DERRIÈRE le cochon. */
@@ -140,14 +152,14 @@ export function wardrobeInside(w: number, h: number): Shape[] {
     const long = i % 3 === 1;
     garments.push(
       path(`M${x} 30 l-9 8 l3 5 l4 -2 l0 ${long ? 56 : 34} l12 0 l0 -${long ? 56 : 34} l4 2 l3 -5 Z`, c),
-      path(`M${x} 30 l-9 8 l3 5 l4 -2 l0 ${long ? 56 : 34} l12 0 l0 -${long ? 56 : 34} l4 2 l3 -5 Z`, 'url(#lab-h)'),
+      path(`M${x} 30 l-9 8 l3 5 l4 -2 l0 ${long ? 56 : 34} l12 0 l0 -${long ? 56 : 34} l4 2 l3 -5 Z`, 'url(#room-h)'),
       path(`M${x} 30 v-6 q0 -3 3 -3`, 'none', { stroke: '#cfd8dc', sw: 1.4 }),
     );
   }
   return [
     rect(0, 0, w, h, 4, '#6e4526'),
     rect(3, 3, w - 6, h - 6, 3, '#8a5a35'),
-    rect(3, 3, w - 6, h - 6, 3, 'url(#lab-v)'),
+    rect(3, 3, w - 6, h - 6, 3, 'url(#room-v)'),
     line(`M4 20 H${w - 4}`, '#cfd8dc', 2.6),
     ...garments,
     // étagère du bas avec piles et chaussures
@@ -165,22 +177,21 @@ export function drawers(w: number, h: number): Shape[] {
   const dh = (h - 12) / 3;
   return [0, 1, 2].flatMap((i) => [
     rect(5, 4 + i * (dh + 2), w - 10, dh, 3, WOOD_LIGHT),
-    rect(5, 4 + i * (dh + 2), w - 10, dh, 3, 'url(#lab-v)'),
+    rect(5, 4 + i * (dh + 2), w - 10, dh, 3, 'url(#room-v)'),
     rect(w / 2 - 9, 4 + i * (dh + 2) + dh / 2 - 2, 18, 4, 2, '#8d6e63'),
   ]);
 }
 
-/** Portes fermées de l'armoire (w × h) : deux battants à panneaux. */
-export function wardrobeDoors(w: number, h: number): Shape[] {
-  const half = (w - 8) / 2;
-  const door = (x: number, knob: number): Shape[] => [
-    rect(x, 6, half, h - 14, 4, WOOD_LIGHT),
-    rect(x, 6, half, h - 14, 4, 'url(#lab-v)'),
-    rect(x + 8, 18, half - 16, h - 40, 3, 'none', { stroke: WOOD_DARK, sw: 2.2 }),
+/** Un battant de l'armoire (largeur w, hauteur h) : bois, relief, panneau, poignée du côté du milieu. */
+export function wardrobeDoor(w: number, h: number, side: 'left' | 'right'): Shape[] {
+  const knob = side === 'left' ? w - 8 : 8;
+  return [
+    rect(0, 0, w, h, 4, WOOD_LIGHT),
+    rect(0, 0, w, h, 4, 'url(#room-v)'),
+    rect(8, 12, w - 16, h - 24, 3, 'none', { stroke: WOOD_DARK, sw: 2.2 }),
     circle(knob, h / 2, 3.6, '#8d6e63'),
     circle(knob - 1, h / 2 - 1, 1.3, '#d7b899'),
   ];
-  return [...door(4, 4 + half - 9), ...door(4 + half, 4 + half + 9)];
 }
 
 /** Bandes et serrure du coffre (95 × 34). */

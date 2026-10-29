@@ -1,11 +1,11 @@
-import { Shape, darken, lighten, path } from '../../shared/svg/shapes';
+import { Shape, darken, lighten, path } from '../shared/svg/shapes';
 
 /** Mini-moteur 3D pour les maquettes : monde en unités (≈ 7,6 mm), Y vers le haut, mur du fond en Z = 0, mur gauche en X = 0. */
 export type V3 = readonly [number, number, number];
 export type P2 = [number, number];
 
 export interface Projection {
-  kind: 'persp' | 'iso';
+  kind: 'persp';
   p(v: V3): P2;
   /** Pixels par unité à la profondeur de v. */
   scaleAt(v: V3): number;
@@ -24,16 +24,6 @@ export function perspective(c: { vx: number; vy: number; k0: number; camX: numbe
   };
 }
 
-/** Isométrique : les murs X = 0 et Z = 0 se rejoignent au coin du fond, en haut au milieu. */
-export function isometric(c: { cx: number; cy: number; k: number }): Projection {
-  return {
-    kind: 'iso',
-    p: ([x, y, z]) => [c.cx + (x - z) * 0.866 * c.k, c.cy + (x + z) * 0.5 * c.k - y * c.k],
-    scaleAt: () => c.k,
-    toCamera: () => [1, 1, 1],
-  };
-}
-
 export interface Layer {
   shapes: Shape[];
   /** Id d'un filtre défini dans <defs> (ombres floues). */
@@ -46,6 +36,10 @@ export interface Layer {
   clip?: string;
   /** Nom du calque, pour les tests et le débogage. */
   name?: string;
+  /** Classe CSS du calque (pièce qui s'ouvre : porte, tiroir, couvercle…). */
+  cls?: string;
+  /** Meuble dont l'ouverture ajoute la classe « open » à ce calque. */
+  opens?: string;
 }
 
 const fmt = (n: number) => Math.round(n * 10) / 10;
@@ -88,9 +82,8 @@ function facesOf(b: Box): Face[] {
 const dot = (a: V3, b: V3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 
 /** Couleur d'une face selon sa normale : lumière douce venant du haut-gauche (dessus clair, côté droit plus sombre). */
-export function faceColor(base: string, f: Face['name'], kind: Projection['kind']): string {
+export function faceColor(base: string, f: Face['name']): string {
   if (f === 'top') return lighten(base, 0.22);
-  if (kind === 'iso') return f === '+z' ? darken(base, 0.06) : darken(base, 0.26);
   return f === '+z' || f === '-z' ? base : f === '+x' ? darken(base, 0.2) : darken(base, 0.3);
 }
 
@@ -103,8 +96,8 @@ export function box(pr: Projection, b: Box, base: string, opts: { relief?: boole
     const fc: V3 = [(f.c[0][0] + f.c[2][0]) / 2, (f.c[0][1] + f.c[2][1]) / 2, (f.c[0][2] + f.c[2][2]) / 2];
     if (dot(f.n, pr.toCamera(fc)) <= 0) continue;
     const pts = f.c.map((v) => pr.p(v));
-    out.push(poly(pts, faceColor(base, f.name, pr.kind)));
-    if (opts.relief !== false) out.push(poly(pts, f.name === 'top' ? 'url(#lab-top)' : f.name === '+x' || f.name === '-x' ? 'url(#lab-h)' : 'url(#lab-v)'));
+    out.push(poly(pts, faceColor(base, f.name)));
+    if (opts.relief !== false) out.push(poly(pts, f.name === 'top' ? 'url(#room-top)' : f.name === '+x' || f.name === '-x' ? 'url(#room-h)' : 'url(#room-v)'));
     if (f.name === 'top') {
       // arête avant du dessus : un filet clair
       const front = f.c[0] && pr.p(f.c[0]);
@@ -116,7 +109,7 @@ export function box(pr: Projection, b: Box, base: string, opts: { relief?: boole
   return out;
 }
 
-/** Ombre portée au sol d'un volume : son emprise décalée, floue (à mettre dans un calque avec le filtre lab-blur). */
+/** Ombre portée au sol d'un volume : son emprise décalée, floue (à mettre dans un calque avec le filtre room-blur). */
 export function shadowOf(pr: Projection, b: Box, dx = 14, dz = 12, opacity = 0.28): Shape {
   const pts = [[b.x0 + dx, b.z0], [b.x1 + dx, b.z0], [b.x1 + dx, b.z1 + dz], [b.x0 + dx, b.z1 + dz]].map(([x, z]) => pr.p([x, 0, z]));
   return poly(pts, '#3b1d0a', { opacity });
@@ -133,7 +126,7 @@ export function floorEllipse(pr: Projection, cx: number, cz: number, rx: number,
 
 /**
  * Décor plan collé sur un mur : dessiné dans un repère local à plat (origine en haut à gauche, y vers le bas) puis
- * envoyé sur le plan par une matrice affine (exacte en isométrique, très proche en perspective).
+ * envoyé sur le plan par une matrice affine (exacte pour une face parallèle à l'écran).
  */
 export function decal(pr: Projection, origin: V3, along: V3, down: V3, w: number, h: number, shapes: Shape[], name?: string): Layer {
   const o = pr.p(origin);

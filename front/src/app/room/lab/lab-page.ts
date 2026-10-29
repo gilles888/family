@@ -1,13 +1,8 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Avatar } from '../../avatar/avatar';
 import { PARTS_BY_SLOT } from '../../avatar/avatar-parts';
 import { AvatarConfig, normalizeAvatar, defaultAvatar } from '../../avatar/avatar-config';
-import { SvgShapes } from '../../shared/svg/svg-shapes';
-import { LabDefs } from './lab-defs';
-import { ParticlesScope, SeasonParticles } from '../../theme/season-particles';
-import { LabFigure } from './lab-body';
-import { RoomModel, buildRoom } from './lab-rooms';
 
 const DEMO: AvatarConfig = normalizeAvatar(
   { version: 2, skin: 'skin-3', eyes: 'eyes-happy', eyeColor: '#5d4037', mouth: 'mouth-grin', hair: 'hair-ponytail', hairColor: '#6b3e26', outfit: 'outfit-tshirt', outfitColor: '#ec4899', hat: 'none', accessory: 'none', background: '#fde68a' },
@@ -38,37 +33,13 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
  */
 @Component({
   selector: 'app-lab-page',
-  imports: [SvgShapes, LabDefs, LabFigure, SeasonParticles, Avatar],
+  imports: [Avatar],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1>Labo : la chambre</h1>
     <p class="intro">
-      Direction A (2,5D douce, vue de face) et corps « enfant ». Rien n'est appliqué à la vraie chambre.
+      Planches de pièces sur le corps « enfant » (?lot=tenues, deguisements, tetes ou objets). La chambre est sur /chambre/:id.
     </p>
-
-    <section class="direction" id="dir-A">
-      <h2>Chambre</h2>
-      <div class="scenes">
-        @for (s of scenes; track s.label) {
-          <figure>
-            <div class="frame">
-              <svg class="room" viewBox="0 0 1000 430" role="img" [attr.aria-label]="s.label">
-                <defs labDefs></defs>
-                @for (layer of model(s.open).layers; track $index) {
-                  @if (layer.figure) {
-                    <g labFigure [config]="demo" [attr.transform]="layer.transform"></g>
-                  } @else {
-                    <g [attr.filter]="layer.filter ? 'url(#' + layer.filter + ')' : null" [attr.transform]="layer.transform ?? null" [attr.clip-path]="layer.clip ? 'url(#' + layer.clip + ')' : null" [appShapes]="layer.shapes"></g>
-                  }
-                }
-              </svg>
-              <app-season-particles />
-            </div>
-            <figcaption>{{ s.label }}</figcaption>
-          </figure>
-        }
-      </div>
-    </section>
 
     @if (sheet().length) {
       <section class="direction" id="planche">
@@ -92,11 +63,7 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
       <div class="body-row">
         @for (v of variants; track v.label) {
           <figure>
-            <svg viewBox="0 0 200 300" class="figure" role="img" [attr.aria-label]="v.label">
-              <defs labDefs></defs>
-              <rect width="200" height="300" rx="14" fill="#fde8d8" />
-              <g labFigure [config]="v.config"></g>
-            </svg>
+            <app-avatar [config]="v.config" [size]="200" [full]="true" [round]="false" [label]="v.label" />
             <figcaption>{{ v.label }}</figcaption>
           </figure>
         }
@@ -121,17 +88,6 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
     }
     .direction {
       margin: 28px 0;
-    }
-    .scenes {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .frame {
-      position: relative;
-      overflow: hidden;
-      border-radius: 18px;
-      box-shadow: var(--mat-sys-level2);
     }
     figure {
       margin: 0;
@@ -187,23 +143,4 @@ export class LabPage {
       })),
     );
   };
-  protected readonly scenes: { label: string; open: boolean }[] = [
-    { label: 'Chambre fermée', open: false },
-    { label: 'Armoire ouverte', open: true },
-  ];
-
-  constructor() {
-    // les particules du thème restent dans les scènes, pas dans les marges de la page
-    inject(DestroyRef).onDestroy(inject(ParticlesScope).hostParticles());
-  }
-
-  private readonly cache = new Map<boolean, RoomModel>();
-  protected model(open: boolean): RoomModel {
-    let m = this.cache.get(open);
-    if (!m) {
-      m = buildRoom({ armoireOpen: open });
-      this.cache.set(open, m);
-    }
-    return m;
-  }
 }

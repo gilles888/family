@@ -6,24 +6,49 @@ import { of } from 'rxjs';
 import { FamilyMemberDTO, MembresService, MeDTO, provideApi } from '../api-client';
 import { provideFakeAuth } from '../auth/testing';
 import { defaultAvatar } from '../avatar/avatar-config';
-import { ALL_STATIC, FURNITURE_RECT, ROOM_H, ROOM_W } from './room-art';
+import { ROOM_H, ROOM_W, buildRoom } from './room-model';
 import { roomMemberResolver } from './room-member.resolver';
 import { RoomScene, SPOT_LABELS } from './room-scene';
 
 const MEMBER: FamilyMemberDTO = { id: 4, nom: 'Léa', couleur: '#E91E63' };
 
+import type { RoomOptions } from './room-model';
+
+const SKY: RoomOptions = { sky: '#bfe6ff', night: false, season: 'ete' };
+
 describe('chambre : dessin', () => {
+  const room = buildRoom(SKY);
+
   it('tous les meubles tiennent dans la pièce et ont un libellé', () => {
-    for (const [name, [x, y, w, h]] of Object.entries(FURNITURE_RECT)) {
-      expect(x >= 0 && y >= 0 && x + w <= ROOM_W && y + h <= ROOM_H, name).toBe(true);
+    for (const [name, [x, y, w, h]] of Object.entries(room.spots)) {
+      expect(x >= 0 && y >= 0 && x + w <= ROOM_W && y + h <= ROOM_H && w > 0 && h > 0, name).toBe(true);
       expect(SPOT_LABELS[name as keyof typeof SPOT_LABELS], name).toBeTruthy();
     }
+    expect(Object.keys(room.spots).sort()).toEqual(Object.keys(SPOT_LABELS).sort());
   });
 
-  it('chaque groupe de formes est dessiné', () => {
-    for (const shapes of ALL_STATIC) {
-      expect(shapes.length).toBeGreaterThan(0);
-    }
+  it('le personnage tient dans la pièce et la fenêtre reste visible à côté de lui', () => {
+    const { left, width } = room.character;
+    expect(left).toBeGreaterThan(0);
+    expect(left + width).toBeLessThan(ROOM_W);
+    const [wx, , ww] = room.spots.fenetre;
+    // le corps (≈ moitié du cadre, centré) ne recouvre pas la fenêtre
+    const bodyL = left + width * 0.25;
+    const bodyR = left + width * 0.75;
+    expect(bodyL > wx + ww || bodyR < wx).toBe(true);
+  });
+
+  it('les pièces qui s\'ouvrent sont des calques à part', () => {
+    const opens = room.layers.filter((l) => l.opens).map((l) => `${l.opens}:${l.cls}`);
+    expect(opens).toEqual(expect.arrayContaining(['armoire:door door-left', 'armoire:door door-right', 'commode:drawer', 'coffre:lid', 'boutique:shop-door', 'tirelire:pig', 'chapeaux:rack']));
+  });
+
+  it('la vue par la fenêtre suit la saison et la nuit', () => {
+    const view = (o: Partial<RoomOptions>) =>
+      JSON.stringify(buildRoom({ ...SKY, ...o }).layers.find((l) => l.name === 'vue-fenetre')?.shapes);
+    expect(view({ season: 'hiver' })).not.toBe(view({ season: 'ete' }));
+    expect(view({ season: 'automne' })).not.toBe(view({ season: 'printemps' }));
+    expect(view({ night: true })).not.toBe(view({}));
   });
 });
 
@@ -41,7 +66,7 @@ describe('chambre : scène', () => {
   it('chaque meuble est un vrai bouton avec son libellé', () => {
     const el = render();
     const buttons = [...el.querySelectorAll<HTMLButtonElement>('button.spot')];
-    expect(buttons).toHaveLength(Object.keys(FURNITURE_RECT).length);
+    expect(buttons).toHaveLength(Object.keys(SPOT_LABELS).length);
     expect(buttons.map((b) => b.getAttribute('aria-label'))).toContain('Armoire : tenues et déguisements');
     expect(buttons.every((b) => b.getAttribute('type') === 'button')).toBe(true);
   });
@@ -64,10 +89,10 @@ describe('chambre : scène', () => {
 
   it('le ciel de la fenêtre suit le fond du personnage (couleur, puis dégradé)', () => {
     let el = render({ config: { ...defaultAvatar(4), background: '#bbf7d0' } });
-    expect(el.querySelector('svg.art > rect')?.getAttribute('fill')).toBe('#bbf7d0');
+    expect(el.querySelector('g[clip-path] rect')?.getAttribute('fill')).toBe('#bbf7d0');
     TestBed.resetTestingModule();
     el = render({ config: { ...defaultAvatar(4), background: 'bg-ocean' } });
-    expect(el.querySelector('svg.art > rect')?.getAttribute('fill')).toBe('url(#room-sky)');
+    expect(el.querySelector('g[clip-path] rect')?.getAttribute('fill')).toBe('url(#room-sky)');
     expect(el.querySelector('linearGradient#room-sky')).not.toBeNull();
   });
 

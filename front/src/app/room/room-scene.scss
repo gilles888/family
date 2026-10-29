@@ -6,7 +6,7 @@
 .room {
   position: relative;
   width: 100%;
-  aspect-ratio: 1000 / 600;
+  aspect-ratio: 1000 / 414;
   border-radius: 24px;
   overflow: hidden;
   box-shadow: var(--mat-sys-level2);
@@ -23,7 +23,6 @@
 
 .character {
   position: absolute;
-  aspect-ratio: 1;
   pointer-events: none;
 }
 
@@ -157,7 +156,7 @@
 
 .drop {
   position: absolute;
-  aspect-ratio: 1;
+  aspect-ratio: 200 / 336;
   border-radius: 24px;
   pointer-events: none;
   transition: box-shadow 160ms ease;

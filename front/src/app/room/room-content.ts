@@ -1,6 +1,6 @@
 import { AvatarDressingStore } from '../avatar/avatar-dressing-store';
 import { WARDROBE, WardrobeCategory, WardrobeGroup } from '../avatar/avatar-wardrobe';
-import { FurnitureId } from './room-art';
+import { FurnitureId } from './room-model';
 
 /** Meubles qui rangent des affaires de la garde-robe (la tirelire et la boutique ont leur propre contenu). */
 export type StorageFurniture = Exclude<FurnitureId, 'tirelire' | 'boutique'>;

@@ -1,18 +1,16 @@
 import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { FamilyMemberDTO } from '../api-client';
 import { Avatar } from '../avatar/avatar';
 import { AvatarConfig } from '../avatar/avatar-config';
 import { BACKGROUND_GRADIENTS } from '../avatar/avatar-parts';
 import { SvgShapes } from '../shared/svg/svg-shapes';
-import {
-  ARMOIRE_BODY, ARMOIRE_DOOR_LEFT, ARMOIRE_DOOR_RIGHT, ARMOIRE_INSIDE, BOOK, CHARACTER, CHEST_BODY, CHEST_LID, COMMODE_BODY,
-  COMMODE_DRAWERS, CURTAIN_LEFT, CURTAIN_RIGHT, CURTAIN_ROD, DICE, FLOOR, FURNITURE_RECT, FurnitureId, HAT_RACK, LEGS, MIRROR,
-  PIG, ROOM_H, ROOM_VIEWBOX, ROOM_W, RUG, SHADOW, SHELF, SHOP_DOOR, SHOP_LIGHT, VANITY, WALL, WINDOW_FRAME, WINDOW_SKY_RECT,
-} from './room-art';
+import { ActiveTheme } from '../theme/active-theme';
+import { SeasonParticles } from '../theme/season-particles';
+import { FurnitureId, ROOM_H, ROOM_VIEWBOX, ROOM_W, RoomSpot, buildRoom, windowSeason } from './room-model';
+import { RoomDefs } from './room-defs';
 
-/** Un point cliquable de la pièce : un meuble, ou un objet (dé, livre). */
-export type RoomSpot = FurnitureId | 'de' | 'livre';
+export type { FurnitureId, RoomSpot };
 
 /** Libellés des points cliquables, lus par les lecteurs d'écran. */
 export const SPOT_LABELS: Record<RoomSpot, string> = {
@@ -28,7 +26,10 @@ export const SPOT_LABELS: Record<RoomSpot, string> = {
   livre: $localize`:@@room.livre:Idées de thème`,
 };
 
-const SPOTS = Object.keys(FURNITURE_RECT) as RoomSpot[];
+const SPOTS = Object.keys(SPOT_LABELS) as RoomSpot[];
+
+/** Nuit : de 20 h à 7 h (la fenêtre montre la lune et les étoiles). */
+const isNight = (d = new Date()) => d.getHours() >= 20 || d.getHours() < 7;
 
 /**
  * La pièce : mur, parquet, meubles et personnage au milieu, en SVG (viewBox fixe, la scène s'adapte à l'écran). Les
@@ -37,11 +38,12 @@ const SPOTS = Object.keys(FURNITURE_RECT) as RoomSpot[];
  */
 @Component({
   selector: 'app-room-scene',
-  imports: [Avatar, CdkDropList, SvgShapes],
+  imports: [Avatar, CdkDropList, SvgShapes, RoomDefs, SeasonParticles],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="room" [style.--room-ratio]="ratio">
-      <svg class="art" [attr.viewBox]="viewBox" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <svg class="art" [attr.viewBox]="viewBox" aria-hidden="true">
+        <defs roomDefs></defs>
         <defs>
           @if (gradient(); as g) {
             <linearGradient id="room-sky" x1="0" y1="0" x2="0" y2="1">
@@ -50,46 +52,18 @@ const SPOTS = Object.keys(FURNITURE_RECT) as RoomSpot[];
             </linearGradient>
           }
         </defs>
-        <g [appShapes]="wall"></g>
-        <g [appShapes]="floor"></g>
-        <g [appShapes]="rug"></g>
-
-        <!-- Fenêtre : le ciel est le fond choisi pour le personnage -->
-        <rect [attr.x]="sky[0]" [attr.y]="sky[1]" [attr.width]="sky[2]" [attr.height]="sky[3]" [attr.fill]="skyFill()" />
-        <g class="scenery" [class.hidden]="!!open()"></g>
-        <g [appShapes]="curtainRod"></g>
-        <g class="curtain left" [class.open]="open() === 'fenetre'" [appShapes]="curtainLeft"></g>
-        <g class="curtain right" [class.open]="open() === 'fenetre'" [appShapes]="curtainRight"></g>
-        <g [appShapes]="windowFrame"></g>
-
-        <!-- Armoire -->
-        <g [appShapes]="armoireBody"></g>
-        <g [appShapes]="armoireInside"></g>
-        <g class="door door-left" [class.open]="open() === 'armoire'" [appShapes]="armoireDoorLeft"></g>
-        <g class="door door-right" [class.open]="open() === 'armoire'" [appShapes]="armoireDoorRight"></g>
-
-        <!-- Étagère à chapeaux, commode et dé -->
-        <g class="rack" [class.lift]="open() === 'chapeaux'" [appShapes]="hatRack"></g>
-        <g [appShapes]="commodeBody"></g>
-        @for (drawer of commodeDrawers; track $index) {
-          <g class="drawer" [class.open]="open() === 'commode' && $index === 1" [appShapes]="drawer"></g>
+        @for (layer of model().layers; track $index) {
+          <g [attr.transform]="layer.transform ?? null" [attr.clip-path]="layer.clip ? 'url(#' + layer.clip + ')' : null">
+            <g
+              [class]="layer.cls ?? ''"
+              [class.open]="!!layer.opens && open() === layer.opens"
+              [attr.filter]="layer.filter ? 'url(#' + layer.filter + ')' : null"
+              [appShapes]="layer.shapes"
+            ></g>
+          </g>
         }
-        <g class="dice" [appShapes]="dice"></g>
-
-        <!-- Côté droit : étagère (tirelire, livre), coiffeuse, porte de la boutique, coffre -->
-        <g [appShapes]="shelf"></g>
-        <g class="pig" [class.hop]="open() === 'tirelire'" [appShapes]="pig"></g>
-        <g [appShapes]="book"></g>
-        <g [appShapes]="mirror"></g>
-        <g [appShapes]="vanity"></g>
-        <g [appShapes]="shopDoor"></g>
-        <g class="shop-light" [class.open]="open() === 'boutique'" [appShapes]="shopLight"></g>
-        <g [appShapes]="chestBody"></g>
-        <g class="lid" [class.open]="open() === 'coffre'" [appShapes]="chestLid"></g>
-
-        <g [appShapes]="shadow"></g>
-        <g [appShapes]="legs"></g>
       </svg>
+      <app-season-particles />
 
       <app-avatar
         class="character"
@@ -100,9 +74,9 @@ const SPOTS = Object.keys(FURNITURE_RECT) as RoomSpot[];
         [round]="false"
         [size]="null"
         [label]="member().nom ?? ''"
-        [style.left.%]="characterBox.left"
-        [style.top.%]="characterBox.top"
-        [style.width.%]="characterBox.width"
+        [style.left.%]="characterBox().left"
+        [style.top.%]="characterBox().top"
+        [style.width.%]="characterBox().width"
       />
 
       <!-- Zone de dépôt : une affaire glissée depuis un meuble s'enfile sur le personnage -->
@@ -112,9 +86,9 @@ const SPOTS = Object.keys(FURNITURE_RECT) as RoomSpot[];
         cdkDropList
         cdkDropListSortingDisabled
         [class.targeted]="dragging()"
-        [style.left.%]="characterBox.left"
-        [style.top.%]="characterBox.top"
-        [style.width.%]="characterBox.width"
+        [style.left.%]="characterBox().left"
+        [style.top.%]="characterBox().top"
+        [style.width.%]="characterBox().width"
         (cdkDropListDropped)="dropped.emit($event)"
       ></div>
 
@@ -125,10 +99,10 @@ const SPOTS = Object.keys(FURNITURE_RECT) as RoomSpot[];
           [class.active]="open() === spot"
           [class.empty]="empty()[spot]"
           [class.object]="spot === 'de' || spot === 'livre'"
-          [style.left.%]="box[spot].left"
-          [style.top.%]="box[spot].top"
-          [style.width.%]="box[spot].width"
-          [style.height.%]="box[spot].height"
+          [style.left.%]="box()[spot].left"
+          [style.top.%]="box()[spot].top"
+          [style.width.%]="box()[spot].width"
+          [style.height.%]="box()[spot].height"
           [attr.aria-label]="labels[spot]"
           [attr.aria-expanded]="spot === 'de' || spot === 'livre' ? null : open() === spot"
           [attr.aria-disabled]="empty()[spot] ? 'true' : null"
@@ -159,47 +133,27 @@ export class RoomScene {
   protected readonly labels = SPOT_LABELS;
   protected readonly empty = computed(() => this.emptyFurniture());
 
-  protected readonly wall = WALL;
-  protected readonly floor = FLOOR;
-  protected readonly rug = RUG;
-  protected readonly shadow = SHADOW;
-  protected readonly legs = LEGS;
-  protected readonly sky = WINDOW_SKY_RECT;
-  protected readonly windowFrame = WINDOW_FRAME;
-  protected readonly curtainLeft = CURTAIN_LEFT;
-  protected readonly curtainRight = CURTAIN_RIGHT;
-  protected readonly curtainRod = CURTAIN_ROD;
-  protected readonly armoireBody = ARMOIRE_BODY;
-  protected readonly armoireInside = ARMOIRE_INSIDE;
-  protected readonly armoireDoorLeft = ARMOIRE_DOOR_LEFT;
-  protected readonly armoireDoorRight = ARMOIRE_DOOR_RIGHT;
-  protected readonly hatRack = HAT_RACK;
-  protected readonly commodeBody = COMMODE_BODY;
-  protected readonly commodeDrawers = COMMODE_DRAWERS;
-  protected readonly dice = DICE;
-  protected readonly shelf = SHELF;
-  protected readonly pig = PIG;
-  protected readonly book = BOOK;
-  protected readonly mirror = MIRROR;
-  protected readonly vanity = VANITY;
-  protected readonly shopDoor = SHOP_DOOR;
-  protected readonly shopLight = SHOP_LIGHT;
-  protected readonly chestBody = CHEST_BODY;
-  protected readonly chestLid = CHEST_LID;
+  private readonly theme = inject(ActiveTheme).id;
+  private readonly night = isNight();
+
+  /** La pièce en volumes : ciel de la fenêtre (fond choisi), nuit, saison du thème. */
+  protected readonly model = computed(() => buildRoom({ sky: this.skyFill(), night: this.night, season: windowSeason(this.theme()) }));
 
   /** Position des points cliquables en % de la pièce. */
-  protected readonly box = Object.fromEntries(
-    SPOTS.map((s) => {
-      const [x, y, w, h] = FURNITURE_RECT[s];
-      return [s, { left: (100 * x) / ROOM_W, top: (100 * y) / ROOM_H, width: (100 * w) / ROOM_W, height: (100 * h) / ROOM_H }];
-    }),
-  ) as Record<RoomSpot, { left: number; top: number; width: number; height: number }>;
+  protected readonly box = computed(() => {
+    const spots = this.model().spots;
+    return Object.fromEntries(
+      SPOTS.map((s) => {
+        const [x, y, w, h] = spots[s];
+        return [s, { left: (100 * x) / ROOM_W, top: (100 * y) / ROOM_H, width: (100 * w) / ROOM_W, height: (100 * h) / ROOM_H }];
+      }),
+    ) as Record<RoomSpot, { left: number; top: number; width: number; height: number }>;
+  });
 
-  protected readonly characterBox = {
-    left: (100 * CHARACTER.x) / ROOM_W,
-    top: (100 * CHARACTER.y) / ROOM_H,
-    width: (100 * CHARACTER.size) / ROOM_W,
-  };
+  protected readonly characterBox = computed(() => {
+    const c = this.model().character;
+    return { left: (100 * c.left) / ROOM_W, top: (100 * c.top) / ROOM_H, width: (100 * c.width) / ROOM_W };
+  });
 
   protected readonly gradient = computed(() => BACKGROUND_GRADIENTS.find((g) => g.id === this.config().background));
   /** Ciel de la fenêtre : la couleur ou le dégradé du fond du personnage. */

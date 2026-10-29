@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +14,8 @@ import { furnitureCount } from './room-content';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { findArticle } from '../avatar/article-info';
 import { WardrobeOption } from '../avatar/avatar-wardrobe';
-import { FURNITURE_RECT, FurnitureId } from './room-art';
+import { ParticlesScope } from '../theme/season-particles';
+import { FurnitureId } from './room-model';
 import { FurniturePanel } from './furniture-panel';
 import { RoomScene, RoomSpot } from './room-scene';
 
@@ -111,6 +112,9 @@ const FURNITURE: FurnitureId[] = ['armoire', 'commode', 'chapeaux', 'coiffeuse',
 })
 export class RoomView {
   protected readonly store = inject(AvatarDressingStore);
+  // les particules du thème restent dans la scène, pas dans les marges de la page
+  private readonly releaseParticles = inject(ParticlesScope).hostParticles();
+  private readonly destroyRef = inject(DestroyRef).onDestroy(() => this.releaseParticles());
   protected readonly member = this.store.member;
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
@@ -136,9 +140,8 @@ export class RoomView {
 
   /** Le panneau s'ouvre du côté du meuble : à gauche pour ceux de gauche, sinon à droite (le personnage reste visible). */
   protected onLeft(id: FurnitureId): boolean {
-    const [x, , w] = FURNITURE_RECT[id];
     // la fenêtre est au milieu : le panneau passe à gauche pour qu'on voie le paysage changer
-    return id === 'fenetre' || x + w / 2 < 400;
+    return id === 'armoire' || id === 'commode' || id === 'chapeaux' || id === 'fenetre';
   }
 
   protected wear(option: WardrobeOption): void {
