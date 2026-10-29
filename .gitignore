@@ -20,3 +20,6 @@ front/.angular/
 famille.json
 backend/famille.json
 !.env.example
+
+# Cache Angular (aussi quand ng est lancé depuis la racine)
+.angular/
