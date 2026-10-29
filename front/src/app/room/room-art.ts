@@ -25,8 +25,8 @@ export const FURNITURE_RECT: Record<FurnitureId | 'de' | 'livre', readonly [numb
   livre: [774, 54, 72, 58],
 };
 
-/** Position du personnage entier dans la pièce (largeur ; la hauteur fait 1,5 fois la largeur). */
-export const CHARACTER = { x: 385, y: 225, size: 230 } as const;
+/** Position du personnage entier dans la pièce (largeur ; la hauteur fait 1,68 fois la largeur). */
+export const CHARACTER = { x: 392, y: 205, size: 216 } as const;
 
 const WOOD = '#d9ab70';
 const WOOD_DARK = '#c08d52';

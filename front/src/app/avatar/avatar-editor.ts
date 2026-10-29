@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { map } from 'rxjs';
 import { FamilyMemberDTO } from '../api-client';
+import { BODY_FULL_H, BODY_TOP } from './avatar-body';
 import { BuyDialog, BuyDialogData } from '../shop/buy-dialog';
 import { PiggyBank } from '../shop/piggy-bank';
 import { DropZone, HATS, ACCESSORIES, ZONES } from './avatar-parts';
@@ -45,7 +46,7 @@ const DRAG_DELAY = { touch: 180, mouse: 0 };
 /** Position CSS (en %) d'une zone du personnage. */
 function zoneStyle(zone: DropZone): Record<string, string> {
   const [x, y, w, h] = ZONES[zone];
-  return { left: `${x / 2}%`, top: `${y / 3}%`, width: `${w / 2}%`, height: `${h / 3}%` };
+  return { left: `${x / 2}%`, top: `${((y - BODY_TOP) * 100) / BODY_FULL_H}%`, width: `${w / 2}%`, height: `${(h * 100) / BODY_FULL_H}%` };
 }
 
 /** Réduction des animations demandée par le système. */

@@ -9,8 +9,10 @@ import { DropZone } from './avatar-part-types';
 
 export const BODY_W = 200;
 export const BODY_H = 300;
-/** Personnage entier. */
-export const BODY_FRAME = '0 0 200 300';
+/** Personnage entier, avec de la place au-dessus de la tête pour les coiffes hautes (oreilles de lapin, pointe de sorcier). */
+export const BODY_TOP = -36;
+export const BODY_FULL_H = BODY_H - BODY_TOP;
+export const BODY_FRAME = `0 ${BODY_TOP} ${BODY_W} ${BODY_FULL_H}`;
 /** Buste : tête, épaules et haut du torse (carré). */
 export const BUST_FRAME = '20 0 160 160';
 /** Tête et haut des épaules (mini-avatars). */
@@ -19,6 +21,8 @@ export const HEAD_FRAME = '40 0 120 120';
 /** Les pièces de tête sont dessinées dans 200 × 200, menton en y = 133. */
 const HEAD_CHIN = 133;
 const HEAD_SCALE = 0.94;
+/** Échelle des dessins posés sur le corps (têtes, objets tenus). */
+export const HEAD_SCALE_VALUE = HEAD_SCALE;
 const CHIN_Y = 98;
 
 /** Transformation qui pose un dessin de tête (espace 200 × 200) sur le corps. */

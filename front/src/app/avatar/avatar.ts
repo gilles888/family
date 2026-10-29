@@ -3,12 +3,13 @@ import { FamilyMemberDTO } from '../api-client';
 import { ActiveTheme } from '../theme/active-theme';
 import { SeasonId, toApiTheme } from '../theme/seasons';
 import { SvgShapes } from '../shared/svg/svg-shapes';
-import { BODY_FRAME, BUST_FRAME, HEAD_FRAME, HEAD_TRANSFORM } from './avatar-body';
+import { BODY_FRAME, BODY_FULL_H, BODY_W, BUST_FRAME, HEAD_FRAME, HEAD_TRANSFORM } from './avatar-body';
 import { AvatarConfig, defaultAvatar, normalizeAvatar } from './avatar-config';
 import { LayerKey, drawAvatar } from './avatar-layers';
 
 let nextId = 0;
 
+const FULL_RATIO = BODY_FULL_H / BODY_W;
 /** En dessous (px), cadrage sur la tête. */
 const SMALL = 40;
 
@@ -23,7 +24,7 @@ const SMALL = 40;
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[style.width]': 'size() === null ? "100%" : size() + "px"',
-    '[style.height]': 'size() === null ? "auto" : (full() ? size()! * 1.5 : size()) + "px"',
+    '[style.height]': 'size() === null ? "auto" : (full() ? size()! * fullRatio : size()) + "px"',
     '[class.full]': 'full()',
     '[class.round]': 'round()',
   },
@@ -72,7 +73,7 @@ const SMALL = 40;
       @for (layer of drawing().layers; track layer.key) {
         <g
           [attr.data-layer]="layer.key"
-          [attr.transform]="layer.space === 'head' ? headTransform : null"
+          [attr.transform]="layer.transform ?? (layer.space === 'head' ? headTransform : null)"
           [attr.data-part]="layer.part"
           [appShapes]="layer.shapes"
         ></g>
@@ -89,7 +90,7 @@ const SMALL = 40;
       aspect-ratio: 1;
     }
     :host(.full) {
-      aspect-ratio: 2 / 3;
+      aspect-ratio: 200 / 336;
       border-radius: 16%;
     }
     :host(.round) {
@@ -135,6 +136,7 @@ export class Avatar {
   protected readonly gradientId = `avatar-gradient-${this.uid}`;
   protected readonly ids = { shade: `avatar-shade-${this.uid}`, shadeV: `avatar-shade-v-${this.uid}` };
   protected readonly headTransform = HEAD_TRANSFORM;
+  protected readonly fullRatio = FULL_RATIO;
 
   protected readonly label = computed(() => this.ariaLabel() ?? '');
 

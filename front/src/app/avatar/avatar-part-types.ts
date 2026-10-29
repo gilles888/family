@@ -41,6 +41,8 @@ export interface AvatarPart extends PartMeta {
   shapes: Shape[];
   /** Espace de dessin : « body » = corps entier 200 × 300 (repères ANCHORS) ; sinon espace de tête 200 × 200. */
   space?: 'body';
+  /** Objets tenus : point du dessin (espace 200 × 200) que la main serre ; l'objet est posé sur la main droite. */
+  grip?: readonly [number, number];
   /** Habits : derrière le corps (cape, capuche) ; espace du corps. */
   under?: Shape[];
   /** Déguisements : calque de tête (espace 200 × 200) posé sur la tête, avant les yeux (masque, barbe, oreilles…). */

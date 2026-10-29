@@ -6,6 +6,7 @@
  */
 import { INK, Shape, circle, ellipse, line, path, rect, star } from '../shared/svg/shapes';
 import { AvatarPart, GradientOption } from './avatar-part-types';
+import { BACK_BODIES, HELD_GRIPS } from './avatar-backs-held';
 import { COSTUME_BODIES } from './avatar-costumes';
 
 const TORSO = 'M34 200 C36 168 60 150 100 150 C140 150 164 168 166 200 Z';
@@ -294,10 +295,10 @@ const COSTUME_HEADS: AvatarPart[] = [
     label: $localize`:@@avatar.costume.bunny:Lapin`,
     shapes: [],
     headwear: [
-      ellipse(78, 14, 12, 38, '#f5f5f5'),
-      ellipse(122, 14, 12, 38, '#f5f5f5'),
-      ellipse(78, 16, 5.5, 28, '#f8bbd0'),
-      ellipse(122, 16, 5.5, 28, '#f8bbd0'),
+      ellipse(78, 22, 12, 32, '#f5f5f5'),
+      ellipse(122, 22, 12, 32, '#f5f5f5'),
+      ellipse(78, 24, 5.5, 23, '#f8bbd0'),
+      ellipse(122, 24, 5.5, 23, '#f8bbd0'),
     ],
   },
   // ---- Toute l'année
@@ -503,7 +504,7 @@ export const FACES: AvatarPart[] = [
 // Dos : cape, ailes, sac (derrière le corps)
 // =====================================================================================================================
 
-export const BACKS: AvatarPart[] = [
+const BACK_ART: AvatarPart[] = [
   {
     id: 'none',
     slot: 'back',
@@ -516,10 +517,7 @@ export const BACKS: AvatarPart[] = [
     slot: 'back',
     free: true,
     label: $localize`:@@avatar.back.capePlain:Cape bleue`,
-    shapes: [
-      path('M46 146 L154 146 L184 200 L16 200 Z', '#3b82f6'),
-      path('M46 146 L154 146 L160 160 L40 160 Z', '#2563eb'),
-    ],
+    shapes: [],
   },
   {
     id: 'back-bat-wings',
@@ -527,18 +525,7 @@ export const BACKS: AvatarPart[] = [
     theme: 'halloween',
     rarete: 'rare',
     label: $localize`:@@avatar.back.batWings:Ailes de chauve-souris`,
-    shapes: [
-      path(
-        'M52 150 C30 110 10 112 6 96 C20 100 26 96 28 92 C34 106 44 106 48 100 C52 112 60 114 62 120 Z',
-        '#37474f',
-      ),
-      path(
-        'M148 150 C170 110 190 112 194 96 C180 100 174 96 172 92 C166 106 156 106 152 100 C148 112 140 114 138 120 Z',
-        '#37474f',
-      ),
-      path('M52 150 L50 122 M52 150 L36 112', 'none', { stroke: '#263238', sw: 2.5 }),
-      path('M148 150 L150 122 M148 150 L164 112', 'none', { stroke: '#263238', sw: 2.5 }),
-    ],
+    shapes: [],
   },
   {
     id: 'back-hero-cape',
@@ -546,11 +533,7 @@ export const BACKS: AvatarPart[] = [
     theme: 'carnaval',
     rarete: 'rare',
     label: $localize`:@@avatar.back.heroCape:Cape de héros`,
-    shapes: [
-      path('M44 144 L156 144 L190 200 L10 200 Z', '#d32f2f'),
-      path('M44 144 L156 144 L162 158 L38 158 Z', '#b71c1c'),
-      path('M60 160 L52 200 M140 160 L148 200', 'none', { stroke: '#b71c1c', sw: 3 }),
-    ],
+    shapes: [],
   },
   {
     id: 'back-fairy-wings',
@@ -558,14 +541,7 @@ export const BACKS: AvatarPart[] = [
     theme: 'carnaval',
     rarete: 'rare',
     label: $localize`:@@avatar.back.fairyWings:Ailes de fée`,
-    shapes: [
-      ellipse(34, 122, 26, 40, '#b3e5fc', { opacity: 0.8, stroke: '#81d4fa', sw: 2 }),
-      ellipse(30, 168, 16, 26, '#f8bbd0', { opacity: 0.8, stroke: '#f48fb1', sw: 2 }),
-      ellipse(166, 122, 26, 40, '#b3e5fc', { opacity: 0.8, stroke: '#81d4fa', sw: 2 }),
-      ellipse(170, 168, 16, 26, '#f8bbd0', { opacity: 0.8, stroke: '#f48fb1', sw: 2 }),
-      star(30, 112, 6, 2.6, '#ffffff'),
-      star(170, 112, 6, 2.6, '#ffffff'),
-    ],
+    shapes: [],
   },
   {
     id: 'back-butterfly-wings',
@@ -573,18 +549,7 @@ export const BACKS: AvatarPart[] = [
     theme: 'paques',
     rarete: 'rare',
     label: $localize`:@@avatar.back.butterflyWings:Ailes de papillon`,
-    shapes: [
-      ellipse(32, 122, 28, 36, '#ff9800', { stroke: '#e65100', sw: 3 }),
-      ellipse(36, 170, 18, 24, '#ffb74d', { stroke: '#e65100', sw: 3 }),
-      ellipse(168, 122, 28, 36, '#ff9800', { stroke: '#e65100', sw: 3 }),
-      ellipse(164, 170, 18, 24, '#ffb74d', { stroke: '#e65100', sw: 3 }),
-      ...[
-        [28, 118, 8],
-        [172, 118, 8],
-        [34, 168, 5],
-        [166, 168, 5],
-      ].map(([x, y, r]) => dot(x, y, r, '#212121')),
-    ],
+    shapes: [],
   },
   {
     id: 'back-backpack',
@@ -592,22 +557,17 @@ export const BACKS: AvatarPart[] = [
     theme: 'rentree',
     rarete: 'commun',
     label: $localize`:@@avatar.back.backpack:Sac à dos`,
-    shapes: [
-      rect(14, 140, 44, 60, 14, '#e53935'),
-      rect(142, 140, 44, 60, 14, '#e53935'),
-      rect(20, 176, 32, 18, 6, '#c62828'),
-      rect(148, 176, 32, 18, 6, '#c62828'),
-      rect(50, 156, 8, 44, 0, '#37474f'),
-      rect(142, 156, 8, 44, 0, '#37474f'),
-    ],
+    shapes: [],
   },
 ];
+
+export const BACKS: AvatarPart[] = BACK_ART.map((b) => (BACK_BODIES[b.id] ? { ...b, shapes: BACK_BODIES[b.id], space: 'body' as const } : b));
 
 // =====================================================================================================================
 // Objets tenus (en bas, devant le corps, à droite)
 // =====================================================================================================================
 
-export const HELD: AvatarPart[] = [
+const HELD_ART: AvatarPart[] = [
   {
     id: 'none',
     slot: 'held',
@@ -945,6 +905,8 @@ export const HELD: AvatarPart[] = [
     ],
   },
 ];
+
+export const HELD: AvatarPart[] = HELD_ART.map((h) => (HELD_GRIPS[h.id] ? { ...h, grip: HELD_GRIPS[h.id] } : h));
 
 // =====================================================================================================================
 // Habits, chapeaux, accessoires, coiffures, fonds supplémentaires

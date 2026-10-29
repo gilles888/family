@@ -8,6 +8,7 @@ import {
   findPart,
 } from './avatar-parts';
 import { BodyIds, DEFAULT_BODY_IDS, DEFAULT_GARMENT, bodyShapes } from './avatar-body';
+import { heldTransform } from './avatar-backs-held';
 import { PaintContext, Shape, isHexColor, resolvePaint } from '../shared/svg/shapes';
 
 /**
@@ -39,6 +40,8 @@ export interface AvatarLayer {
   key: LayerKey;
   /** Espace de dessin : « head » (200 × 200, posé sur le corps par HEAD_TRANSFORM) ou « body » (200 × 300). */
   space: 'head' | 'body';
+  /** Transformation propre au calque (objet tenu posé sur la main) ; remplace celle de l'espace. */
+  transform?: string;
   /** Pièce dessinée (id du catalogue), pour les tests et le débogage. */
   part: string;
   shapes: ResolvedShape[];
@@ -85,12 +88,15 @@ export function drawAvatar(config: AvatarConfig, options: DrawOptions = {}): Ava
   const own = outfit?.space === 'body';
   const memberColor = isHexColor(options.memberColor) ? options.memberColor : config.outfitColor;
 
+  const backPart = findPart('back', config.back);
+  const heldPart = findPart('held', config.held);
   const layers: AvatarLayer[] = [
     layer(
       'back',
       config.back ?? NONE,
-      findPart('back', config.back)?.shapes,
+      backPart?.shapes,
       ctx(config.outfitColor),
+      backPart?.space === 'body' ? 'body' : 'head',
     ),
     layer('body', costume ? costume.id : config.outfit, [...(own ? (outfit?.under ?? []) : []), ...body.back, ...(own ? (outfit?.shapes ?? []) : [])], outfitColor, 'body'),
     layer('hair-back', config.hair, hair?.back, ctx(config.hairColor)),
@@ -118,7 +124,10 @@ export function drawAvatar(config: AvatarConfig, options: DrawOptions = {}): Ava
       findPart('accessory', config.accessory)?.shapes,
       ctx(config.hairColor),
     ),
-    layer('held', config.held ?? NONE, findPart('held', config.held)?.shapes, ctx(memberColor)),
+    {
+      ...layer('held', config.held ?? NONE, heldPart?.shapes, ctx(memberColor), heldPart?.grip ? 'body' : 'head'),
+      ...(heldPart?.grip ? { transform: heldTransform(heldPart.grip) } : {}),
+    },
   ].filter((l) => l.shapes.length > 0);
 
   return { background: gradient ? { gradient } : { color: config.background }, layers };
