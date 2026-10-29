@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, output } f
 import { MatIconModule } from '@angular/material/icon';
 import { Avatar } from '../avatar/avatar';
 import { AvatarDressingStore } from '../avatar/avatar-dressing-store';
-import { WardrobeOption } from '../avatar/avatar-wardrobe';
+import { WardrobeOption, previewOption } from '../avatar/avatar-wardrobe';
 import { PiggyBank } from '../shop/piggy-bank';
 import { FurnitureId } from './room-model';
 import { furnitureGroups } from './room-content';
@@ -121,6 +121,6 @@ export class FurniturePanel {
   /** Le personnage avec chaque pièce du meuble (on voit le résultat avant de choisir). */
   protected readonly thumbs = computed(() => {
     const config = this.store.config();
-    return new Map(this.groups().flatMap((g) => g.options).map((o) => [o.key, o.apply(config)] as const));
+    return new Map(this.groups().flatMap((g) => g.options).map((o) => [o.key, previewOption(o, config)] as const));
   });
 }

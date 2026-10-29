@@ -24,6 +24,8 @@
 .character {
   position: absolute;
   pointer-events: none;
+  // halo très léger qui détache le personnage du mur, sans effet « autocollant »
+  filter: drop-shadow(0 1px 3px rgb(40 30 60 / 0.35));
 }
 
 // Meubles : de vrais boutons posés sur le dessin

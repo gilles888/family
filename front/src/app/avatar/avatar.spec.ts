@@ -11,7 +11,9 @@ import {
 import { PARTS_BY_SLOT } from './avatar-parts';
 import { ANCHORS, BODY_FRAME, BODY_H, BODY_W, BUST_FRAME, HEAD_FRAME, HEAD_TRANSFORM } from './avatar-body';
 import { ZONES } from './avatar-parts';
-import { LAYER_ORDER } from './avatar-layers';
+import { LAYER_ORDER, drawAvatar } from './avatar-layers';
+import { SKIN_TONES } from './avatar-parts';
+import { darken } from '../shared/svg/shapes';
 import { Avatar } from './avatar';
 
 const CONFIG: AvatarConfig = {
@@ -275,6 +277,32 @@ describe('Avatar', () => {
       const ys = [ANCHORS.chin, ANCHORS.neck, ANCHORS.shoulderL, ANCHORS.elbowL, ANCHORS.handL, ANCHORS.hipL, ANCHORS.kneeL, ANCHORS.footL].map((p) => p[1]);
       expect(ys).toEqual([...ys].sort((a, b) => a - b));
       expect(ANCHORS.footL[1]).toBe(290);
+    });
+  });
+
+  describe('la peau', () => {
+    const skinOf = (id: string) => SKIN_TONES.find((t) => t.id === id)!.value;
+    const body = (skin: string) => drawAvatar({ ...CONFIG, skin: SKIN_TONES.find((t) => t.value === skin)!.id }).layers.find((l) => l.key === 'body')!.shapes;
+
+    it.each(SKIN_TONES.map((t) => t.id))('%s : peau en couleur unie (sans dégradé ni opacité), bras et mains cernés du même contour', (id) => {
+      const skin = skinOf(id);
+      const outline = darken(skin, 0.4);
+      const shapes = body(skin);
+      const skinShapes = shapes.filter((s) => s.fill === skin || s.stroke === skin);
+      expect(skinShapes.length).toBeGreaterThan(2);
+      for (const s of skinShapes) {
+        expect(s.opacity, 'opacité sur la peau').toBeUndefined();
+      }
+      // contour : un trait de bras plus large que le trait de peau, de la couleur du contour
+      const armOutlines = shapes.filter((s) => s.stroke === outline && (s.sw ?? 0) > 12);
+      expect(armOutlines.length).toBe(2);
+      expect(shapes.filter((s) => s.el === 'ellipse' && s.fill === outline).length).toBe(2);
+    });
+
+    it('le visage a le même contour que le corps', () => {
+      const skin = skinOf('skin-3');
+      const head = drawAvatar({ ...CONFIG, skin: 'skin-3' }).layers.find((l) => l.key === 'head')!.shapes;
+      expect(head.filter((s) => s.stroke === darken(skin, 0.4)).length).toBeGreaterThanOrEqual(3);
     });
   });
 });

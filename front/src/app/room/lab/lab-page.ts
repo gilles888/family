@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Avatar } from '../../avatar/avatar';
-import { PARTS_BY_SLOT } from '../../avatar/avatar-parts';
+import { PARTS_BY_SLOT, SKIN_TONES } from '../../avatar/avatar-parts';
 import { AvatarConfig, normalizeAvatar, defaultAvatar } from '../../avatar/avatar-config';
 
 const DEMO: AvatarConfig = normalizeAvatar(
   { version: 2, skin: 'skin-3', eyes: 'eyes-happy', eyeColor: '#5d4037', mouth: 'mouth-grin', hair: 'hair-ponytail', hairColor: '#6b3e26', outfit: 'outfit-tshirt', outfitColor: '#ec4899', hat: 'none', accessory: 'none', background: '#fde68a' },
   defaultAvatar(1),
 );
+const SKINS = SKIN_TONES.map((t) => t.id);
 type Slot = keyof typeof PARTS_BY_SLOT;
 const LOTS: Record<string, Slot[]> = {
   tenues: ['body'],
@@ -134,6 +135,9 @@ export class LabPage {
   /** Planche de pièces sur le corps (?lot=tenues|deguisements|tetes|objets), pour vérifier une migration. */
   protected readonly lot = inject(ActivatedRoute).snapshot.queryParamMap.get('lot') ?? '';
   protected readonly sheet = () => {
+    if (this.lot === 'peaux') {
+      return SKINS.flatMap((skin) => [{ key: skin + 't', label: skin + ' t-shirt', config: { ...DEMO, skin } }, { key: skin + 'r', label: skin + ' robe', config: { ...DEMO, skin, outfit: 'outfit-dress', costume: 'none' } }]);
+    }
     const slots = LOTS[this.lot] ?? [];
     return slots.flatMap((slot) =>
       PARTS_BY_SLOT[slot].map((part) => ({

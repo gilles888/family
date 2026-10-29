@@ -33,6 +33,12 @@ export interface RoomModel {
   character: { left: number; top: number; width: number; scale: number };
 }
 
+/**
+ * Couleurs du mur : un bleu-gris clair et froid, jamais proche d'un teint (la peau, même contournée, doit se détacher du
+ * mur) ; room.spec.ts vérifie l'écart avec chaque teint.
+ */
+export const WALL_COLORS = { wall: '#dbe9f0', wainscot: '#bcd5e2', wainscotSide: '#aac7d8' } as const;
+
 /** Saison de la vue par la fenêtre selon le thème en cours. */
 export function windowSeason(theme: SeasonId | 'neutre'): WindowSeason {
   switch (theme) {
@@ -108,7 +114,7 @@ export function buildRoom(opts: RoomOptions): RoomModel {
   const back: Frame = { o: [0, 0, 0], a: [1, 0, 0], n: [0, 0, 1] };
 
   // ---------- murs, plafond, sol
-  const wallBase = '#fde4d2';
+  const wallBase = WALL_COLORS.wall;
   const floorBase = '#e9c9a0';
   const leftWall: V3[] = [[0, 0, Dp], [0, 0, 0], [0, H, 0], [0, H, Dp]];
   const rightWall: V3[] = [[W, 0, 0], [W, 0, Dp], [W, H, Dp], [W, H, 0]];
@@ -137,7 +143,7 @@ export function buildRoom(opts: RoomOptions): RoomModel {
   ];
   push({
     name: 'lambris',
-    shapes: [...wainscot((h) => [[0, 0, 0], [W, 0, 0], [W, h, 0], [0, h, 0]], '#f2c9ab'), ...wainscot((h) => [[0, 0, Dp], [0, 0, 0], [0, h, 0], [0, h, Dp]], '#e7bb9a')],
+    shapes: [...wainscot((h) => [[0, 0, 0], [W, 0, 0], [W, h, 0], [0, h, 0]], WALL_COLORS.wainscot), ...wainscot((h) => [[0, 0, Dp], [0, 0, 0], [0, h, 0], [0, h, Dp]], WALL_COLORS.wainscotSide)],
   });
   // sol : lames qui convergent, joints décalés
   const floor: Shape[] = [quad(pr, [[0, 0, 0], [W, 0, 0], [W, 0, Dp], [0, 0, Dp]], floorBase), quad(pr, [[0, 0, 0], [W, 0, 0], [W, 0, Dp], [0, 0, Dp]], 'url(#room-top)')];

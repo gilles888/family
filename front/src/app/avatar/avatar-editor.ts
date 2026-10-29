@@ -27,7 +27,7 @@ import { BODY_FULL_H, BODY_TOP } from './avatar-body';
 import { BuyDialog, BuyDialogData } from '../shop/buy-dialog';
 import { PiggyBank } from '../shop/piggy-bank';
 import { DropZone, HATS, ACCESSORIES, ZONES } from './avatar-parts';
-import { WARDROBE, WardrobeCategory, WardrobeOption } from './avatar-wardrobe';
+import { WARDROBE, WardrobeCategory, WardrobeOption, previewOption } from './avatar-wardrobe';
 import { Avatar } from './avatar';
 import { AvatarDressingStore, DRESSING_MEMBER } from './avatar-dressing-store';
 
@@ -179,7 +179,7 @@ export class AvatarEditor {
     return new Map(
       this.category()
         .groups.flatMap((g) => g.options)
-        .map((o) => [o.key, o.apply(config)] as const),
+        .map((o) => [o.key, previewOption(o, config)] as const),
     );
   });
 

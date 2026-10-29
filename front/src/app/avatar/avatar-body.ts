@@ -59,11 +59,11 @@ export const ANCHORS = {
   neck: [100, 106] as Point,
   shoulderL: [63, 123] as Point,
   shoulderR: [137, 123] as Point,
-  elbowL: [52, 155] as Point,
-  elbowR: [148, 155] as Point,
+  elbowL: [48, 155] as Point,
+  elbowR: [152, 155] as Point,
   /** Centre de la paume : les objets tenus s'y posent. */
-  handL: [47, 193] as Point,
-  handR: [153, 193] as Point,
+  handL: [51, 193] as Point,
+  handR: [149, 193] as Point,
   waist: [100, 174] as Point,
   hipL: [67, 194] as Point,
   hipR: [133, 194] as Point,
@@ -114,6 +114,9 @@ export interface Garment {
   hideBody?: boolean;
 }
 
+/** Épaisseur du contour de la peau (espace du corps ; celui de la tête, mis à l'échelle, est presque identique). */
+const OUTLINE_W = 2.3;
+
 export const DEFAULT_GARMENT: Garment = { sleeve: 'short' };
 
 /** Ids des dégradés d'ombrage (à définir dans le <defs> du SVG qui dessine le corps). */
@@ -145,6 +148,8 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
   const bottom = garment.bottom ?? 'pants';
   const pants = look.pants ?? (bottom === 'skirt' ? top : '#4f63a8');
   const accent = darken(top, 0.05);
+  // contour de la peau (bras, mains, jambes) : même brun chaud que celui du visage, même épaisseur partout
+  const outline = darken(skin, 0.4);
   const { shoulderY: sy, waistY, hipY, kneeY, ankleY, footY, shoulderW, waistW, hipW, armLen, armW } = M;
   const shade = (d: string, opacity = 1): Shape => path(d, `url(#${ids.shade})`, { opacity });
   const back: Shape[] = [ellipse(cx, footY + 2, 58, 9, '#2b1a3a', { opacity: 0.22 })];
@@ -164,8 +169,8 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
     const shoeX = cx + side * 14 + relax;
     const toe = cx + side * 21 + relax;
     return [
-      path(d, bottom === 'pants' ? pants : skin),
-      shade(d),
+      bottom === 'pants' ? path(d, pants) : path(d, skin, { stroke: outline, sw: OUTLINE_W }),
+      ...(bottom === 'pants' ? [shade(d)] : []),
       ...(bottom === 'shorts'
         ? [
             path(`M ${outer} ${hipY - 4} L ${inner} ${hipY - 4} L ${inner} ${kneeY - 14} L ${outer - side * 1.5} ${kneeY - 14} Z`, pants),
@@ -187,26 +192,33 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
     const bend = side === 1 ? 2 : 0;
     const sx = cx + side * (shoulderW - 6);
     const ay = sy + 11;
-    const ex = cx + side * (shoulderW + 12 + bend);
+    const ex = cx + side * (shoulderW + 15 + bend);
     const ey = ay + armLen * 0.5;
-    const wx = cx + side * (shoulderW + 15);
+    const wx = cx + side * (shoulderW + 12);
     const wy = ay + armLen;
     const stroke = (d: string, col: string, w: number): Shape => path(d, 'none', { stroke: col, sw: w });
-    const upper = `M ${sx} ${ay} Q ${ex} ${ey - 8} ${ex} ${ey}`;
+    // le bras est un trait épais à bouts ronds (épaule → coude → poignet), tracé deux fois : le contour, puis la peau en
+    // couleur unie par-dessus (exactement celle du visage). Il commence sous la manche, près de l'épaule.
+    const arm1 = `M ${sx} ${ay} C ${sx + side * 6} ${ay + 8} ${ex} ${ey - 12} ${ex} ${ey} C ${ex + side} ${ey + 8} ${wx + side * 3} ${wy - 10} ${wx} ${wy}`;
+    const skinW = armW - 2;
+    const hx = wx;
+    const hy = wy + 7;
+    const thumb = `M ${wx - side * 4} ${wy + 3} Q ${wx - side * 12} ${wy + 5} ${wx - side * 9} ${wy + 13} Q ${wx - side * 6} ${wy + 14} ${wx - side * 4} ${wy + 10} Z`;
     const out: Shape[] = [
-      stroke(upper, skin, armW - 2),
-      stroke(`M ${ex} ${ey} Q ${ex - side * 2} ${ey + 10} ${wx} ${wy}`, skin, armW - 3),
-      // main : moufle arrondie, pouce suggéré vers le corps
-      ellipse(wx, wy + 7, armW * 0.68, armW * 0.88, skin),
-      path(`M ${wx - side * 4} ${wy + 3} Q ${wx - side * 12} ${wy + 5} ${wx - side * 9} ${wy + 13} Q ${wx - side * 6} ${wy + 14} ${wx - side * 4} ${wy + 10} Z`, skin),
-      ellipse(wx, wy + 7, armW * 0.68, armW * 0.88, `url(#${ids.shade})`, { opacity: 0.5 }),
+      stroke(arm1, outline, skinW + OUTLINE_W * 2),
+      // main : moufle (rond aplati + pouce suggéré), même contour, raccordée au bout du trait
+      ellipse(hx, hy, armW * 0.68, armW * 0.88, outline, { stroke: outline, sw: OUTLINE_W * 2 }),
+      path(thumb, outline, { stroke: outline, sw: OUTLINE_W * 2 }),
+      stroke(arm1, skin, skinW),
+      ellipse(hx, hy, armW * 0.68, armW * 0.88, skin),
+      path(thumb, skin),
     ];
     if (garment.sleeve !== 'none') {
       const long = garment.sleeve === 'long';
       const sw = armW + 4;
       const tipX = long ? wx : sx + (ex - sx) * 0.9;
       const tipY = long ? wy - 5 : ay + (ey - ay) * 0.8;
-      const d = long ? `M ${sx} ${ay} Q ${ex + side * 2} ${ey - 4} ${ex} ${ey} Q ${ex - side * 2} ${ey + 10} ${tipX} ${tipY}` : `M ${sx} ${ay} Q ${ex} ${ey - 10} ${tipX} ${tipY}`;
+      const d = long ? `M ${sx} ${ay} C ${sx + side * 6} ${ay + 8} ${ex} ${ey - 12} ${ex} ${ey} C ${ex + side} ${ey + 8} ${wx + side * 3} ${wy - 12} ${tipX} ${tipY}` : `M ${sx} ${ay} C ${sx + side * 6} ${ay + 8} ${ex} ${ey - 14} ${tipX} ${tipY}`;
       out.push(circle(sx, ay, sw / 2, top), stroke(d, top, sw), stroke(d, `url(#${ids.shade})`, sw));
     }
     return out;
