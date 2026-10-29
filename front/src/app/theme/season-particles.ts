@@ -124,8 +124,10 @@ export class ParticlesScope {
     }
     .flocons .element::before {
       content: '❄';
-      color: color-mix(in srgb, var(--mat-sys-primary) 30%, white);
-      text-shadow: 0 0 3px rgb(80 110 160 / 0.6);
+      color: #fff;
+      text-shadow:
+        0 0 2px #4f77b0,
+        0 0 5px #4f77b0;
     }
     .feuilles .element::before {
       content: '🍂';
