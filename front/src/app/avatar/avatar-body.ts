@@ -114,6 +114,9 @@ export interface Garment {
   hideBody?: boolean;
 }
 
+/** Épaisseur du contour de la peau (espace du corps ; celui de la tête, mis à l'échelle, est presque identique). */
+const OUTLINE_W = 2.3;
+
 export const DEFAULT_GARMENT: Garment = { sleeve: 'short' };
 
 /** Ids des dégradés d'ombrage (à définir dans le <defs> du SVG qui dessine le corps). */
@@ -145,6 +148,8 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
   const bottom = garment.bottom ?? 'pants';
   const pants = look.pants ?? (bottom === 'skirt' ? top : '#4f63a8');
   const accent = darken(top, 0.05);
+  // contour de la peau (bras, mains, jambes) : même brun chaud que celui du visage, même épaisseur partout
+  const outline = darken(skin, 0.4);
   const { shoulderY: sy, waistY, hipY, kneeY, ankleY, footY, shoulderW, waistW, hipW, armLen, armW } = M;
   const shade = (d: string, opacity = 1): Shape => path(d, `url(#${ids.shade})`, { opacity });
   const back: Shape[] = [ellipse(cx, footY + 2, 58, 9, '#2b1a3a', { opacity: 0.22 })];
@@ -164,9 +169,8 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
     const shoeX = cx + side * 14 + relax;
     const toe = cx + side * 21 + relax;
     return [
-      path(d, bottom === 'pants' ? pants : skin),
-      // jambe nue : un léger volume par un filet plus foncé côté intérieur, sans dégradé (la peau garde la couleur du visage)
-      ...(bottom === 'pants' ? [shade(d)] : [path(`M ${inner - side * 1.5} ${hipY + 2} Q ${inner - side * 2.5 + relax} ${kneeY} ${ankleI + relax - side * 1.5} ${ankleY - 2}`, 'none', { stroke: darken(skin, 0.14), sw: 3, opacity: 0.5 })]),
+      bottom === 'pants' ? path(d, pants) : path(d, skin, { stroke: outline, sw: OUTLINE_W }),
+      ...(bottom === 'pants' ? [shade(d)] : []),
       ...(bottom === 'shorts'
         ? [
             path(`M ${outer} ${hipY - 4} L ${inner} ${hipY - 4} L ${inner} ${kneeY - 14} L ${outer - side * 1.5} ${kneeY - 14} Z`, pants),
@@ -193,16 +197,21 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
     const wx = cx + side * (shoulderW + 12);
     const wy = ay + armLen;
     const stroke = (d: string, col: string, w: number): Shape => path(d, 'none', { stroke: col, sw: w });
-    // courbe naturelle : le haut du bras s'écarte, l'avant-bras revient vers la hanche (coude plié)
-    const upper = `M ${sx} ${ay} C ${sx + side * 6} ${ay + 8} ${ex} ${ey - 12} ${ex} ${ey}`;
+    // le bras est un trait épais à bouts ronds (épaule → coude → poignet), tracé deux fois : le contour, puis la peau en
+    // couleur unie par-dessus (exactement celle du visage). Il commence sous la manche, près de l'épaule.
+    const arm1 = `M ${sx} ${ay} C ${sx + side * 6} ${ay + 8} ${ex} ${ey - 12} ${ex} ${ey} C ${ex + side} ${ey + 8} ${wx + side * 3} ${wy - 10} ${wx} ${wy}`;
+    const skinW = armW - 2;
+    const hx = wx;
+    const hy = wy + 7;
+    const thumb = `M ${wx - side * 4} ${wy + 3} Q ${wx - side * 12} ${wy + 5} ${wx - side * 9} ${wy + 13} Q ${wx - side * 6} ${wy + 14} ${wx - side * 4} ${wy + 10} Z`;
     const out: Shape[] = [
-      stroke(upper, skin, armW - 2),
-      stroke(`M ${ex} ${ey} C ${ex + side * 1} ${ey + 8} ${wx + side * 3} ${wy - 10} ${wx} ${wy}`, skin, armW - 3),
-      // main : moufle arrondie, pouce suggéré vers le corps
-      ellipse(wx, wy + 7, armW * 0.68, armW * 0.88, skin),
-      path(`M ${wx - side * 4} ${wy + 3} Q ${wx - side * 12} ${wy + 5} ${wx - side * 9} ${wy + 13} Q ${wx - side * 6} ${wy + 14} ${wx - side * 4} ${wy + 10} Z`, skin),
-      // volume léger : filet plus foncé du côté du corps, sans dégradé
-      path(`M ${sx} ${ay} C ${sx + side * 3} ${ay + 8} ${ex - side * 3} ${ey - 12} ${ex - side * 3} ${ey} C ${ex - side * 2} ${ey + 8} ${wx + side * 0} ${wy - 10} ${wx - side * 3} ${wy}`, 'none', { stroke: darken(skin, 0.14), sw: 2.2, opacity: 0.3 }),
+      stroke(arm1, outline, skinW + OUTLINE_W * 2),
+      // main : moufle (rond aplati + pouce suggéré), même contour, raccordée au bout du trait
+      ellipse(hx, hy, armW * 0.68, armW * 0.88, outline, { stroke: outline, sw: OUTLINE_W * 2 }),
+      path(thumb, outline, { stroke: outline, sw: OUTLINE_W * 2 }),
+      stroke(arm1, skin, skinW),
+      ellipse(hx, hy, armW * 0.68, armW * 0.88, skin),
+      path(thumb, skin),
     ];
     if (garment.sleeve !== 'none') {
       const long = garment.sleeve === 'long';

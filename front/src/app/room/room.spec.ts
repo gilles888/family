@@ -6,7 +6,8 @@ import { of } from 'rxjs';
 import { FamilyMemberDTO, MembresService, MeDTO, provideApi } from '../api-client';
 import { provideFakeAuth } from '../auth/testing';
 import { defaultAvatar } from '../avatar/avatar-config';
-import { ROOM_H, ROOM_W, buildRoom } from './room-model';
+import { SKIN_TONES } from '../avatar/avatar-parts';
+import { ROOM_H, ROOM_W, WALL_COLORS, buildRoom } from './room-model';
 import { roomMemberResolver } from './room-member.resolver';
 import { RoomScene, SPOT_LABELS } from './room-scene';
 
@@ -15,6 +16,19 @@ const MEMBER: FamilyMemberDTO = { id: 4, nom: 'Léa', couleur: '#E91E63' };
 import type { RoomOptions } from './room-model';
 
 const SKY: RoomOptions = { sky: '#bfe6ff', night: false, season: 'ete' };
+
+const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+const distance = (a: string, b: string) => Math.hypot(...rgb(a).map((v, i) => v - rgb(b)[i]));
+
+describe('chambre : contraste', () => {
+  it('chaque teint se détache du mur et du lambris par défaut', () => {
+    for (const tone of SKIN_TONES) {
+      for (const [name, color] of Object.entries(WALL_COLORS)) {
+        expect(distance(tone.value, color), `${tone.id} / ${name}`).toBeGreaterThanOrEqual(45);
+      }
+    }
+  });
+});
 
 describe('chambre : dessin', () => {
   const room = buildRoom(SKY);

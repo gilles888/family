@@ -147,6 +147,9 @@ export function resolvePaint(paint: Paint | undefined, ctx: PaintContext): strin
       return darken(ctx.color, 0.18);
     case '$dd':
       return darken(ctx.color, 0.35);
+    case '$o':
+      // contour de la peau : brun chaud dérivé du teint, jamais noir
+      return darken(ctx.color, 0.4);
     case '$l':
       return lighten(ctx.color, 0.35);
     case '$skin':
