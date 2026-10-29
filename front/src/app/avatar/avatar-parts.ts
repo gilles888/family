@@ -9,6 +9,7 @@
  */
 import { INK, Shape, circle, ellipse, line, path, rect, star } from '../shared/svg/shapes';
 import { AvatarPart, ColorOption, DropZone, GradientOption, NONE } from './avatar-part-types';
+import { EXTRA_OUTFITS, OUTFITS } from './avatar-outfits';
 import {
   BACKS,
   COSTUMES,
@@ -16,7 +17,6 @@ import {
   EXTRA_GRADIENTS,
   EXTRA_HAIRS,
   EXTRA_HATS,
-  EXTRA_OUTFITS,
   FACES,
   HELD,
 } from './avatar-parts-extra';
@@ -308,115 +308,7 @@ export const HAIR_COLORS: ColorOption[] = [
 /** Buste commun. */
 const TORSO = 'M34 200 C36 168 60 150 100 150 C140 150 164 168 166 200 Z';
 
-export const OUTFITS: AvatarPart[] = [
-  {
-    id: 'outfit-tshirt',
-    slot: 'body',
-    label: $localize`:@@avatar.outfit.tshirt:T-shirt`,
-    shapes: [path(TORSO)],
-    front: [line('M86 151 Q100 164 114 151', '$d', 3.5)],
-  },
-  {
-    id: 'outfit-sweater',
-    slot: 'body',
-    label: $localize`:@@avatar.outfit.sweater:Pull`,
-    shapes: [
-      path(TORSO),
-      line('M42 180 H158', '$l', 5, { opacity: 0.55 }),
-      line('M38 191 H162', '$l', 5, { opacity: 0.55 }),
-    ],
-    front: [rect(84, 140, 32, 20, 9, '$d')],
-  },
-  {
-    id: 'outfit-hoodie',
-    slot: 'body',
-    label: $localize`:@@avatar.outfit.hoodie:Sweat à capuche`,
-    shapes: [
-      path('M60 162 C56 138 76 128 100 128 C124 128 144 138 140 162 Z', '$d'),
-      path(TORSO),
-      path('M72 186 H128 L122 200 H78 Z', '$d'),
-    ],
-    front: [
-      path('M78 150 C84 162 116 162 122 150 C116 156 84 156 78 150 Z', '$d'),
-      line('M92 158 L90 178', '#ffffff', 2.5),
-      line('M108 158 L110 178', '#ffffff', 2.5),
-    ],
-  },
-  {
-    id: 'outfit-shirt',
-    slot: 'body',
-    label: $localize`:@@avatar.outfit.shirt:Chemise`,
-    shapes: [
-      path(TORSO),
-      line('M100 158 V200', '$d', 2),
-      circle(100, 172, 2.4, '$dd'),
-      circle(100, 186, 2.4, '$dd'),
-    ],
-    front: [
-      path('M100 158 L85 145 L80 163 Z', '#ffffff'),
-      path('M100 158 L115 145 L120 163 Z', '#ffffff'),
-    ],
-  },
-  {
-    id: 'outfit-dress',
-    slot: 'body',
-    label: $localize`:@@avatar.outfit.dress:Robe`,
-    shapes: [
-      path(TORSO, '$skin'),
-      path('M56 200 C56 176 66 160 82 156 L118 156 C134 160 144 176 144 200 Z'),
-      rect(78, 148, 8, 14, 3),
-      rect(114, 148, 8, 14, 3),
-      ...[
-        [80, 180],
-        [100, 170],
-        [120, 180],
-        [90, 194],
-        [110, 194],
-      ].map(([x, y]) => circle(x, y, 3, '#ffffff', { opacity: 0.6 })),
-    ],
-  },
-  {
-    id: 'outfit-overalls',
-    slot: 'body',
-    label: $localize`:@@avatar.outfit.overalls:Salopette`,
-    shapes: [
-      path(TORSO, '#eceff1'),
-      path('M70 200 V170 C70 166 72 164 76 164 H124 C128 164 130 166 130 170 V200 Z'),
-      line('M76 166 L66 150', '$c', 8),
-      line('M124 166 L134 150', '$c', 8),
-      circle(78, 170, 3.5, '#fbbf24'),
-      circle(122, 170, 3.5, '#fbbf24'),
-      rect(88, 176, 24, 14, 4, '$d'),
-    ],
-  },
-  {
-    id: 'outfit-jersey',
-    slot: 'body',
-    label: $localize`:@@avatar.outfit.jersey:Maillot de sport`,
-    shapes: [
-      path(TORSO),
-      line('M54 168 L45 196', '#ffffff', 5),
-      line('M146 168 L155 196', '#ffffff', 5),
-      line('M95 178 L102 173 V196', '#ffffff', 5),
-    ],
-    front: [
-      path('M87 151 L100 167 L113 151 Z', '#ffffff'),
-      line('M87 151 L100 167 L113 151', '$d', 2.5),
-    ],
-  },
-  {
-    id: 'outfit-hero',
-    slot: 'body',
-    label: $localize`:@@avatar.outfit.hero:Costume de super-héros`,
-    shapes: [
-      path('M26 200 C28 168 50 148 74 146 L126 146 C150 148 172 168 174 200 Z', '$dd'),
-      path(TORSO),
-      circle(100, 178, 13, '#ffffff'),
-      star(100, 178.5, 9, 4, '$c'),
-      rect(40, 195, 120, 5, 0, '#fbbf24'),
-    ],
-  },
-];
+export { OUTFITS };
 
 export const OUTFIT_COLORS: ColorOption[] = [
   { value: '#3b82f6', label: $localize`:@@avatar.color.blue:Bleu` },

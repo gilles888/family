@@ -7,7 +7,7 @@ import {
   SKIN_TONES,
   findPart,
 } from './avatar-parts';
-import { BodyIds, DEFAULT_BODY_IDS, bodyShapes, garmentOf } from './avatar-body';
+import { BodyIds, DEFAULT_BODY_IDS, DEFAULT_GARMENT, bodyShapes } from './avatar-body';
 import { PaintContext, Shape, isHexColor, resolvePaint } from '../shared/svg/shapes';
 
 /**
@@ -70,8 +70,14 @@ export function drawAvatar(config: AvatarConfig, options: DrawOptions = {}): Ava
   const hat = costume?.includesHat || costume?.hidesHat ? undefined : findPart('hat', config.hat);
   const gradient = BACKGROUND_GRADIENTS.find((g) => g.id === config.background);
   const outfitColor = ctx(config.outfitColor);
+  const garment = outfit?.garment ?? DEFAULT_GARMENT;
   const body = bodyShapes(
-    { skin, top: config.outfitColor, garment: outfit?.garment ?? garmentOf(outfit?.id ?? config.outfit) },
+    {
+      skin,
+      top: (garment.top && resolvePaint(garment.top, outfitColor)) || config.outfitColor,
+      pants: garment.pants ? resolvePaint(garment.pants, outfitColor) : undefined,
+      garment,
+    },
     options.ids ?? DEFAULT_BODY_IDS,
   );
   // pièce déjà redessinée pour le corps : ses formes viennent par-dessus le corps de base
@@ -85,7 +91,7 @@ export function drawAvatar(config: AvatarConfig, options: DrawOptions = {}): Ava
       findPart('back', config.back)?.shapes,
       ctx(config.outfitColor),
     ),
-    layer('body', costume ? costume.id : config.outfit, [...body.back, ...(own ? (outfit?.shapes ?? []) : [])], outfitColor, 'body'),
+    layer('body', costume ? costume.id : config.outfit, [...(own ? (outfit?.under ?? []) : []), ...body.back, ...(own ? (outfit?.shapes ?? []) : [])], outfitColor, 'body'),
     layer('hair-back', config.hair, hair?.back, ctx(config.hairColor)),
     layer('head', config.skin, HEAD_SHAPES, ctx(skin)),
     layer('body-front', costume ? costume.id : config.outfit, [...body.front, ...(own ? (outfit?.front ?? []) : [])], outfitColor, 'body'),

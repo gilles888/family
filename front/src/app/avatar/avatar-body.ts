@@ -95,30 +95,18 @@ export const ZONES: Record<DropZone, readonly [number, number, number, number]> 
   background: [0, 0, BODY_W, BODY_H],
 };
 
-/** Ce que l'habit change sur le corps de base. */
+/** Ce que l'habit change sur le corps de base. Les couleurs peuvent être des jetons ($c, $d…) ou fixes. */
 export interface Garment {
   sleeve: 'short' | 'long' | 'none';
-  /** Robe : jupe évasée à la place du pantalon. */
-  skirt?: boolean;
-  /** Couleur du pantalon, si l'habit en impose une. */
+  /** Bas : pantalon (par défaut), short ou jupe évasée (robe). */
+  bottom?: 'pants' | 'shorts' | 'skirt';
+  /** Couleur du haut, si l'habit en impose une (sinon la couleur de tenue choisie). */
+  top?: string;
+  /** Couleur du bas (sinon jean pour pantalon et short, couleur du haut pour la jupe). */
   pants?: string;
 }
 
-const DEFAULT_GARMENT: Garment = { sleeve: 'short' };
-const GARMENTS: Record<string, Garment> = {
-  'outfit-sweater': { sleeve: 'long' },
-  'outfit-hoodie': { sleeve: 'long' },
-  'outfit-shirt': { sleeve: 'long' },
-  'outfit-puffer': { sleeve: 'long' },
-  'outfit-raincoat': { sleeve: 'long' },
-  'outfit-xmas-sweater': { sleeve: 'long' },
-  'outfit-dress': { sleeve: 'none', skirt: true },
-  'outfit-swimsuit': { sleeve: 'none' },
-};
-
-export function garmentOf(outfitId: string): Garment {
-  return GARMENTS[outfitId] ?? DEFAULT_GARMENT;
-}
+export const DEFAULT_GARMENT: Garment = { sleeve: 'short' };
 
 /** Ids des dégradés d'ombrage (à définir dans le <defs> du SVG qui dessine le corps). */
 export interface BodyIds {
@@ -132,7 +120,10 @@ export const DEFAULT_BODY_IDS: BodyIds = { shade: 'body-shade', shadeV: 'body-sh
 
 export interface BodyLook {
   skin: string;
+  /** Couleur du haut (déjà résolue). */
   top: string;
+  /** Couleur du bas (déjà résolue), sinon jean ou, pour une jupe, la couleur du haut. */
+  pants?: string;
   garment: Garment;
 }
 
@@ -143,7 +134,8 @@ export interface BodyLook {
 export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { back: Shape[]; front: Shape[] } {
   const cx = 100;
   const { skin, top, garment } = look;
-  const pants = garment.pants ?? (garment.skirt ? top : '#4f63a8');
+  const bottom = garment.bottom ?? 'pants';
+  const pants = look.pants ?? (bottom === 'skirt' ? top : '#4f63a8');
   const accent = darken(top, 0.05);
   const { shoulderY: sy, waistY, hipY, kneeY, ankleY, footY, shoulderW, waistW, hipW, armLen, armW } = M;
   const shade = (d: string, opacity = 1): Shape => path(d, `url(#${ids.shade})`, { opacity });
@@ -159,8 +151,15 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
     const shoeX = cx + side * 14;
     const toe = cx + side * 21;
     return [
-      path(d, garment.skirt ? skin : pants),
+      path(d, bottom === 'pants' ? pants : skin),
       shade(d),
+      ...(bottom === 'shorts'
+        ? [
+            path(`M ${outer} ${hipY - 4} L ${inner} ${hipY - 4} L ${inner} ${kneeY - 14} L ${outer - side * 1.5} ${kneeY - 14} Z`, pants),
+            path(`M ${outer} ${hipY - 4} L ${inner} ${hipY - 4} L ${inner} ${kneeY - 14} L ${outer - side * 1.5} ${kneeY - 14} Z`, `url(#${ids.shade})`),
+            path(`M ${inner} ${kneeY - 14} L ${outer - side * 1.5} ${kneeY - 14}`, 'none', { stroke: darken(pants, 0.2), sw: 2.5 }),
+          ]
+        : []),
       ellipse(shoeX + side * 3, footY - 8, 17, 10, '#fafafa'),
       path(`M ${shoeX - 14} ${footY - 3} Q ${shoeX + side * 3} ${footY + 5} ${shoeX + 20} ${footY - 3} L ${shoeX + 20} ${footY - 1} Q ${shoeX + side * 3} ${footY + 7} ${shoeX - 14} ${footY - 1} Z`, '#cfd8dc'),
       ellipse(toe, footY - 9, 8, 6.5, accent),
@@ -198,7 +197,7 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
   const body = `M ${cx - 11} ${sy - 3} Q ${cx - shoulderW + 2} ${sy - 4} ${cx - shoulderW} ${sy + 12} L ${cx - waistW} ${waistY} Q ${cx - hipW - 2} ${hipY - 8} ${cx - hipW} ${hipY + 2} L ${cx + hipW} ${hipY + 2} Q ${cx + hipW + 2} ${hipY - 8} ${cx + waistW} ${waistY} L ${cx + shoulderW} ${sy + 12} Q ${cx + shoulderW - 2} ${sy - 4} ${cx + 11} ${sy - 3} Z`;
   back.push(...arm(-1), ...arm(1));
   back.push(path(body, top), shade(body), path(body, `url(#${ids.shadeV})`));
-  if (garment.skirt) {
+  if (bottom === 'skirt') {
     const skirt = `M ${cx - waistW} ${waistY - 2} L ${cx + waistW} ${waistY - 2} L ${cx + hipW + 16} ${kneeY - 6} Q ${cx} ${kneeY + 4} ${cx - hipW - 16} ${kneeY - 6} Z`;
     back.push(path(skirt, top), shade(skirt), path(`M ${cx - hipW - 14} ${kneeY - 8} Q ${cx} ${kneeY + 2} ${cx + hipW + 14} ${kneeY - 8}`, 'none', { stroke: lighten(top, 0.3), sw: 2 }));
   } else {

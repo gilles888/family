@@ -41,7 +41,9 @@ export interface AvatarPart extends PartMeta {
   shapes: Shape[];
   /** Espace de dessin : « body » = corps entier 200 × 300 (repères ANCHORS) ; sinon espace de tête 200 × 200. */
   space?: 'body';
-  /** Habits : manches et bas (sinon déduits de l'id par garmentOf). */
+  /** Habits : derrière le corps (cape, capuche) ; espace du corps. */
+  under?: Shape[];
+  /** Habits : manches, bas et couleurs du corps de base. */
   garment?: Garment;
   /** Cheveux : partie derrière la tête (cheveux longs, afro…). */
   back?: Shape[];

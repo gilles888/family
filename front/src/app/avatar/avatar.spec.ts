@@ -234,6 +234,14 @@ describe('Avatar', () => {
     });
   });
 
+  it('un avatar enregistré en version 2 reste valide : mêmes ids, version remise à jour', () => {
+    const old = { ...CONFIG, version: 2, outfit: 'outfit-hoodie', costume: 'costume-witch' };
+    const config = normalizeAvatar(old, defaultAvatar(1));
+    expect(config.version).toBe(AVATAR_VERSION);
+    expect(config.outfit).toBe('outfit-hoodie');
+    expect(config.costume).toBe('costume-witch');
+  });
+
   describe('le corps unique', () => {
     it('buste et tête sont des recadrages du même corps entier', () => {
       render({ config: CONFIG, size: 100 });

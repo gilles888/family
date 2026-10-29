@@ -19,8 +19,8 @@ import {
 } from './avatar-parts';
 import { isHexColor, lighten } from '../shared/svg/shapes';
 
-/** Version du catalogue : à incrémenter si le sens d'un champ change (les ids retirés, eux, sont tolérés). */
-export const AVATAR_VERSION = 2;
+/** Version du catalogue : à incrémenter si le sens d'un champ change (les ids retirés, eux, sont tolérés). 3 : corps entier (200 × 300), les ids ne changent pas. */
+export const AVATAR_VERSION = 3;
 
 /** Couleur des yeux des avatars qui n'en ont pas (anciens avatars, avatar par défaut) : noir. */
 export const DEFAULT_EYE_COLOR = EYE_COLORS[0].value;

@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Avatar } from '../../avatar/avatar';
+import { PARTS_BY_SLOT } from '../../avatar/avatar-parts';
 import { AvatarConfig, normalizeAvatar, defaultAvatar } from '../../avatar/avatar-config';
 import { SvgShapes } from '../../shared/svg/svg-shapes';
 import { LabDefs } from './lab-defs';
@@ -10,6 +13,19 @@ const DEMO: AvatarConfig = normalizeAvatar(
   { version: 2, skin: 'skin-3', eyes: 'eyes-happy', eyeColor: '#5d4037', mouth: 'mouth-grin', hair: 'hair-ponytail', hairColor: '#6b3e26', outfit: 'outfit-tshirt', outfitColor: '#ec4899', hat: 'none', accessory: 'none', background: '#fde68a' },
   defaultAvatar(1),
 );
+type Slot = keyof typeof PARTS_BY_SLOT;
+const LOTS: Record<string, Slot[]> = {
+  tenues: ['body'],
+  deguisements: ['costume'],
+  tetes: ['hat', 'hair'],
+  objets: ['face', 'back', 'held', 'accessory'],
+};
+const SLOT_FIELD: Record<Slot, keyof AvatarConfig> = {
+  body: 'outfit', costume: 'costume', hat: 'hat', hair: 'hair', face: 'face', back: 'back', held: 'held', accessory: 'accessory', eyes: 'eyes', mouth: 'mouth',
+};
+function configWith(slot: Slot, id: string): AvatarConfig {
+  return { ...DEMO, [SLOT_FIELD[slot]]: id };
+}
 const VARIANTS: { label: string; config: AvatarConfig }[] = [
   { label: 'T-shirt rose, couettes', config: DEMO },
   { label: 'Sweat bleu, cheveux courts', config: { ...DEMO, skin: 'skin-2', hair: 'hair-short', hairColor: '#e8c267', outfit: 'outfit-hoodie', outfitColor: '#3b82f6', eyes: 'eyes-round' } },
@@ -22,7 +38,7 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
  */
 @Component({
   selector: 'app-lab-page',
-  imports: [SvgShapes, LabDefs, LabFigure, SeasonParticles],
+  imports: [SvgShapes, LabDefs, LabFigure, SeasonParticles, Avatar],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1>Labo : la chambre</h1>
@@ -53,6 +69,20 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
         }
       </div>
     </section>
+
+    @if (sheet().length) {
+      <section class="direction" id="planche">
+        <h2>Planche : {{ lot }}</h2>
+        <div class="sheet">
+          @for (p of sheet(); track p.key) {
+            <figure>
+              <app-avatar [config]="p.config" [size]="110" [full]="true" [round]="false" label="" />
+              <figcaption>{{ p.label }}</figcaption>
+            </figure>
+          }
+        </div>
+      </section>
+    }
 
     <section class="direction" id="corps">
       <h2>Le corps « enfant »</h2>
@@ -118,6 +148,14 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
       height: auto;
       background: #fde4d2;
     }
+    .sheet {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+    .sheet figcaption {
+      font: var(--mat-sys-label-small);
+    }
     .figure {
       border-radius: 18px;
       box-shadow: var(--mat-sys-level2);
@@ -137,6 +175,18 @@ const VARIANTS: { label: string; config: AvatarConfig }[] = [
 export class LabPage {
   protected readonly demo = DEMO;
   protected readonly variants = VARIANTS;
+  /** Planche de pièces sur le corps (?lot=tenues|deguisements|tetes|objets), pour vérifier une migration. */
+  protected readonly lot = inject(ActivatedRoute).snapshot.queryParamMap.get('lot') ?? '';
+  protected readonly sheet = () => {
+    const slots = LOTS[this.lot] ?? [];
+    return slots.flatMap((slot) =>
+      PARTS_BY_SLOT[slot].map((part) => ({
+        key: slot + part.id,
+        label: part.label,
+        config: configWith(slot, part.id),
+      })),
+    );
+  };
   protected readonly scenes: { label: string; open: boolean }[] = [
     { label: 'Chambre fermée', open: false },
     { label: 'Armoire ouverte', open: true },
