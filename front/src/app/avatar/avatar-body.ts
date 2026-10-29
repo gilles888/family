@@ -104,6 +104,8 @@ export interface Garment {
   top?: string;
   /** Couleur du bas (sinon jean pour pantalon et short, couleur du haut pour la jupe). */
   pants?: string;
+  /** Le déguisement cache tout le corps (fantôme, sapin, bonhomme de neige) : seule son ombre au sol reste. */
+  hideBody?: boolean;
 }
 
 export const DEFAULT_GARMENT: Garment = { sleeve: 'short' };
@@ -140,6 +142,9 @@ export function bodyShapes(look: BodyLook, ids: BodyIds = DEFAULT_BODY_IDS): { b
   const { shoulderY: sy, waistY, hipY, kneeY, ankleY, footY, shoulderW, waistW, hipW, armLen, armW } = M;
   const shade = (d: string, opacity = 1): Shape => path(d, `url(#${ids.shade})`, { opacity });
   const back: Shape[] = [ellipse(cx, footY + 2, 58, 9, '#2b1a3a', { opacity: 0.22 })];
+  if (garment.hideBody) {
+    return { back, front: [] };
+  }
 
   // jambes un peu effilées ; chaussures à semelle claire et bout de couleur
   const leg = (side: -1 | 1): Shape[] => {

@@ -9,15 +9,15 @@ import { circle, line, path, rect, star } from '../shared/svg/shapes';
 import { AvatarPart } from './avatar-part-types';
 
 /** Rangée de points (boutons, pois). */
-const dots = (pts: number[][], r: number, fill: string, opacity = 1) =>
+export const dots = (pts: number[][], r: number, fill: string, opacity = 1) =>
   pts.map(([x, y]) => circle(x, y, r, fill, { opacity }));
 /** Poignets (revers) : un trait en travers de chaque manche longue. */
-const cuffs = (color: string) => [
+export const cuffs = (color: string) => [
   line('M45 182 L59 183', color, 5),
   line('M141 183 L155 182', color, 5),
 ];
 /** Encolure ronde en côte, par-dessus l'encolure du corps. */
-const ribCollar = (color: string) =>
+export const ribCollar = (color: string) =>
   path('M83 108 Q100 127 117 108', 'none', { stroke: color, sw: 5 });
 
 export const OUTFITS: AvatarPart[] = [

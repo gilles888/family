@@ -43,6 +43,8 @@ export interface AvatarPart extends PartMeta {
   space?: 'body';
   /** Habits : derrière le corps (cape, capuche) ; espace du corps. */
   under?: Shape[];
+  /** Déguisements : calque de tête (espace 200 × 200) posé sur la tête, avant les yeux (masque, barbe, oreilles…). */
+  headFront?: Shape[];
   /** Habits : manches, bas et couleurs du corps de base. */
   garment?: Garment;
   /** Cheveux : partie derrière la tête (cheveux longs, afro…). */

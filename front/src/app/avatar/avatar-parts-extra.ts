@@ -6,6 +6,7 @@
  */
 import { INK, Shape, circle, ellipse, line, path, rect, star } from '../shared/svg/shapes';
 import { AvatarPart, GradientOption } from './avatar-part-types';
+import { COSTUME_BODIES } from './avatar-costumes';
 
 const TORSO = 'M34 200 C36 168 60 150 100 150 C140 150 164 168 166 200 Z';
 const WIDE = 'M22 200 C28 168 56 150 100 150 C144 150 172 168 178 200 Z';
@@ -23,19 +24,14 @@ const row = (xs: number[], y: number, r: number, fill: string): Shape[] =>
 // Déguisements
 // =====================================================================================================================
 
-export const COSTUMES: AvatarPart[] = [
+/** Déguisements : identité et coiffe ; la partie corps est dans avatar-costumes.ts. */
+const COSTUME_HEADS: AvatarPart[] = [
   {
     id: 'costume-pyjama',
     slot: 'costume',
     free: true,
     label: $localize`:@@avatar.costume.pyjama:Pyjama étoilé`,
-    shapes: [
-      torso('#90caf9'),
-      star(70, 178, 7, 3, '#fff59d'),
-      star(128, 172, 6, 2.6, '#fff59d'),
-      star(104, 192, 5, 2.2, '#fff59d'),
-    ],
-    front: [path('M84 151 Q100 166 116 151', 'none', { stroke: '#1e88e5', sw: 4 })],
+    shapes: [],
   },
   // ---- Halloween
   {
@@ -45,13 +41,7 @@ export const COSTUMES: AvatarPart[] = [
     rarete: 'super',
     includesHat: true,
     label: $localize`:@@avatar.costume.witch:Sorcière`,
-    shapes: [
-      torso('#5e35b1'),
-      rect(34, 176, 132, 8, 0, '#fbc02d'),
-      rect(92, 173, 16, 14, 3, '#ffd54f'),
-      rect(97, 177, 6, 6, 1, '#5e35b1'),
-    ],
-    front: [path('M80 150 L100 168 L120 150 Z', '#311b92')],
+    shapes: [],
     headwear: [
       ellipse(100, 62, 54, 10, '#1a1a2e'),
       path('M68 62 C80 50 88 30 104 2 C108 30 120 50 132 62 Z', '#1a1a2e'),
@@ -68,24 +58,7 @@ export const COSTUMES: AvatarPart[] = [
     hidesHair: true,
     includesHat: true,
     label: $localize`:@@avatar.costume.ghost:Fantôme`,
-    shapes: [
-      path('M26 200 C30 166 58 148 100 148 C142 148 170 166 174 200 Z', '#fafafa'),
-      path(
-        'M26 200 Q40 188 54 200 Q68 188 82 200 Q96 188 110 200 Q124 188 138 200 Q152 188 166 200',
-        'none',
-        { stroke: '#cfd8dc', sw: 3 },
-      ),
-    ],
-    front: [
-      path(
-        'M48 150 C40 90 56 36 100 36 C144 36 160 90 152 150 C140 140 124 134 100 134 C76 134 60 140 48 150 Z',
-        '#fafafa',
-      ),
-      path('M48 150 C40 90 56 36 100 36 C144 36 160 90 152 150', 'none', {
-        stroke: '#cfd8dc',
-        sw: 3,
-      }),
-    ],
+    shapes: [],
   },
   {
     id: 'costume-skeleton',
@@ -93,20 +66,7 @@ export const COSTUMES: AvatarPart[] = [
     theme: 'halloween',
     rarete: 'super',
     label: $localize`:@@avatar.costume.skeleton:Squelette`,
-    shapes: [
-      torso('#263238'),
-      line('M100 152 V200', '#f5f5f5', 4),
-      line('M80 168 Q100 160 120 168', '#f5f5f5', 4),
-      line('M76 180 Q100 172 124 180', '#f5f5f5', 4),
-      line('M72 192 Q100 184 128 192', '#f5f5f5', 4),
-    ],
-    front: [
-      ellipse(100, 92, 37, 41, '#f5f5f5', { opacity: 0.92 }),
-      ellipse(84, 90, 11, 12, '#212121'),
-      ellipse(116, 90, 11, 12, '#212121'),
-      path('M100 98 L94 110 L106 110 Z', '#212121'),
-      ...[88, 94, 100, 106, 112].map((x) => line(`M${x} 116 V124`, '#212121', 2)),
-    ],
+    shapes: [],
   },
   {
     id: 'costume-pumpkin',
@@ -116,13 +76,7 @@ export const COSTUMES: AvatarPart[] = [
     hidesHair: true,
     includesHat: true,
     label: $localize`:@@avatar.costume.pumpkin:Citrouille`,
-    shapes: [
-      torso('#fb8c00'),
-      path('M80 152 Q70 176 80 200', 'none', { stroke: '#ef6c00', sw: 4 }),
-      path('M100 152 V200', 'none', { stroke: '#ef6c00', sw: 4 }),
-      path('M120 152 Q130 176 120 200', 'none', { stroke: '#ef6c00', sw: 4 }),
-    ],
-    front: [path('M84 152 Q100 164 116 152', 'none', { stroke: '#558b2f', sw: 6 })],
+    shapes: [],
     headwear: [
       path(
         'M54 80 C52 44 76 30 100 30 C124 30 148 44 146 80 C134 68 118 64 100 64 C82 64 66 68 54 80 Z',
@@ -138,19 +92,7 @@ export const COSTUMES: AvatarPart[] = [
     theme: 'halloween',
     rarete: 'super',
     label: $localize`:@@avatar.costume.vampire:Vampire`,
-    shapes: [
-      path('M20 200 C24 164 54 144 100 144 C146 144 176 164 180 200 Z', '#b71c1c'),
-      torso('#212121'),
-      path('M86 152 L100 200 L114 152 Z', '#fafafa'),
-    ],
-    front: [
-      path('M84 152 L66 120 L98 150 Z', '#212121'),
-      path('M116 152 L134 120 L102 150 Z', '#212121'),
-      path('M84 152 L74 134 L96 150 Z', '#b71c1c'),
-      path('M116 152 L126 134 L104 150 Z', '#b71c1c'),
-      path('M90 108 L94 120 L98 108 Z', '#ffffff'),
-      path('M102 108 L106 120 L110 108 Z', '#ffffff'),
-    ],
+    shapes: [],
   },
   // ---- Noël
   {
@@ -160,19 +102,7 @@ export const COSTUMES: AvatarPart[] = [
     rarete: 'super',
     includesHat: true,
     label: $localize`:@@avatar.costume.santa:Père Noël`,
-    shapes: [
-      torso('#d32f2f'),
-      rect(92, 152, 16, 48, 0, '#fafafa'),
-      rect(34, 178, 132, 10, 0, '#212121'),
-      rect(92, 176, 16, 14, 3, '#ffd54f'),
-    ],
-    front: [
-      ellipse(100, 154, 34, 9, '#fafafa'),
-      path(
-        'M62 98 C58 140 142 140 138 98 C130 118 108 112 100 112 C92 112 70 118 62 98 Z',
-        '#fafafa',
-      ),
-    ],
+    shapes: [],
     headwear: [
       path(
         'M56 74 C56 44 74 30 100 30 C126 30 144 46 160 74 L148 78 C140 66 124 62 100 62 C82 62 66 66 56 74 Z',
@@ -189,19 +119,7 @@ export const COSTUMES: AvatarPart[] = [
     rarete: 'super',
     includesHat: true,
     label: $localize`:@@avatar.costume.elf:Lutin`,
-    shapes: [
-      torso('#2e7d32'),
-      rect(34, 178, 132, 9, 0, '#c62828'),
-      rect(92, 176, 16, 13, 3, '#ffd54f'),
-    ],
-    front: [
-      path(
-        'M72 150 L80 140 L88 150 L96 140 L104 150 L112 140 L120 150 L128 140 L132 152 L68 152 Z',
-        '#c62828',
-      ),
-      path('M60 90 L40 76 L60 104 Z', '$skin'),
-      path('M140 90 L160 76 L140 104 Z', '$skin'),
-    ],
+    shapes: [],
     headwear: [
       path(
         'M56 74 C56 46 76 36 100 36 C124 36 144 46 144 74 C132 62 118 60 100 60 C82 60 68 62 56 74 Z',
@@ -220,15 +138,7 @@ export const COSTUMES: AvatarPart[] = [
     hidesHair: true,
     includesHat: true,
     label: $localize`:@@avatar.costume.tree:Sapin`,
-    shapes: [
-      path('M20 200 L100 126 L180 200 Z', '#2e7d32'),
-      path('M50 200 L100 152 L150 200 Z', '#388e3c'),
-      dot(70, 186, 5, '#e53935'),
-      dot(130, 188, 5, '#ffca28'),
-      dot(100, 168, 5, '#e53935'),
-      dot(112, 194, 4, '#42a5f5'),
-    ],
-    front: [],
+    shapes: [],
     headwear: [
       path(
         'M54 82 C54 50 74 36 100 8 C126 36 146 50 146 82 C134 70 118 66 100 66 C82 66 66 70 54 82 Z',
@@ -247,15 +157,7 @@ export const COSTUMES: AvatarPart[] = [
     hidesHair: true,
     includesHat: true,
     label: $localize`:@@avatar.costume.snowman:Bonhomme de neige`,
-    shapes: [
-      circle(100, 196, 56, '#fafafa', { stroke: '#cfd8dc', sw: 3 }),
-      dot(100, 172, 4.5, '#37474f'),
-      dot(100, 188, 4.5, '#37474f'),
-    ],
-    front: [
-      path('M72 146 C86 160 114 160 128 146 L130 158 C114 170 86 170 70 158 Z', '#e53935'),
-      path('M100 98 L130 105 L100 110 Z', '#fb8c00'),
-    ],
+    shapes: [],
     headwear: [
       ellipse(100, 62, 44, 8, '#212121'),
       rect(70, 20, 60, 44, 4, '#212121'),
@@ -271,17 +173,7 @@ export const COSTUMES: AvatarPart[] = [
     hidesHair: true,
     includesHat: true,
     label: $localize`:@@avatar.costume.clown:Clown`,
-    shapes: [
-      path(WIDE, '#fdd835'),
-      ...row([60, 96, 134, 78, 116], 176, 6, '#e53935'),
-      ...row([70, 106, 144, 90], 192, 6, '#1e88e5'),
-    ],
-    front: [
-      ...[62, 80, 100, 120, 138].map((x, i) =>
-        dot(x, i % 2 ? 152 : 148, 10, i % 2 ? '#fafafa' : '#e53935'),
-      ),
-      circle(100, 156, 12, '#fafafa'),
-    ],
+    shapes: [],
     headwear: [
       dot(54, 78, 16, '#ff7043'),
       dot(146, 78, 16, '#ff7043'),
@@ -299,15 +191,7 @@ export const COSTUMES: AvatarPart[] = [
     rarete: 'super',
     includesHat: true,
     label: $localize`:@@avatar.costume.pirate:Pirate`,
-    shapes: [
-      torso('#fafafa'),
-      ...[160, 172, 184, 196].map((y) => rect(34, y, 132, 6, 0, '#1565c0')),
-      path('M34 200 C36 168 60 150 100 150 L86 200 Z', '#4e342e'),
-      path('M166 200 C164 168 140 150 100 150 L114 200 Z', '#4e342e'),
-      dot(78, 178, 3, '#ffd54f'),
-      dot(122, 178, 3, '#ffd54f'),
-    ],
-    front: [path('M80 150 L100 170 L120 150 Z', '#fafafa')],
+    shapes: [],
     headwear: [
       path('M52 76 C52 46 76 34 100 34 C124 34 148 46 148 76 C130 66 70 66 52 76 Z', '#d32f2f'),
       rect(52, 68, 96, 9, 3, '#b71c1c'),
@@ -324,15 +208,7 @@ export const COSTUMES: AvatarPart[] = [
     hidesHair: true,
     includesHat: true,
     label: $localize`:@@avatar.costume.knight:Chevalier`,
-    shapes: [
-      torso('#b0bec5'),
-      line('M100 152 V200', '#78909c', 3),
-      line('M60 170 H140', '#78909c', 3),
-      line('M50 186 H150', '#78909c', 3),
-      circle(42, 164, 14, '#cfd8dc', { stroke: '#78909c', sw: 3 }),
-      circle(158, 164, 14, '#cfd8dc', { stroke: '#78909c', sw: 3 }),
-    ],
-    front: [path('M74 150 Q100 168 126 150 L126 158 Q100 176 74 158 Z', '#90a4ae')],
+    shapes: [],
     headwear: [
       path('M52 96 C48 36 152 36 148 96 L134 96 C134 60 66 60 66 96 Z', '#90a4ae'),
       rect(96, 58, 8, 38, 3, '#78909c'),
@@ -346,15 +222,7 @@ export const COSTUMES: AvatarPart[] = [
     rarete: 'super',
     includesHat: true,
     label: $localize`:@@avatar.costume.princess:Princesse`,
-    shapes: [
-      path('M14 200 C24 166 58 150 100 150 C142 150 176 166 186 200 Z', '#f48fb1'),
-      path('M60 200 C62 180 80 166 100 166 C120 166 138 180 140 200 Z', '#f8bbd0'),
-      star(40, 184, 6, 2.6, '#fff8e1'),
-      star(160, 182, 6, 2.6, '#fff8e1'),
-      star(100, 190, 6, 2.6, '#fff8e1'),
-      rect(60, 164, 80, 7, 3, '#ec407a'),
-    ],
-    front: [...[70, 82, 94, 106, 118, 130].map((x) => dot(x, 152, 7, '#fafafa'))],
+    shapes: [],
     headwear: [
       path('M68 62 L70 40 L84 52 L100 30 L116 52 L130 40 L132 62 Z', '#fbc02d'),
       dot(100, 44, 4, '#ec407a'),
@@ -368,14 +236,7 @@ export const COSTUMES: AvatarPart[] = [
     theme: 'carnaval',
     rarete: 'super',
     label: $localize`:@@avatar.costume.hero:Super-héros`,
-    shapes: [
-      torso('#1e88e5'),
-      rect(34, 184, 132, 16, 0, '#d32f2f'),
-      rect(88, 184, 24, 16, 3, '#ffd54f'),
-      circle(100, 170, 14, '#ffd54f'),
-      star(100, 170.5, 10, 4.5, '#d32f2f'),
-    ],
-    front: [path('M82 150 L100 164 L118 150 Z', '#d32f2f')],
+    shapes: [],
     headwear: [
       path(
         'M58 84 C70 70 130 70 142 84 C142 104 128 106 118 98 C108 92 92 92 82 98 C72 106 58 104 58 84 Z',
@@ -393,13 +254,7 @@ export const COSTUMES: AvatarPart[] = [
     hidesHair: true,
     includesHat: true,
     label: $localize`:@@avatar.costume.dino:Dinosaure`,
-    shapes: [
-      torso('#43a047'),
-      ellipse(100, 190, 30, 26, '#c5e1a5'),
-      path('M34 186 L22 176 L34 168 Z', '#ff8f00'),
-      path('M166 186 L178 176 L166 168 Z', '#ff8f00'),
-    ],
-    front: [path('M82 150 Q100 164 118 150', 'none', { stroke: '#2e7d32', sw: 4 })],
+    shapes: [],
     headwear: [
       path('M52 96 C46 36 154 36 148 96 L136 96 C136 62 64 62 64 96 Z', '#43a047'),
       path('M76 46 L84 22 L92 42 L100 16 L108 42 L116 22 L124 46 Z', '#ff8f00'),
@@ -416,13 +271,7 @@ export const COSTUMES: AvatarPart[] = [
     rarete: 'super',
     includesHat: true,
     label: $localize`:@@avatar.costume.unicorn:Licorne`,
-    shapes: [
-      torso('#fafafa'),
-      path('M150 152 C176 160 176 190 160 200 L146 200 Z', '#f48fb1'),
-      path('M156 160 C170 168 170 190 158 200', 'none', { stroke: '#81d4fa', sw: 5 }),
-      path('M162 156 C176 170 174 192 164 200', 'none', { stroke: '#fff176', sw: 4 }),
-    ],
-    front: [path('M84 151 Q100 164 116 151', 'none', { stroke: '#f48fb1', sw: 4 })],
+    shapes: [],
     headwear: [
       path('M64 56 L58 24 L80 46 Z', '#f8bbd0'),
       path('M136 56 L142 24 L120 46 Z', '#f8bbd0'),
@@ -443,17 +292,7 @@ export const COSTUMES: AvatarPart[] = [
     rarete: 'super',
     includesHat: true,
     label: $localize`:@@avatar.costume.bunny:Lapin`,
-    shapes: [torso('#f5f5f5'), ellipse(100, 186, 28, 26, '#f8bbd0'), dot(164, 196, 12, '#fafafa')],
-    front: [
-      path('M84 151 Q100 164 116 151', 'none', { stroke: '#f48fb1', sw: 4 }),
-      ...[0, 1].map((i) =>
-        line(`M${72 - i * 6} ${108 + i * 6} L${52 - i * 6} ${106 + i * 12}`, '#bdbdbd', 1.5),
-      ),
-      ...[0, 1].map((i) =>
-        line(`M${128 + i * 6} ${108 + i * 6} L${148 + i * 6} ${106 + i * 12}`, '#bdbdbd', 1.5),
-      ),
-      path('M96 100 L104 100 L100 106 Z', '#f48fb1'),
-    ],
+    shapes: [],
     headwear: [
       ellipse(78, 14, 12, 38, '#f5f5f5'),
       ellipse(122, 14, 12, 38, '#f5f5f5'),
@@ -468,15 +307,7 @@ export const COSTUMES: AvatarPart[] = [
     rarete: 'super',
     includesHat: true,
     label: $localize`:@@avatar.costume.astronaut:Astronaute`,
-    shapes: [
-      torso('#eceff1'),
-      rect(76, 168, 48, 26, 6, '#cfd8dc'),
-      dot(88, 180, 5, '#e53935'),
-      dot(112, 180, 5, '#1e88e5'),
-      circle(52, 178, 9, '#1e88e5'),
-      rect(34, 150, 132, 5, 0, '#b0bec5'),
-    ],
-    front: [ellipse(100, 152, 36, 9, '#b0bec5')],
+    shapes: [],
     headwear: [
       circle(100, 90, 58, '#b3e5fc', { opacity: 0.28 }),
       circle(100, 90, 58, 'none', { stroke: '#eceff1', sw: 9 }),
@@ -490,13 +321,7 @@ export const COSTUMES: AvatarPart[] = [
     hidesHair: true,
     includesHat: true,
     label: $localize`:@@avatar.costume.firefighter:Pompier`,
-    shapes: [
-      torso('#d32f2f'),
-      rect(34, 172, 132, 8, 0, '#fdd835'),
-      rect(34, 188, 132, 8, 0, '#fdd835'),
-      rect(86, 152, 28, 48, 4, '#b71c1c'),
-    ],
-    front: [path('M80 150 L100 166 L120 150 Z', '#b71c1c')],
+    shapes: [],
     headwear: [
       path('M56 80 C56 40 80 30 100 30 C120 30 144 40 144 80 Z', '#d32f2f'),
       rect(44, 76, 112, 10, 5, '#b71c1c'),
@@ -510,16 +335,7 @@ export const COSTUMES: AvatarPart[] = [
     rarete: 'super',
     includesHat: true,
     label: $localize`:@@avatar.costume.doctor:Docteur`,
-    shapes: [
-      torso('#fafafa'),
-      path('M86 152 L100 200 L114 152 Z', '#80cbc4'),
-      line('M72 156 C60 190 100 196 100 176', '#607d8b', 3.5),
-      circle(100, 176, 5, '#90a4ae'),
-    ],
-    front: [
-      path('M82 150 L68 164 L90 168 Z', '#eceff1'),
-      path('M118 150 L132 164 L110 168 Z', '#eceff1'),
-    ],
+    shapes: [],
     headwear: [
       rect(58, 62, 84, 8, 4, '#eceff1'),
       circle(100, 62, 10, '#b0bec5'),
@@ -533,15 +349,7 @@ export const COSTUMES: AvatarPart[] = [
     hidesHair: true,
     includesHat: true,
     label: $localize`:@@avatar.costume.chef:Cuisinier`,
-    shapes: [
-      torso('#fafafa'),
-      dot(86, 172, 3.5, '#90a4ae'),
-      dot(86, 188, 3.5, '#90a4ae'),
-      dot(114, 172, 3.5, '#90a4ae'),
-      dot(114, 188, 3.5, '#90a4ae'),
-      line('M100 152 V200', '#cfd8dc', 2),
-    ],
-    front: [path('M76 150 Q100 166 124 150 L120 158 Q100 172 80 158 Z', '#e53935')],
+    shapes: [],
     headwear: [
       rect(62, 58, 76, 12, 3, '#fafafa'),
       dot(70, 44, 18, '#fafafa'),
@@ -555,15 +363,12 @@ export const COSTUMES: AvatarPart[] = [
     slot: 'costume',
     rarete: 'super',
     label: $localize`:@@avatar.costume.football:Footballeur`,
-    shapes: [
-      torso('#1565c0'),
-      ...[48, 72, 128, 152].map((x) => rect(x, 160, 10, 40, 0, '#fafafa')),
-      path('M92 168 L98 164 V188 M104 168 H114 V188 H104 Z', 'none', { stroke: '#fafafa', sw: 4 }),
-    ],
-    front: [path('M84 150 Q100 166 116 150', 'none', { stroke: '#fafafa', sw: 5 })],
+    shapes: [],
     headwear: [line('M58 70 C80 62 120 62 142 70', '#e53935', 6)],
   },
 ];
+
+export const COSTUMES: AvatarPart[] = COSTUME_HEADS.map((c) => ({ ...c, ...COSTUME_BODIES[c.id], space: 'body' as const }));
 
 // =====================================================================================================================
 // Visage : maquillages et masques (sous les yeux, donc yeux et bouche restent visibles)

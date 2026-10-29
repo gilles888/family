@@ -21,6 +21,7 @@ export const LAYER_ORDER = [
   'hair-back',
   'head',
   'body-front',
+  'head-front',
   'face',
   'eyes',
   'mouth',
@@ -95,6 +96,7 @@ export function drawAvatar(config: AvatarConfig, options: DrawOptions = {}): Ava
     layer('hair-back', config.hair, hair?.back, ctx(config.hairColor)),
     layer('head', config.skin, HEAD_SHAPES, ctx(skin)),
     layer('body-front', costume ? costume.id : config.outfit, [...body.front, ...(own ? (outfit?.front ?? []) : [])], outfitColor, 'body'),
+    layer('head-front', costume ? costume.id : NONE, costume?.headFront, ctx(skin)),
     layer('face', config.face ?? NONE, findPart('face', config.face)?.shapes, ctx(skin)),
     layer(
       'eyes',
