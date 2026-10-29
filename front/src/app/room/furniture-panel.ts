@@ -33,7 +33,27 @@ export const CHARACTER_DROP_LIST = 'room-character';
     </header>
 
     <div class="body">
-      @if (furniture() === 'tirelire') {
+      @if (furniture() === 'livre') {
+        <ul class="ideas">
+          @for (idea of store.ideas(); track $index) {
+            <li>
+              <button type="button" class="idea" (click)="store.applyIdea(idea.idea)">
+                <app-avatar [config]="idea.config" [member]="store.member" [size]="64" [full]="true" [bare]="true" [round]="false" label="" />
+                <span class="idea-title">{{ idea.title }}</span>
+                <span class="idea-price">
+                  @if (idea.price > 0) {
+                    🪙 {{ idea.price }}
+                  } @else {
+                    <mat-icon>check_circle</mat-icon>
+                  }
+                </span>
+              </button>
+            </li>
+          } @empty {
+            <p class="empty" i18n="@@shop.filter.empty">Rien ici pour le moment.</p>
+          }
+        </ul>
+      } @else if (furniture() === 'tirelire') {
         <div class="piggy"><app-piggy-bank [memberId]="store.member.id!" /></div>
       } @else {
         @if (furniture() === 'coiffeuse') {

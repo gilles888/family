@@ -7,8 +7,8 @@ import {
 import { Box, Layer, P2, Projection, V3, box, decal, floorEllipse, perspective, polyline, quad, shadowOf, sprite } from './room-3d';
 
 /** Un point cliquable de la pièce : un meuble, ou un objet (dé, livre). */
-export type FurnitureId = 'armoire' | 'commode' | 'chapeaux' | 'coiffeuse' | 'coffre' | 'fenetre' | 'tirelire' | 'boutique';
-export type RoomSpot = FurnitureId | 'de' | 'livre';
+export type FurnitureId = 'armoire' | 'commode' | 'chapeaux' | 'coiffeuse' | 'coffre' | 'fenetre' | 'tirelire' | 'boutique' | 'livre';
+export type RoomSpot = FurnitureId | 'de';
 
 /** Dimensions de la pièce dessinée (unités de l'écran). */
 export const ROOM_W = 1000;
@@ -315,7 +315,7 @@ export function buildRoom(opts: RoomOptions): RoomModel {
   spots.chapeaux = bounds(pr, [lbox(back, 400, 512, 0, 24, 168, 198), hatShelf], 6);
   vanity(540, 4);
   shelf(534, 124, 188, 2.5, [
-    { a: 18, shapes: BOOKS, s: 1.1 },
+    { a: 18, shapes: BOOKS, s: 1.1, cls: 'pig', opens: 'livre' },
     { a: 74, shapes: PIG_SPRITE, s: 1.1, cls: 'pig', opens: 'tirelire' },
   ]);
   spots.tirelire = bounds(pr, [lbox(back, 534 + 56, 534 + 116, 0, 24, 188, 226)], 6);

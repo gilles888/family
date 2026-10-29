@@ -166,7 +166,7 @@ export class RoomView implements AfterViewInit {
   /** Le panneau s'ouvre à gauche pour les meubles de droite et du milieu, à droite pour ceux de gauche. */
   protected onLeft(id: FurnitureId): boolean {
     // le panneau s'ouvre du côté opposé au meuble : on voit le meuble s'ouvrir, et le personnage reste au milieu
-    return id === 'commode' || id === 'chapeaux' || id === 'coiffeuse' || id === 'tirelire' || id === 'boutique';
+    return id === 'commode' || id === 'chapeaux' || id === 'coiffeuse' || id === 'tirelire' || id === 'boutique' || id === 'livre';
   }
 
   protected wear(option: WardrobeOption): void {
@@ -202,8 +202,6 @@ export class RoomView implements AfterViewInit {
   protected pick(spot: RoomSpot): void {
     if (spot === 'de') {
       this.store.surprise();
-    } else if (spot === 'livre') {
-      // les idées de thème s'ouvrent à l'étape suivante
     } else if (!this.emptyFurniture()[spot]) {
       this.open.update((current) => (current === spot ? null : spot));
     }

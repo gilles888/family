@@ -3,7 +3,7 @@ import { WARDROBE, WardrobeCategory, WardrobeGroup } from '../avatar/avatar-ward
 import { FurnitureId } from './room-model';
 
 /** Meubles qui rangent des affaires de la garde-robe (la tirelire et la boutique ont leur propre contenu). */
-export type StorageFurniture = Exclude<FurnitureId, 'tirelire' | 'boutique'>;
+export type StorageFurniture = Exclude<FurnitureId, 'tirelire' | 'boutique' | 'livre'>;
 
 /** Quelles catégories (et quels groupes) de la garde-robe vont dans quel meuble. */
 const CONTENT: Record<StorageFurniture, { category: WardrobeCategory['id']; groups?: string[] }[]> = {
@@ -19,7 +19,7 @@ const category = (id: WardrobeCategory['id']) => WARDROBE.find((c) => c.id === i
 
 /** Groupes de vignettes d'un meuble, selon le filtre du store (ou « à moi » / « boutique » forcés). */
 export function furnitureGroups(store: AvatarDressingStore, id: FurnitureId): WardrobeGroup[] {
-  if (id === 'tirelire') {
+  if (id === 'tirelire' || id === 'livre') {
     return [];
   }
   if (id === 'boutique') {
@@ -35,6 +35,9 @@ export function furnitureGroups(store: AvatarDressingStore, id: FurnitureId): Wa
 export function furnitureCount(store: AvatarDressingStore, id: FurnitureId): number {
   if (id === 'tirelire') {
     return 1;
+  }
+  if (id === 'livre') {
+    return store.ideas().length;
   }
   return furnitureGroups(store, id).reduce((n, g) => n + g.options.filter((o) => !o.none).length, 0);
 }
