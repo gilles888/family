@@ -1,7 +1,7 @@
 import { Shape, darken, lighten, rect } from '../shared/svg/shapes';
 import { SeasonId } from '../theme/seasons';
 import {
-  BOOKS, CHEST_FRONT, CURTAIN_LEFT, CURTAIN_RIGHT, CURTAIN_ROD, DIE_FRONT, HAT_BEANIE, HAT_CAP, HAT_CROWN, MIRROR, PIG_SPRITE, POSTER,
+  BOOKS, CHEST_FRONT, CURTAIN_LEFT, CURTAIN_RIGHT, CURTAIN_ROD, DIE_FRONT, HAT_BEANIE, HAT_CAP, HAT_CROWN, MIRROR, PIG_SPRITE,
   SHOP_DOOR, SIGN, WINDOW_FRAME, WOOD, WOOD_DARK, WOOD_LIGHT, WindowSeason, drawers, wardrobeDoor, wardrobeInside, windowView,
 } from './room-props';
 import { Box, Layer, P2, Projection, V3, box, decal, floorEllipse, perspective, polyline, quad, shadowOf, sprite } from './room-3d';
@@ -302,25 +302,25 @@ export function buildRoom(opts: RoomOptions): RoomModel {
     spots.boutique = bounds(pr, [lbox(back, a0 - 8, a0 + w + 8, 0, 34, 0, h + 62)]);
   };
 
-  // ---------- dispositions : le personnage se tient devant la partie vide du mur (poster), la fenêtre reste dégagée
-  const figAnchor: V3 = [480, 0, 215];
+  // ---------- dispositions : le personnage se tient au milieu, entre la fenêtre et la commode ; les panneaux (200 px de
+  // chaque côté) laissent voir le meuble qui s'ouvre
+  const figAnchor: V3 = [345, 0, 215];
   armoire(14, 1);
-  commode(310, 3);
-  const hatShelf = shelf(310, 112, 168, 2, [
+  commode(400, 3);
+  const hatShelf = shelf(400, 112, 168, 2, [
     { a: 20, shapes: HAT_CAP, cls: 'rack', opens: 'chapeaux' },
     { a: 54, shapes: HAT_BEANIE, cls: 'rack', opens: 'chapeaux' },
     { a: 88, shapes: HAT_CROWN, cls: 'rack', opens: 'chapeaux' },
   ]);
-  spots.chapeaux = bounds(pr, [lbox(back, 310, 422, 0, 24, 168, 198), hatShelf], 6);
-  add(2.2, onWall(pr, back, 440, 0, 190, 70, 50, POSTER, 'tableau'));
-  vanity(570, 4);
-  shelf(564, 124, 188, 2.5, [
+  spots.chapeaux = bounds(pr, [lbox(back, 400, 512, 0, 24, 168, 198), hatShelf], 6);
+  vanity(540, 4);
+  shelf(534, 124, 188, 2.5, [
     { a: 18, shapes: BOOKS, s: 1.1 },
     { a: 74, shapes: PIG_SPRITE, s: 1.1, cls: 'pig', opens: 'tirelire' },
   ]);
-  spots.tirelire = bounds(pr, [lbox(back, 564 + 56, 564 + 116, 0, 24, 188, 226)], 6);
-  spots.livre = bounds(pr, [lbox(back, 564 + 16, 564 + 52, 0, 24, 188, 218)], 6);
-  shopDoor(700, 3.5);
+  spots.tirelire = bounds(pr, [lbox(back, 534 + 56, 534 + 116, 0, 24, 188, 226)], 6);
+  spots.livre = bounds(pr, [lbox(back, 534 + 16, 534 + 52, 0, 24, 188, 218)], 6);
+  shopDoor(690, 3.5);
   chest(70, 110, 8);
 
   // tapis sous le personnage, puis meubles du fond vers l'avant

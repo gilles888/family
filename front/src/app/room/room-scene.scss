@@ -66,70 +66,91 @@
   }
 }
 
-// Ouvertures (CSS pur)
+// Ouvertures en 3D (CSS pur) : chaque pièce est un calque SVG à part ; `perspective()` donne la profondeur. Les durées
+// restent entre 350 et 450 ms ; tout est coupé si l'utilisateur préfère moins d'animations (voir plus bas).
 .door,
 .curtain,
 .drawer,
+.drawer-shadow,
 .lid,
+.chest-inside,
+.shop-door,
 .pig,
-.rack,
-.shop-light {
+.rack {
   transform-box: fill-box;
-  transition: transform 360ms cubic-bezier(0.3, 0.8, 0.3, 1);
+  transform-origin: 50% 50%;
+  transition:
+    transform 420ms cubic-bezier(0.3, 0.8, 0.3, 1),
+    opacity 420ms ease;
 }
 
+// Armoire : les battants pivotent sur leurs charnières (vers nous) et laissent voir les vêtements
 .door-left {
-  transform-origin: left center;
+  transform-origin: 0% 50%;
   &.open {
-    transform: scaleX(0.18);
+    transform: perspective(560px) rotateY(-104deg);
   }
 }
-
 .door-right {
-  transform-origin: right center;
+  transform-origin: 100% 50%;
   &.open {
-    transform: scaleX(0.18);
+    transform: perspective(560px) rotateY(104deg);
   }
 }
 
-.curtain.left {
-  transform-origin: left center;
+// Boutique : la porte s'entrouvre sur la lumière
+.shop-door {
+  transform-origin: 0% 50%;
   &.open {
-    transform: scaleX(0.35);
+    transform: perspective(420px) rotateY(-58deg);
   }
 }
 
-.curtain.right {
-  transform-origin: right center;
-  &.open {
-    transform: scaleX(0.35);
-  }
-}
-
+// Commode : le tiroir du milieu sort vers l'avant, son ombre grandit
 .drawer.open {
-  transform: translateY(16px);
+  transform: perspective(520px) translateZ(72px) translateY(8px);
 }
-
-.lid {
-  transform-origin: left bottom;
+.drawer-shadow {
+  opacity: 0;
+  transform: scale(0.5);
   &.open {
-    transform: rotate(-24deg) translateY(-6px);
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-.rack.lift {
-  transform: translateY(-6px);
+// Coffre : le couvercle se relève sur sa charnière arrière, l'intérieur apparaît
+.lid {
+  transform-origin: 50% 12%;
+  &.open {
+    transform: perspective(460px) rotateX(-60deg) translateY(-6px);
+  }
 }
-
-.shop-light {
+.chest-inside {
   opacity: 0;
-  transition: opacity 360ms ease;
   &.open {
     opacity: 1;
   }
 }
 
-.pig.hop {
+.curtain.left {
+  transform-origin: 0% 50%;
+  &.open {
+    transform: scaleX(0.35);
+  }
+}
+.curtain.right {
+  transform-origin: 100% 50%;
+  &.open {
+    transform: scaleX(0.35);
+  }
+}
+
+.rack.open {
+  transform: translateY(-6px);
+}
+
+.pig.open {
   animation: hop 700ms ease-in-out 2;
 }
 
@@ -139,18 +160,44 @@
   }
 }
 
+// Parallaxe léger : le décor et les meubles bougent un peu moins que le personnage (--px, --py entre -1 et 1)
+.art,
+.spot {
+  transform: translate(calc(var(--px, 0) * -4px), calc(var(--py, 0) * -2px));
+  transition: transform 200ms ease-out;
+}
+.character,
+.drop {
+  translate: calc(var(--px, 0) * 4px) calc(var(--py, 0) * 2px);
+  transition: translate 200ms ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .door,
   .curtain,
   .drawer,
+  .drawer-shadow,
   .lid,
+  .chest-inside,
+  .shop-door,
   .pig,
   .rack,
-  .shop-light {
+  .art,
+  .spot,
+  .character,
+  .drop {
     transition: none;
   }
-  .pig.hop {
+  .pig.open {
     animation: none;
+  }
+  .art,
+  .spot {
+    transform: none;
+  }
+  .character,
+  .drop {
+    translate: none;
   }
 }
 

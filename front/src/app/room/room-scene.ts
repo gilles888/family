@@ -1,5 +1,5 @@
 import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, input, output, signal } from '@angular/core';
 import { FamilyMemberDTO } from '../api-client';
 import { Avatar } from '../avatar/avatar';
 import { AvatarConfig } from '../avatar/avatar-config';
@@ -28,6 +28,8 @@ export const SPOT_LABELS: Record<RoomSpot, string> = {
 
 const SPOTS = Object.keys(SPOT_LABELS) as RoomSpot[];
 
+const clamp = (n: number) => Math.max(-1, Math.min(1, n));
+
 /** Nuit : de 20 h à 7 h (la fenêtre montre la lune et les étoiles). */
 const isNight = (d = new Date()) => d.getHours() >= 20 || d.getHours() < 7;
 
@@ -41,7 +43,14 @@ const isNight = (d = new Date()) => d.getHours() >= 20 || d.getHours() < 7;
   imports: [Avatar, CdkDropList, SvgShapes, RoomDefs, SeasonParticles],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="room" [style.--room-ratio]="ratio">
+    <div
+      class="room"
+      [style.--room-ratio]="ratio"
+      [style.--px]="tilt().x"
+      [style.--py]="tilt().y"
+      (pointermove)="onPointer($event)"
+      (pointerleave)="tilt.set({ x: 0, y: 0 })"
+    >
       <svg class="art" [attr.viewBox]="viewBox" aria-hidden="true">
         <defs roomDefs></defs>
         <defs>
@@ -132,6 +141,32 @@ export class RoomScene {
   protected readonly spots = SPOTS;
   protected readonly labels = SPOT_LABELS;
   protected readonly empty = computed(() => this.emptyFurniture());
+
+  /** Parallaxe : inclinaison (-1…1) donnée par la souris, ou par le téléphone quand l'orientation est disponible sans demande. */
+  protected readonly tilt = signal({ x: 0, y: 0 });
+  private readonly reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  constructor() {
+    // iOS demande une autorisation (requestPermission) : sans elle on ne l'utilise pas ; ailleurs l'événement est libre
+    const orientation = globalThis.DeviceOrientationEvent as unknown as { requestPermission?: unknown } | undefined;
+    if (!this.reduced && orientation && typeof orientation.requestPermission !== 'function') {
+      const onTilt = (e: DeviceOrientationEvent) => {
+        if (e.gamma !== null && e.beta !== null) {
+          this.tilt.set({ x: clamp(e.gamma / 25), y: clamp((e.beta - 45) / 25) });
+        }
+      };
+      addEventListener('deviceorientation', onTilt);
+      inject(DestroyRef).onDestroy(() => removeEventListener('deviceorientation', onTilt));
+    }
+  }
+
+  protected onPointer(event: PointerEvent): void {
+    if (this.reduced || event.pointerType !== 'mouse') {
+      return;
+    }
+    const r = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    this.tilt.set({ x: clamp(((event.clientX - r.left) / r.width) * 2 - 1), y: clamp(((event.clientY - r.top) / r.height) * 2 - 1) });
+  }
 
   private readonly theme = inject(ActiveTheme).id;
   private readonly night = isNight();

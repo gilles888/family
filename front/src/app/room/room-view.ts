@@ -138,10 +138,10 @@ export class RoomView {
   protected readonly dragging = signal(false);
   protected readonly wornOpen = signal(false);
 
-  /** Le panneau s'ouvre du côté du meuble : à gauche pour ceux de gauche, sinon à droite (le personnage reste visible). */
+  /** Le panneau s'ouvre à gauche pour les meubles de droite et du milieu, à droite pour ceux de gauche. */
   protected onLeft(id: FurnitureId): boolean {
-    // la fenêtre est au milieu : le panneau passe à gauche pour qu'on voie le paysage changer
-    return id === 'armoire' || id === 'commode' || id === 'chapeaux' || id === 'fenetre';
+    // le panneau s'ouvre du côté opposé au meuble : on voit le meuble s'ouvrir, et le personnage reste au milieu
+    return id === 'commode' || id === 'chapeaux' || id === 'coiffeuse' || id === 'tirelire' || id === 'boutique';
   }
 
   protected wear(option: WardrobeOption): void {
